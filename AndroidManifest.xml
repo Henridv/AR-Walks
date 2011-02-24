@@ -18,6 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
+        <activity android:name="Hoofdmenu"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Berichten"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
 
 
     </application>
