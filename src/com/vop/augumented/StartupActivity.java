@@ -1,19 +1,18 @@
 package com.vop.augumented;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-public class StartupActivity extends Activity {
+import com.vop.tools.FullscreenActivity;
+
+public class StartupActivity extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startupactivity_layout);
 	}
 	//go-klik

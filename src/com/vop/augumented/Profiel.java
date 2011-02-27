@@ -1,15 +1,12 @@
 package com.vop.augumented;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-public class Profiel extends Activity {
+import com.vop.tools.FullscreenActivity;
+
+public class Profiel extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

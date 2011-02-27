@@ -18,27 +18,25 @@ package com.vop.augumented;
 
 //package com.example.android.apis.graphics;
 
-import android.app.Activity;
+import java.io.IOException;
+
 import android.content.Context;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
-import java.io.IOException;
+
+import com.vop.tools.FullscreenActivity;
 
 // ----------------------------------------------------------------------
 
-public class Locaties extends Activity {    
+public class Locaties extends FullscreenActivity {    
     private Preview mPreview;
     
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Hide the window title.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-    
+            
         // Create our Preview view and set it as the content of our activity.
         mPreview = new Preview(this);
         setContentView(mPreview);
