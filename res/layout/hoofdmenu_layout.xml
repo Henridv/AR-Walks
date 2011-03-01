@@ -1,67 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-<Button
-android:id="@+id/berichten"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Berichten"
-android:layout_x="0px"
-android:layout_y="22px"
-android:onClick="berichten_klik">
-</Button>
-<Button
-android:id="@+id/trajecten"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Trajecten"
-android:layout_x="80px"
-android:layout_y="22px"
-android:onClick="trajecten_klik"
->
-</Button>
-<Button
-android:id="@+id/locaties"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Locaties"
-android:layout_x="160px"
-android:layout_y="22px"
-android:onClick="locaties_klik"
->
-</Button>
-<Button
-android:id="@+id/vrienden"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Vrienden"
-android:layout_x="0px"
-android:layout_y="92px"
-android:onClick="vrienden_klik"
->
-</Button>
-<Button
-android:id="@+id/profiel"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Profiel"
-android:layout_x="80px"
-android:layout_y="92px"
-android:onClick="profiel_klik"
->
-</Button>
-<Button
-android:id="@+id/uitloggen"
-android:layout_width="75px"
-android:layout_height="wrap_content"
-android:text="Uitloggen"
-android:layout_x="160px"
-android:layout_y="92px"
-android:onClick="uitloggen_klik"
->
-</Button>
-</AbsoluteLayout>
+<LinearLayout android:id="@+id/widget32"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:gravity="center">
+	<TableLayout android:id="@+id/tableLayout1"
+		android:padding="10dip" android:layout_height="wrap_content" android:layout_width="wrap_content">
+		<TableRow
+			android:layout_height="wrap_content">
+			<Button android:id="@+id/berichten" android:text="Berichten"
+				android:layout_x="0px" android:layout_y="22px" android:onClick="berichten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+			<Button android:id="@+id/trajecten" android:text="Trajecten"
+				android:layout_x="80px" android:layout_y="22px" android:onClick="trajecten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+			<Button android:id="@+id/locaties" android:text="Locaties"
+				android:layout_x="160px" android:layout_y="22px" android:onClick="locaties_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+		</TableRow>
+		<TableRow
+			android:layout_height="wrap_content">
+			<Button android:id="@+id/vrienden" android:text="Vrienden"
+				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+			<Button android:id="@+id/profiel" android:text="Profiel"
+				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+			<Button android:id="@+id/uitloggen" android:text="Uitloggen"
+				android:layout_x="160px" android:layout_y="92px" android:onClick="uitloggen_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
+			</Button>
+		</TableRow>
+	</TableLayout>
+</LinearLayout>

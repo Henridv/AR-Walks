@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 
 import com.vop.tools.FullscreenActivity;
+import com.vop.tools.VopApplication;
 
 public class StartupActivity extends FullscreenActivity {
 
@@ -16,7 +17,10 @@ public class StartupActivity extends FullscreenActivity {
 		setContentView(R.layout.startupactivity_layout);
 	}
 	//go-klik
-	public void go_klik(View v){
+	public void go_klik(View v) {
+		VopApplication app = (VopApplication)getApplicationContext();
+		app.putState("login", "true");
+		
     	Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
     	StartupActivity.this.startActivity(myIntent);
 	}

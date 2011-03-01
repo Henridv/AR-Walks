@@ -9,13 +9,26 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.vop.tools.FullscreenActivity;
+import com.vop.tools.VopApplication;
 
 public class Hoofdmenu extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hoofdmenu_layout);
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		VopApplication app = (VopApplication)getApplicationContext();
+		Boolean loggedIn = Boolean.parseBoolean(app.getState().get("login"));
+		
+		if (loggedIn == null || !loggedIn) {
+	    	Intent myIntent = new Intent(Hoofdmenu.this, StartupActivity.class);
+	    	Hoofdmenu.this.startActivity(myIntent);
+		}
 	}
 	//knoppen
 	public void locaties_klik(View v){
@@ -39,6 +52,9 @@ public class Hoofdmenu extends FullscreenActivity {
     	Hoofdmenu.this.startActivity(myIntent);
 	}
 	public void uitloggen_klik(View v){
+		VopApplication app = (VopApplication)getApplicationContext();
+		app.putState("login", "false");
+		
     	Intent myIntent = new Intent(Hoofdmenu.this, StartupActivity.class);
     	Hoofdmenu.this.startActivity(myIntent);
 	}
