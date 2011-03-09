@@ -12,16 +12,16 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="com.vop.tools.VopApplication">
         <activity android:icon="@drawable/icon" 
         android:name="StartupActivity" 
-        android:theme="@android:style/Theme.Light.NoTitleBar">
+        android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:name="Hoofdmenu"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="Berichten"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:screenOrientation="landscape" android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Hoofdmenu"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
+        <activity android:name="Berichten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
+        <activity android:name="Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
+        <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>

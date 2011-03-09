@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -18,8 +19,10 @@ public class StartupActivity extends FullscreenActivity {
 	}
 	//go-klik
 	public void go_klik(View v) {
+		TextView tv = (TextView)findViewById(R.id.email_tekst);
 		VopApplication app = (VopApplication)getApplicationContext();
 		app.putState("login", "true");
+		app.putState("email", tv.getText().toString());
 		
     	Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
     	StartupActivity.this.startActivity(myIntent);
