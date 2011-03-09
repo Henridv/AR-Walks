@@ -5,13 +5,4 @@ android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
-<TextView
-android:id="@+id/widget55"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Trajecten"
-android:layout_x="50px"
-android:layout_y="22px"
->
-</TextView>
 </AbsoluteLayout>
