@@ -19,7 +19,10 @@ package com.vop.augumented;
 //package com.example.android.apis.graphics;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.location.Location;
@@ -30,11 +33,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
-
-import com.vop.tools.FullscreenActivity;
+import android.widget.Toast;
 
 public class Locaties extends Activity {
 	private Preview mPreview;
@@ -45,17 +47,56 @@ public class Locaties extends Activity {
 	SensorManager sensorManager;
 
 	@Override
+	public boolean onTouchEvent(final MotionEvent ev) {
+		switch (ev.getAction()) {
+		case MotionEvent.ACTION_DOWN: {
+			// Code on finger down
+			float posX = ev.getX();
+			float posY = ev.getY();
+
+			// 80x80 pixel square located 20 pixels left, 20 pixels top.
+			// float x1 = 20, x2 = 100, y1 = 20, y2 = 100;
+			/*
+			 * canvas.drawRect(0, 0, getMeasuredWidth(), 2 * getMeasuredHeight()
+			 * / 10, kader_kleur);
+			 */
+
+			if ((posX >= 0 && posX <= compassView.getMeasuredWidth())
+					&& (posY >= 0 && posY <= 2 * compassView
+							.getMeasuredHeight() / 10)) {
+				// we are in the square
+				String tekst = compassView.getDichtste_punt();
+				if (tekst != "") {
+					Toast toast = Toast.makeText(getApplicationContext(), ""
+							+ tekst, Toast.LENGTH_SHORT);
+					toast.show();
+				}
+
+			} else {
+
+				// we are somewhere else on the canvas
+			}
+		}
+		case MotionEvent.ACTION_UP: {
+			// Code on finger up
+
+		}
+		case MotionEvent.ACTION_MOVE: {
+			// Code on finger move
+
+		}
+		}
+		return true;
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Hide the window title.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		// Create our Preview view and set it as the content of our activity.
-
-		//
 
 		mPreview = new Preview(this);
 		compassView = new AugView(getApplicationContext());
@@ -79,7 +120,8 @@ public class Locaties extends Activity {
 		String provider = LocationManager.GPS_PROVIDER;
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
-
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				35000, 1, this.locationListener);
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -102,6 +144,7 @@ public class Locaties extends Activity {
 		if (location != null) {
 			compassView.setLng(location.getLongitude());
 			compassView.setLat(location.getLatitude());
+			compassView.invalidate();
 		}
 	}
 
@@ -135,10 +178,9 @@ public class Locaties extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		sensorManager
-				.registerListener(sensorListener,
-						sensorManager.SENSOR_ORIENTATION,
-						sensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(sensorListener,
+				sensorManager.SENSOR_ORIENTATION,
+				sensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	@Override
@@ -150,7 +192,7 @@ public class Locaties extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.locaties_menu, menu);
+		inflater.inflate(R.layout.hoofdmenu_menu, menu);
 		return true;
 	}
 
@@ -158,6 +200,7 @@ public class Locaties extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
+
 		case R.id.info:
 			return true;
 		case R.id.km_1:
