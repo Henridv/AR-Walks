@@ -18,77 +18,185 @@ package com.vop.augumented;
 
 //package com.example.android.apis.graphics;
 
-import java.io.IOException;
-
+import android.app.Activity;
 import android.content.Context;
-import android.hardware.Camera;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
 
 import com.vop.tools.FullscreenActivity;
 
-// ----------------------------------------------------------------------
+public class Locaties extends Activity {
+	private Preview mPreview;
+	float pitch = 0;
+	float roll = 0;
+	float heading = 0;
+	AugView compassView;
+	SensorManager sensorManager;
 
-public class Locaties extends FullscreenActivity {    
-    private Preview mPreview;
-    
-    @Override
-	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-            
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new Preview(this);
-        setContentView(mPreview);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-}
+		// Hide the window title.
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-// ----------------------------------------------------------------------
+		// Create our Preview view and set it as the content of our activity.
 
-class Preview extends SurfaceView implements SurfaceHolder.Callback {
-    SurfaceHolder mHolder;
-    Camera mCamera;
-    
-    Preview(Context context) {
-        super(context);
-        
-        // Install a SurfaceHolder.Callback so we get notified when the
-        // underlying surface is created and destroyed.
-        mHolder = getHolder();
-        mHolder.addCallback(this);
-        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-    }
+		//
 
-    public void surfaceCreated(SurfaceHolder holder) {
-        // The Surface has been created, acquire the camera and tell it where
-        // to draw.
-        mCamera = Camera.open();
-        try {
-           mCamera.setPreviewDisplay(holder);
-        } catch (IOException exception) {
-            mCamera.release();
-            mCamera = null;
-            // TODO: add more exception handling logic here
-        }
-    }
+		mPreview = new Preview(this);
+		compassView = new AugView(getApplicationContext());
 
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        // Surface will be destroyed when we return, so stop the preview.
-        // Because the CameraDevice object is not a shared resource, it's very
-        // important to release it when the activity is paused.
-        mCamera.stopPreview();
-        mCamera.release();
-        mCamera = null;
-    }
+		MenuItem item = (MenuItem) findViewById(R.id.m_500);
+		compassView.setAfstand(100000);
 
-    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        // Now that the size is known, set up the camera parameters and begin
-        // the preview.
-        Camera.Parameters parameters = mCamera.getParameters();
-        parameters.setPreviewSize(768, 432);
-        mCamera.setParameters(parameters);
-        mCamera.startPreview();
-    }
+		// werkt niet
+		// if (item.isChecked()) item.setChecked(true);
+		// else item.setChecked(false);
 
+		setContentView(mPreview);
+		addContentView(compassView, new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		updateOrientation(0, 0, 0);
+
+		LocationManager locationManager;
+		String context = Context.LOCATION_SERVICE;
+		locationManager = (LocationManager) getSystemService(context);
+		String provider = LocationManager.GPS_PROVIDER;
+		Location location = locationManager.getLastKnownLocation(provider);
+		updateWithNewLocation(location);
+
+	}
+
+	private final LocationListener locationListener = new LocationListener() {
+		public void onLocationChanged(Location location) {
+			updateWithNewLocation(location);
+		}
+
+		public void onProviderDisabled(String provider) {
+
+		}
+
+		public void onProviderEnabled(String provider) {
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+	};
+
+	private void updateWithNewLocation(Location location) {
+		if (location != null) {
+			compassView.setLng(location.getLongitude());
+			compassView.setLat(location.getLatitude());
+		}
+	}
+
+	private void updateOrientation(float _roll, float _pitch, float _heading) {
+		heading = _heading;
+		pitch = _pitch;
+		roll = _roll;
+		if (compassView != null) {
+			compassView.setHeading(heading);
+			compassView.setPitch(pitch);
+			compassView.setRoll(roll);
+			compassView.invalidate();
+		}
+	}
+
+	private final SensorListener sensorListener = new SensorListener() {
+		public void onSensorChanged(int sensor, float[] values) {
+
+			float headingAngle = values[0];
+			float pitchAngle = values[1];
+			float rollAngle = values[2];
+
+			updateOrientation(headingAngle, pitchAngle, rollAngle);
+			// TODO Apply the orientation changes to your application.
+		}
+
+		public void onAccuracyChanged(int sensor, int accuracy) {
+		}
+	};
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sensorManager
+				.registerListener(sensorListener,
+						sensorManager.SENSOR_ORIENTATION,
+						sensorManager.SENSOR_DELAY_UI);
+	}
+
+	@Override
+	protected void onStop() {
+		sensorManager.unregisterListener(sensorListener);
+		super.onStop();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.layout.locaties_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.info:
+			return true;
+		case R.id.km_1:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			compassView.setAfstand(1000);
+			return true;
+		case R.id.km_5:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			compassView.setAfstand(5000);
+			return true;
+		case R.id.km_10:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			compassView.setAfstand(10000);
+			return true;
+		case R.id.km_20:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			compassView.setAfstand(20000);
+			return true;
+		case R.id.m_500:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			compassView.setAfstand(500);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

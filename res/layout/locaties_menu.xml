@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/optie_1"
-          android:title="optie 1" />
-    <item android:id="@+id/optie_2"
-          android:title="optie 2" />
+	<item android:id="@+id/location" android:title="location" />
+	<item android:id="@+id/info" android:title="info" />
+	<item android:id="@+id/hoofdscherm" android:title="main" />
+	<item android:id="@+id/group1" android:title="afstand">
+		<menu>
+			<group android:checkableBehavior="single">
+				<item android:id="@+id/m_500" android:title="500m" />
+				<item android:id="@+id/km_1" android:title="1km" />
+				<item android:id="@+id/km_5" android:title="5km" />
+				<item android:id="@+id/km_10" android:title="10km" />
+				<item android:id="@+id/km_20" android:title="20km" />
+			</group>
+		</menu>
+	</item>
+
 </menu>
