@@ -19,7 +19,7 @@
 		<TableRow
 			android:layout_height="wrap_content">
 			<Button android:id="@+id/vrienden" android:text="Vrienden"
-				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
+				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</Button>
 			<Button android:id="@+id/profiel" android:text="Profiel"
 				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
