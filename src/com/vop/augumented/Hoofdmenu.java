@@ -54,9 +54,8 @@ public class Hoofdmenu extends FullscreenActivity {
 	public void uitloggen_klik(View v){
 		VopApplication app = (VopApplication)getApplicationContext();
 		app.putState("login", "false");
-		
-    	Intent myIntent = new Intent(Hoofdmenu.this, StartupActivity.class);
-    	Hoofdmenu.this.startActivity(myIntent);
+		moveTaskToBack(true);
+    	
 	}
 	//menu openen
 	@Override
