@@ -12,7 +12,7 @@ import android.util.Pair;
  */
 public class Traject {
 
-	private Integer id;
+	private final Integer id;
 	private String name;
 	private Person person;
 	private ArrayList<Pair<Double, Double>> walk;
@@ -35,46 +35,32 @@ public class Traject {
 		this.walk = walk;
 	}
 
-	public String getName() {
-		return name;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getName() {
+		return name;
 	}
 
 	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
 	public ArrayList<Pair<Double, Double>> getWalk() {
 		return walk;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	public void setWalk(ArrayList<Pair<Double, Double>> walk) {
 		this.walk = walk;
 	}
-	/**
-	 * saves traject data to database
-	 * @return true if successful
-	 */
-	public boolean save() {
-		if (id == null) ; //make new user
-		else ; // edit existing user
-		return true;
-	}
-	
-	/**
-	 * load traject data from database
-	 * @param id
-	 * @return
-	 */
-	public boolean load(int id) {
-		this.id = id;
-		return true;
-	}
+
 }

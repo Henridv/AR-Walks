@@ -18,18 +18,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.util.Pair;
 
+import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Traject;
 
 /**
- * This class provides an abstraction of the database HTML connections are
+ * This class provides an abstraction of the database. HTML connections are
  * hidden from the user
  * 
  * @author henri
  * 
  */
-// TODO: define methods
 public class DBWrapper {
 	private static String log_tag;
 
@@ -56,20 +57,20 @@ public class DBWrapper {
 	public ArrayList<Person> getFriends(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues
+				.add(new BasicNameValuePair("id", Integer.toString(personId)));
 
 		ArrayList<Person> p = new ArrayList<Person>();
-		
+
 		// parse json data
 		try {
 			JSONArray jArray = doPOST(page, null);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				p.add(new Person(json_data.getInt("id"),
-						json_data.getString("name"),
-						json_data.getString("phone"),
-						json_data.getString("password"),
-						json_data.getString("email")));
+				p.add(new Person(json_data.getInt("id"), json_data
+						.getString("name"), json_data.getString("phone"),
+						json_data.getString("password"), json_data
+								.getString("email")));
 			}
 		} catch (JSONException e) {
 			Log.e("log_tag", "Error parsing data " + e.toString());
@@ -95,11 +96,10 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, null);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				p = new Person(json_data.getInt("id"),
-						json_data.getString("name"),
-						json_data.getString("phone"),
-						json_data.getString("password"),
-						json_data.getString("email"));
+				p = new Person(json_data.getInt("id"), json_data
+						.getString("name"), json_data.getString("phone"),
+						json_data.getString("password"), json_data
+								.getString("email"));
 			}
 		} catch (JSONException e) {
 			Log.e("log_tag", "Error parsing data " + e.toString());
@@ -107,6 +107,51 @@ public class DBWrapper {
 		return p;
 	}
 
+	/**
+	 * Get a list of locations from a person and his friends
+	 * @param personId
+	 * @return
+	 */
+	public ArrayList<Location> getLocations(int personId) {
+		String page = "locations.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues
+				.add(new BasicNameValuePair("id", Integer.toString(personId)));
+
+		ArrayList<Location> l = new ArrayList<Location>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, null);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				l.add(new Location(json_data.getInt("id"),
+						json_data.getString("name"),
+						new Pair<Double, Double>(json_data.getDouble("lat"), json_data.getDouble("lng")),
+						json_data.getString("date")));
+			}
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
+		return l;
+	}
+	
+	/**
+	 * Save a location
+	 * @param l
+	 */
+	public static void save(Location l) {
+		//TODO: save location
+	}
+	
+	/**
+	 * Create a location
+	 * @param l
+	 */
+	public static void create(Location l) {
+		//TODO: create location
+	}
+	
 	/**
 	 * Perform actual HTTP POST
 	 * 
