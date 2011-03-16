@@ -3,14 +3,19 @@ package com.vop.augumented;
 import java.io.IOException;
 import java.util.List;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
+
 
 class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	SurfaceHolder mHolder;
 	Camera mCamera;
+	Context context1;
 
 	Preview(Context context) {
 		super(context);
@@ -20,6 +25,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		mHolder = getHolder();
 		mHolder.addCallback(this);
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		context1 = context;
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -85,9 +91,8 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		Camera.Parameters parameters = mCamera.getParameters();
 
 		List<Size> sizes = parameters.getSupportedPreviewSizes();
-		Size optimalSize = getOptimalPreviewSize(sizes, w, h);
-		parameters.setPreviewSize(optimalSize.width, optimalSize.height);
-
+		Size optimalSize_horizontaal = getOptimalPreviewSize(sizes, w, h);
+		parameters.setPreviewSize(optimalSize_horizontaal.width, optimalSize_horizontaal.height);	
 		mCamera.setParameters(parameters);
 		mCamera.startPreview();
 	}

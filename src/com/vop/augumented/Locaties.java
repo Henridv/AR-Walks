@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -35,6 +36,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
@@ -53,13 +55,6 @@ public class Locaties extends Activity {
 			// Code on finger down
 			float posX = ev.getX();
 			float posY = ev.getY();
-
-			// 80x80 pixel square located 20 pixels left, 20 pixels top.
-			// float x1 = 20, x2 = 100, y1 = 20, y2 = 100;
-			/*
-			 * canvas.drawRect(0, 0, getMeasuredWidth(), 2 * getMeasuredHeight()
-			 * / 10, kader_kleur);
-			 */
 
 			if ((posX >= 0 && posX <= compassView.getMeasuredWidth())
 					&& (posY >= 0 && posY <= 2 * compassView
@@ -95,6 +90,8 @@ public class Locaties extends Activity {
 
 		// Hide the window title.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// Create our Preview view and set it as the content of our activity.
 
@@ -117,11 +114,20 @@ public class Locaties extends Activity {
 		LocationManager locationManager;
 		String context = Context.LOCATION_SERVICE;
 		locationManager = (LocationManager) getSystemService(context);
-		String provider = LocationManager.GPS_PROVIDER;
+
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		String provider = locationManager.getBestProvider(criteria, true);
+		compassView.setProvider(provider);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				35000, 1, this.locationListener);
+		locationManager.requestLocationUpdates(provider, 2, 10,
+				locationListener);
+
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -130,7 +136,7 @@ public class Locaties extends Activity {
 		}
 
 		public void onProviderDisabled(String provider) {
-
+			updateWithNewLocation(null);
 		}
 
 		public void onProviderEnabled(String provider) {
@@ -144,7 +150,8 @@ public class Locaties extends Activity {
 		if (location != null) {
 			compassView.setLng(location.getLongitude());
 			compassView.setLat(location.getLatitude());
-			compassView.invalidate();
+			// compassView.setAlt(location.getAltitude());
+			// compassView.invalidate();
 		}
 	}
 
@@ -192,7 +199,7 @@ public class Locaties extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.hoofdmenu_menu, menu);
+		inflater.inflate(R.layout.locaties_menu, menu);
 		return true;
 	}
 
