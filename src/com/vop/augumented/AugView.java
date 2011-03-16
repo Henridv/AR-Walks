@@ -298,18 +298,18 @@ public class AugView extends View {
 			afstand_tot_punt = new float[3];
 			Location.distanceBetween(lat, lng, lat_POI[dichtste_punt], lng_POI[dichtste_punt],
 					afstand_tot_punt);
-			/*canvas.drawText(naam[dichtste_punt], getMeasuredWidth() / 10,
+			canvas.drawText(naam[dichtste_punt], getMeasuredWidth() / 10,
 					getMeasuredHeight() / 10, myPaint2);
 			canvas.drawText("afstand: "+afstand_tot_punt[0], getMeasuredWidth() / 10,
-					2*getMeasuredHeight() / 10, myPaint2);*/
+					2*getMeasuredHeight() / 10, myPaint2);
 			canvas.drawCircle(getMeasuredWidth() / 2
 					+ (float) pos_horizontaal[dichtste_punt]
 					* getMeasuredWidth() / 2, getMeasuredHeight() / 2,
 					(float) 20, cirkel_select);
 		}
 		
-		  canvas.drawText("provider: "+provider, getMeasuredWidth() / 10,
-		  getMeasuredHeight() / 10, myPaint2);
+		  /*canvas.drawText("provider: "+provider, getMeasuredWidth() / 10,
+		  getMeasuredHeight() / 10, myPaint2);*/
 		 
 	}
 }
