@@ -37,6 +37,7 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 public class Locaties extends Activity {
 	private Preview mPreview;
