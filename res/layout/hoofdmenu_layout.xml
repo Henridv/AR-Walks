@@ -7,7 +7,7 @@
 		<TableRow
 			android:layout_height="wrap_content">
 			<Button android:id="@+id/berichten" android:text="Berichten"
-				android:layout_x="0px" android:layout_y="22px" android:onClick="berichten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="true">
+				android:layout_x="0px" android:layout_y="22px" android:onClick="berichten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
 			</Button>
 			<Button android:id="@+id/trajecten" android:text="Trajecten"
 				android:layout_x="80px" android:layout_y="22px" android:onClick="trajecten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
@@ -19,10 +19,10 @@
 		<TableRow
 			android:layout_height="wrap_content">
 			<Button android:id="@+id/vrienden" android:text="Vrienden"
-				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="true">
+				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</Button>
 			<Button android:id="@+id/profiel" android:text="Profiel"
-				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="true">
+				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
 			</Button>
 			<Button android:id="@+id/uitloggen" android:text="Uitloggen"
 				android:layout_x="160px" android:layout_y="92px" android:onClick="uitloggen_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
