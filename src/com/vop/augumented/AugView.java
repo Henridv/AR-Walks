@@ -1,12 +1,11 @@
 package com.vop.augumented;
 
 import android.content.Context;
-import android.graphics.*;
-import android.graphics.drawable.*;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.location.Location;
-import android.view.*;
 import android.util.AttributeSet;
-import android.content.res.Resources;
+import android.view.View;
 
 public class AugView extends View {
 
