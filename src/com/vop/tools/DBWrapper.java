@@ -32,18 +32,14 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class DBWrapper {
-	private static String log_tag;
-
-	public DBWrapper() {
-		log_tag = "AR Walks";
-	}
+	private static String log_tag = "AR Walks";
 
 	/**
 	 * Get all trajects from the database
 	 * 
 	 * @return
 	 */
-	public ArrayList<Traject> getTrajects() {
+	public static ArrayList<Traject> getTrajects() {
 		return null;
 	}
 
@@ -54,7 +50,7 @@ public class DBWrapper {
 	 *            id of person who's logged in
 	 * @return
 	 */
-	public ArrayList<Person> getFriends(int personId) {
+	public static ArrayList<Person> getFriends(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues
@@ -85,7 +81,7 @@ public class DBWrapper {
 	 *            authentication via email
 	 * @return
 	 */
-	public Person getProfile(String email) {
+	public static Person getProfile(String email) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "profile"));
@@ -93,7 +89,7 @@ public class DBWrapper {
 
 		Person p = null;
 		try {
-			JSONArray jArray = doPOST(page, null);
+			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
 				p = new Person(json_data.getInt("id"), json_data
@@ -102,7 +98,7 @@ public class DBWrapper {
 								.getString("email"));
 			}
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
@@ -112,7 +108,7 @@ public class DBWrapper {
 	 * @param personId
 	 * @return
 	 */
-	public ArrayList<Location> getLocations(int personId) {
+	public static ArrayList<Location> getLocations(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues
@@ -145,11 +141,59 @@ public class DBWrapper {
 	}
 	
 	/**
-	 * Create a location
+	 * Save a person
+	 * @param p
+	 */
+	public static void save(Person p) {
+		String page = "persons.php";
+		
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		if (p.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(p.getId())));
+		postValues.add(new BasicNameValuePair("name", p.getName()));
+		postValues.add(new BasicNameValuePair("phone", p.getPhone()));
+		postValues.add(new BasicNameValuePair("password", p.getPassword()));
+		postValues.add(new BasicNameValuePair("email", p.getEmail()));
+		
+		postValues.add(new BasicNameValuePair("action", "adduser"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
+	}
+	
+	/**
+	 * Delete a location
 	 * @param l
 	 */
-	public static void create(Location l) {
-		//TODO: create location
+	public static void delete(Location l) {
+		//TODO: delete location
+	}
+
+	/**
+	 * Delete a person
+	 * @param p
+	 */
+	public static void delete(Person p) {
+		String page = "persons.php";
+		
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		if (p.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(p.getId())));
+		else
+			return;
+		
+		postValues.add(new BasicNameValuePair("action", "deluser"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
 	}
 	
 	/**
@@ -162,7 +206,7 @@ public class DBWrapper {
 	 * @return JSON array
 	 * @throws JSONException
 	 */
-	private JSONArray doPOST(String page, ArrayList<NameValuePair> postValues)
+	private static JSONArray doPOST(String page, ArrayList<NameValuePair> postValues)
 			throws JSONException {
 		String result = "";
 		InputStream is = null;
