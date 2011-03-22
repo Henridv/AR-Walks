@@ -3,7 +3,7 @@ include 'header.php';
 
 if (isset($_POST['id'])) {
 	$query = "
-		SELECT id, name, pers_id, date, X(position) as lat, Y(position) as lng
+		SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt
 		FROM locations
 		WHERE pers_id = '".$_POST['id']."'";
 
@@ -14,6 +14,6 @@ if (isset($_POST['id'])) {
 
 	print(json_encode($output));
 } else {
-	echo "niets!";
+	echo "No data available!";
 }
 ?>

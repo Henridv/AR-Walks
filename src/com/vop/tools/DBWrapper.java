@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import android.util.Pair;
 
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
@@ -53,27 +52,37 @@ public class DBWrapper {
 	public static ArrayList<Person> getFriends(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues
-				.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("action", "friends"));
 
 		ArrayList<Person> p = new ArrayList<Person>();
 
 		// parse json data
 		try {
-			JSONArray jArray = doPOST(page, null);
-			for (int i = 0; i < jArray.length(); i++) {
-				JSONObject json_data = jArray.getJSONObject(i);
-				p.add(new Person(json_data.getInt("id"), json_data
-						.getString("name"), json_data.getString("phone"),
-						json_data.getString("password"), json_data
-								.getString("email")));
-			}
+			doPOST(page, postValues);
 		} catch (JSONException e) {
 			Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 		return p;
 	}
 
+	public static void addFriend(Person p1, Person p2) {
+		String page = "persons.php";
+		
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id1", Integer.toString(p1.getId())));
+		postValues.add(new BasicNameValuePair("id2", Integer.toString(p2.getId())));
+		
+		postValues.add(new BasicNameValuePair("action", "addfriend"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
+	}
+	
 	/**
 	 * Get a single profile
 	 * 
@@ -111,20 +120,22 @@ public class DBWrapper {
 	public static ArrayList<Location> getLocations(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues
-				.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
 
 		ArrayList<Location> l = new ArrayList<Location>();
 
 		// parse json data
 		try {
-			JSONArray jArray = doPOST(page, null);
+			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"),
-						json_data.getString("name"),
-						new Pair<Double, Double>(json_data.getDouble("lat"), json_data.getDouble("lng")),
-						json_data.getString("date")));
+				l.add(new Location(	json_data.getInt("id"),
+									json_data.getString("name"),
+									json_data.getString("description"),
+									json_data.getDouble("lat"),
+									json_data.getDouble("lng"),
+									json_data.getDouble("alt"),
+									json_data.getString("date")));
 			}
 		} catch (JSONException e) {
 			Log.e("log_tag", "Error parsing data " + e.toString());

@@ -49,7 +49,13 @@ switch($action) {
 			WHERE id = ".$_POST['id'];
 		echo $query;
 		break;
-		
+	
+	case "friends":
+		$query = "
+			SELECT id, name, email, phone, password
+			FROM persons
+				INNER JOIN friends ON id=friendId
+			WHERE personId=".$_POST['id'];
 	default:
 		die("no data available");
 }
