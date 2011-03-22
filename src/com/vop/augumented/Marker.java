@@ -38,6 +38,22 @@ public class Marker {
 	private double horizontale_positie;
 	private double PI = 4.0 * Math.atan(1.0);
 	private String titel;
+	public String getTitel() {
+		return titel;
+	}
+
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	private String info;
 
 	double angle_of_view_horizontal = 54.4 / 2;
@@ -85,6 +101,7 @@ public class Marker {
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double roll) {
 		double hoek;
+		zichtbaarheid = false;
 		horizontale_positie = -1;
 		double x = Math.abs(lng - lng_loc);
 		double y = Math.abs(lat - lat_loc);
