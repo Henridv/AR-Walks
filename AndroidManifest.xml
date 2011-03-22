@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="com.vop.tools.VopApplication">
         <activity android:icon="@drawable/icon" 
@@ -24,5 +25,7 @@
         <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Locaties_map"></activity>
+        <uses-library android:name="com.google.android.maps"/>
     </application>
 </manifest>

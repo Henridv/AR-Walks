@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
@@ -29,6 +30,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +48,7 @@ public class Locaties extends Activity {
 	float heading = 0;
 	AugView compassView;
 	SensorManager sensorManager;
+	LocationManager locationManager;
 
 	@Override
 	public boolean onTouchEvent(final MotionEvent ev) {
@@ -98,7 +101,7 @@ public class Locaties extends Activity {
 		compassView = new AugView(getApplicationContext());
 
 		MenuItem item = (MenuItem) findViewById(R.id.m_500);
-		compassView.setAfstand(100000);
+		Marker.setAfstand(100000);
 
 		// werkt niet
 		// if (item.isChecked()) item.setChecked(true);
@@ -110,7 +113,7 @@ public class Locaties extends Activity {
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		updateOrientation(0, 0, 0);
 
-		LocationManager locationManager;
+		
 		String context = Context.LOCATION_SERVICE;
 		locationManager = (LocationManager) getSystemService(context);
 
@@ -149,8 +152,8 @@ public class Locaties extends Activity {
 		if (location != null) {
 			compassView.setLng(location.getLongitude());
 			compassView.setLat(location.getLatitude());
-			// compassView.setAlt(location.getAltitude());
-			// compassView.invalidate();
+			compassView.setAlt(location.getAltitude());
+			compassView.invalidate();
 		}
 	}
 
@@ -192,6 +195,7 @@ public class Locaties extends Activity {
 	@Override
 	protected void onStop() {
 		sensorManager.unregisterListener(sensorListener);
+		locationManager.removeUpdates(locationListener);
 		super.onStop();
 	}
 
@@ -207,42 +211,46 @@ public class Locaties extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 
-		case R.id.info:
+		case R.id.kaart:
+			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
+	    	Locaties.this.startActivity(myIntent);
+	    	
+	    	finish();
 			return true;
 		case R.id.km_1:
 			if (item.isChecked())
 				item.setChecked(true);
 			else
 				item.setChecked(false);
-			compassView.setAfstand(1000);
+			Marker.setAfstand(1000);
 			return true;
 		case R.id.km_5:
 			if (item.isChecked())
 				item.setChecked(true);
 			else
 				item.setChecked(false);
-			compassView.setAfstand(5000);
+			Marker.setAfstand(5000);
 			return true;
 		case R.id.km_10:
 			if (item.isChecked())
 				item.setChecked(true);
 			else
 				item.setChecked(false);
-			compassView.setAfstand(10000);
+			Marker.setAfstand(10000);
 			return true;
 		case R.id.km_20:
 			if (item.isChecked())
 				item.setChecked(true);
 			else
 				item.setChecked(false);
-			compassView.setAfstand(20000);
+			Marker.setAfstand(20000);
 			return true;
 		case R.id.m_500:
 			if (item.isChecked())
 				item.setChecked(true);
 			else
 				item.setChecked(false);
-			compassView.setAfstand(500);
+			Marker.setAfstand(500);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
