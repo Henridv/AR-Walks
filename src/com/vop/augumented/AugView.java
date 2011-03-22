@@ -27,7 +27,6 @@ public class AugView extends View {
 	private double lng_POI[];
 	private double alt_POI[];
 	private double pos_horizontaal[];
-	private double pos_verticaal[];
 	private boolean zichtbaar[];
 	private int dichtste_punt;
 	private String provider;
@@ -152,41 +151,21 @@ public class AugView extends View {
 		cirkel_select.setStrokeWidth(4);
 
 		// aantal punten worden ingegeven
-		aantal = 4;
-		lat_POI = new double[aantal];
-		lng_POI = new double[aantal];
-		alt_POI = new double[aantal];
-		naam = new String[aantal];
-		pos_horizontaal = new double[aantal];
-		pos_verticaal = new double[aantal];
-		info = new String[aantal];
-		zichtbaar = new boolean[aantal];
+		aantal = 9;
+		Marker POI[] = new Marker[aantal];
+		//Marker("titel","info",long,lat,alt, cur_lat,cur_lng,cur_alt,roll)
+		POI[0] = new Marker("hello","hello",3.722281028086385,51.04615330799309, alt + 4, lat, lng, alt, roll);
+		POI[1] = new Marker("hello","hello",3.722314331480408,51.04615326177683, alt - 10, lat, lng, alt, roll);
+		POI[2] = new Marker("hello","hello",3.722354263472321,51.04615320666444, alt + 4, lat, lng, alt, roll);
+		POI[3] = new Marker("hello","hello",3.722420739099623,51.04615311457567, alt - 10, lat, lng, alt, roll);
+		POI[4] = new Marker("hello","hello",3.722493750467275,51.04615301342314, alt + 4, lat, lng, alt, roll);
+		POI[5] = new Marker("hello","hello",3.722520243787253,51.04615706501512, alt - 10, lat, lng, alt, roll);
+		POI[6] = new Marker("hello","hello",3.722540124390397,51.0461570364843, alt + 4, lat, lng, alt, roll);
+		POI[7] = new Marker("hello","hello",3.722579806879691,51.04616515131642, alt - 10, lat, lng, alt, roll);
+		POI[8] = new Marker("hello","hello",3.722619508791369,51.04616509092327, alt + 4, lat, lng, alt, roll);
+		
+		
 
-		lat_POI[0] = 51.045859;
-		lng_POI[0] = 3.724902;
-		naam[0] = "jozef-plateaustraat";
-		info[0] = "faculteit ingenieurwetenschappen";
-		alt_POI[0] = alt;
-
-		lat_POI[1] = 51.040746;
-		lng_POI[1] = 3.730009;
-		naam[1] = "Kinepolis";
-		info[1] = "Ter platen";
-		alt_POI[1] = alt;
-
-		lat_POI[2] = 51.038048;
-		lng_POI[2] = 3.720438;
-		naam[2] = "Citadelpark";
-		info[2] = "Paul Bergmansdreef";
-		alt_POI[2] = alt;
-
-		lat_POI[3] = 51.025012;
-		lng_POI[3] = 3.725181;
-		naam[3] = "Universitair ziekenhuis gent";
-		info[3] = "De pintenlaan 185";
-		alt_POI[3] = alt;
-
-		// pitch +=80;
 
 		RectF rectangle = new RectF(getMeasuredWidth() / 70,
 				getMeasuredHeight() / 70, 69 * getMeasuredWidth() / 70,
@@ -195,121 +174,40 @@ public class AugView extends View {
 		canvas.drawRoundRect(rectangle, 8, 8, kader_kleur);
 
 		for (int i = 0; i < aantal; i++) {
-
-			// afstanden in x en y coordinaten worden berekend
-			double x = Math.abs(lng_POI[i] - lng);
-			double y = Math.abs(lat_POI[i] - lat);
-
-			pos_horizontaal[i] = -1;
-			double hoek;
-			zichtbaar[i] = false;
-
-			// wiskundige berekening voor de positie op het scherm te vinden
-			// horizontaal, verticaal wordt er geen rekening mee gehouden
-			if (lat_POI[i] - lat > 0) {
-				if (lng_POI[i] - lng > 0) {
-					hoek = Math.atan(x / y) / (2 * PI) * 360;
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						pos_horizontaal[i] = (hoek - roll)
-								/ (angle_of_view_horizontal);
-					else if (Math.abs(hoek + (360 - roll)) < angle_of_view_horizontal)
-						pos_horizontaal[i] = Math.abs(hoek + (360 - roll))
-								/ (angle_of_view_horizontal);
-				} else if (lng_POI[i] - lng < 0) {
-					hoek = 360 - Math.atan(x / y) / (2 * PI) * 360;
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						pos_horizontaal[i] = (hoek - roll)
-								/ (angle_of_view_horizontal);
-					else {
-						hoek = Math.atan(x / y) / (2 * PI) * 360;
-						if (Math.abs(hoek + roll) < angle_of_view_horizontal)
-							pos_horizontaal[i] = -Math.abs(hoek + roll)
-									/ (angle_of_view_horizontal / 2);
-					}
-				} else if (roll < angle_of_view_horizontal)
-					pos_horizontaal[i] = -roll / (angle_of_view_horizontal);
-				else if (Math.abs(360 - roll) < angle_of_view_horizontal)
-					pos_horizontaal[i] = Math.abs(roll - 360)
-							/ (angle_of_view_horizontal);
-			} else if (lat_POI[i] - lat < 0) {
-				if (lng_POI[i] - lng > 0) {
-					hoek = 90 + Math.abs(Math.atan(y / x) / (2 * PI) * 360);
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						pos_horizontaal[i] = (hoek - roll)
-								/ (angle_of_view_horizontal);
-				} else if (lng_POI[i] - lng < 0) {
-					hoek = 180 + ((Math.atan(x / y) / (2 * PI) * 360));
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						pos_horizontaal[i] = (hoek - roll)
-								/ (angle_of_view_horizontal);
-				} else if (Math.abs(roll - 180) < angle_of_view_horizontal)
-					pos_horizontaal[i] = (180 - roll)
-							/ (angle_of_view_horizontal);
-			} else if (lng_POI[i] - lng > 0) {
-				if (Math.abs(roll - 90) < angle_of_view_horizontal)
-					pos_horizontaal[i] = (90 - roll)
-							/ (angle_of_view_horizontal);
-			} else if (lng_POI[i] - lng < 0) {
-				if (Math.abs(roll - 270) < angle_of_view_horizontal)
-					pos_horizontaal[i] = (270 - roll)
-							/ (angle_of_view_horizontal);
-			}
-			afstand_tot_punt = new float[3];
-
-			// afstand tot punt berekenen
-			Location.distanceBetween(lat, lng, lat_POI[i], lng_POI[i],
-					afstand_tot_punt);
-			// teken punt wanneer het binnen het bereik ligt
-			if (pos_horizontaal[i] != -1 && afstand_tot_punt[0] < afstand) {
-				/*
-				 * double hoogte_verschil = Math.abs(alt_POI[i] - alt); double
-				 * afstand = afstand_tot_punt[0]; double alpha =
-				 * Math.atan(hoogte_verschil/afstand)/(2*PI)*360;
-				 * 
-				 * //verticaal de positie bepalen if( (alt_POI[i] - alt) > 0){
-				 * if(Math.abs(heading) < Math.abs(heading -180)){
-				 * pos_verticaal[i] = -((Math.abs(pitch)+Math.abs(alpha))); }
-				 * else{ pos_verticaal[i] = Math.abs(pitch) - Math.abs(alpha); }
-				 * } else{ if(Math.abs(heading) > Math.abs(heading -180)){
-				 * pos_verticaal[i] = Math.abs(pitch) + Math.abs(alpha); } else{
-				 * pos_verticaal[i] = (Math.abs(alpha) - Math.abs(pitch)); } }
-				 * pos_verticaal[i] =
-				 * pos_verticaal[i]/(angle_of_view_vertical/2);
-				 */
-
-				zichtbaar[i] = true;
-				// aanduiding punt
-				canvas.drawCircle(getMeasuredWidth() / 2
-						+ (float) pos_horizontaal[i] * getMeasuredWidth() / 2,
-						getMeasuredHeight() / 2, (float) 20, myPaint);
-			}
+			if (POI[i].isZichtbaarheid())
+				canvas.drawCircle(
+						getMeasuredWidth() / 2
+								+ (float) POI[i].getHorizontale_positie()
+								* getMeasuredWidth() / 2,
+						(float) (getMeasuredHeight() / 2 + POI[i].getVerticale_positie()*getMeasuredHeight() / 2), (float) 20, myPaint);
 		}
+
 		dichtste_punt = -1;
 		for (int i = 0; i < aantal; i++) {
-			if (dichtste_punt == -1 && zichtbaar[i])
+			if (dichtste_punt == -1 && POI[i].isZichtbaarheid())
 				dichtste_punt = i;
-			else if (dichtste_punt != -1 && zichtbaar[i]) {
-				if (Math.abs(pos_horizontaal[dichtste_punt]) > Math
-						.abs(pos_horizontaal[i]))
+			else if (dichtste_punt != -1 && POI[i].isZichtbaarheid()) {
+				if (Math.abs(POI[dichtste_punt].getHorizontale_positie()) > Math
+						.abs(POI[i].getHorizontale_positie()))
 					dichtste_punt = i;
 			}
 		}
 		if (dichtste_punt != -1) {
-			afstand_tot_punt = new float[3];
-			Location.distanceBetween(lat, lng, lat_POI[dichtste_punt], lng_POI[dichtste_punt],
-					afstand_tot_punt);
-			canvas.drawText(naam[dichtste_punt], getMeasuredWidth() / 10,
-					getMeasuredHeight() / 10, myPaint2);
-			canvas.drawText("afstand: "+afstand_tot_punt[0], getMeasuredWidth() / 10,
-					2*getMeasuredHeight() / 10, myPaint2);
+			/*canvas.drawText(naam[dichtste_punt], getMeasuredWidth() / 10,
+					getMeasuredHeight() / 10, myPaint2);*/
+			canvas.drawText("afstand: " + POI[dichtste_punt].getAfstand_marker(),
+					getMeasuredWidth() / 10, 2 * getMeasuredHeight() / 10,
+					myPaint2);
 			canvas.drawCircle(getMeasuredWidth() / 2
-					+ (float) pos_horizontaal[dichtste_punt]
-					* getMeasuredWidth() / 2, getMeasuredHeight() / 2,
+					+ (float) POI[dichtste_punt].getHorizontale_positie()
+					* getMeasuredWidth() / 2, (float) (getMeasuredHeight() / 2 + POI[dichtste_punt].getVerticale_positie()*getMeasuredHeight() / 2),
 					(float) 20, cirkel_select);
 		}
-		
-		  /*canvas.drawText("provider: "+provider, getMeasuredWidth() / 10,
-		  getMeasuredHeight() / 10, myPaint2);*/
-		 
+
+		/*
+		 * canvas.drawText("provider: "+provider, getMeasuredWidth() / 10,
+		 * getMeasuredHeight() / 10, myPaint2);
+		 */
+
 	}
 }
