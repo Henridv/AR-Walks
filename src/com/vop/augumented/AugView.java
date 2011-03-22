@@ -1,19 +1,23 @@
 package com.vop.augumented;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.location.Location;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.vop.tools.DBWrapper;
 
 public class AugView extends View {
 
 	private double lat;
 	private double lng;
 	private double alt;
+	private Marker POI[];
 
 	public double getAlt() {
 		return alt;
@@ -23,27 +27,21 @@ public class AugView extends View {
 		this.alt = alt;
 	}
 
-	private double lat_POI[];
-	private double lng_POI[];
-	private double alt_POI[];
-	private double pos_horizontaal[];
-	private boolean zichtbaar[];
 	private int dichtste_punt;
-	private String provider;
 
-	public void setProvider(String provider) {
-		this.provider = provider;
+	private static boolean first;
+
+	public static void setFirst(boolean first) {
+		AugView.first = first;
 	}
 
 	public String getDichtste_punt() {
 		if (dichtste_punt != -1)
-			return info[dichtste_punt];
+			return POI[dichtste_punt].getInfo();
 		else
 			return "";
 	}
 
-	private String naam[];
-	private String info[];
 	double PI = 4.0 * Math.atan(1.0);
 
 	double angle_of_view_horizontal = 54.4 / 2;
@@ -106,17 +104,19 @@ public class AugView extends View {
 
 	public AugView(Context context) {
 		super(context);
+		first = true;
 
 	}
 
 	public AugView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		first = true;
 
 	}
 
 	public AugView(Context context, AttributeSet ats, int defaultStyle) {
 		super(context, ats, defaultStyle);
-
+		first = true;
 	}
 
 	private float bearing;
@@ -150,23 +150,15 @@ public class AugView extends View {
 		cirkel_select.setStyle(Paint.Style.STROKE);
 		cirkel_select.setStrokeWidth(4);
 
-		// aantal punten worden ingegeven
-		aantal = 9;
-		Marker POI[] = new Marker[aantal];
-		//Marker("titel","info",long,lat,alt, cur_lat,cur_lng,cur_alt,roll)
-		POI[0] = new Marker("hello","hello",3.722281028086385,51.04615330799309, alt + 4, lat, lng, alt, roll);
-		POI[1] = new Marker("hello","hello",3.722314331480408,51.04615326177683, alt - 10, lat, lng, alt, roll);
-		POI[2] = new Marker("hello","hello",3.722354263472321,51.04615320666444, alt + 4, lat, lng, alt, roll);
-		POI[3] = new Marker("hello","hello",3.722420739099623,51.04615311457567, alt - 10, lat, lng, alt, roll);
-		POI[4] = new Marker("hello","hello",3.722493750467275,51.04615301342314, alt + 4, lat, lng, alt, roll);
-		POI[5] = new Marker("hello","hello",3.722520243787253,51.04615706501512, alt - 10, lat, lng, alt, roll);
-		POI[6] = new Marker("hello","hello",3.722540124390397,51.0461570364843, alt + 4, lat, lng, alt, roll);
-		POI[7] = new Marker("hello","hello",3.722579806879691,51.04616515131642, alt - 10, lat, lng, alt, roll);
-		POI[8] = new Marker("hello","hello",3.722619508791369,51.04616509092327, alt + 4, lat, lng, alt, roll);
-		
-		
+		if (first) {
+			construeer();
+			first = false;
+		} else {
+			for (int i = 0; i < POI.length; i++) {
+				POI[i].bereken_zichtbaarheid(lat, lng, alt, roll);
+			}
 
-
+		}
 		RectF rectangle = new RectF(getMeasuredWidth() / 70,
 				getMeasuredHeight() / 70, 69 * getMeasuredWidth() / 70,
 				2 * getMeasuredHeight() / 10);
@@ -179,7 +171,10 @@ public class AugView extends View {
 						getMeasuredWidth() / 2
 								+ (float) POI[i].getHorizontale_positie()
 								* getMeasuredWidth() / 2,
-						(float) (getMeasuredHeight() / 2 + POI[i].getVerticale_positie()*getMeasuredHeight() / 2), (float) 20, myPaint);
+						(float) (getMeasuredHeight() / 2 + POI[i]
+								.getVerticale_positie()
+								* getMeasuredHeight()
+								/ 2), (float) 20, myPaint);
 		}
 
 		dichtste_punt = -1;
@@ -193,14 +188,22 @@ public class AugView extends View {
 			}
 		}
 		if (dichtste_punt != -1) {
-			/*canvas.drawText(naam[dichtste_punt], getMeasuredWidth() / 10,
-					getMeasuredHeight() / 10, myPaint2);*/
-			canvas.drawText("afstand: " + POI[dichtste_punt].getAfstand_marker(),
+
+			canvas.drawText(POI[dichtste_punt].getTitel(),
+					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
+
+			canvas.drawText(
+					"afstand: " + POI[dichtste_punt].getAfstand_marker(),
 					getMeasuredWidth() / 10, 2 * getMeasuredHeight() / 10,
 					myPaint2);
-			canvas.drawCircle(getMeasuredWidth() / 2
-					+ (float) POI[dichtste_punt].getHorizontale_positie()
-					* getMeasuredWidth() / 2, (float) (getMeasuredHeight() / 2 + POI[dichtste_punt].getVerticale_positie()*getMeasuredHeight() / 2),
+			canvas.drawCircle(
+					getMeasuredWidth()
+							/ 2
+							+ (float) POI[dichtste_punt]
+									.getHorizontale_positie()
+							* getMeasuredWidth() / 2,
+					(float) (getMeasuredHeight() / 2 + POI[dichtste_punt]
+							.getVerticale_positie() * getMeasuredHeight() / 2),
 					(float) 20, cirkel_select);
 		}
 
@@ -209,5 +212,17 @@ public class AugView extends View {
 		 * getMeasuredHeight() / 10, myPaint2);
 		 */
 
+	}
+
+	public void construeer() {
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+		aantal = loc.size();
+		POI = new Marker[aantal];
+		int j = 0;
+		for (com.vop.tools.data.Location l : loc) {
+			POI[j] = new Marker(l.getName(), l.getDescription(),
+					l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, roll);
+			j++;
+		}
 	}
 }

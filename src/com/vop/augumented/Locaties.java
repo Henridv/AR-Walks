@@ -88,6 +88,7 @@ public class Locaties extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Marker.setAfstand(1000000);
 		super.onCreate(savedInstanceState);
 
 		// Hide the window title.
@@ -99,9 +100,6 @@ public class Locaties extends Activity {
 
 		mPreview = new Preview(this);
 		compassView = new AugView(getApplicationContext());
-
-		MenuItem item = (MenuItem) findViewById(R.id.m_500);
-		Marker.setAfstand(100000);
 
 		// werkt niet
 		// if (item.isChecked()) item.setChecked(true);
@@ -124,7 +122,6 @@ public class Locaties extends Activity {
 		criteria.setCostAllowed(true);
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
 		String provider = locationManager.getBestProvider(criteria, true);
-		compassView.setProvider(provider);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 2, 10,
@@ -135,6 +132,7 @@ public class Locaties extends Activity {
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			updateWithNewLocation(location);
+			AugView.setFirst(true);
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -214,7 +212,6 @@ public class Locaties extends Activity {
 		case R.id.kaart:
 			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
 	    	Locaties.this.startActivity(myIntent);
-	    	
 	    	finish();
 			return true;
 		case R.id.km_1:
