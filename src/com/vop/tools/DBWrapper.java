@@ -61,7 +61,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
@@ -79,7 +79,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
 	
@@ -121,6 +121,8 @@ public class DBWrapper {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		
+		postValues.add(new BasicNameValuePair("action", "getloc"));
 
 		ArrayList<Location> l = new ArrayList<Location>();
 
@@ -135,10 +137,11 @@ public class DBWrapper {
 									json_data.getDouble("lat"),
 									json_data.getDouble("lng"),
 									json_data.getDouble("alt"),
-									json_data.getString("date")));
+									json_data.getString("date"),
+									json_data.getInt("pers_id")));
 			}
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 		return l;
 	}
@@ -148,7 +151,27 @@ public class DBWrapper {
 	 * @param l
 	 */
 	public static void save(Location l) {
-		//TODO: save location
+		String page = "locations.php";
+		
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		if (l.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(l.getId())));
+		postValues.add(new BasicNameValuePair("name", l.getName()));
+		postValues.add(new BasicNameValuePair("description", l.getDescription()));
+		postValues.add(new BasicNameValuePair("lat", Double.toString(l.getLatitute())));
+		postValues.add(new BasicNameValuePair("lng", Double.toString(l.getLongitude())));
+		postValues.add(new BasicNameValuePair("alt", Double.toString(l.getAltitude())));
+		postValues.add(new BasicNameValuePair("date", l.getDate()));
+		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(l.getPersId())));
+		
+		postValues.add(new BasicNameValuePair("action", "addloc"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(log_tag, "Error parsing data " + e.toString());
+		}
 	}
 	
 	/**
@@ -172,7 +195,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
 	
@@ -203,7 +226,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
+			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
 	

@@ -30,11 +30,6 @@ switch($action) {
 					password='$password'
 				WHERE id='$id'";
 		} else {
-			$name = $_POST['name'];
-			$email = $_POST['email'];
-			$phone = $_POST['phone'];
-			$password = $_POST['password'];
-			
 			$query = "
 				INSERT INTO persons
 				(name, email, phone, password)

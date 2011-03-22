@@ -8,6 +8,7 @@ public class Location {
 	private Double longitude;
 	private Double altitude;
 	private String date;
+	private Integer pers_id;
 
 	/**
 	 * @param id
@@ -17,9 +18,11 @@ public class Location {
 	 * @param longitude
 	 * @param altitude
 	 * @param date
+	 * @param persId
 	 */
 	public Location(Integer id, String name, String description,
-			Double latitute, Double longitude, Double altitude, String date) {
+			Double latitute, Double longitude, Double altitude, String date,
+			Integer persId) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,6 +31,7 @@ public class Location {
 		this.longitude = longitude;
 		this.altitude = altitude;
 		this.date = date;
+		pers_id = persId;
 	}
 
 	/**
@@ -37,9 +41,10 @@ public class Location {
 	 * @param longitude
 	 * @param altitude
 	 * @param date
+	 * @param persId
 	 */
 	public Location(String name, String description, Double latitute,
-			Double longitude, Double altitude, String date) {
+			Double longitude, Double altitude, String date, Integer persId) {
 		super();
 		this.id = null;
 		this.name = name;
@@ -48,6 +53,7 @@ public class Location {
 		this.longitude = longitude;
 		this.altitude = altitude;
 		this.date = date;
+		pers_id = persId;
 	}
 
 	public Double getAltitude() {
@@ -78,6 +84,10 @@ public class Location {
 		return name;
 	}
 
+	public Integer getPersId() {
+		return pers_id;
+	}
+
 	public void setAltitude(Double altitude) {
 		this.altitude = altitude;
 	}
@@ -100,5 +110,9 @@ public class Location {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setPersId(Integer persId) {
+		pers_id = persId;
 	}
 }
