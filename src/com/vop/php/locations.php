@@ -40,7 +40,7 @@ switch ($action) {
 				INSERT INTO locations
 				(name, description, pers_id, date, position)
 				VALUES
-				('$name','$description','$pers_id','$date',GeomFromText('POINT($lat $lng $alt)', 4326))";
+				('$name','$description','$pers_id',NOW(),GeomFromText('POINT($lat $lng $alt)', 4326))";
 		}
 		break;
 		
