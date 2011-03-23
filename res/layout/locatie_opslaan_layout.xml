@@ -19,7 +19,7 @@
 		android:layout_x="0px" android:layout_y="142px">
 	</EditText>
 	<Button android:id="@+id/opslaan" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="opslaan"
-		android:layout_x="120px" android:onClick="go_klik" android:layout_y="322px">
+		android:layout_height="wrap_content" android:text="opslaan" android:onClick="go_klik"
+		android:layout_x="210px" android:layout_y="202px">
 	</Button>
 </AbsoluteLayout>

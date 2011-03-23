@@ -25,16 +25,7 @@ public class Locatie_opslaan extends FullscreenActivity {
 		/*Location loc = Location(Integer id, String name, String description,
 				Double latitute, Double longitude, Double altitude, String date,
 				Integer persId)*/
-		EditText titel_edit = (EditText) findViewById(R.id.titel);
-		String titel = titel_edit.getText().toString();
-		EditText info_edit = (EditText) findViewById(R.id.info);
-		String info = info_edit.getText().toString();
-		VopApplication app = (VopApplication) getApplicationContext();
-		Integer id = Integer.parseInt(app.getState().get("userid"));
-		double lng = Double.parseDouble(app.getState().get("long"));
-		double lat = Double.parseDouble(app.getState().get("lat"));
-		double alt = Double.parseDouble(app.getState().get("alt"));
-		loc = new Location(titel, info,lat, lng, alt, "default",id);		
+
 	}
 
 	// menu openen
@@ -45,8 +36,17 @@ public class Locatie_opslaan extends FullscreenActivity {
 		return true;
 	}
 	public void go_klik(View v) {
+		EditText titel_edit = (EditText) findViewById(R.id.titel);
+		String titel = titel_edit.getText().toString();
+		EditText info_edit = (EditText) findViewById(R.id.info);
+		String info = info_edit.getText().toString();
+		VopApplication app = (VopApplication) getApplicationContext();
+		Integer id = Integer.parseInt(app.getState().get("userid"));
+		double lng = Double.parseDouble(app.getState().get("long"));
+		double lat = Double.parseDouble(app.getState().get("lat"));
+		double alt = Double.parseDouble(app.getState().get("alt"));
+		loc = new Location(titel, info,lat, lng, alt, "default",id);		
 		DBWrapper.save(loc);
-		
 		Intent myIntent = new Intent(Locatie_opslaan.this, Locaties.class);
 		Locatie_opslaan.this.startActivity(myIntent);
 	}
