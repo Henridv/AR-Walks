@@ -70,6 +70,7 @@ public class Hoofdmenu extends FullscreenActivity {
 	public void uitloggen_klik(View v) {
 		VopApplication app = (VopApplication) getApplicationContext();
 		app.putState("login", "false");
+		app.putState("userid", null);
 		moveTaskToBack(true);
 
 	}

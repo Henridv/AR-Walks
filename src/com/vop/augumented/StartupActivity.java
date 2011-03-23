@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Person;
 
 public class StartupActivity extends FullscreenActivity {
 
@@ -20,13 +23,19 @@ public class StartupActivity extends FullscreenActivity {
 
 	// go-klik
 	public void go_klik(View v) {
-		TextView tv = (TextView) findViewById(R.id.email_tekst);
-		VopApplication app = (VopApplication) getApplicationContext();
+		EditText emailbox = (EditText)findViewById(R.id.invul_box);
+		VopApplication app = (VopApplication)getApplicationContext();
 		app.putState("login", "true");
-		app.putState("email", tv.getText().toString());
-
-		Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
-		StartupActivity.this.startActivity(myIntent);
+		
+		Person p = DBWrapper.getProfile(emailbox.getText().toString());
+		
+		if (p != null) {
+			app.putState("userid", p.getId().toString());
+	    	Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
+	    	StartupActivity.this.startActivity(myIntent);
+		} else {
+			Toast.makeText(getApplicationContext(), "emailaddress not valid", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	// menu openen
