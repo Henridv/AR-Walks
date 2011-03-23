@@ -52,7 +52,8 @@ public class DBWrapper {
 	public static ArrayList<Person> getFriends(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues
+				.add(new BasicNameValuePair("id", Integer.toString(personId)));
 		postValues.add(new BasicNameValuePair("action", "friends"));
 
 		ArrayList<Person> p = new ArrayList<Person>();
@@ -68,11 +69,13 @@ public class DBWrapper {
 
 	public static void addFriend(Person p1, Person p2) {
 		String page = "persons.php";
-		
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id1", Integer.toString(p1.getId())));
-		postValues.add(new BasicNameValuePair("id2", Integer.toString(p2.getId())));
-		
+		postValues.add(new BasicNameValuePair("id1", Integer.toString(p1
+				.getId())));
+		postValues.add(new BasicNameValuePair("id2", Integer.toString(p2
+				.getId())));
+
 		postValues.add(new BasicNameValuePair("action", "addfriend"));
 
 		// Post data
@@ -82,7 +85,7 @@ public class DBWrapper {
 			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Get a single profile
 	 * 
@@ -101,10 +104,11 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				p = new Person(json_data.getInt("id"), json_data
-						.getString("name"), json_data.getString("phone"),
-						json_data.getString("password"), json_data
-								.getString("email"));
+				p = new Person(json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("phone"),
+						json_data.getString("password"),
+						json_data.getString("email"));
 			}
 		} catch (JSONException e) {
 			Log.e(log_tag, "Error parsing data " + e.toString());
@@ -114,14 +118,16 @@ public class DBWrapper {
 
 	/**
 	 * Get a list of locations from a person and his friends
+	 * 
 	 * @param personId
 	 * @return
 	 */
 	public static ArrayList<Location> getLocations(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
-		
+		postValues
+				.add(new BasicNameValuePair("id", Integer.toString(personId)));
+
 		postValues.add(new BasicNameValuePair("action", "getloc"));
 
 		ArrayList<Location> l = new ArrayList<Location>();
@@ -131,39 +137,44 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(	json_data.getInt("id"),
-									json_data.getString("name"),
-									json_data.getString("description"),
-									json_data.getDouble("lat"),
-									json_data.getDouble("lng"),
-									json_data.getDouble("alt"),
-									json_data.getString("date"),
-									json_data.getInt("pers_id")));
+				l.add(new Location(json_data.getInt("id"), json_data
+						.getString("name"), json_data.getString("description"),
+						json_data.getDouble("lat"), json_data.getDouble("lng"),
+						json_data.getDouble("alt"),
+						json_data.getString("date"), json_data
+								.getInt("pers_id")));
 			}
 		} catch (JSONException e) {
 			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 		return l;
 	}
-	
+
 	/**
 	 * Save a location
+	 * 
 	 * @param l
 	 */
 	public static void save(Location l) {
 		String page = "locations.php";
-		
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (l.getId() != null)
-			postValues.add(new BasicNameValuePair("id", Integer.toString(l.getId())));
+			postValues.add(new BasicNameValuePair("id", Integer.toString(l
+					.getId())));
 		postValues.add(new BasicNameValuePair("name", l.getName()));
-		postValues.add(new BasicNameValuePair("description", l.getDescription()));
-		postValues.add(new BasicNameValuePair("lat", Double.toString(l.getLatitute())));
-		postValues.add(new BasicNameValuePair("lng", Double.toString(l.getLongitude())));
-		postValues.add(new BasicNameValuePair("alt", Double.toString(l.getAltitude())));
+		postValues
+				.add(new BasicNameValuePair("description", l.getDescription()));
+		postValues.add(new BasicNameValuePair("lat", Double.toString(l
+				.getLatitute())));
+		postValues.add(new BasicNameValuePair("lng", Double.toString(l
+				.getLongitude())));
+		postValues.add(new BasicNameValuePair("alt", Double.toString(l
+				.getAltitude())));
 		postValues.add(new BasicNameValuePair("date", l.getDate()));
-		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(l.getPersId())));
-		
+		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(l
+				.getPersId())));
+
 		postValues.add(new BasicNameValuePair("action", "addloc"));
 
 		// Post data
@@ -173,22 +184,24 @@ public class DBWrapper {
 			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Save a person
+	 * 
 	 * @param p
 	 */
 	public static void save(Person p) {
 		String page = "persons.php";
-		
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (p.getId() != null)
-			postValues.add(new BasicNameValuePair("id", Integer.toString(p.getId())));
+			postValues.add(new BasicNameValuePair("id", Integer.toString(p
+					.getId())));
 		postValues.add(new BasicNameValuePair("name", p.getName()));
 		postValues.add(new BasicNameValuePair("phone", p.getPhone()));
 		postValues.add(new BasicNameValuePair("password", p.getPassword()));
 		postValues.add(new BasicNameValuePair("email", p.getEmail()));
-		
+
 		postValues.add(new BasicNameValuePair("action", "adduser"));
 
 		// Post data
@@ -198,28 +211,31 @@ public class DBWrapper {
 			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Delete a location
+	 * 
 	 * @param l
 	 */
 	public static void delete(Location l) {
-		//TODO: delete location
+		// TODO: delete location
 	}
 
 	/**
 	 * Delete a person
+	 * 
 	 * @param p
 	 */
 	public static void delete(Person p) {
 		String page = "persons.php";
-		
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (p.getId() != null)
-			postValues.add(new BasicNameValuePair("id", Integer.toString(p.getId())));
+			postValues.add(new BasicNameValuePair("id", Integer.toString(p
+					.getId())));
 		else
 			return;
-		
+
 		postValues.add(new BasicNameValuePair("action", "deluser"));
 
 		// Post data
@@ -229,7 +245,7 @@ public class DBWrapper {
 			Log.e(log_tag, "Error parsing data " + e.toString());
 		}
 	}
-	
+
 	/**
 	 * Perform actual HTTP POST
 	 * 
@@ -240,8 +256,8 @@ public class DBWrapper {
 	 * @return JSON array
 	 * @throws JSONException
 	 */
-	private static JSONArray doPOST(String page, ArrayList<NameValuePair> postValues)
-			throws JSONException {
+	private static JSONArray doPOST(String page,
+			ArrayList<NameValuePair> postValues) throws JSONException {
 		String result = "";
 		InputStream is = null;
 

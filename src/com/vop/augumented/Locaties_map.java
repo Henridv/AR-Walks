@@ -88,7 +88,7 @@ public class Locaties_map extends MapActivity {
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
 				locationListener);
-		
+
 	}
 
 	private void updateWithNewLocation(Location location) {
@@ -126,8 +126,10 @@ public class Locaties_map extends MapActivity {
 		} else
 			latLong = "Geen current location";
 
-		/*myLocationText.setText("De huidige provider is :" + provider
-				+ "\nDe huidige plaats is:\n" + latLong + "\n" + adresStr);*/
+		/*
+		 * myLocationText.setText("De huidige provider is :" + provider +
+		 * "\nDe huidige plaats is:\n" + latLong + "\n" + adresStr);
+		 */
 	}
 
 	@Override
@@ -143,20 +145,21 @@ public class Locaties_map extends MapActivity {
 		mapView.getOverlays().add(myLocationOverlay);
 		mapView.getOverlays().add(mapje);
 		myLocationOverlay.enableCompass();
-		//myLocationOverlay.enableMyLocation();
+		// myLocationOverlay.enableMyLocation();
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
 				mapController.animateTo(myLocationOverlay.getMyLocation());
 			}
 		});
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.layout.locaties_map_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -164,7 +167,7 @@ public class Locaties_map extends MapActivity {
 
 		case R.id.augmentedView:
 			Intent myIntent = new Intent(Locaties_map.this, Locaties.class);
-	    	Locaties_map.this.startActivity(myIntent);
+			Locaties_map.this.startActivity(myIntent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

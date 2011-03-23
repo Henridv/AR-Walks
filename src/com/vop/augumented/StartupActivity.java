@@ -17,22 +17,24 @@ public class StartupActivity extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startupactivity_layout);
 	}
-	//go-klik
+
+	// go-klik
 	public void go_klik(View v) {
-		TextView tv = (TextView)findViewById(R.id.email_tekst);
-		VopApplication app = (VopApplication)getApplicationContext();
+		TextView tv = (TextView) findViewById(R.id.email_tekst);
+		VopApplication app = (VopApplication) getApplicationContext();
 		app.putState("login", "true");
 		app.putState("email", tv.getText().toString());
-		
-    	Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
-    	StartupActivity.this.startActivity(myIntent);
+
+		Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
+		StartupActivity.this.startActivity(myIntent);
 	}
-	//menu openen
+
+	// menu openen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.layout.hoofdmenu_menu, menu);
-	    return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.layout.hoofdmenu_menu, menu);
+		return true;
 	}
 
 }

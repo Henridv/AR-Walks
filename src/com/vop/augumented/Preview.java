@@ -11,7 +11,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-
 class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	SurfaceHolder mHolder;
 	Camera mCamera;
@@ -92,7 +91,8 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 		List<Size> sizes = parameters.getSupportedPreviewSizes();
 		Size optimalSize_horizontaal = getOptimalPreviewSize(sizes, w, h);
-		parameters.setPreviewSize(optimalSize_horizontaal.width, optimalSize_horizontaal.height);	
+		parameters.setPreviewSize(optimalSize_horizontaal.width,
+				optimalSize_horizontaal.height);
 		mCamera.setParameters(parameters);
 		mCamera.startPreview();
 	}

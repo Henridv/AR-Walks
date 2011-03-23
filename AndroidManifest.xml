@@ -27,5 +27,6 @@
         <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Locaties_map"></activity>
         <uses-library android:name="com.google.android.maps"/>
+        <activity android:name="Locatie_opslaan"></activity>
     </application>
 </manifest>

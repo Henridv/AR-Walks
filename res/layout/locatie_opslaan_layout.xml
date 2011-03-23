@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@+id/widget0"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/widget27" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="titel"
+		android:layout_x="20px" android:layout_y="12px">
+	</TextView>
+	<TextView android:id="@+id/widget28" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="info"
+		android:layout_x="20px" android:layout_y="122px">
+	</TextView>
+	<EditText android:id="@+id/titel" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textSize="18sp"
+		android:layout_x="0px" android:layout_y="32px">
+	</EditText>
+	<EditText android:id="@+id/info" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textSize="18sp"
+		android:layout_x="0px" android:layout_y="142px">
+	</EditText>
+	<Button android:id="@+id/opslaan" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="opslaan"
+		android:layout_x="120px" android:onClick="go_klik" android:layout_y="322px">
+	</Button>
+</AbsoluteLayout>

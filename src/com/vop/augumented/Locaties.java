@@ -18,10 +18,15 @@ package com.vop.augumented;
 
 //package com.example.android.apis.graphics;
 
+import com.vop.tools.VopApplication;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.SensorListener;
@@ -111,7 +116,6 @@ public class Locaties extends Activity {
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		updateOrientation(0, 0, 0);
 
-		
 		String context = Context.LOCATION_SERVICE;
 		locationManager = (LocationManager) getSystemService(context);
 
@@ -126,12 +130,20 @@ public class Locaties extends Activity {
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 2, 10,
 				locationListener);
+		VopApplication app = (VopApplication) getApplicationContext();
+		app.putState("lat", Double.toString(location.getLatitude()));
+		app.putState("long", Double.toString(location.getLongitude()));
+		app.putState("alt", Double.toString(location.getAltitude()));
 
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			updateWithNewLocation(location);
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.putState("lat", Double.toString(location.getLatitude()));
+			app.putState("long", Double.toString(location.getLongitude()));
+			app.putState("alt", Double.toString(location.getAltitude()));
 			AugView.setFirst(true);
 		}
 
@@ -211,8 +223,8 @@ public class Locaties extends Activity {
 
 		case R.id.kaart:
 			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
-	    	Locaties.this.startActivity(myIntent);
-	    	finish();
+			Locaties.this.startActivity(myIntent);
+			finish();
 			return true;
 		case R.id.km_1:
 			if (item.isChecked())
@@ -248,6 +260,10 @@ public class Locaties extends Activity {
 			else
 				item.setChecked(false);
 			Marker.setAfstand(500);
+			return true;
+		case R.id.opslaan:
+			myIntent = new Intent(Locaties.this, Locatie_opslaan.class);
+			Locaties.this.startActivity(myIntent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

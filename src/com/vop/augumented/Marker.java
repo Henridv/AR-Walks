@@ -38,6 +38,7 @@ public class Marker {
 	private double horizontale_positie;
 	private double PI = 4.0 * Math.atan(1.0);
 	private String titel;
+
 	public String getTitel() {
 		return titel;
 	}
@@ -88,8 +89,9 @@ public class Marker {
 		this.alt = alt;
 	}
 
-	public Marker(String naam, String com,double longitude, double latitude, double altitude,
-			double lat_loc, double lng_loc, double alt_loc, double roll) {
+	public Marker(String naam, String com, double longitude, double latitude,
+			double altitude, double lat_loc, double lng_loc, double alt_loc,
+			double roll) {
 		titel = naam;
 		info = com;
 		lat = latitude;
