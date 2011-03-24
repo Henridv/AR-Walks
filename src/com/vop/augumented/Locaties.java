@@ -130,10 +130,12 @@ public class Locaties extends Activity {
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 2, 10,
 				locationListener);
-		VopApplication app = (VopApplication) getApplicationContext();
-		app.putState("lat", Double.toString(location.getLatitude()));
-		app.putState("long", Double.toString(location.getLongitude()));
-		app.putState("alt", Double.toString(location.getAltitude()));
+		if (location != null) {
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.putState("lat", Double.toString(location.getLatitude()));
+			app.putState("long", Double.toString(location.getLongitude()));
+			app.putState("alt", Double.toString(location.getAltitude()));
+		}
 
 	}
 
@@ -144,7 +146,8 @@ public class Locaties extends Activity {
 			app.putState("lat", Double.toString(location.getLatitude()));
 			app.putState("long", Double.toString(location.getLongitude()));
 			app.putState("alt", Double.toString(location.getAltitude()));
-			AugView.setFirst(true);
+			app = (VopApplication) getApplicationContext();
+			app.putState("first", "true");
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -160,9 +163,10 @@ public class Locaties extends Activity {
 
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-			compassView.setLng(location.getLongitude());
-			compassView.setLat(location.getLatitude());
-			compassView.setAlt(location.getAltitude());
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.putState("lat", Double.toString(location.getLatitude()));
+			app.putState("long", Double.toString(location.getLongitude()));
+			app.putState("alt", Double.toString(location.getAltitude()));
 			compassView.invalidate();
 		}
 	}

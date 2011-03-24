@@ -161,22 +161,8 @@ public class Marker {
 							/ (angle_of_view_horizontal);
 			}
 			if (horizontale_positie != -1) {
-				boolean boven;
-				double hoogte_verschil = (alt_loc - alt);
-				if (hoogte_verschil < 0)
-					boven = true;
-				else
-					boven = false;
-				hoogte_verschil = Math.abs(hoogte_verschil);
-				double hoek_vert = Math.atan(hoogte_verschil
-						/ afstand_tot_punt[0])
-						/ (2 * PI) * 360;
-				if (hoek_vert < angle_of_view_vertical) {
-					verticale_positie = hoek_vert / angle_of_view_vertical;
-					if (boven)
-						verticale_positie *= -1;
-					zichtbaarheid = true;
-				}
+				zichtbaarheid = true;
+				verticale_positie = 0;
 			}
 		}
 	}

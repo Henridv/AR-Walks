@@ -11,29 +11,20 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.vop.tools.DBWrapper;
+import com.vop.tools.VopApplication;
 
 public class AugView extends View {
 
+	private Marker POI[];
+	private Context kontekst;
 	private double lat;
 	private double lng;
 	private double alt;
-	private Marker POI[];
 
-	public double getAlt() {
-		return alt;
-	}
-
-	public void setAlt(double alt) {
-		this.alt = alt;
-	}
 
 	private int dichtste_punt;
 
-	private static boolean first;
 
-	public static void setFirst(boolean first) {
-		AugView.first = first;
-	}
 
 	public String getDichtste_punt() {
 		if (dichtste_punt != -1)
@@ -62,22 +53,6 @@ public class AugView extends View {
 		this.afstand = afstand;
 	}
 
-	public double getLat() {
-		return lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public void setLat(double latitude) {
-		lat = latitude;
-	}
-
-	public void setLng(double longitude) {
-		lng = longitude;
-	}
-
 	public float getRoll() {
 		return roll;
 	}
@@ -104,19 +79,25 @@ public class AugView extends View {
 
 	public AugView(Context context) {
 		super(context);
-		first = true;
+		VopApplication app = (VopApplication) context;
+		app.putState("first",Boolean.toString(true));
+		kontekst = context;
 
 	}
 
 	public AugView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		first = true;
+		VopApplication app = (VopApplication) context;
+		app.putState("first",Boolean.toString(true));
+		kontekst = context;
 
 	}
 
 	public AugView(Context context, AttributeSet ats, int defaultStyle) {
 		super(context, ats, defaultStyle);
-		first = true;
+		VopApplication app = (VopApplication) context;
+		app.putState("first",Boolean.toString(true));
+		kontekst = context;
 	}
 
 	private float bearing;
@@ -132,6 +113,15 @@ public class AugView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// instellingen van de paint die gebruikt wordt voor de cirkels en tekst
+		VopApplication app = (VopApplication) kontekst;
+		lng = Double.parseDouble(app.getState().get("long"));
+		lat = Double.parseDouble(app.getState().get("lat"));
+		alt = Double.parseDouble(app.getState().get("alt"));
+		
+		//lng = 3.726897;
+		//lat = 51.038662;
+		//alt = 40;
+		
 		Paint myPaint = new Paint();
 		myPaint.setStrokeWidth(4);
 		myPaint.setColor(Color.WHITE);
@@ -150,9 +140,10 @@ public class AugView extends View {
 		cirkel_select.setStyle(Paint.Style.STROKE);
 		cirkel_select.setStrokeWidth(4);
 
+		Boolean first = Boolean.parseBoolean((app.getState().get("first")));
 		if (first) {
 			construeer();
-			first = false;
+			app.putState("first", "false");
 		} else {
 			for (int i = 0; i < POI.length; i++) {
 				POI[i].bereken_zichtbaarheid(lat, lng, alt, roll);
@@ -222,7 +213,15 @@ public class AugView extends View {
 		for (com.vop.tools.data.Location l : loc) {
 			POI[j] = new Marker(l.getName(), l.getDescription(),
 					l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, roll);
+			//POI[j] = new Marker("overpoortresto", "resto",
+					//3.726259, 51.039326, alt, lat, lng, alt, roll);
 			j++;
 		}
 	}
+	/*public void construeer(){
+		POI = new Marker[1];
+		POI[0] = new Marker("overpoortresto", "resto",
+				3.726259, 51.039326, alt, lat, lng, alt, roll);
+	}*/
+	
 }
