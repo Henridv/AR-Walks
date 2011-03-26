@@ -18,20 +18,20 @@ package com.vop.augumented;
 
 //package com.example.android.apis.graphics;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import com.vop.tools.VopApplication;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -48,9 +48,6 @@ import android.widget.Toast;
 
 public class Locaties extends Activity {
 	private Preview mPreview;
-	float pitch = 0;
-	float roll = 0;
-	float heading = 0;
 	AugView compassView;
 	SensorManager sensorManager;
 	LocationManager locationManager;
@@ -136,18 +133,14 @@ public class Locaties extends Activity {
 			app.putState("long", Double.toString(location.getLongitude()));
 			app.putState("alt", Double.toString(location.getAltitude()));
 		}
+		VopApplication app = (VopApplication) getApplicationContext();
+		app.putState("first", "true");
 
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			updateWithNewLocation(location);
-			VopApplication app = (VopApplication) getApplicationContext();
-			app.putState("lat", Double.toString(location.getLatitude()));
-			app.putState("long", Double.toString(location.getLongitude()));
-			app.putState("alt", Double.toString(location.getAltitude()));
-			app = (VopApplication) getApplicationContext();
-			app.putState("first", "true");
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -167,18 +160,32 @@ public class Locaties extends Activity {
 			app.putState("lat", Double.toString(location.getLatitude()));
 			app.putState("long", Double.toString(location.getLongitude()));
 			app.putState("alt", Double.toString(location.getAltitude()));
+			Geocoder gc = new Geocoder(getApplicationContext(),
+					Locale.getDefault());
+			try {
+				List<Address> addresses = gc.getFromLocation(
+						location.getLatitude(), location.getLongitude(), 1);
+				Address adres = addresses.get(0);
+				if (adres.getThoroughfare() != null)
+					app.putState("adres", adres.getThoroughfare());
+				else
+					app.putState("adres", "null");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Toast.makeText(getApplicationContext(), "locatie geupdated",
+					Toast.LENGTH_SHORT).show();
 			compassView.invalidate();
 		}
 	}
 
 	private void updateOrientation(float _roll, float _pitch, float _heading) {
-		heading = _heading;
-		pitch = _pitch;
-		roll = _roll;
 		if (compassView != null) {
-			compassView.setHeading(heading);
-			compassView.setPitch(pitch);
-			compassView.setRoll(roll);
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.putState("heading", Double.toString(_heading));
+			app.putState("roll", Double.toString(_roll));
+			app.putState("pitch", Double.toString(_pitch));
 			compassView.invalidate();
 		}
 	}

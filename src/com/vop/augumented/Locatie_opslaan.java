@@ -22,10 +22,6 @@ public class Locatie_opslaan extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locatie_opslaan_layout);
-		/*Location loc = Location(Integer id, String name, String description,
-				Double latitute, Double longitude, Double altitude, String date,
-				Integer persId)*/
-
 	}
 
 	// menu openen
@@ -47,7 +43,7 @@ public class Locatie_opslaan extends FullscreenActivity {
 		double alt = Double.parseDouble(app.getState().get("alt"));
 		loc = new Location(titel, info,lat, lng, alt, "default",id);		
 		DBWrapper.save(loc);
-		Intent myIntent = new Intent(Locatie_opslaan.this, Locaties.class);
-		Locatie_opslaan.this.startActivity(myIntent);
+		app.putState("first", "true");
+		finish();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -16,15 +17,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
+import com.vop.tools.VopApplication;
 
 public class Locaties_map extends MapActivity {
 	LocationManager locationManager;
@@ -35,6 +37,8 @@ public class Locaties_map extends MapActivity {
 	int minDistance = 0;
 	int minTime = 1000;
 	MyLocationOverlay myLocationOverlay;
+	List<Overlay> mapOverlays;
+	punten_overlay itemizedoverlay;
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
@@ -67,6 +71,10 @@ public class Locaties_map extends MapActivity {
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
 		this.mapView.displayZoomControls(true);
+		
+		mapOverlays = mapView.getOverlays();
+		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
+		itemizedoverlay = new punten_overlay(drawable,this);
 
 		initMap();
 
@@ -88,7 +96,6 @@ public class Locaties_map extends MapActivity {
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
 				locationListener);
-
 	}
 
 	private void updateWithNewLocation(Location location) {
@@ -125,11 +132,6 @@ public class Locaties_map extends MapActivity {
 
 		} else
 			latLong = "Geen current location";
-
-		/*
-		 * myLocationText.setText("De huidige provider is :" + provider +
-		 * "\nDe huidige plaats is:\n" + latLong + "\n" + adresStr);
-		 */
 	}
 
 	@Override
@@ -139,18 +141,22 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void initMap() {
-		MapOverlay mapje = new MapOverlay(getApplicationContext());
-
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
-		mapView.getOverlays().add(mapje);
 		myLocationOverlay.enableCompass();
-		// myLocationOverlay.enableMyLocation();
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
 				mapController.animateTo(myLocationOverlay.getMyLocation());
 			}
 		});
+		VopApplication app = (VopApplication) getApplicationContext();
+		Marker POI[] = app.getPunten();
+		for(int i=0;i<POI.length;i++){
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() *1E6), (int) (POI[i].getLng() *1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(), POI[i].getTitel());
+			itemizedoverlay.addOverlay(overlayitem);
+		}
+		mapOverlays.add(itemizedoverlay);
 	}
 
 	@Override
@@ -167,6 +173,10 @@ public class Locaties_map extends MapActivity {
 
 		case R.id.augmentedView:
 			Intent myIntent = new Intent(Locaties_map.this, Locaties.class);
+			Locaties_map.this.startActivity(myIntent);
+			return true;
+		case R.id.opslaan:
+			myIntent = new Intent(Locaties_map.this, Locatie_opslaan.class);
 			Locaties_map.this.startActivity(myIntent);
 			return true;
 		default:

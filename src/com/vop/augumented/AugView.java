@@ -14,22 +14,16 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 
 public class AugView extends View {
-
-	private Marker POI[];
 	private Context kontekst;
-	private double lat;
-	private double lng;
-	private double alt;
-
 
 	private int dichtste_punt;
 
-
-
 	public String getDichtste_punt() {
-		if (dichtste_punt != -1)
+		if (dichtste_punt != -1) {
+			VopApplication app = (VopApplication) kontekst;
+			Marker POI[] = app.getPunten();
 			return POI[dichtste_punt].getInfo();
-		else
+		} else
 			return "";
 	}
 
@@ -38,90 +32,41 @@ public class AugView extends View {
 	double angle_of_view_horizontal = 54.4 / 2;
 	double angle_of_view_vertical = 37.8 / 2;
 
-	float pitch;
-	float heading;
-	float roll;
 	double afstand;
 	float afstand_tot_punt[];
-	int aantal;
-
-	public double getAfstand() {
-		return afstand;
-	}
-
-	public void setAfstand(double afstand) {
-		this.afstand = afstand;
-	}
-
-	public float getRoll() {
-		return roll;
-	}
-
-	public void setPitch(float pitch) {
-		this.pitch = pitch;
-	}
-
-	public float getPitch() {
-		return roll;
-	}
-
-	public void setRoll(float roll) {
-		this.roll = roll;
-	}
-
-	public float getHeading() {
-		return heading;
-	}
-
-	public void setHeading(float heading) {
-		this.heading = heading;
-	}
 
 	public AugView(Context context) {
 		super(context);
 		VopApplication app = (VopApplication) context;
-		app.putState("first",Boolean.toString(true));
+		app.putState("first", Boolean.toString(true));
 		kontekst = context;
-
 	}
 
 	public AugView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		VopApplication app = (VopApplication) context;
-		app.putState("first",Boolean.toString(true));
+		app.putState("first", Boolean.toString(true));
 		kontekst = context;
-
 	}
 
 	public AugView(Context context, AttributeSet ats, int defaultStyle) {
 		super(context, ats, defaultStyle);
 		VopApplication app = (VopApplication) context;
-		app.putState("first",Boolean.toString(true));
+		app.putState("first", Boolean.toString(true));
 		kontekst = context;
-	}
-
-	private float bearing;
-
-	public void setBearing(float _bearing) {
-		bearing = _bearing;
-	}
-
-	public float getBearing() {
-		return bearing;
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// instellingen van de paint die gebruikt wordt voor de cirkels en tekst
 		VopApplication app = (VopApplication) kontekst;
-		lng = Double.parseDouble(app.getState().get("long"));
-		lat = Double.parseDouble(app.getState().get("lat"));
-		alt = Double.parseDouble(app.getState().get("alt"));
-		
-		//lng = 3.726897;
-		//lat = 51.038662;
-		//alt = 40;
-		
+		double lng = Double.parseDouble(app.getState().get("long"));
+		double lat = Double.parseDouble(app.getState().get("lat"));
+		double alt = Double.parseDouble(app.getState().get("alt"));
+
+		double roll = Double.parseDouble(app.getState().get("roll"));
+		Marker POI[];
+
 		Paint myPaint = new Paint();
 		myPaint.setStrokeWidth(4);
 		myPaint.setColor(Color.WHITE);
@@ -143,8 +88,9 @@ public class AugView extends View {
 		Boolean first = Boolean.parseBoolean((app.getState().get("first")));
 		if (first) {
 			construeer();
-			app.putState("first", "false");
+			POI = app.getPunten();
 		} else {
+			POI = app.getPunten();
 			for (int i = 0; i < POI.length; i++) {
 				POI[i].bereken_zichtbaarheid(lat, lng, alt, roll);
 			}
@@ -156,7 +102,7 @@ public class AugView extends View {
 
 		canvas.drawRoundRect(rectangle, 8, 8, kader_kleur);
 
-		for (int i = 0; i < aantal; i++) {
+		for (int i = 0; i < POI.length; i++) {
 			if (POI[i].isZichtbaarheid())
 				canvas.drawCircle(
 						getMeasuredWidth() / 2
@@ -169,7 +115,7 @@ public class AugView extends View {
 		}
 
 		dichtste_punt = -1;
-		for (int i = 0; i < aantal; i++) {
+		for (int i = 0; i < POI.length; i++) {
 			if (dichtste_punt == -1 && POI[i].isZichtbaarheid())
 				dichtste_punt = i;
 			else if (dichtste_punt != -1 && POI[i].isZichtbaarheid()) {
@@ -184,7 +130,8 @@ public class AugView extends View {
 					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
 
 			canvas.drawText(
-					"afstand: " + POI[dichtste_punt].getAfstand_marker(),
+					"afstand: "
+							+ Math.round(POI[dichtste_punt].getAfstand_marker()),
 					getMeasuredWidth() / 10, 2 * getMeasuredHeight() / 10,
 					myPaint2);
 			canvas.drawCircle(
@@ -197,31 +144,31 @@ public class AugView extends View {
 							.getVerticale_positie() * getMeasuredHeight() / 2),
 					(float) 20, cirkel_select);
 		}
-
-		/*
-		 * canvas.drawText("provider: "+provider, getMeasuredWidth() / 10,
-		 * getMeasuredHeight() / 10, myPaint2);
-		 */
-
+		canvas.drawText("lat: " + lat + "lng" + lng,
+				3 * getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
+		if (app.getState().get("adres") != null)
+			canvas.drawText("adres: " + app.getState().get("adres"),
+					5 * getMeasuredWidth() / 10, 2 * getMeasuredHeight() / 10,
+					myPaint2);
 	}
 
 	public void construeer() {
+		VopApplication app = (VopApplication) kontekst;
+		double lng = Double.parseDouble(app.getState().get("long"));
+		double lat = Double.parseDouble(app.getState().get("lat"));
+		double alt = Double.parseDouble(app.getState().get("alt"));
+
+		double roll = Double.parseDouble(app.getState().get("roll"));
+		Marker POI[];
+
 		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
-		aantal = loc.size();
-		POI = new Marker[aantal];
+		POI = new Marker[loc.size()];
 		int j = 0;
 		for (com.vop.tools.data.Location l : loc) {
 			POI[j] = new Marker(l.getName(), l.getDescription(),
 					l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, roll);
-			//POI[j] = new Marker("overpoortresto", "resto",
-					//3.726259, 51.039326, alt, lat, lng, alt, roll);
 			j++;
 		}
+		app.setPunten(POI);
 	}
-	/*public void construeer(){
-		POI = new Marker[1];
-		POI[0] = new Marker("overpoortresto", "resto",
-				3.726259, 51.039326, alt, lat, lng, alt, roll);
-	}*/
-	
 }

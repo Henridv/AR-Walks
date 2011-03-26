@@ -3,4 +3,5 @@
 	<item android:id="@+id/augmentedView" android:title="augmented view" />
 	<item android:id="@+id/info" android:title="info" />
 	<item android:id="@+id/hoofdscherm" android:title="main" />
+	<item android:id="@+id/opslaan" android:title="opslaan" />
 </menu>
