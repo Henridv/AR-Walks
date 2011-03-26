@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/kaart" android:title="location" />
-	<item android:id="@+id/info" android:title="info" />
-	<item android:id="@+id/hoofdscherm" android:title="main" />
-	<item android:id= "@+id/opslaan" android:title="opslaan" />
-	<item android:id="@+id/group1" android:title="afstand">
+	<item android:id="@+id/kaart" android:icon="@drawable/location_map" android:title="kaart" />
+	<item android:id= "@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
+	<item android:id="@+id/group1" android:title="afstand" android:icon="@drawable/liniaal">
 		<menu>
 			<group android:checkableBehavior="single">
 				<item android:id="@+id/m_500" android:title="500m" />
@@ -15,5 +13,4 @@
 			</group>
 		</menu>
 	</item>
-
 </menu>

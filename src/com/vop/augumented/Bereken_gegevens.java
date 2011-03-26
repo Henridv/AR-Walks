@@ -12,9 +12,8 @@ import android.content.Context;
 class Bereken_gegevens implements Callable<Marker[]> {
 	Context context;
 	Activity activiteit;
-	
 
-	public Bereken_gegevens(Context kontekst,Activity activity) {
+	public Bereken_gegevens(Context kontekst, Activity activity) {
 		context = kontekst;
 		activiteit = activity;
 	}

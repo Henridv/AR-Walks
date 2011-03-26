@@ -26,11 +26,13 @@ public class VopApplication extends Application {
 	public HashMap<String, String> getState() {
 		return state;
 	}
+
 	public void setState(HashMap<String, String> state) {
 		this.state = state;
 	}
+
 	public String putState(String k, String v) {
 		return state.put(k, v);
 	}
-	
+
 }

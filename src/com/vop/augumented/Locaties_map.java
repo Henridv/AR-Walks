@@ -1,15 +1,11 @@
 package com.vop.augumented;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,7 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -63,6 +60,9 @@ public class Locaties_map extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
 
 		this.mapView = (MapView) findViewById(R.id.myMapView);
@@ -70,16 +70,14 @@ public class Locaties_map extends MapActivity {
 
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
-		this.mapView.displayZoomControls(true);
-		
+		this.mapView.setBuiltInZoomControls(true);
+		// this.mapView.displayZoomControls(true);
 		mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
-		itemizedoverlay = new punten_overlay(drawable,this);
-
+		Drawable drawable = this.getResources().getDrawable(
+				R.drawable.androidmarker);
+		itemizedoverlay = new punten_overlay(drawable, this);
 		initMap();
-
 		this.mapController.setZoom(17);
-
 		this.context = Context.LOCATION_SERVICE;
 		this.locationManager = (LocationManager) getSystemService(context);
 
@@ -99,39 +97,12 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void updateWithNewLocation(Location location) {
-
-		String latLong;
-		TextView myLocationText;
-
-		myLocationText = (TextView) findViewById(R.id.myLocationText);
-		String adresStr = "Geen adres gevonden";
-
 		if (location != null) {
-
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
 			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			this.mapController.animateTo(punt);
-			latLong = "Lat: " + lat + "\nLng: " + lng;
-			Geocoder gc = new Geocoder(this, Locale.getDefault());
-			try {
-				List<Address> adressen = gc.getFromLocation(lat, lng, 1);
-				StringBuilder sb = new StringBuilder();
-				if (adressen.size() > 0) {
-					Address adres = adressen.get(0);
-
-					for (int i = 0; i < adres.getMaxAddressLineIndex(); i++) {
-						sb.append(adres.getAddressLine(i)).append("\n");
-					}
-					sb.append(adres.getCountryName());
-				}
-
-				adresStr = sb.toString();
-			} catch (IOException e) {
-			}
-
-		} else
-			latLong = "Geen current location";
+		}
 	}
 
 	@Override
@@ -151,9 +122,11 @@ public class Locaties_map extends MapActivity {
 		});
 		VopApplication app = (VopApplication) getApplicationContext();
 		Marker POI[] = app.getPunten();
-		for(int i=0;i<POI.length;i++){
-			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() *1E6), (int) (POI[i].getLng() *1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(), POI[i].getTitel());
+		for (int i = 0; i < POI.length; i++) {
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
+					(int) (POI[i].getLng() * 1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
+					POI[i].getTitel());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 		mapOverlays.add(itemizedoverlay);

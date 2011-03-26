@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<TextView android:id="@+id/myLocationText"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:text="@string/hello" />
-	<com.google.android.maps.MapView
-		android:id="@+id/myMapView" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:enabled="true"
-		android:clickable="true" android:apiKey="06J1KfWhroat1_PqI3BqB6v8FaeiNWHOTsZ75Qw" />
-
-</LinearLayout>
+<com.google.android.maps.MapView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myMapView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:apiKey="06J1KfWhroat1_PqI3BqB6v8FaeiNWHOTsZ75Qw"
+/>

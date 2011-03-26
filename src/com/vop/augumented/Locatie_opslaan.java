@@ -5,7 +5,6 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +30,7 @@ public class Locatie_opslaan extends FullscreenActivity {
 		inflater.inflate(R.layout.berichten_menu, menu);
 		return true;
 	}
+
 	public void go_klik(View v) {
 		EditText titel_edit = (EditText) findViewById(R.id.titel);
 		String titel = titel_edit.getText().toString();
@@ -41,7 +41,7 @@ public class Locatie_opslaan extends FullscreenActivity {
 		double lng = Double.parseDouble(app.getState().get("long"));
 		double lat = Double.parseDouble(app.getState().get("lat"));
 		double alt = Double.parseDouble(app.getState().get("alt"));
-		loc = new Location(titel, info,lat, lng, alt, "default",id);		
+		loc = new Location(titel, info, lat, lng, alt, "default", id);
 		DBWrapper.save(loc);
 		app.putState("first", "true");
 		finish();
