@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Locatie_opslaan extends FullscreenActivity {
-	private Location loc;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +37,10 @@ public class Locatie_opslaan extends FullscreenActivity {
 		String info = info_edit.getText().toString();
 		VopApplication app = (VopApplication) getApplicationContext();
 		Integer id = Integer.parseInt(app.getState().get("userid"));
-		double lng = Double.parseDouble(app.getState().get("long"));
-		double lat = Double.parseDouble(app.getState().get("lat"));
-		double alt = Double.parseDouble(app.getState().get("alt"));
-		loc = new Location(titel, info, lat, lng, alt, "default", id);
+		double lng = app.getLng();
+		double lat = app.getLat();
+		double alt = app.getAlt();
+		Location loc = new Location(titel, info, lat, lng, alt, "default", id);
 		DBWrapper.save(loc);
 		app.putState("first", "true");
 		finish();

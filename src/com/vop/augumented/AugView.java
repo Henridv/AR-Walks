@@ -60,11 +60,11 @@ public class AugView extends View {
 	protected void onDraw(Canvas canvas) {
 		// instellingen van de paint die gebruikt wordt voor de cirkels en tekst
 		VopApplication app = (VopApplication) kontekst;
-		double lng = Double.parseDouble(app.getState().get("long"));
-		double lat = Double.parseDouble(app.getState().get("lat"));
-		double alt = Double.parseDouble(app.getState().get("alt"));
-
-		double roll = Double.parseDouble(app.getState().get("roll"));
+		double lng = app.getLng();
+		double lat = app.getLat();
+		double alt = app.getAlt();
+		double roll = app.getRoll();
+		
 		Marker POI[];
 
 		Paint myPaint = new Paint();
@@ -154,11 +154,11 @@ public class AugView extends View {
 
 	public void construeer() {
 		VopApplication app = (VopApplication) kontekst;
-		double lng = Double.parseDouble(app.getState().get("long"));
-		double lat = Double.parseDouble(app.getState().get("lat"));
-		double alt = Double.parseDouble(app.getState().get("alt"));
+		double lng = app.getLng();
+		double lat = app.getLat();
+		double alt = app.getAlt();
 
-		double roll = Double.parseDouble(app.getState().get("roll"));
+		double roll = app.getRoll();
 		Marker POI[];
 
 		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);

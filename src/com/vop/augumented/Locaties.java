@@ -103,10 +103,6 @@ public class Locaties extends Activity {
 		mPreview = new Preview(this);
 		compassView = new AugView(getApplicationContext());
 
-		// werkt niet
-		// if (item.isChecked()) item.setChecked(true);
-		// else item.setChecked(false);
-
 		setContentView(mPreview);
 		addContentView(compassView, new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
@@ -127,13 +123,12 @@ public class Locaties extends Activity {
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 2, 10,
 				locationListener);
-		if (location != null) {
-			VopApplication app = (VopApplication) getApplicationContext();
-			app.putState("lat", Double.toString(location.getLatitude()));
-			app.putState("long", Double.toString(location.getLongitude()));
-			app.putState("alt", Double.toString(location.getAltitude()));
-		}
 		VopApplication app = (VopApplication) getApplicationContext();
+		if (location != null) {
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
+		}
 		app.putState("first", "true");
 
 	}
@@ -157,9 +152,9 @@ public class Locaties extends Activity {
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
 			VopApplication app = (VopApplication) getApplicationContext();
-			app.putState("lat", Double.toString(location.getLatitude()));
-			app.putState("long", Double.toString(location.getLongitude()));
-			app.putState("alt", Double.toString(location.getAltitude()));
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
 			Geocoder gc = new Geocoder(getApplicationContext(),
 					Locale.getDefault());
 			try {
@@ -183,9 +178,9 @@ public class Locaties extends Activity {
 	private void updateOrientation(float _roll, float _pitch, float _heading) {
 		if (compassView != null) {
 			VopApplication app = (VopApplication) getApplicationContext();
-			app.putState("heading", Double.toString(_heading));
-			app.putState("roll", Double.toString(_roll));
-			app.putState("pitch", Double.toString(_pitch));
+			app.setHeading(_heading);
+			app.setRoll(_roll);
+			app.setPitch(_pitch);
 			compassView.invalidate();
 		}
 	}
@@ -209,8 +204,8 @@ public class Locaties extends Activity {
 	protected void onResume() {
 		super.onResume();
 		sensorManager.registerListener(sensorListener,
-				sensorManager.SENSOR_ORIENTATION,
-				sensorManager.SENSOR_DELAY_FASTEST);
+				SensorManager.SENSOR_ORIENTATION,
+				SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	@Override
@@ -231,7 +226,6 @@ public class Locaties extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-
 		case R.id.kaart:
 			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
 			Locaties.this.startActivity(myIntent);

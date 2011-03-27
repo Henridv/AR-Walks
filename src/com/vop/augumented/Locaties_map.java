@@ -73,9 +73,10 @@ public class Locaties_map extends MapActivity {
 		this.mapView.setBuiltInZoomControls(true);
 		// this.mapView.displayZoomControls(true);
 		mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(
+		Drawable drawable1 = this.getResources().getDrawable(
 				R.drawable.androidmarker);
-		itemizedoverlay = new punten_overlay(drawable, this);
+		itemizedoverlay = new punten_overlay(drawable1, this);
+
 		initMap();
 		this.mapController.setZoom(17);
 		this.context = Context.LOCATION_SERVICE;
@@ -115,6 +116,7 @@ public class Locaties_map extends MapActivity {
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableCompass();
+		
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
 				mapController.animateTo(myLocationOverlay.getMyLocation());
@@ -129,6 +131,7 @@ public class Locaties_map extends MapActivity {
 					POI[i].getTitel());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
+		myLocationOverlay.enableMyLocation();
 		mapOverlays.add(itemizedoverlay);
 	}
 
@@ -143,7 +146,6 @@ public class Locaties_map extends MapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-
 		case R.id.augmentedView:
 			Intent myIntent = new Intent(Locaties_map.this, Locaties.class);
 			Locaties_map.this.startActivity(myIntent);
