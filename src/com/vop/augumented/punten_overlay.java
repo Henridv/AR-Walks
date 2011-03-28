@@ -43,9 +43,11 @@ public class punten_overlay extends ItemizedOverlay {
 	protected boolean onTap(int index) {
 		OverlayItem item = mOverlays.get(index);
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-		dialog.setTitle(item.getTitle());
-		dialog.setMessage(item.getSnippet());
-		dialog.show();
+		if (item != null) {
+			dialog.setTitle(item.getTitle());
+			dialog.setMessage(item.getSnippet());
+			dialog.show();
+		}
 		return true;
 	}
 

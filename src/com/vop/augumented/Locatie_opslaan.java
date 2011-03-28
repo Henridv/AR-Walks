@@ -42,7 +42,7 @@ public class Locatie_opslaan extends FullscreenActivity {
 		double alt = app.getAlt();
 		Location loc = new Location(titel, info, lat, lng, alt, "default", id);
 		DBWrapper.save(loc);
-		app.putState("first", "true");
+		AugView.construeer();
 		finish();
 	}
 }

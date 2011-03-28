@@ -13,4 +13,5 @@
 			</group>
 		</menu>
 	</item>
+	<item android:id="@+id/refresh" android:title="refresh" android:icon="@drawable/refresh" />
 </menu>

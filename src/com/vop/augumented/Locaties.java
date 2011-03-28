@@ -44,6 +44,7 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class Locaties extends Activity {
@@ -129,8 +130,6 @@ public class Locaties extends Activity {
 			app.setLng(location.getLongitude());
 			app.setLat(location.getLatitude());
 		}
-		app.putState("first", "true");
-
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -269,6 +268,9 @@ public class Locaties extends Activity {
 		case R.id.opslaan:
 			myIntent = new Intent(Locaties.this, Locatie_opslaan.class);
 			Locaties.this.startActivity(myIntent);
+			return true;
+		case R.id.refresh:
+			AugView.construeer();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

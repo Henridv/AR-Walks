@@ -8,6 +8,21 @@ public class Marker {
 	private double alt;
 	private boolean zichtbaarheid;
 	private double afstand_marker;
+	private float afstand_x;
+	private float  afstand_y;
+	private Boolean binnen_afstand;
+
+	public Boolean getBinnen_afstand() {
+		return binnen_afstand;
+	}
+
+	public float getAfstand_x() {
+		return afstand_x;
+	}
+
+	public float getAfstand_y() {
+		return afstand_y;
+	}
 
 	public double getAfstand_marker() {
 		return afstand_marker;
@@ -108,10 +123,17 @@ public class Marker {
 		double x = Math.abs(lng - lng_loc);
 		double y = Math.abs(lat - lat_loc);
 		float afstand_tot_punt[] = new float[3];
+		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
+		afstand_x = afstand_tot_punt[0];
+		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc, afstand_tot_punt);
+		afstand_y = afstand_tot_punt[0];
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
+		afstand_x = (float) (afstand_x*1.0/afstand*20);
+		afstand_y = (float) (afstand_y*1.0/afstand*20);
+		binnen_afstand = false;
 		if (afstand_tot_punt[0] < afstand) {
-
+			binnen_afstand = true;
 			if (lat - lat_loc > 0) {
 				if (lng - lng_loc > 0) {
 					hoek = Math.atan(x / y) / (2 * PI) * 360;
@@ -122,6 +144,7 @@ public class Marker {
 						horizontale_positie = Math.abs(hoek + (360 - roll))
 								/ (angle_of_view_horizontal);
 				} else if (lng - lng_loc < 0) {
+					afstand_x*=-1;
 					hoek = 360 - Math.atan(x / y) / (2 * PI) * 360;
 					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
 						horizontale_positie = (hoek - roll)
@@ -138,12 +161,14 @@ public class Marker {
 					horizontale_positie = Math.abs(roll - 360)
 							/ (angle_of_view_horizontal);
 			} else if (lat - lat_loc < 0) {
+				afstand_y *=-1;
 				if (lng - lng_loc > 0) {
 					hoek = 90 + Math.abs(Math.atan(y / x) / (2 * PI) * 360);
 					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
 						horizontale_positie = (hoek - roll)
 								/ (angle_of_view_horizontal);
 				} else if (lng - lng_loc < 0) {
+					afstand_x*=-1;
 					hoek = 180 + ((Math.atan(x / y) / (2 * PI) * 360));
 					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
 						horizontale_positie = (hoek - roll)
@@ -156,6 +181,7 @@ public class Marker {
 					horizontale_positie = (90 - roll)
 							/ (angle_of_view_horizontal);
 			} else if (lng - lng_loc < 0) {
+				afstand_x*=-1;
 				if (Math.abs(roll - 270) < angle_of_view_horizontal)
 					horizontale_positie = (270 - roll)
 							/ (angle_of_view_horizontal);

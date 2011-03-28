@@ -34,7 +34,6 @@ public class Locaties_map extends MapActivity {
 	int minDistance = 0;
 	int minTime = 1000;
 	MyLocationOverlay myLocationOverlay;
-	List<Overlay> mapOverlays;
 	punten_overlay itemizedoverlay;
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -72,7 +71,6 @@ public class Locaties_map extends MapActivity {
 		this.mapView.setStreetView(true);
 		this.mapView.setBuiltInZoomControls(true);
 		// this.mapView.displayZoomControls(true);
-		mapOverlays = mapView.getOverlays();
 		Drawable drawable1 = this.getResources().getDrawable(
 				R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
@@ -99,8 +97,12 @@ public class Locaties_map extends MapActivity {
 
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
+			VopApplication app = (VopApplication) getApplicationContext();
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
 			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			this.mapController.animateTo(punt);
 		}
@@ -116,7 +118,7 @@ public class Locaties_map extends MapActivity {
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableCompass();
-		
+
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
 				mapController.animateTo(myLocationOverlay.getMyLocation());
@@ -132,7 +134,23 @@ public class Locaties_map extends MapActivity {
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 		myLocationOverlay.enableMyLocation();
-		mapOverlays.add(itemizedoverlay);
+		if(POI.length != 0) mapView.getOverlays().add(itemizedoverlay);
+	}
+
+	private void refreshMap() {
+		mapView.getOverlays().clear();
+		mapView.getOverlays().add(myLocationOverlay);
+		VopApplication app = (VopApplication) getApplicationContext();
+		Marker POI[] = app.getPunten();
+		for (int i = 0; i < POI.length; i++) {
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
+					(int) (POI[i].getLng() * 1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
+					POI[i].getTitel());
+			itemizedoverlay.addOverlay(overlayitem);
+		}
+		mapView.getOverlays().add(itemizedoverlay);
+		mapView.invalidate();
 	}
 
 	@Override
@@ -154,6 +172,9 @@ public class Locaties_map extends MapActivity {
 			myIntent = new Intent(Locaties_map.this, Locatie_opslaan.class);
 			Locaties_map.this.startActivity(myIntent);
 			return true;
+		case R.id.refresh:
+			AugView.construeer();
+			refreshMap();
 		default:
 			return super.onOptionsItemSelected(item);
 		}
