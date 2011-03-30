@@ -70,7 +70,7 @@ public class AugView extends View {
 		double lat = app.getLat();
 		double alt = app.getAlt();
 		double roll = app.getRoll();
-		
+
 		Marker POI[];
 
 		Paint myPaint = new Paint();
@@ -100,25 +100,26 @@ public class AugView extends View {
 				2 * getMeasuredHeight() / 10);
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(),
 				R.drawable.androidmarker);
-		
-		canvas.drawCircle( 9*getMeasuredWidth() / 10 ,
-				  9*getMeasuredHeight() / 10, 20,
-				  myPaint);
-		canvas.drawCircle( 9*getMeasuredWidth() / 10 ,
-				  9*getMeasuredHeight() / 10, 1,
-				  kader_kleur);
+
+		canvas.drawCircle(9 * getMeasuredWidth() / 10,
+				9 * getMeasuredHeight() / 10, 20, myPaint);
+		canvas.drawCircle(9 * getMeasuredWidth() / 10,
+				9 * getMeasuredHeight() / 10, 1, kader_kleur);
 
 		for (int i = 0; i < POI.length; i++) {
-			canvas.rotate((float) roll,9*getMeasuredWidth() / 10,9*getMeasuredHeight() / 10);
-			if(POI[i].getBinnen_afstand()) canvas.drawCircle( 9*getMeasuredWidth() / 10 + POI[i].getAfstand_x(),
-					  9*getMeasuredHeight() / 10+ POI[i].getAfstand_y(), 1,
-					  kader_kleur);
-			canvas.rotate((float) -roll,9*getMeasuredWidth() / 10,9*getMeasuredHeight() / 10);
+			canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
+					9 * getMeasuredHeight() / 10);
+			if (POI[i].getBinnen_afstand())
+				canvas.drawCircle(
+						9 * getMeasuredWidth() / 10 + POI[i].getAfstand_x(),
+						9 * getMeasuredHeight() / 10 + POI[i].getAfstand_y(),
+						1, kader_kleur);
+			canvas.rotate((float) -roll, 9 * getMeasuredWidth() / 10,
+					9 * getMeasuredHeight() / 10);
 			if (POI[i].isZichtbaarheid()) {
 				canvas.drawRoundRect(rectangle, 8, 8, kader_kleur);
-				canvas.drawCircle( 9*getMeasuredWidth() / 10 ,
-						  9*getMeasuredHeight() / 10, 1,
-						  kader_kleur);
+				canvas.drawCircle(9 * getMeasuredWidth() / 10,
+						9 * getMeasuredHeight() / 10, 1, kader_kleur);
 				/*
 				 * canvas.drawCircle( getMeasuredWidth() / 2 + (float)
 				 * POI[i].getHorizontale_positie() getMeasuredWidth() / 2,
@@ -155,10 +156,13 @@ public class AugView extends View {
 		if (dichtste_punt != -1) {
 			canvas.drawText(POI[dichtste_punt].getTitel(),
 					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
-			canvas.rotate((float) roll,9*getMeasuredWidth() / 10,9*getMeasuredHeight() / 10);
-			canvas.drawCircle( 9*getMeasuredWidth() / 10 + POI[dichtste_punt].getAfstand_x(),
-					  9*getMeasuredHeight() / 10+ POI[dichtste_punt].getAfstand_y(), 1,
-					  myPaint2);
+			canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
+					9 * getMeasuredHeight() / 10);
+			canvas.drawCircle(
+					9 * getMeasuredWidth() / 10
+							+ POI[dichtste_punt].getAfstand_x(),
+					9 * getMeasuredHeight() / 10
+							+ POI[dichtste_punt].getAfstand_y(), 1, myPaint2);
 			canvas.restore();
 			canvas.drawText(
 					"afstand: "

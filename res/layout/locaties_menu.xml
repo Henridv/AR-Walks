@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/kaart" android:icon="@drawable/location_map" android:title="kaart" />
 	<item android:id= "@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
+	<item android:id= "@+id/lijstloc" android:title="lijst" android:icon="@drawable/locatie_toevoegen" />
 	<item android:id="@+id/group1" android:title="afstand" android:icon="@drawable/liniaal">
 		<menu>
 			<group android:checkableBehavior="single">

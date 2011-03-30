@@ -28,5 +28,7 @@
         <activity android:name="Locaties_map"></activity>
         <uses-library android:name="com.google.android.maps"/>
         <activity android:name="Locatie_opslaan"></activity>
+        <activity android:name="ListView_Locaties"></activity>
+        <activity android:name="TutorialPartI"></activity>
     </application>
 </manifest>

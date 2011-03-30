@@ -12,7 +12,7 @@ public class VopApplication extends Application {
 	private double lng;
 	private double lat;
 	private double alt;
-	
+
 	private double roll;
 	private double pitch;
 	private double heading;

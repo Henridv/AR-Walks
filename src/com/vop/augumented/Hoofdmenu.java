@@ -58,7 +58,7 @@ public class Hoofdmenu extends FullscreenActivity {
 	}
 
 	public void vrienden_klik(View v) {
-		Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, TutorialPartI.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
@@ -96,5 +96,4 @@ public class Hoofdmenu extends FullscreenActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 }

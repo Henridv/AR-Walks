@@ -134,7 +134,8 @@ public class Locaties_map extends MapActivity {
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 		myLocationOverlay.enableMyLocation();
-		if(POI.length != 0) mapView.getOverlays().add(itemizedoverlay);
+		if (POI.length != 0)
+			mapView.getOverlays().add(itemizedoverlay);
 	}
 
 	private void refreshMap() {
@@ -175,6 +176,9 @@ public class Locaties_map extends MapActivity {
 		case R.id.refresh:
 			AugView.construeer();
 			refreshMap();
+		case R.id.lijstloc:
+			myIntent = new Intent(Locaties_map.this, ListView_Locaties.class);
+			Locaties_map.this.startActivity(myIntent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
