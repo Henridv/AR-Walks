@@ -1,12 +1,9 @@
 package com.vop.tools.data;
 
-public class Location {
+public class Location extends Point {
 	private final Integer id;
 	private String name;
 	private String description;
-	private Double latitute;
-	private Double longitude;
-	private Double altitude;
 	private String date;
 	private Integer pers_id;
 
@@ -23,13 +20,10 @@ public class Location {
 	public Location(Integer id, String name, String description,
 			Double latitute, Double longitude, Double altitude, String date,
 			Integer persId) {
-		super();
+		super(latitute, longitude, altitude);
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.latitute = latitute;
-		this.longitude = longitude;
-		this.altitude = altitude;
 		this.date = date;
 		pers_id = persId;
 	}
@@ -45,19 +39,12 @@ public class Location {
 	 */
 	public Location(String name, String description, Double latitute,
 			Double longitude, Double altitude, String date, Integer persId) {
-		super();
+		super(latitute, longitude, altitude);
 		this.id = null;
 		this.name = name;
 		this.description = description;
-		this.latitute = latitute;
-		this.longitude = longitude;
-		this.altitude = altitude;
 		this.date = date;
 		pers_id = persId;
-	}
-
-	public Double getAltitude() {
-		return altitude;
 	}
 
 	public String getDate() {
@@ -72,14 +59,6 @@ public class Location {
 		return id;
 	}
 
-	public Double getLatitute() {
-		return latitute;
-	}
-
-	public Double getLongitude() {
-		return longitude;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -88,24 +67,12 @@ public class Location {
 		return pers_id;
 	}
 
-	public void setAltitude(Double altitude) {
-		this.altitude = altitude;
-	}
-
 	public void setDate(String date) {
 		this.date = date;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setLatitute(Double latitute) {
-		this.latitute = latitute;
-	}
-
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
 	}
 
 	public void setName(String name) {

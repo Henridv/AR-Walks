@@ -21,6 +21,7 @@ import android.util.Log;
 
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
+import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 
 /**
@@ -39,7 +40,32 @@ public class DBWrapper {
 	 * @return
 	 */
 	public static ArrayList<Traject> getTrajects() {
-		return null;
+		String page = "traject.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("action", "trajects"));
+
+		ArrayList<Traject> t = new ArrayList<Traject>();
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				int id					= json_data.getInt("id");
+				String name				= json_data.getString("name");
+				Person person			= getProfile(json_data.getInt("id"));
+				ArrayList<Point> walk	= new ArrayList<Point>();
+				/*
+				JSONArray walkArray = json_data.getJSONArray("walk");
+				for (int j = 0; j < walkArray.length(); j++) {
+					JSONObject walkObject = walkArray.getJSONObject(j);
+					walk.add(new Point(walkObject.getDouble("latitude"), walkObject.getDouble("longitude"), walkObject.getDouble("altitude")));
+				}*/
+				
+				t.add(new Traject(id, name, person, null));
+			}
+		} catch (JSONException e) {
+			Log.e(log_tag, "Error parsing data " + e.toString());
+		}
+		return t;
 	}
 
 	/**
@@ -116,6 +142,36 @@ public class DBWrapper {
 		return p;
 	}
 
+	/**
+	 * Get a single profile
+	 * 
+	 * @param id
+	 *            authentication via id
+	 * @return
+	 */
+	public static Person getProfile(int id) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("action", "profile"));
+		postValues.add(new BasicNameValuePair("id", Integer.toString(id)));
+
+		Person p = null;
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p = new Person(json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("phone"),
+						json_data.getString("password"),
+						json_data.getString("email"));
+			}
+		} catch (JSONException e) {
+			Log.e(log_tag, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
+	
 	/**
 	 * Get a list of locations from a person and his friends
 	 * 
