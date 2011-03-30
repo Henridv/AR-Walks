@@ -6,27 +6,28 @@
 		android:padding="10dip" android:layout_height="wrap_content" android:layout_width="wrap_content">
 		<TableRow
 			android:layout_height="wrap_content">
-			<Button android:id="@+id/berichten" android:text="Berichten"
-				android:layout_x="0px" android:layout_y="22px" android:onClick="berichten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
-			<Button android:id="@+id/trajecten" android:text="Trajecten"
+			<ImageButton android:id="@+id/berichten" android:src="@drawable/bericht" android:background="@android:color/transparent"
+				android:layout_x="0px" android:layout_y="22px" android:onClick="berichten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
+			</ImageButton>
+			<ImageButton android:id="@+id/trajecten" android:src="@drawable/traject" android:background="@android:color/transparent"
 				android:layout_x="80px" android:layout_y="22px" android:onClick="trajecten_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
-			<Button android:id="@+id/locaties" android:text="Locaties"
+			</ImageButton>
+			<ImageButton android:id="@+id/locaties" 
+				android:src="@drawable/location" android:background="@android:color/transparent"
 				android:layout_x="160px" android:layout_y="22px" android:onClick="locaties_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
+			</ImageButton>
 		</TableRow>
 		<TableRow
 			android:layout_height="wrap_content">
-			<Button android:id="@+id/vrienden" android:text="Vrienden"
+			<ImageButton android:id="@+id/vrienden" android:src="@drawable/friends" android:background="@android:color/transparent"
 				android:layout_x="0px" android:layout_y="92px" android:onClick="vrienden_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
-			<Button android:id="@+id/profiel" android:text="Profiel"
-				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
-			<Button android:id="@+id/uitloggen" android:text="Uitloggen"
+			</ImageButton>
+			<ImageButton android:id="@+id/profiel" android:src="@drawable/profiel" android:background="@android:color/transparent"
+				android:layout_x="80px" android:layout_y="92px" android:onClick="profiel_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
+			</ImageButton> 
+			<ImageButton android:id="@+id/uitloggen" android:src="@drawable/exit" android:background="@android:color/transparent"
 				android:layout_x="160px" android:layout_y="92px" android:onClick="uitloggen_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
-			</Button>
+			</ImageButton>
 		</TableRow>
 	</TableLayout>
 </LinearLayout>

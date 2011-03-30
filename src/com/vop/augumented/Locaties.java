@@ -18,15 +18,20 @@ package com.vop.augumented;
 
 //package com.example.android.apis.graphics;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import com.vop.tools.VopApplication;
+
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,13 +44,11 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class Locaties extends Activity {
 	private Preview mPreview;
-	float pitch = 0;
-	float roll = 0;
-	float heading = 0;
 	AugView compassView;
 	SensorManager sensorManager;
 	LocationManager locationManager;
@@ -88,6 +91,7 @@ public class Locaties extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Marker.setAfstand(1000000);
 		super.onCreate(savedInstanceState);
 
 		// Hide the window title.
@@ -100,20 +104,12 @@ public class Locaties extends Activity {
 		mPreview = new Preview(this);
 		compassView = new AugView(getApplicationContext());
 
-		MenuItem item = (MenuItem) findViewById(R.id.m_500);
-		Marker.setAfstand(100000);
-
-		// werkt niet
-		// if (item.isChecked()) item.setChecked(true);
-		// else item.setChecked(false);
-
 		setContentView(mPreview);
 		addContentView(compassView, new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		updateOrientation(0, 0, 0);
 
-		
 		String context = Context.LOCATION_SERVICE;
 		locationManager = (LocationManager) getSystemService(context);
 
@@ -124,12 +120,16 @@ public class Locaties extends Activity {
 		criteria.setCostAllowed(true);
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
 		String provider = locationManager.getBestProvider(criteria, true);
-		compassView.setProvider(provider);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 2, 10,
 				locationListener);
-
+		VopApplication app = (VopApplication) getApplicationContext();
+		if (location != null) {
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
+		}
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -150,21 +150,36 @@ public class Locaties extends Activity {
 
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-			compassView.setLng(location.getLongitude());
-			compassView.setLat(location.getLatitude());
-			compassView.setAlt(location.getAltitude());
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
+			Geocoder gc = new Geocoder(getApplicationContext(),
+					Locale.getDefault());
+			try {
+				List<Address> addresses = gc.getFromLocation(
+						location.getLatitude(), location.getLongitude(), 1);
+				Address adres = addresses.get(0);
+				if (adres.getThoroughfare() != null)
+					app.putState("adres", adres.getThoroughfare());
+				else
+					app.putState("adres", "null");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Toast.makeText(getApplicationContext(), "locatie geupdated",
+					Toast.LENGTH_SHORT).show();
 			compassView.invalidate();
 		}
 	}
 
 	private void updateOrientation(float _roll, float _pitch, float _heading) {
-		heading = _heading;
-		pitch = _pitch;
-		roll = _roll;
 		if (compassView != null) {
-			compassView.setHeading(heading);
-			compassView.setPitch(pitch);
-			compassView.setRoll(roll);
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.setHeading(_heading);
+			app.setRoll(_roll);
+			app.setPitch(_pitch);
 			compassView.invalidate();
 		}
 	}
@@ -188,8 +203,8 @@ public class Locaties extends Activity {
 	protected void onResume() {
 		super.onResume();
 		sensorManager.registerListener(sensorListener,
-				sensorManager.SENSOR_ORIENTATION,
-				sensorManager.SENSOR_DELAY_FASTEST);
+				SensorManager.SENSOR_ORIENTATION,
+				SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	@Override
@@ -210,12 +225,10 @@ public class Locaties extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-
 		case R.id.kaart:
 			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
-	    	Locaties.this.startActivity(myIntent);
-	    	
-	    	finish();
+			Locaties.this.startActivity(myIntent);
+			finish();
 			return true;
 		case R.id.km_1:
 			if (item.isChecked())
@@ -252,6 +265,16 @@ public class Locaties extends Activity {
 				item.setChecked(false);
 			Marker.setAfstand(500);
 			return true;
+		case R.id.opslaan:
+			myIntent = new Intent(Locaties.this, Locatie_opslaan.class);
+			Locaties.this.startActivity(myIntent);
+			return true;
+		case R.id.refresh:
+			AugView.construeer();
+			return true;
+		case R.id.lijstloc:
+			myIntent = new Intent(Locaties.this, ListView_Locaties.class);
+			Locaties.this.startActivity(myIntent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}

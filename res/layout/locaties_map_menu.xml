@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/augmentedView" android:title="augmented view" />
-	<item android:id="@+id/info" android:title="info" />
-	<item android:id="@+id/hoofdscherm" android:title="main" />
+	<item android:id="@+id/augmentedView" android:title="augmented view" android:icon="@drawable/ar" />
+	<item android:id="@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
+	<item android:id="@+id/refresh" android:title="refresh" android:icon="@drawable/refresh" />
 </menu>

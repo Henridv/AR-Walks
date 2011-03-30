@@ -8,6 +8,21 @@ public class Marker {
 	private double alt;
 	private boolean zichtbaarheid;
 	private double afstand_marker;
+	private float afstand_x;
+	private float afstand_y;
+	private Boolean binnen_afstand;
+
+	public Boolean getBinnen_afstand() {
+		return binnen_afstand;
+	}
+
+	public float getAfstand_x() {
+		return afstand_x;
+	}
+
+	public float getAfstand_y() {
+		return afstand_y;
+	}
 
 	public double getAfstand_marker() {
 		return afstand_marker;
@@ -38,6 +53,23 @@ public class Marker {
 	private double horizontale_positie;
 	private double PI = 4.0 * Math.atan(1.0);
 	private String titel;
+
+	public String getTitel() {
+		return titel;
+	}
+
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	private String info;
 
 	double angle_of_view_horizontal = 54.4 / 2;
@@ -72,8 +104,9 @@ public class Marker {
 		this.alt = alt;
 	}
 
-	public Marker(String naam, String com,double longitude, double latitude, double altitude,
-			double lat_loc, double lng_loc, double alt_loc, double roll) {
+	public Marker(String naam, String com, double longitude, double latitude,
+			double altitude, double lat_loc, double lng_loc, double alt_loc,
+			double roll) {
 		titel = naam;
 		info = com;
 		lat = latitude;
@@ -85,14 +118,26 @@ public class Marker {
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double roll) {
 		double hoek;
+		zichtbaarheid = false;
 		horizontale_positie = -1;
 		double x = Math.abs(lng - lng_loc);
 		double y = Math.abs(lat - lat_loc);
+		
 		float afstand_tot_punt[] = new float[3];
+		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
+		afstand_x = afstand_tot_punt[0];
+		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc,
+				afstand_tot_punt);
+		afstand_y = afstand_tot_punt[0];
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
+		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
+		afstand_y = (float) (afstand_y * 1.0 /afstand_marker);
+		if(lat-lat_loc <0) afstand_y*=-1;
+		if(lng-lng_loc<0) afstand_x*=-1;
+		binnen_afstand = false;
 		if (afstand_tot_punt[0] < afstand) {
-
+			binnen_afstand = true;
 			if (lat - lat_loc > 0) {
 				if (lng - lng_loc > 0) {
 					hoek = Math.atan(x / y) / (2 * PI) * 360;
@@ -142,22 +187,8 @@ public class Marker {
 							/ (angle_of_view_horizontal);
 			}
 			if (horizontale_positie != -1) {
-				boolean boven;
-				double hoogte_verschil = (alt_loc - alt);
-				if (hoogte_verschil < 0)
-					boven = true;
-				else
-					boven = false;
-				hoogte_verschil = Math.abs(hoogte_verschil);
-				double hoek_vert = Math.atan(hoogte_verschil
-						/ afstand_tot_punt[0])
-						/ (2 * PI) * 360;
-				if (hoek_vert < angle_of_view_vertical) {
-					verticale_positie = hoek_vert / angle_of_view_vertical;
-					if (boven)
-						verticale_positie *= -1;
-					zichtbaarheid = true;
-				}
+				zichtbaarheid = true;
+				verticale_positie = 0;
 			}
 		}
 	}
