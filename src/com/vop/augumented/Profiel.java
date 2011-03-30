@@ -7,11 +7,14 @@ import android.view.MenuInflater;
 import com.vop.tools.FullscreenActivity;
 
 public class Profiel extends FullscreenActivity {
+	
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.profiel_layout);
+		
 	}
 	//menu openen
 	@Override

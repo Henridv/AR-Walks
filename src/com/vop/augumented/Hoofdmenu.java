@@ -10,8 +10,12 @@ import android.widget.Toast;
 
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.ListViews;
+import com.vop.tools.data.Person;
 
 public class Hoofdmenu extends FullscreenActivity {
+	
+	Person ingelogd;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class Hoofdmenu extends FullscreenActivity {
 	    	Intent myIntent = new Intent(Hoofdmenu.this, StartupActivity.class);
 	    	Hoofdmenu.this.startActivity(myIntent);
 		}
+		
 	}
 	//knoppen
 	public void locaties_klik(View v){
@@ -36,7 +41,7 @@ public class Hoofdmenu extends FullscreenActivity {
     	Hoofdmenu.this.startActivity(myIntent);
 	}
 	public void trajecten_klik(View v){
-    	Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
+    	Intent myIntent = new Intent(Hoofdmenu.this, ListViews.class);
     	Hoofdmenu.this.startActivity(myIntent);
 	}
 	public void profiel_klik(View v){

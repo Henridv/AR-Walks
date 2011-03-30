@@ -3,7 +3,7 @@
 android:id="@+id/widget32"
 android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent">
-<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="naam:" android:id="@+id/textView1" android:layout_x="20dip" android:layout_y="72dip"></TextView>
+<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="naam" android:id="@+id/textView1" android:layout_x="20dip" android:layout_y="72dip"></TextView>
 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="voornaam:" android:id="@+id/textView2" android:layout_x="16dip" android:layout_y="105dip"></TextView>
 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="gsmnr:" android:id="@+id/textView3" android:layout_x="18dip" android:layout_y="138dip"></TextView>
 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="e-mail:" android:id="@+id/textView4" android:layout_x="16dip" android:layout_y="174dip"></TextView>

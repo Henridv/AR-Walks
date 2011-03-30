@@ -43,7 +43,7 @@ public class DBWrapper {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Traject> getTrajects() {
+	public static ArrayList<Traject> getTrajects() {
 		return null;
 	}
 

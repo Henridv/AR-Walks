@@ -35,7 +35,11 @@ public class Trajecten extends FullscreenActivity {
 	    }
 	}
 	
+	
+	
 	private void updateTrajects() {
 		// send request to server
 	}
+	
+	
 }
