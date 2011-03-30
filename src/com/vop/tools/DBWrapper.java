@@ -51,16 +51,16 @@ public class DBWrapper {
 				JSONObject json_data = jArray.getJSONObject(i);
 				int id					= json_data.getInt("id");
 				String name				= json_data.getString("name");
-				Person person			= getProfile(json_data.getInt("id"));
+				Person person			= getProfile(json_data.getInt("person"));
 				ArrayList<Point> walk	= new ArrayList<Point>();
-				/*
+				
 				JSONArray walkArray = json_data.getJSONArray("walk");
 				for (int j = 0; j < walkArray.length(); j++) {
 					JSONObject walkObject = walkArray.getJSONObject(j);
-					walk.add(new Point(walkObject.getDouble("latitude"), walkObject.getDouble("longitude"), walkObject.getDouble("altitude")));
-				}*/
+					walk.add(new Point(walkObject.getDouble("lat"), walkObject.getDouble("lng"), walkObject.getDouble("alt")));
+				}
 				
-				t.add(new Traject(id, name, person, null));
+				t.add(new Traject(id, name, person, walk));
 			}
 		} catch (JSONException e) {
 			Log.e(log_tag, "Error parsing data " + e.toString());

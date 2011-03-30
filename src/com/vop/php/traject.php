@@ -52,13 +52,22 @@ switch($action) {
 				INNER JOIN friends ON id=friendId
 			WHERE personId=".$_POST['id'];
 	default:
-		die("no data available");
+		//die("no data available");
 }
 
 $result = pg_query($conn, $query);
 while ($traject = pg_fetch_assoc($result)) {
-	//$query = "
-	//	SELECT X(PointN(walk, "
+	$id = $traject["id"];
+	
+	$query = "
+		SELECT X(geom(dump(walk))) as lat, Y(geom(dump(walk))) as lng, Z(geom(dump(walk))) as alt
+		FROM trajects
+		WHERE id=$id";
+	$point_res = pg_query($conn, $query);
+	while ($point = pg_fetch_assoc($point_res)) {
+		$walk[] = $point;
+	}
+	$traject["walk"] = $walk;
 	$output[] = $traject;
 }
 
