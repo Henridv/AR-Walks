@@ -114,6 +114,13 @@ public class Marker {
 		alt = altitude;
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, roll);
 	}
+	public Marker(String naam,String com,double longitude,double latitude,double altitude){
+		titel = naam;
+		info = com;
+		lat = latitude;
+		lng = longitude;
+		alt = altitude;
+	}
 
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double roll) {
