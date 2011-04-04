@@ -107,8 +107,9 @@ public class locatie_map2 extends MapActivity {
 
 		this.provider = locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
-		Traject t;//traject nog afhalen, functie wel al ge•mplementeerd
-		//showTrajectOnMap(t);
+		
+		showTrajectOnMap(DBWrapper.getTrajects().get(0));
+		
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
 				locationListener);
