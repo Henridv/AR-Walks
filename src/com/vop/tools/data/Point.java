@@ -16,6 +16,12 @@ public class Point {
 		this.longitude = longitude;
 		this.altitude = altitude;
 	}
+	
+	public Point(){
+		this.latitute=0.0;
+		this.longitude=0.0;
+		this.altitude=0.0;
+	}
 
 	public Double getAltitude() {
 		return altitude;

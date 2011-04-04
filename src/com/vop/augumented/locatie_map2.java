@@ -1,6 +1,7 @@
 package com.vop.augumented;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.content.Context;
@@ -28,6 +29,8 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Point;
+import com.vop.tools.data.Traject;
 
 public class locatie_map2 extends MapActivity {
 	LocationManager locationManager;
@@ -104,9 +107,26 @@ public class locatie_map2 extends MapActivity {
 
 		this.provider = locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
+		Traject t;//traject nog afhalen, functie wel al ge•mplementeerd
+		//showTrajectOnMap(t);
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
 				locationListener);
+	}
+
+	private void showTrajectOnMap(Traject t) {
+		VopApplication app = (VopApplication) content ;	
+		Iterator <Point> it = t.getWalk().iterator();
+		Point tmp = new Point();
+		Marker[] POI = new Marker[t.getWalk().size()];
+		int i=0;
+		while (it.hasNext()) {
+			tmp = it.next();
+			POI[i] = new Marker("Punt "+i,"Punt van wandeling",
+					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude());
+			i++;
+			}
+			app.setPunten(POI);
 	}
 
 	private void updateWithNewLocation(Location location) {
@@ -133,6 +153,7 @@ public class locatie_map2 extends MapActivity {
 		construeer();
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
+		
 		myLocationOverlay.enableCompass();
 
 		myLocationOverlay.runOnFirstFix(new Runnable() {
