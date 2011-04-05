@@ -81,15 +81,15 @@ public class locatie_map2 extends MapActivity {
 				R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
 		try {
-		    // Create the file
+			// Create the file
 			initMap();
 		} catch (Exception e) {
-		    // Print out the exception that occurred
-			Toast toast = Toast.makeText(getApplicationContext(),"hello", Toast.LENGTH_SHORT);
+			// Print out the exception that occurred
+			Toast toast = Toast.makeText(getApplicationContext(), "hello",
+					Toast.LENGTH_SHORT);
 			toast.show();
 			Log.w("hello", e.getMessage());
 		}
-		
 
 		this.mapController.setZoom(17);
 		this.context = Context.LOCATION_SERVICE;
@@ -150,23 +150,24 @@ public class locatie_map2 extends MapActivity {
 					POI[i].getTitel());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
-		
+
 		myLocationOverlay.enableMyLocation();
 		if (POI.length != 0)
 			mapView.getOverlays().add(itemizedoverlay);
-}
+	}
+
 	public void construeer() {
-				VopApplication app = (VopApplication) content ;	
-				Marker POI[];
-				ArrayList<com.vop.tools.data.Location> loc = DBWrapper
-						.getLocations(2);
-				POI = new Marker[loc.size()];
-				int j = 0;
-				for (com.vop.tools.data.Location l : loc) {
-					POI[j] = new Marker(l.getName(), l.getDescription(),
-							l.getLongitude(), l.getLatitute(),l.getAltitude());
-					j++;
-				}
-				app.setPunten(POI);
+		VopApplication app = (VopApplication) content;
+		Marker POI[];
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+		POI = new Marker[loc.size()];
+		int j = 0;
+		for (com.vop.tools.data.Location l : loc) {
+			POI[j] = new Marker(l.getName(), l.getDescription(),
+					l.getLongitude(), l.getLatitute(), l.getAltitude(),
+					getApplicationContext());
+			j++;
+		}
+		app.setPunten(POI);
 	}
 }

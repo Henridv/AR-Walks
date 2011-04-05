@@ -1,5 +1,8 @@
 package com.vop.augumented;
 
+import com.vop.tools.VopApplication;
+
+import android.content.Context;
 import android.location.Location;
 
 public class Marker {
@@ -114,22 +117,19 @@ public class Marker {
 		alt = altitude;
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, roll);
 	}
-	public Marker(String naam,String com,double longitude,double latitude,double altitude){
+
+	public Marker(String naam, String com, double longitude, double latitude,
+			double altitude, Context context) {
 		titel = naam;
 		info = com;
 		lat = latitude;
 		lng = longitude;
 		alt = altitude;
-	}
 
-	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
-			double alt_loc, double roll) {
-		double hoek;
-		zichtbaarheid = false;
-		horizontale_positie = -1;
-		double x = Math.abs(lng - lng_loc);
-		double y = Math.abs(lat - lat_loc);
-		
+		VopApplication app = (VopApplication) context;
+		double lng_loc = app.getLng();
+		double lat_loc = app.getLat();
+
 		float afstand_tot_punt[] = new float[3];
 		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
 		afstand_x = afstand_tot_punt[0];
@@ -139,9 +139,35 @@ public class Marker {
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
 		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 /afstand_marker);
-		if(lat-lat_loc <0) afstand_y*=-1;
-		if(lng-lng_loc<0) afstand_x*=-1;
+		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
+		if (lat - lat_loc < 0)
+			afstand_y *= -1;
+		if (lng - lng_loc < 0)
+			afstand_x *= -1;
+	}
+
+	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
+			double alt_loc, double roll) {
+		double hoek;
+		zichtbaarheid = false;
+		horizontale_positie = -1;
+		double x = Math.abs(lng - lng_loc);
+		double y = Math.abs(lat - lat_loc);
+
+		float afstand_tot_punt[] = new float[3];
+		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
+		afstand_x = afstand_tot_punt[0];
+		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc,
+				afstand_tot_punt);
+		afstand_y = afstand_tot_punt[0];
+		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
+		afstand_marker = afstand_tot_punt[0];
+		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
+		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
+		if (lat - lat_loc < 0)
+			afstand_y *= -1;
+		if (lng - lng_loc < 0)
+			afstand_x *= -1;
 		binnen_afstand = false;
 		if (afstand_tot_punt[0] < afstand) {
 			binnen_afstand = true;

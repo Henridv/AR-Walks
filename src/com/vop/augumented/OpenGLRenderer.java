@@ -23,103 +23,87 @@ import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+import android.widget.Toast;
 
 public class OpenGLRenderer implements Renderer {
-	private final Group root;
 	private Cube cube;
 	Activity activiteit;
+	private Quad quad;
+
+	private float xrot; // X Rotation ( NEW )
+	private float yrot; // Y Rotation ( NEW )
+	private float zrot; // Z Rotation ( NEW )
 
 	public OpenGLRenderer(Activity act) {
-		// Initialize our root.
-		Group group = new Group();
-		root = group;
-		cube = new Cube(1, 1, 1);
+		// cube = new Cube(1, 1, 1);
 		activiteit = act;
+		quad = new Quad();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(javax.microedition
-	 * .khronos.opengles.GL10, javax.microedition.khronos.egl.EGLConfig)
-	 */
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Set the background color to black ( rgba ).
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-		// Enable Smooth Shading, default not really needed.
-		gl.glShadeModel(GL10.GL_SMOOTH);
-		// Depth buffer setup.
-		gl.glClearDepthf(1.0f);
-		// Enables depth testing.
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-		// The type of depth testing to do.
-		gl.glDepthFunc(GL10.GL_LEQUAL);
-		// Really nice perspective calculations.
+		gl.glEnable(GL10.GL_BLEND); // enable transparency blending
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
+		// transparency
+		quad.loadGLTexture(gl, this.activiteit);
+
+		gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping ( NEW )
+		gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
+		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Yellow Background
+		gl.glClearDepthf(1.0f); // Depth Buffer Setup
+		gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
+		gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
+
+		// Really Nice Perspective Calculations
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.microedition.
-	 * khronos.opengles.GL10)
-	 */
 	public void onDrawFrame(GL10 gl) {
-		// Clears the screen and depth buffer.
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		try {
+			// Clears the screen and depth buffer.
+			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
-		VopApplication app = (VopApplication) activiteit
-				.getApplicationContext();
-		double lng = app.getLng();
-		double lat = app.getLat();
-		double alt = app.getAlt();
-		double roll = app.getRoll();
+			VopApplication app = (VopApplication) activiteit
+					.getApplicationContext();
 
-		Marker POI[];
-		POI = app.getPunten();
-		for (int i = 0; i < POI.length; i++) {
-			gl.glLoadIdentity();
-			if (TutorialPartI.values != null) {
-				gl.glLoadMatrixf(TutorialPartI.values, 0);
-				gl.glTranslatef(POI[i].getAfstand_x() * 20,
-						POI[i].getAfstand_y() * 20, 0);
-				cube.draw(gl);
+			Marker POI[];
+			POI = app.getPunten();
+			for (int i = 0; i < POI.length; i++) {
+				gl.glLoadIdentity();
+				if (app.getValues() != null) {
+					// gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //Z
+					gl.glLoadMatrixf(app.getValues(), 0);
+					// gl.glTranslatef(0.0f, 0.0f, -1.0f); // Move 5 units into
+					// the
+					// screen
+					// gl.glScalef(100f, 100f, 100f);
+
+					gl.glTranslatef(POI[i].getAfstand_x() * 10f,
+							POI[i].getAfstand_y() * 10f, 0);
+					gl.glRotatef(xrot, 0.0f, 0.0f, 1.0f); // Z
+					quad.draw(gl);
+					xrot += 0.3f;
+				}
 			}
+		} catch (Exception e) {
+
 		}
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(javax.microedition
-	 * .khronos.opengles.GL10, int, int)
-	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		// Sets the current view port to the new size.
-		gl.glViewport(0, 0, width, height);
-		// Select the projection matrix
-		gl.glMatrixMode(GL10.GL_PROJECTION);
-		// Reset the projection matrix
-		gl.glLoadIdentity();
-		// Calculate the aspect ratio of the window
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
-				1000.0f);
-		// Select the modelview matrix
-		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		// Reset the modelview matrix
-		gl.glLoadIdentity();
-	}
+		if (height == 0) { // Prevent A Divide By Zero By
+			height = 1; // Making Height Equal One
+		}
 
-	/**
-	 * Adds a mesh to the root.
-	 * 
-	 * @param mesh
-	 *            the mesh to add.
-	 */
-	public void addMesh(Mesh mesh) {
-		root.add(mesh);
+		gl.glViewport(0, 0, width, height); // Reset The Current Viewport
+		gl.glMatrixMode(GL10.GL_PROJECTION); // Select The Projection Matrix
+		gl.glLoadIdentity(); // Reset The Projection Matrix
+
+		// Calculate The Aspect Ratio Of The Window
+		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
+				100.0f);
+
+		gl.glMatrixMode(GL10.GL_MODELVIEW); // Select The Modelview Matrix
+		gl.glLoadIdentity(); // Reset The Modelview Matrix
 	}
 }

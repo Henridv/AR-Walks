@@ -13,9 +13,18 @@ public class VopApplication extends Application {
 	private double lat;
 	private double alt;
 
-	private double roll;
+	private float roll;
 	private double pitch;
 	private double heading;
+	private float values[];
+
+	public float[] getValues() {
+		return values;
+	}
+
+	public void setValues(float[] values) {
+		this.values = values;
+	}
 
 	public double getLng() {
 		return lng;
@@ -41,11 +50,11 @@ public class VopApplication extends Application {
 		this.alt = alt;
 	}
 
-	public double getRoll() {
+	public float getRoll() {
 		return roll;
 	}
 
-	public void setRoll(double roll) {
+	public void setRoll(float roll) {
 		this.roll = roll;
 	}
 
@@ -88,6 +97,20 @@ public class VopApplication extends Application {
 
 	public String putState(String k, String v) {
 		return state.put(k, v);
+	}
+
+	private boolean isLocked = false;
+
+	public synchronized void lock() throws InterruptedException {
+		while (isLocked) {
+			wait();
+		}
+		isLocked = true;
+	}
+
+	public synchronized void unlock() {
+		isLocked = false;
+		notify();
 	}
 
 }

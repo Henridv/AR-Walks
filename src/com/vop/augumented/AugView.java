@@ -204,10 +204,10 @@ public class AugView extends View {
 				double lng = app.getLng();
 				double lat = app.getLat();
 				double alt = app.getAlt();
-				//double roll = app.getRoll();
-				
+				// double roll = app.getRoll();
+
 				double roll = 0;
-				
+
 				Marker POI[];
 				ArrayList<com.vop.tools.data.Location> loc = DBWrapper
 						.getLocations(2);

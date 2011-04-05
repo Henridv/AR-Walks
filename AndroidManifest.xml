@@ -29,7 +29,7 @@
         <uses-library android:name="com.google.android.maps"/>
         <activity android:name="Locatie_opslaan"></activity>
         <activity android:name="ListView_Locaties"></activity>
-        <activity android:name="TutorialPartI"></activity>
+        <activity android:name="TutorialPartI" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="locatie_map2"></activity>
     </application>
 </manifest>
