@@ -13,16 +13,6 @@ import com.vop.tools.VopApplication;
 
 public class Hoofdmenu extends FullscreenActivity {
 
-	private static int id;
-
-	public static int getId() {
-		return id;
-	}
-
-	public static void setId(int id) {
-		Hoofdmenu.id = id;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

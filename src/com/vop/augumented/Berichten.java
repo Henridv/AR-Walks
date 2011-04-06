@@ -13,12 +13,4 @@ public class Berichten extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.berichten_layout);
 	}
-
-	// menu openen
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.berichten_menu, menu);
-		return true;
-	}
 }

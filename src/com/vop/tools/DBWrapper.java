@@ -51,7 +51,7 @@ public class DBWrapper {
 				JSONObject json_data = jArray.getJSONObject(i);
 				int id					= json_data.getInt("id");
 				String name				= json_data.getString("name");
-				Person person			= getProfile(json_data.getInt("person"));
+				Person person			= getProfile(json_data.getInt("pers_id"));
 				ArrayList<Point> walk	= new ArrayList<Point>();
 				
 				JSONArray walkArray = json_data.getJSONArray("walk");
@@ -119,11 +119,12 @@ public class DBWrapper {
 	 *            authentication via email
 	 * @return
 	 */
-	public static Person getProfile(String email) {
+	public static Person getProfile(String email, String password) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "profile"));
 		postValues.add(new BasicNameValuePair("email", email));
+		postValues.add(new BasicNameValuePair("password", password));
 
 		Person p = null;
 		try {
