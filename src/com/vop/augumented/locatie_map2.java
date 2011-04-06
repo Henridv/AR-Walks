@@ -84,6 +84,7 @@ public class locatie_map2 extends MapActivity {
 		Drawable drawable1 = this.getResources().getDrawable(
 				R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
+		this.walks = DBWrapper.getTrajects();
 		try {
 		    // Create the file
 			initMap();
@@ -109,7 +110,7 @@ public class locatie_map2 extends MapActivity {
 		this.provider = locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
 		
-		this.walks = DBWrapper.getTrajects();
+		
 		
 		
 		updateWithNewLocation(location);
