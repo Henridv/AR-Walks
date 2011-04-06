@@ -30,5 +30,6 @@
         <activity android:name="Locatie_opslaan"></activity>
         <activity android:name="ListView_Locaties"></activity>
         <activity android:name="TutorialPartI"></activity>
+        <activity android:name="locatie_map2"></activity>
     </application>
 </manifest>

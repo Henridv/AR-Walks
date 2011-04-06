@@ -7,18 +7,11 @@ if (!isset($_POST['action']))
 $action = $_POST['action'];
 
 switch($action) {
-	case "profile":
-		if (isset($_POST['email'])) {
-			$query = "
-				SELECT id, name, email, phone, password
-				FROM persons
-				WHERE email = '".$_POST['email']."'";
-		} else if (isset($_POST['id'])) {
-			$query = "
-				SELECT id, name, email, phone, password
-				FROM persons
-				WHERE email = '".$_POST['id']."'";
-		}
+	case "trajects":
+		$query = "
+			SELECT id, name, pers_id as person
+			FROM trajects
+			ORDER BY id";
 		break;
 		
 	case "adduser":
@@ -59,12 +52,24 @@ switch($action) {
 				INNER JOIN friends ON id=friendId
 			WHERE personId=".$_POST['id'];
 	default:
-		die("no data available");
+		//die("no data available");
 }
 
 $result = pg_query($conn, $query);
-while ($person = pg_fetch_assoc($result))
-	$output[] = $person;
+while ($traject = pg_fetch_assoc($result)) {
+	$id = $traject["id"];
+	
+	$query = "
+		SELECT X(geom(dump(walk))) as lat, Y(geom(dump(walk))) as lng, Z(geom(dump(walk))) as alt
+		FROM trajects
+		WHERE id=$id";
+	$point_res = pg_query($conn, $query);
+	while ($point = pg_fetch_assoc($point_res)) {
+		$walk[] = $point;
+	}
+	$traject["walk"] = $walk;
+	$output[] = $traject;
+}
 
 print(json_encode($output));
 ?>

@@ -83,7 +83,8 @@ public class OpenGLRenderer implements Renderer {
 			gl.glLoadIdentity();
 			if (TutorialPartI.values != null) {
 				gl.glLoadMatrixf(TutorialPartI.values, 0);
-				gl.glTranslatef(POI[i].getAfstand_x()*10, POI[i].getAfstand_y()*10, 0);
+				gl.glTranslatef(POI[i].getAfstand_x() * 20,
+						POI[i].getAfstand_y() * 20, 0);
 				cube.draw(gl);
 			}
 		}
