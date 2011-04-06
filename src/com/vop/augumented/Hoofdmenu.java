@@ -10,13 +10,11 @@ import android.widget.Toast;
 
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
-import com.vop.tools.data.ListViews;
 import com.vop.tools.data.Person;
 
 public class Hoofdmenu extends FullscreenActivity {
 	
-	Person ingelogd;
-
+	
 	private static int id;
 
 	public static int getId() {
