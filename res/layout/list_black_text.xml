@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
@@ -9,3 +10,4 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:textColor = "#000000"
 />
+</LinearLayout>
