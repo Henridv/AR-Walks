@@ -2,8 +2,6 @@ package com.vop.tools.data;
 
 import java.util.ArrayList;
 
-import android.util.Pair;
-
 /**
  * Represents a Traject
  * 
@@ -15,10 +13,10 @@ public class Traject {
 	private final Integer id;
 	private String name;
 	private Person person;
-	private ArrayList<Pair<Double, Double>> walk;
+	private ArrayList<Point> walk;
 
 	public Traject(Integer id, String name, Person person,
-			ArrayList<Pair<Double, Double>> walk) {
+			ArrayList<Point> walk) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -27,7 +25,7 @@ public class Traject {
 	}
 
 	public Traject(String name, Person person,
-			ArrayList<Pair<Double, Double>> walk) {
+			ArrayList<Point> walk) {
 		super();
 		this.id = null;
 		this.name = name;
@@ -47,7 +45,7 @@ public class Traject {
 		return person;
 	}
 
-	public ArrayList<Pair<Double, Double>> getWalk() {
+	public ArrayList<Point> getWalk() {
 		return walk;
 	}
 
@@ -59,8 +57,12 @@ public class Traject {
 		this.person = person;
 	}
 
-	public void setWalk(ArrayList<Pair<Double, Double>> walk) {
+	public void setWalk(ArrayList<Point> walk) {
 		this.walk = walk;
+	}
+	
+	public void addPoint(Point p) {
+		walk.add(p);
 	}
 
 }
