@@ -127,7 +127,7 @@ public class locatie_map2 extends MapActivity {
 		while (it.hasNext()) {
 			tmp = it.next();
 			POI[i] = new Marker("Punt "+i,"Punt van wandeling",
-					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude());
+					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude(),content);
 			i++;
 			}
 			app.setPunten(POI);

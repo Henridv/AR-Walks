@@ -29,10 +29,8 @@ public class OpenGLRenderer implements Renderer {
 	private Cube cube;
 	Activity activiteit;
 	private Quad quad;
+	private float xrot;
 
-	private float xrot; // X Rotation ( NEW )
-	private float yrot; // Y Rotation ( NEW )
-	private float zrot; // Z Rotation ( NEW )
 
 	public OpenGLRenderer(Activity act) {
 		// cube = new Cube(1, 1, 1);
@@ -76,12 +74,10 @@ public class OpenGLRenderer implements Renderer {
 					// the
 					// screen
 					// gl.glScalef(100f, 100f, 100f);
-
 					gl.glTranslatef(POI[i].getAfstand_x() * 10f,
 							POI[i].getAfstand_y() * 10f, 0);
-					gl.glRotatef(xrot, 0.0f, 0.0f, 1.0f); // Z
+					//gl.glRotatef(app.getRoll(), 0.0f, 0.0f, 1.0f); // Z
 					quad.draw(gl);
-					xrot += 0.3f;
 				}
 			}
 		} catch (Exception e) {

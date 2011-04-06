@@ -17,6 +17,15 @@ public class VopApplication extends Application {
 	private double pitch;
 	private double heading;
 	private float values[];
+	private float max_afstand;
+
+	public float getMax_afstand() {
+		return max_afstand;
+	}
+
+	public void setMax_afstand(float max_afstand) {
+		this.max_afstand = max_afstand;
+	}
 
 	public float[] getValues() {
 		return values;

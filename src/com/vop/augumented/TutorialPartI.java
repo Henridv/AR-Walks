@@ -6,6 +6,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,6 +18,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -79,7 +83,7 @@ public class TutorialPartI extends Activity {
 		Sensor mfSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		sm.registerListener(myAccelerometerListener, aSensor,
 				SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(myMagneticFieldListener, mfSensor,
+		sm.registerListener(myAccelerometerListener, mfSensor,
 				SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
@@ -116,39 +120,25 @@ public class TutorialPartI extends Activity {
 		public void onSensorChanged(SensorEvent sensorEvent) {
 			if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 				accelerometerValues = sensorEvent.values;
-			}
-			r = new float[16];
-			SensorManager.getRotationMatrix(r, null, accelerometerValues,
-					magneticFieldValues);
-			float[] outR = new float[16];
-			float[] values=new float[3];
-			SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y,
-					SensorManager.AXIS_MINUS_X, outR);
-			VopApplication app = (VopApplication) getApplicationContext();
-			try {
-				app.lock();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			app.setValues(outR);
-			SensorManager.getRotationMatrix(r, null, accelerometerValues,
-					magneticFieldValues);
-			SensorManager.getOrientation(r, values);
-			app.setRoll((float) Math.toDegrees(values[0]));
-			app.unlock();
-
-		}
-
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		}
-	};
-	final SensorEventListener myMagneticFieldListener = new SensorEventListener() {
-		public void onSensorChanged(SensorEvent sensorEvent) {
-			if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+			} else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
 				magneticFieldValues = sensorEvent.values;
 			}
-
+			if (magneticFieldValues != null && accelerometerValues != null) {
+				r = new float[16];
+				SensorManager.getRotationMatrix(r, null, accelerometerValues,
+						magneticFieldValues);
+				VopApplication app = (VopApplication) getApplicationContext();
+				float[] values = new float[3];
+				SensorManager.getOrientation(r, values);
+				values[0] = (float) Math.toDegrees(values[0]);
+				values[1] = (float) Math.toDegrees(values[1]);
+				values[2] = (float) Math.toDegrees(values[2]);
+				app.setRoll(0);
+				float[] outR = new float[16];
+				SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y,
+						SensorManager.AXIS_MINUS_X, outR);
+				app.setValues(outR);
+			}
 		}
 
 		public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -168,5 +158,72 @@ public class TutorialPartI extends Activity {
 			j++;
 		}
 		app.setPunten(POI);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.layout.locaties_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		VopApplication app = (VopApplication) getApplicationContext();
+		switch (item.getItemId()) {
+		case R.id.kaart:
+			Intent myIntent = new Intent(TutorialPartI.this, locatie_map2.class);
+			TutorialPartI.this.startActivity(myIntent);
+			finish();
+			return true;
+		case R.id.km_1:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			app.setMax_afstand(1000);
+			return true;
+		case R.id.km_5:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			app.setMax_afstand(5000);
+			return true;
+		case R.id.km_10:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			app.setMax_afstand(10000);
+			return true;
+		case R.id.km_20:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			app.setMax_afstand(20000);
+			return true;
+		case R.id.m_500:
+			if (item.isChecked())
+				item.setChecked(true);
+			else
+				item.setChecked(false);
+			app.setMax_afstand(500);
+			return true;
+		case R.id.opslaan:
+			myIntent = new Intent(TutorialPartI.this, Locatie_opslaan.class);
+			TutorialPartI.this.startActivity(myIntent);
+			return true;
+		case R.id.refresh:
+			construeer();
+			return true;
+		case R.id.lijstloc:
+			myIntent = new Intent(TutorialPartI.this, ListView_Locaties.class);
+			TutorialPartI.this.startActivity(myIntent);
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }
