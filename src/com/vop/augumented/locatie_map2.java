@@ -193,5 +193,11 @@ public class locatie_map2 extends MapActivity {
 					j++;
 				}
 				app.setPunten(POI);
+				
+				//voor trajecten
+				ArrayList<Traject> trajecten = DBWrapper.getTrajects();
+				for(int i=0;i<trajecten.size();i++){
+				showTrajectOnMap(DBWrapper.getTrajects().get(i));
+				}
 	}
 }
