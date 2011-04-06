@@ -108,7 +108,10 @@ public class locatie_map2 extends MapActivity {
 		this.provider = locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
 		
-		showTrajectOnMap(DBWrapper.getTrajects().get(0));
+		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
+		for(int i=0;i<trajecten.size();i++){
+		showTrajectOnMap(DBWrapper.getTrajects().get(i));
+		}
 		
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
@@ -190,5 +193,11 @@ public class locatie_map2 extends MapActivity {
 					j++;
 				}
 				app.setPunten(POI);
+				
+				//voor trajecten
+				ArrayList<Traject> trajecten = DBWrapper.getTrajects();
+				for(int i=0;i<trajecten.size();i++){
+				showTrajectOnMap(DBWrapper.getTrajects().get(i));
+				}
 	}
 }

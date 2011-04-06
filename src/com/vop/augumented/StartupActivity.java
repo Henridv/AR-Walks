@@ -27,33 +27,31 @@ public class StartupActivity extends FullscreenActivity {
 
 	// go-klik
 	public void go_klik(View v) {
-		final EditText emailbox = (EditText) findViewById(R.id.invul_box);
+		final EditText emailbox = (EditText) findViewById(R.id.login_email);
+		final EditText password = (EditText) findViewById(R.id.login_password);
+		
 		final VopApplication app = (VopApplication) getApplicationContext();
 		app.putState("login", "true");
 		final ProgressDialog dialog = ProgressDialog.show(this, "",
 				"Bezig met inloggen. Even geduld...", true);
 		new Thread() {
 			public void run() {
-				try {
-					Person p = DBWrapper.getProfile(emailbox.getText()
-							.toString());
-					if (p != null) {
-						app.putState("userid", p.getId().toString());
-						Intent myIntent = new Intent(StartupActivity.this,
-								Hoofdmenu.class);
-						StartupActivity.this.startActivity(myIntent);
-						dialog.dismiss();
-					} else {
-						dialog.dismiss();
-						runOnUiThread(new Runnable() {
-							public void run() {
-								Toast.makeText(getApplicationContext(),
-										"emailadres is niet gevonden",
-										Toast.LENGTH_SHORT).show();
-							}
-						});
-					}
-				} catch (Exception e) {
+				Person p = DBWrapper.getProfile(emailbox.getText().toString(), password.getText().toString());
+				if (p != null) {
+					app.putState("userid", p.getId().toString());
+					Intent myIntent = new Intent(StartupActivity.this,
+							Hoofdmenu.class);
+					StartupActivity.this.startActivity(myIntent);
+					dialog.dismiss();
+				} else {
+					dialog.dismiss();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(getApplicationContext(),
+									"emailadres is niet gevonden",
+									Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 			}
 		}.start();
