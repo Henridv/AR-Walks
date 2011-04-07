@@ -125,27 +125,8 @@ public class Marker {
 		lat = latitude;
 		lng = longitude;
 		alt = altitude;
-
-		VopApplication app = (VopApplication) context;
-		double lng_loc = app.getLng();
-		double lat_loc = app.getLat();
-
-		float afstand_tot_punt[] = new float[3];
-		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
-		afstand_x = afstand_tot_punt[0];
-		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc,
-				afstand_tot_punt);
-		afstand_y = afstand_tot_punt[0];
-		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
-		afstand_marker = afstand_tot_punt[0];
-		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
-		if (lat - lat_loc < 0)
-			afstand_y *= -1;
-		if (lng - lng_loc < 0)
-			afstand_x *= -1;
 	}
-
+	
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double roll) {
 		double hoek;

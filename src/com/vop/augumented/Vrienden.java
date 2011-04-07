@@ -1,22 +1,61 @@
 package com.vop.augumented;
 
+import java.util.ArrayList;
+
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
+import com.vop.tools.VopApplication;
+import com.vop.tools.data.Person;
+import com.vop.tools.data.Traject;
 
-public class Vrienden extends FullscreenActivity {
+public class Vrienden extends ListActivity {
 
 	private DBWrapper db;
+	static ArrayList<Person> vrienden;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.vrienden_layout);
+
+		VopApplication app = (VopApplication) getApplicationContext();
+		int id = Integer.parseInt(app.getState().get("userid"));
+
+		vrienden = DBWrapper.getFriends(id);
+
+		String[] res = new String[vrienden.size()];
+		{
+			for (int i = 0; i < vrienden.size(); i++) {
+				res[i] = vrienden.get(i).getName();
+			}
+		}
+
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.vrienden_layout,
+				res));
+
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// When clicked, show a toast with the TextView text
+				Toast.makeText(getApplicationContext(),
+						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+			}
+		});
 		db = new DBWrapper();
 	}
 

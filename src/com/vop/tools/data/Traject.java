@@ -15,8 +15,7 @@ public class Traject {
 	private Person person;
 	private ArrayList<Point> walk;
 
-	public Traject(Integer id, String name, Person person,
-			ArrayList<Point> walk) {
+	public Traject(Integer id, String name, Person person, ArrayList<Point> walk) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -24,8 +23,7 @@ public class Traject {
 		this.walk = walk;
 	}
 
-	public Traject(String name, Person person,
-			ArrayList<Point> walk) {
+	public Traject(String name, Person person, ArrayList<Point> walk) {
 		super();
 		this.id = null;
 		this.name = name;
@@ -60,7 +58,7 @@ public class Traject {
 	public void setWalk(ArrayList<Point> walk) {
 		this.walk = walk;
 	}
-	
+
 	public void addPoint(Point p) {
 		walk.add(p);
 	}

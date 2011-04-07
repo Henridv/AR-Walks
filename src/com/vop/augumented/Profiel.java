@@ -12,6 +12,7 @@ public class Profiel extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profiel_layout);
+
 	}
 
 	// menu openen

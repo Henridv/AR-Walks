@@ -1,18 +1,56 @@
 package com.vop.augumented;
 
+import java.util.ArrayList;
+
+import com.vop.augumented.R;
+import com.vop.tools.DBWrapper;
+import com.vop.tools.data.Traject;
+
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.vop.tools.FullscreenActivity;
+public class Trajecten extends ListActivity {
 
-public class Trajecten extends FullscreenActivity {
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.trajecten_layout);
+		//test hallo
+		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
+
+		String[] res = new String[trajecten.size()];
+		{
+			for (int i = 0; i < trajecten.size(); i++) {
+				res[i] = "naam traject: " + trajecten.get(i).getName() + ", "
+						+ "aangemaakt door " + trajecten.get(i).getPerson();
+			}
+		}
+		
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.trajecten_layout, res));
+
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// When clicked, show a toast with the TextView text
+				Toast.makeText(getApplicationContext(),
+						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override
@@ -37,4 +75,5 @@ public class Trajecten extends FullscreenActivity {
 	private void updateTrajects() {
 		// send request to server
 	}
+
 }
