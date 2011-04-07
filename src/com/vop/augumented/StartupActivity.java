@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +25,17 @@ public class StartupActivity extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startupactivity_layout);
 		context = getApplicationContext();
+		
+		final EditText edittext = (EditText) findViewById(R.id.login_password);
+		edittext.setOnKeyListener(new OnKeyListener() {
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+		          go_klik(v);
+		          return true;
+		        }
+		        return false;
+		    }
+		});
 	}
 
 	// go-klik

@@ -51,7 +51,7 @@ public class DBWrapper {
 				JSONObject json_data = jArray.getJSONObject(i);
 				int id = json_data.getInt("id");
 				String name = json_data.getString("name");
-				Person person = getProfile(json_data.getInt("pers_id"));
+				Person person = getProfile(json_data.getInt("person"));
 				ArrayList<Point> walk = new ArrayList<Point>();
 
 				JSONArray walkArray = json_data.getJSONArray("walk");

@@ -17,7 +17,7 @@ switch($action) {
 			$query = "
 				SELECT id, name, email, phone, password
 				FROM persons
-				WHERE email = '".$_POST['id']."'";
+				WHERE id = '".$_POST['id']."'";
 		}
 		break;
 		
