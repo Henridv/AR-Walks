@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.vop.augumented.R;
 import com.vop.tools.DBWrapper;
+import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.data.Traject;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,14 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Trajecten extends ListActivity {
-
-	
+public class Trajecten extends FullscreenListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//test hallo
+		// test hallo
 		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
 
 		String[] res = new String[trajecten.size()];
@@ -36,7 +34,7 @@ public class Trajecten extends ListActivity {
 						+ "aangemaakt door " + trajecten.get(i).getPerson();
 			}
 		}
-		
+
 		setListAdapter(new ArrayAdapter<String>(this,
 				R.layout.trajecten_layout, res));
 

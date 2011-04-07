@@ -2,7 +2,6 @@ package com.vop.augumented;
 
 import java.util.ArrayList;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,14 +15,12 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.vop.tools.DBWrapper;
-import com.vop.tools.FullscreenActivity;
+import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-import com.vop.tools.data.Traject;
 
-public class Vrienden extends ListActivity {
+public class Vrienden extends FullscreenListActivity {
 
-	private DBWrapper db;
 	static ArrayList<Person> vrienden;
 
 	@Override
@@ -56,7 +53,6 @@ public class Vrienden extends ListActivity {
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 			}
 		});
-		db = new DBWrapper();
 	}
 
 	// menu openen
@@ -72,9 +68,9 @@ public class Vrienden extends ListActivity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"u selecteerde:" + db.getFriends(0), Toast.LENGTH_SHORT);
-			toast.show();
+			Toast.makeText(getApplicationContext(),
+					"u selecteerde:" + DBWrapper.getFriends(0),
+					Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
