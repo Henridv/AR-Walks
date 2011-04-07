@@ -26,7 +26,7 @@ public class Trajecten extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		//test hallo
 		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
 
 		String[] res = new String[trajecten.size()];
