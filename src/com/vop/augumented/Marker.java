@@ -1,5 +1,8 @@
 package com.vop.augumented;
 
+import com.vop.tools.VopApplication;
+
+import android.content.Context;
 import android.location.Location;
 
 public class Marker {
@@ -116,14 +119,14 @@ public class Marker {
 	}
 
 	public Marker(String naam, String com, double longitude, double latitude,
-			double altitude) {
+			double altitude, Context context) {
 		titel = naam;
 		info = com;
 		lat = latitude;
 		lng = longitude;
 		alt = altitude;
 	}
-
+	
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double roll) {
 		double hoek;

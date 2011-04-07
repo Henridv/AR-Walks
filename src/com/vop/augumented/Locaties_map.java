@@ -210,7 +210,8 @@ public class Locaties_map extends MapActivity {
 		int j = 0;
 		for (com.vop.tools.data.Location l : loc) {
 			POI[j] = new Marker(l.getName(), l.getDescription(),
-					l.getLongitude(), l.getLatitute(), l.getAltitude());
+					l.getLongitude(), l.getLatitute(), l.getAltitude(),
+					getApplicationContext());
 			j++;
 		}
 		app.setPunten(POI);

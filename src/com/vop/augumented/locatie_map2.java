@@ -123,8 +123,8 @@ public class locatie_map2 extends MapActivity {
 		int i = 0;
 		while (it.hasNext()) {
 			tmp = it.next();
-			POI[i] = new Marker("Punt " + i, "Punt van wandeling",
-					tmp.getLongitude(), tmp.getLatitute(), tmp.getAltitude());
+			POI[i] = new Marker("Punt "+i,"Punt van wandeling",
+					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude(),content);
 			i++;
 		}
 
@@ -190,17 +190,18 @@ public class locatie_map2 extends MapActivity {
 	}
 
 	public void construeer() {
-		VopApplication app = (VopApplication) content;
+		VopApplication app = (VopApplication) content ;	
 		Marker POI[];
-		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper
+				.getLocations(2);
 		POI = new Marker[loc.size()];
 		int j = 0;
 		for (com.vop.tools.data.Location l : loc) {
 			POI[j] = new Marker(l.getName(), l.getDescription(),
-					l.getLongitude(), l.getLatitute(), l.getAltitude());
+					l.getLongitude(), l.getLatitute(),l.getAltitude(),content);
 			j++;
 		}
 		app.setPunten(POI);
-
+				
 	}
 }
