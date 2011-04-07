@@ -43,6 +43,7 @@ public class locatie_map2 extends MapActivity {
 	MyLocationOverlay myLocationOverlay;
 	punten_overlay itemizedoverlay;
 	static Context content;
+	ArrayList<Traject> walks;
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
@@ -83,6 +84,7 @@ public class locatie_map2 extends MapActivity {
 		Drawable drawable1 = this.getResources().getDrawable(
 				R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
+		this.walks = DBWrapper.getTrajects();
 		try {
 		    // Create the file
 			initMap();
@@ -108,10 +110,8 @@ public class locatie_map2 extends MapActivity {
 		this.provider = locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
 		
-		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
-		for(int i=0;i<trajecten.size();i++){
-		showTrajectOnMap(DBWrapper.getTrajects().get(i));
-		}
+		
+		
 		
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
@@ -130,7 +130,14 @@ public class locatie_map2 extends MapActivity {
 					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude());
 			i++;
 			}
-			app.setPunten(POI);
+
+		for (int j = 0; j < POI.length; j++) {
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
+					(int) (POI[i].getLng() * 1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(), POI[i].getInfo());
+			itemizedoverlay.addOverlay(overlayitem);
+		}
+		
 	}
 
 	private void updateWithNewLocation(Location location) {
@@ -175,6 +182,9 @@ public class locatie_map2 extends MapActivity {
 					POI[i].getTitel());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
+		for(int i=0;i<this.walks.size();i++){
+			showTrajectOnMap(this.walks.get(i));
+			}
 		
 		myLocationOverlay.enableMyLocation();
 		if (POI.length != 0)
@@ -194,10 +204,6 @@ public class locatie_map2 extends MapActivity {
 				}
 				app.setPunten(POI);
 				
-				//voor trajecten
-				ArrayList<Traject> trajecten = DBWrapper.getTrajects();
-				for(int i=0;i<trajecten.size();i++){
-				showTrajectOnMap(DBWrapper.getTrajects().get(i));
-				}
+				
 	}
 }
