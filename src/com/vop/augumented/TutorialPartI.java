@@ -29,7 +29,7 @@ public class TutorialPartI extends Activity {
 		view.setRenderer(renderer);
 		setContentView(view);
 
-		//sensors
+		// sensors
 		SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		Sensor aSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		Sensor mfSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -37,7 +37,7 @@ public class TutorialPartI extends Activity {
 				SensorManager.SENSOR_DELAY_GAME);
 		sm.registerListener(myMagneticFieldListener, mfSensor,
 				SensorManager.SENSOR_DELAY_GAME);
-		
+
 	}
 
 	float[] accelerometerValues;
@@ -56,7 +56,8 @@ public class TutorialPartI extends Activity {
 			SensorManager.getRotationMatrix(r, null, accelerometerValues,
 					magneticFieldValues);
 			float[] outR = new float[16];
-			SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
+			SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y,
+					SensorManager.AXIS_MINUS_X, outR);
 			values = outR;
 
 		}

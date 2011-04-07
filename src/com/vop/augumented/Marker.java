@@ -114,7 +114,9 @@ public class Marker {
 		alt = altitude;
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, roll);
 	}
-	public Marker(String naam,String com,double longitude,double latitude,double altitude){
+
+	public Marker(String naam, String com, double longitude, double latitude,
+			double altitude) {
 		titel = naam;
 		info = com;
 		lat = latitude;
@@ -129,7 +131,7 @@ public class Marker {
 		horizontale_positie = -1;
 		double x = Math.abs(lng - lng_loc);
 		double y = Math.abs(lat - lat_loc);
-		
+
 		float afstand_tot_punt[] = new float[3];
 		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
 		afstand_x = afstand_tot_punt[0];
@@ -139,9 +141,11 @@ public class Marker {
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
 		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 /afstand_marker);
-		if(lat-lat_loc <0) afstand_y*=-1;
-		if(lng-lng_loc<0) afstand_x*=-1;
+		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
+		if (lat - lat_loc < 0)
+			afstand_y *= -1;
+		if (lng - lng_loc < 0)
+			afstand_x *= -1;
 		binnen_afstand = false;
 		if (afstand_tot_punt[0] < afstand) {
 			binnen_afstand = true;

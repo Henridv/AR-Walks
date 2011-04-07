@@ -49,17 +49,18 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				int id					= json_data.getInt("id");
-				String name				= json_data.getString("name");
-				Person person			= getProfile(json_data.getInt("pers_id"));
-				ArrayList<Point> walk	= new ArrayList<Point>();
-				
+				int id = json_data.getInt("id");
+				String name = json_data.getString("name");
+				Person person = getProfile(json_data.getInt("pers_id"));
+				ArrayList<Point> walk = new ArrayList<Point>();
+
 				JSONArray walkArray = json_data.getJSONArray("walk");
 				for (int j = 0; j < walkArray.length(); j++) {
 					JSONObject walkObject = walkArray.getJSONObject(j);
-					walk.add(new Point(walkObject.getDouble("lat"), walkObject.getDouble("lng"), walkObject.getDouble("alt")));
+					walk.add(new Point(walkObject.getDouble("lat"), walkObject
+							.getDouble("lng"), walkObject.getDouble("alt")));
 				}
-				
+
 				t.add(new Traject(id, name, person, walk));
 			}
 		} catch (JSONException e) {
@@ -172,7 +173,7 @@ public class DBWrapper {
 		}
 		return p;
 	}
-	
+
 	/**
 	 * Get a list of locations from a person and his friends
 	 * 

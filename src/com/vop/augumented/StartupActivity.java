@@ -29,14 +29,15 @@ public class StartupActivity extends FullscreenActivity {
 	public void go_klik(View v) {
 		final EditText emailbox = (EditText) findViewById(R.id.login_email);
 		final EditText password = (EditText) findViewById(R.id.login_password);
-		
+
 		final VopApplication app = (VopApplication) getApplicationContext();
 		app.putState("login", "true");
 		final ProgressDialog dialog = ProgressDialog.show(this, "",
 				"Bezig met inloggen. Even geduld...", true);
 		new Thread() {
 			public void run() {
-				Person p = DBWrapper.getProfile(emailbox.getText().toString(), password.getText().toString());
+				Person p = DBWrapper.getProfile(emailbox.getText().toString(),
+						password.getText().toString());
 				if (p != null) {
 					app.putState("userid", p.getId().toString());
 					Intent myIntent = new Intent(StartupActivity.this,

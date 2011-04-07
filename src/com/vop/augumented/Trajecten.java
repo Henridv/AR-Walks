@@ -19,61 +19,61 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class Trajecten extends ListActivity {
+
 	
-	static ArrayList<Traject> trajecten = DBWrapper.getTrajects();
-	
-	String[] res = new String[trajecten.size()]; {
-		for (int i = 0; i < trajecten.size(); i++){
-			res[i] = "naam traject: "+ trajecten.get(i).getName()+", "+"aangemaakt door "+trajecten.get(i).getPerson();		
-		}
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 setListAdapter(new ArrayAdapter<String>(this, R.layout.trajecten_layout, res));
+		
+		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
 
-		  ListView lv = getListView();
-		  lv.setTextFilterEnabled(true);
-
-		  lv.setOnItemClickListener(new OnItemClickListener() {
-		    public void onItemClick(AdapterView<?> parent, View view,
-		        int position, long id) {
-		      // When clicked, show a toast with the TextView text
-		      Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-		          Toast.LENGTH_SHORT).show();
-		    }
-		  });
+		String[] res = new String[trajecten.size()];
+		{
+			for (int i = 0; i < trajecten.size(); i++) {
+				res[i] = "naam traject: " + trajecten.get(i).getName() + ", "
+						+ "aangemaakt door " + trajecten.get(i).getPerson();
+			}
 		}
 		
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.trajecten_layout, res));
 
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
 
-
-		@Override
-			public boolean onCreateOptionsMenu(Menu menu) {
-				MenuInflater inflater = getMenuInflater();
-				inflater.inflate(R.layout.trajecten_menu, menu);
-				return true;
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// When clicked, show a toast with the TextView text
+				Toast.makeText(getApplicationContext(),
+						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 			}
+		});
+	}
 
-			@Override
-			public boolean onOptionsItemSelected(MenuItem item) {
-				// Handle item selection
-				switch (item.getItemId()) {
-				case R.id.traject_update:
-					updateTrajects();
-					return true;
-				default:
-					return super.onOptionsItemSelected(item);
-				}
-			}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.layout.trajecten_menu, menu);
+		return true;
+	}
 
-			private void updateTrajects() {
-				// send request to server
-			}
-			
-				
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.traject_update:
+			updateTrajects();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void updateTrajects() {
+		// send request to server
+	}
+
 }
-

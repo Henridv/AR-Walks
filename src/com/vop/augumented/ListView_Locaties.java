@@ -31,7 +31,6 @@ public class ListView_Locaties extends FullscreenActivity {
 		// Bind the array adapter to the listview.
 		myListView.setAdapter(aa);
 
-		
 		Marker POI[] = app.getPunten();
 		for (int i = 0; i < POI.length; i++) {
 			todoItems.add(0, POI[i].getTitel());
@@ -44,7 +43,8 @@ public class ListView_Locaties extends FullscreenActivity {
 				Marker POI[] = app.getPunten();
 				// When clicked, show a toast with the TextView text
 				Toast.makeText(getApplicationContext(),
-						POI[POI.length-position-1].getTitel(), Toast.LENGTH_SHORT).show();
+						POI[POI.length - position - 1].getTitel(),
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

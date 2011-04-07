@@ -25,39 +25,39 @@ public class Vrienden extends ListActivity {
 
 	private DBWrapper db;
 	static ArrayList<Person> vrienden;
-	
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
 
 		vrienden = DBWrapper.getFriends(id);
-		
-		String[] res = new String[vrienden.size()]; {
-			for (int i = 0; i < vrienden.size(); i++){
-				res[i] = vrienden.get(i).getName(); 		
+
+		String[] res = new String[vrienden.size()];
+		{
+			for (int i = 0; i < vrienden.size(); i++) {
+				res[i] = vrienden.get(i).getName();
 			}
 		}
-		
-		 setListAdapter(new ArrayAdapter<String>(this, R.layout.vrienden_layout, res));
 
-		  ListView lv = getListView();
-		  lv.setTextFilterEnabled(true);
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.vrienden_layout,
+				res));
 
-		  lv.setOnItemClickListener(new OnItemClickListener() {
-		    public void onItemClick(AdapterView<?> parent, View view,
-		        int position, long id) {
-		      // When clicked, show a toast with the TextView text
-		      Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-		          Toast.LENGTH_SHORT).show();
-		    }
-		  });
-		  db = new DBWrapper();
-		}
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// When clicked, show a toast with the TextView text
+				Toast.makeText(getApplicationContext(),
+						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+			}
+		});
+		db = new DBWrapper();
+	}
 
 	// menu openen
 	@Override
