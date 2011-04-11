@@ -3,8 +3,6 @@ package com.vop.augumented;
 import java.util.ArrayList;
 import java.util.List;
 
-import overlays.Marker;
-import overlays.punten_overlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +27,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.vop.overlays.Marker;
+import com.vop.overlays.punten_overlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 

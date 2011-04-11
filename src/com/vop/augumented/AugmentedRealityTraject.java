@@ -1,8 +1,8 @@
 package com.vop.augumented;
-import overlays.InfoView;
-import overlays.LocatieRender;
-import overlays.Preview;
 
+import com.vop.overlays.InfoView;
+import com.vop.overlays.LocatieRender;
+import com.vop.overlays.Preview;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Context;

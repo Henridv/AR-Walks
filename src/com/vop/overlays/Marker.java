@@ -1,4 +1,4 @@
-package overlays;
+package com.vop.overlays;
 
 import com.vop.tools.VopApplication;
 

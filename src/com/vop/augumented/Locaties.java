@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import overlays.AugView;
-import overlays.Marker;
-import overlays.Preview;
 
+import com.vop.overlays.AugView;
+import com.vop.overlays.Marker;
+import com.vop.overlays.Preview;
 import com.vop.tools.VopApplication;
 
 import android.app.Activity;
