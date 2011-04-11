@@ -6,6 +6,7 @@ import java.util.List;
 
 import overlays.Marker;
 import overlays.punten_overlay;
+import overlays.wandeling_overlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -67,7 +68,17 @@ public class locatie_map2 extends MapActivity {
 		}
 
 	};
+	
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
+	//////////////////////////////////////
+	//			INITIALISATIE			//
+	//////////////////////////////////////
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -137,7 +148,33 @@ public class locatie_map2 extends MapActivity {
 		//updateWithNewLocation(this.location);
 	}
 	
+	
+	//////////////////////////////////////
+	//				FUNCTIES 			//
+	//////////////////////////////////////
+	
+	@SuppressWarnings("unchecked") //door drawline functie in wandeling_overlay
+	private void drawPath(ArrayList<Point>listOfPoints, int color){
+		List overlays = this.mapView.getOverlays();
+		ArrayList<GeoPoint> listOfGeoPoints = new ArrayList<GeoPoint>();
+		for(int i=0;i<listOfPoints.size();i++){
+			listOfGeoPoints.add(
+					new GeoPoint((int)(listOfPoints.get(i).getLatitute()*1E6),
+							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
+		}
+		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
+			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
+		}
+	}
+	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
 	private void showTrajectsOnMap(){
+		for(int i=0;i<this.walks.size();i++){
+			drawPath(this.walks.get(2).getWalk(),-65536);
+		}
+		
+	}
+	
+	private void showTrajectsOnMap2(){
 		Traject temp;
 		ArrayList<Point> move;
 		Iterator<Point> it;
@@ -180,9 +217,5 @@ public class locatie_map2 extends MapActivity {
 		}
 	}
 	
-	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 }
