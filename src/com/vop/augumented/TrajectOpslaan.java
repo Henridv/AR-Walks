@@ -3,19 +3,31 @@ package com.vop.augumented;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Person;
+import com.vop.tools.data.Point;
+import com.vop.tools.data.Traject;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class TrajectOpslaan extends Activity {
 	VopApplication app;
+	private ArrayList<Point> walk;
+	LocationManager locationManager;
 
 
 	/** Called when the activity is first created. */
@@ -34,20 +46,10 @@ public class TrajectOpslaan extends Activity {
 		
 		setContentView(R.layout.trajectopslaan_layout);
 		
-		//locationmanagement
-		String context = Context.LOCATION_SERVICE;
-		LocationManager locationManager = (LocationManager) getSystemService(context);
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		String provider = locationManager.getBestProvider(criteria, true);
-		Location location = locationManager.getLastKnownLocation(provider);
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 2, 10,
-				locationListener);
+		//initialiseren
+		walk = new ArrayList<Point>();
+		
+
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -68,9 +70,55 @@ public class TrajectOpslaan extends Activity {
 
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-			app.setAlt(location.getAltitude());
-			app.setLng(location.getLongitude());
-			app.setLat(location.getLatitude());
+			Button knop = (Button) findViewById(R.id.startstop) ;
+			if(knop.getText().equals("stop")){
+				Toast toast = Toast.makeText(getApplicationContext(), "velden invullen", Toast.LENGTH_SHORT);
+				toast.show();
+				walk.add(new Point(location.getLatitude(), location.getLatitude(), location.getAltitude()));
+			}
 		}
+	}
+	//knop
+	public void startstop(View v) {
+		Button knop = (Button) findViewById(R.id.startstop) ;
+		TextView veld1 = (TextView) findViewById(R.id.naam);
+		TextView veld2 = (TextView) findViewById(R.id.info);
+		if(knop.getText().equals("start")){
+			if(veld1.getText().length()  > 0 && veld2.getText().length()> 0){
+				knop.setText("stop");
+				v.invalidate();
+				
+				//locationmanagement
+				String context = Context.LOCATION_SERVICE;
+				locationManager = (LocationManager) getSystemService(context);
+				Criteria criteria = new Criteria();
+				criteria.setAccuracy(Criteria.ACCURACY_FINE);
+				criteria.setAltitudeRequired(false);
+				criteria.setBearingRequired(false);
+				criteria.setCostAllowed(true);
+				criteria.setPowerRequirement(Criteria.POWER_LOW);
+				String provider = locationManager.getBestProvider(criteria, true);
+				Location location = locationManager.getLastKnownLocation(provider);
+				updateWithNewLocation(location);
+				locationManager.requestLocationUpdates(provider, 2, 10,
+						locationListener);
+			}
+			else{
+				Toast toast = Toast.makeText(getApplicationContext(), "velden invullen", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+			
+		}
+		else{
+			Person persoon = new Person(2,"glenn bostoen", "050822624", "passke", "glenn@hot.com");
+			Traject traject=new Traject(2, veld1.getText().toString(), persoon, walk);
+			DBWrapper.save(traject);
+			finish();
+		}
+	}
+	@Override
+	protected void onStop() {
+		locationManager.removeUpdates(locationListener);
+		super.onStop();
 	}
 }

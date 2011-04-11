@@ -6,10 +6,11 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 <Button
-android:id="@+id/widget31"
+android:id="@+id/startstop"
 android:layout_width="wrap_content"
 android:layout_height="30px"
-android:text="Button"
+android:text="start"
+android:onClick="startstop"
 android:textSize="10sp"
 android:layout_x="260px"
 android:layout_y="162px"
@@ -34,7 +35,7 @@ android:layout_y="82px"
 >
 </TextView>
 <EditText
-android:id="@+id/widget34"
+android:id="@+id/naam"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:textSize="18sp"
@@ -43,7 +44,7 @@ android:layout_y="22px"
 >
 </EditText>
 <EditText
-android:id="@+id/widget35"
+android:id="@+id/info"
 android:layout_width="fill_parent"
 android:layout_height="48px"
 android:textSize="18sp"

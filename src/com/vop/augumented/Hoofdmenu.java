@@ -58,7 +58,7 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	public void vrienden_klik(View v) {
 		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
