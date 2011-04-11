@@ -26,7 +26,7 @@ import com.vop.tools.data.Traject;
 
 /**
  * This class provides an abstraction of the database. HTML connections are
- * hidden from the user
+ * hidden from the user.
  * 
  * @author henri
  * 
@@ -271,6 +271,33 @@ public class DBWrapper {
 	}
 
 	/**
+	 * Save a traject
+	 * 
+	 * @param t
+	 */
+	public static void save(Traject t) {
+		String page = "traject.php";
+
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		if (t.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(t.getId())));
+		postValues.add(new BasicNameValuePair("name", t.getName()));
+		postValues.add(new BasicNameValuePair("person", t.getPerson().getId().toString()));
+		
+		JSONArray walk = new JSONArray(t.getWalk());
+
+		postValues.add(new BasicNameValuePair("walk", walk.toString()));
+		postValues.add(new BasicNameValuePair("action", "addtraject"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(log_tag, "Error parsing data " + e.toString());
+		}
+	}
+	
+	/**
 	 * Delete a location
 	 * 
 	 * @param l
@@ -304,6 +331,30 @@ public class DBWrapper {
 		}
 	}
 
+	/**
+	 * Delete a traject
+	 * @param t
+	 */
+	public static void delete(Traject t) {
+		String page = "traject.php";
+
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		if (t.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(t
+					.getId())));
+		else
+			return;
+
+		postValues.add(new BasicNameValuePair("action", "deltraject"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(log_tag, "Error parsing data " + e.toString());
+		}
+	}
+	
 	/**
 	 * Perform actual HTTP POST
 	 * 

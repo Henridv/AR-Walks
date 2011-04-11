@@ -14,62 +14,69 @@ switch($action) {
 			ORDER BY id";
 		break;
 		
-	case "adduser":
+	case "addtraject":
 		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$phone = $_POST['phone'];
-		$password = $_POST['password'];
+		$person = $_POST['person'];
+		
+		$walk = json_decode($_POST['walk']);
+		$geom = "GeomFromText('MULTIPOINT(";
+		
+		$i = 0;
+		foreach ($walk as $point) {
+			if ($i++) $geom .= ", ";
+			$point = str_replace(Array("{", "}", ","), "", $point);
+			$geom .= $point;
+		}
+		$geom .= ")', 4326)";
+		
+		echo $geom;
+		
 		if (isset($_POST['id'])) {
 			$id = $_POST['id'];
 			$query = "
-				UPDATE persons
+				UPDATE trajects
 				SET
 					name='$name',
-					email='$email',
-					phone='$phone',
-					password='$password'
+					pers_id='$person',
+					walk=$geom,
 				WHERE id='$id'";
 		} else {
 			$query = "
-				INSERT INTO persons
-				(name, email, phone, password)
+				INSERT INTO trajects
+				(name, pers_id, walk)
 				VALUES
-				('$name', '$email', '$phone', '$password')";
+				('$name', '$person', $geom)";
 		}
 		break;
 		
-	case "deluser":
+	case "deltraject":
 		$query = "
-			DELETE FROM persons
+			DELETE FROM traject
 			WHERE id = ".$_POST['id'];
 		echo $query;
 		break;
-	
-	case "friends":
-		$query = "
-			SELECT id, name, email, phone, password
-			FROM persons
-				INNER JOIN friends ON id=friendId
-			WHERE personId=".$_POST['id'];
 	default:
-		//die("no data available");
+		die("no data available");
 }
 
 $result = pg_query($conn, $query);
-while ($traject = pg_fetch_assoc($result)) {
-	$id = $traject["id"];
-	
-	$query = "
-		SELECT X(geom(dump(walk))) as lat, Y(geom(dump(walk))) as lng, Z(geom(dump(walk))) as alt
-		FROM trajects
-		WHERE id=$id";
-	$point_res = pg_query($conn, $query);
-	while ($point = pg_fetch_assoc($point_res)) {
-		$walk[] = $point;
+if ($action == "trajects") {
+	while ($traject = pg_fetch_assoc($result)) {
+		$id = $traject["id"];
+		
+		$query = "
+			SELECT X(geom(dump(walk))) as lat, Y(geom(dump(walk))) as lng, Z(geom(dump(walk))) as alt
+			FROM trajects
+			WHERE id=$id";
+		$point_res = pg_query($conn, $query);
+		while ($point = pg_fetch_assoc($point_res)) {
+			$walk[] = $point;
+		}
+		$traject["walk"] = $walk;
+		$output[] = $traject;
 	}
-	$traject["walk"] = $walk;
-	$output[] = $traject;
+	print(json_encode($output));
+} else {
+	echo "OK";
 }
-
-print(json_encode($output));
 ?>

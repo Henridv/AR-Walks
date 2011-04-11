@@ -46,5 +46,10 @@ public class Point {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	
+	@Override
+	public String toString() {
+		return "{" + latitute + ", " + longitude + ", " + altitude + "}";
+	}
 
 }
