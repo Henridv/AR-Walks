@@ -26,7 +26,7 @@
         <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="Locaties_map"></activity>
+        <activity android:name="LocatieMap"></activity>
         <uses-library android:name="com.google.android.maps"/>
         <activity android:name="Locatie_opslaan"></activity>
         <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>

@@ -230,7 +230,7 @@ public class Locaties extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
+			Intent myIntent = new Intent(Locaties.this, LocatieMap.class);
 			Locaties.this.startActivity(myIntent);
 			finish();
 			return true;

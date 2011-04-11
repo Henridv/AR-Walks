@@ -5,7 +5,7 @@ import com.vop.tools.VopApplication;
 import android.content.Context;
 import android.location.Location;
 
-public class Marker {
+public class Marker implements Comparable<Marker> {
 	private double lat;
 	private double lng;
 	private double alt;
@@ -164,8 +164,8 @@ public class Marker {
 		afstand_y = afstand_tot_punt[0];
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
-		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
+		afstand_x = (float) (afstand_x * 1.0 /afstand_marker);
+		afstand_y = (float) (afstand_y * 1.0 /afstand_marker);
 		if (lat - lat_loc < 0)
 			afstand_y *= -1;
 		if (lng - lng_loc < 0)
@@ -226,5 +226,12 @@ public class Marker {
 				verticale_positie = 0;
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(Marker another) {
+		if(this.afstand_marker >another.getAfstand_marker()) return 1;
+		else if (this.afstand_marker >another.getAfstand_marker()) return -1;
+		else return 0;
 	}
 }

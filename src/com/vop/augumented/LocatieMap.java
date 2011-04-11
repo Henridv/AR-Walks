@@ -32,7 +32,7 @@ import com.vop.overlays.punten_overlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 
-public class Locaties_map extends MapActivity {
+public class LocatieMap extends MapActivity {
 	LocationManager locationManager;
 	String provider, context;
 	Location location;
@@ -160,7 +160,8 @@ public class Locaties_map extends MapActivity {
 			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
 					(int) (POI[i].getLng() * 1E6));
 			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
-					POI[i].getTitel());
+					POI[i].getAlt()+" "+POI[i].getInfo());
+			
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 		mapView.getOverlays().add(itemizedoverlay);
@@ -181,20 +182,20 @@ public class Locaties_map extends MapActivity {
 		vibrator.vibrate(60);
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
-			Intent myIntent = new Intent(Locaties_map.this, Locaties.class);
-			Locaties_map.this.startActivity(myIntent);
+			Intent myIntent = new Intent(LocatieMap.this, Locaties.class);
+			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(Locaties_map.this, Locatie_opslaan.class);
-			Locaties_map.this.startActivity(myIntent);
+			myIntent = new Intent(LocatieMap.this, Locatie_opslaan.class);
+			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
 			app.construeer();
 			refreshMap();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(Locaties_map.this, ListLocaties.class);
-			Locaties_map.this.startActivity(myIntent);
+			myIntent = new Intent(LocatieMap.this, ListLocaties.class);
+			LocatieMap.this.startActivity(myIntent);
 			finish();
 			return true;
 		default:

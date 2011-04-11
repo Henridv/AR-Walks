@@ -27,10 +27,10 @@ public class LocatieRender implements Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		//gl.glEnable(GL10.GL_BLEND); // enable transparency blending
-		//gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
+		gl.glEnable(GL10.GL_BLEND); // enable transparency blending
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
 		// transparency
-		InputStream is = activiteit.getResources().openRawResource(R.drawable.markerandroid);
+		InputStream is = activiteit.getResources().openRawResource(R.drawable.icon);
 		InputStream is_select = activiteit.getResources().openRawResource(R.drawable.markerandroid_selected);
 		quad.loadGLTexture(gl, this.activiteit,is);
 		quad_selected.loadGLTexture(gl, this.activiteit,is_select);
@@ -39,7 +39,8 @@ public class LocatieRender implements Renderer {
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Yellow Background
 		gl.glClearDepthf(1.0f); // Depth Buffer Setup
 		gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
-		gl.glDepthFunc(GL10.GL_ALWAYS); // The Type Of Depth Testing To Do
+		gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
+		//gl.glDepthFunc(GL10.GL_NEVER);
 
 		// Really Nice Perspective Calculations
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
@@ -60,15 +61,12 @@ public class LocatieRender implements Renderer {
 				if (app.getValues() != null) {
 					gl.glLoadMatrixf(app.getValues(), 0);
 					gl.glTranslatef(POI[i].getAfstand_x()*20f,
-							POI[i].getAfstand_y()*20f, 0);
-					
+							POI[i].getAfstand_y()*20f, (float) (POI[i].getAlt()-app.getAlt()));
 					if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()>0) rot = (float) (180- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
 					else if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()<0) rot = (float) (180+ (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
 					else if(POI[i].getAfstand_x() >0 && POI[i].getAfstand_y()<0) rot = (float) (360- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
 					else rot = (float) (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x())));
 					gl.glRotatef(rot, 0.0f, 0.0f, 1.0f); // Z
-					//if(i != app.getDichtste_punt()) quad.draw(gl);
-					//else quad_selected.draw(gl);
 					quad.draw(gl);
 				}
 			}
