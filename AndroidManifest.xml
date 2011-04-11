@@ -29,8 +29,8 @@
         <activity android:name="Locaties_map"></activity>
         <uses-library android:name="com.google.android.maps"/>
         <activity android:name="Locatie_opslaan"></activity>
-        <activity android:name="ListView_Locaties" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="AugmentedReality" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="locatie_map2"></activity>
     </application>
 </manifest>

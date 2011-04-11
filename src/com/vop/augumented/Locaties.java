@@ -277,7 +277,7 @@ public class Locaties extends Activity {
 			AugView.construeer();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(Locaties.this, ListView_Locaties.class);
+			myIntent = new Intent(Locaties.this, ListLocaties.class);
 			Locaties.this.startActivity(myIntent);
 		default:
 			return super.onOptionsItemSelected(item);

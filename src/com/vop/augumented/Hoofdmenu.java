@@ -15,10 +15,12 @@ import com.vop.tools.VopApplication;
 
 public class Hoofdmenu extends FullscreenActivity {
 	Vibrator vibrator;
+	VopApplication app;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (VopApplication) getApplicationContext();
 		setContentView(R.layout.hoofdmenu_layout);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	}
@@ -26,7 +28,6 @@ public class Hoofdmenu extends FullscreenActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		VopApplication app = (VopApplication) getApplicationContext();
 		Boolean loggedIn = Boolean.parseBoolean(app.getState().get("login"));
 
 		if (loggedIn == null || !loggedIn) {
@@ -38,38 +39,37 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	// knoppen
 	public void locaties_klik(View v) {
-		vibrator.vibrate(30);
-		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedReality.class);
+		vibrator.vibrate(60);
+		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void trajecten_klik(View v) {
-		vibrator.vibrate(30);
+		vibrator.vibrate(60);
 		Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void profiel_klik(View v) {
-		vibrator.vibrate(30);
+		vibrator.vibrate(60);
 		Intent myIntent = new Intent(Hoofdmenu.this, locatie_map2.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void vrienden_klik(View v) {
-		vibrator.vibrate(30);
-		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedReality.class);
+		vibrator.vibrate(60);
+		Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void berichten_klik(View v) {
-		vibrator.vibrate(30);
+		vibrator.vibrate(60);
 		Intent myIntent = new Intent(Hoofdmenu.this, Berichten.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void uitloggen_klik(View v) {
-		vibrator.vibrate(30);
-		VopApplication app = (VopApplication) getApplicationContext();
+		vibrator.vibrate(60);
 		app.putState("login", "false");
 		app.putState("userid", null);
 		moveTaskToBack(true);

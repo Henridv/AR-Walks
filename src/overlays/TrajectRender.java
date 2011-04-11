@@ -14,32 +14,32 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 import android.widget.Toast;
 
-public class OpenGLRenderer implements Renderer {
+public class TrajectRender implements Renderer {
 	Activity activiteit;
 	private Quad quad;
 	private Quad quad_selected;
 
 
-	public OpenGLRenderer(Activity act) {
+	public TrajectRender(Activity act) {
 		activiteit = act;
 		quad = new Quad();
 		quad_selected=new Quad();
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		//gl.glEnable(GL10.GL_BLEND); // enable transparency blending
-		//gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
+		gl.glEnable(GL10.GL_BLEND); // enable transparency blending
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
 		// transparency
 		InputStream is = activiteit.getResources().openRawResource(R.drawable.markerandroid);
 		InputStream is_select = activiteit.getResources().openRawResource(R.drawable.markerandroid_selected);
 		quad.loadGLTexture(gl, this.activiteit,is);
 		quad_selected.loadGLTexture(gl, this.activiteit,is_select);
 		gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping ( NEW )
-		//gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
+		gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Yellow Background
 		gl.glClearDepthf(1.0f); // Depth Buffer Setup
-		//gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
-		//gl.glDepthFunc(GL10.GL_ALWAYS); // The Type Of Depth Testing To Do
+		gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
+		gl.glDepthFunc(GL10.GL_ALWAYS); // The Type Of Depth Testing To Do
 
 		// Really Nice Perspective Calculations
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);

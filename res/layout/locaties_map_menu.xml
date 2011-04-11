@@ -3,4 +3,5 @@
 	<item android:id="@+id/augmentedView" android:title="augmented view" android:icon="@drawable/ar" />
 	<item android:id="@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
 	<item android:id="@+id/refresh" android:title="refresh" android:icon="@drawable/refresh" />
+	<item android:id="@+id/lijstloc" android:title="lijst" android:icon="@drawable/refresh" />
 </menu>

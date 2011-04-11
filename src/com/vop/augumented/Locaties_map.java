@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class Locaties_map extends MapActivity {
 	MyLocationOverlay myLocationOverlay;
 	punten_overlay itemizedoverlay;
 	Context content;
+	VopApplication app;
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
@@ -66,6 +68,7 @@ public class Locaties_map extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		content = getApplicationContext();
+		app = (VopApplication) getApplicationContext();
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -105,7 +108,6 @@ public class Locaties_map extends MapActivity {
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
 			// Create the file
-			VopApplication app = (VopApplication) getApplicationContext();
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
 			app.setAlt(location.getAltitude());
@@ -124,7 +126,6 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void initMap() {
-		VopApplication app = (VopApplication) getApplicationContext();
 		app.construeer();
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
@@ -151,7 +152,6 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void refreshMap() {
-		VopApplication app = (VopApplication) getApplicationContext();
 		app.construeer();
 		mapView.getOverlays().clear();
 		mapView.getOverlays().add(myLocationOverlay);
@@ -176,8 +176,9 @@ public class Locaties_map extends MapActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		VopApplication app = (VopApplication) getApplicationContext();
 		// Handle item selection
+		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(60);
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
 			Intent myIntent = new Intent(Locaties_map.this, Locaties.class);
@@ -190,9 +191,12 @@ public class Locaties_map extends MapActivity {
 		case R.id.refresh:
 			app.construeer();
 			refreshMap();
-		/*case R.id.lijstloc:
-			myIntent = new Intent(Locaties_map.this, ListView_Locaties.class);
-			Locaties_map.this.startActivity(myIntent);*/
+			return true;
+		case R.id.lijstloc:
+			myIntent = new Intent(Locaties_map.this, ListLocaties.class);
+			Locaties_map.this.startActivity(myIntent);
+			finish();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

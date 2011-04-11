@@ -1,11 +1,12 @@
 package com.vop.augumented;
 import overlays.InfoView;
 import overlays.Marker;
-import overlays.OpenGLRenderer;
+import overlays.LocatieRender;
 import overlays.Preview;
 
 import com.vop.tools.VopApplication;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -20,6 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,11 +33,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AugmentedReality extends Activity {
+public class AugmentedRealityLocaties extends Activity {
 	static float r[];
-	OpenGLRenderer renderer;
+	LocatieRender renderer;
 	InfoView infoview;
 	double killfactor = 0.1;
+	VopApplication app;
 	
 	@Override
 	public boolean onTouchEvent(final MotionEvent ev) {
@@ -51,9 +54,12 @@ public class AugmentedReality extends Activity {
 				// we are in the square
 				Marker punt = infoview.getDichtste_punt();
 				if (punt != null) {
-					Toast toast = Toast.makeText(getApplicationContext(), ""
-							+ punt.getTitel()+": "+punt.getInfo(), Toast.LENGTH_SHORT);
-					toast.show();
+					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+					vibrator.vibrate(60);
+					AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+					dialog.setTitle(punt.getTitel());
+					dialog.setMessage(punt.getInfo());
+					dialog.show();
 				}
 
 			} else {
@@ -77,6 +83,7 @@ public class AugmentedReality extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (VopApplication) getApplicationContext();
 		String context = Context.LOCATION_SERVICE;
 		LocationManager locationManager = (LocationManager) getSystemService(context);
 
@@ -120,7 +127,7 @@ public class AugmentedReality extends Activity {
 		
 
 		// Creating and attaching the renderer.
-		renderer = new OpenGLRenderer(this);
+		renderer = new LocatieRender(this);
 		view.setRenderer(renderer);
 		setContentView(layout);
 
@@ -155,7 +162,6 @@ public class AugmentedReality extends Activity {
 
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-			VopApplication app = (VopApplication) getApplicationContext();
 			app.setAlt(location.getAltitude());
 			app.setLng(location.getLongitude());
 			app.setLat(location.getLatitude());
@@ -202,7 +208,6 @@ public class AugmentedReality extends Activity {
 	};
 	private final SensorListener sensorListener = new SensorListener() {
 		public void onSensorChanged(int sensor, float[] values) {
-			VopApplication app = (VopApplication) getApplicationContext();
 			app.setRoll(values[0]);
 			infoview.invalidate();
 						
@@ -222,11 +227,10 @@ public class AugmentedReality extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		VopApplication app = (VopApplication) getApplicationContext();
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedReality.this, locatie_map2.class);
-			AugmentedReality.this.startActivity(myIntent);
+			Intent myIntent = new Intent(AugmentedRealityLocaties.this, Locaties_map.class);
+			AugmentedRealityLocaties.this.startActivity(myIntent);
 			finish();
 			return true;
 		case R.id.km_1:
@@ -265,15 +269,16 @@ public class AugmentedReality extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedReality.this, Locatie_opslaan.class);
-			AugmentedReality.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedRealityLocaties.this, Locatie_opslaan.class);
+			AugmentedRealityLocaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
 			app.construeer();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(AugmentedReality.this, ListView_Locaties.class);
-			AugmentedReality.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedRealityLocaties.this, ListLocaties.class);
+			AugmentedRealityLocaties.this.startActivity(myIntent);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

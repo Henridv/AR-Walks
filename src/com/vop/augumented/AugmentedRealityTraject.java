@@ -1,6 +1,6 @@
 package com.vop.augumented;
 import overlays.InfoView;
-import overlays.OpenGLRenderer;
+import overlays.LocatieRender;
 import overlays.Preview;
 
 import com.vop.tools.VopApplication;
@@ -27,9 +27,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-public class Traject_view extends Activity {
+public class AugmentedRealityTraject extends Activity {
 	static float r[];
-	OpenGLRenderer renderer;
+	LocatieRender renderer;
 	InfoView infoview;
 	double killfactor = 0.1;
 	
@@ -81,7 +81,7 @@ public class Traject_view extends Activity {
 		
 
 		// Creating and attaching the renderer.
-		renderer = new OpenGLRenderer(this);
+		renderer = new LocatieRender(this);
 		view.setRenderer(renderer);
 		setContentView(layout);
 
@@ -186,8 +186,8 @@ public class Traject_view extends Activity {
 		VopApplication app = (VopApplication) getApplicationContext();
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(Traject_view.this, locatie_map2.class);
-			Traject_view.this.startActivity(myIntent);
+			Intent myIntent = new Intent(AugmentedRealityTraject.this, locatie_map2.class);
+			AugmentedRealityTraject.this.startActivity(myIntent);
 			finish();
 			return true;
 		case R.id.km_1:
@@ -226,15 +226,15 @@ public class Traject_view extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(Traject_view.this, Locatie_opslaan.class);
-			Traject_view.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedRealityTraject.this, Locatie_opslaan.class);
+			AugmentedRealityTraject.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
 			app.construeer();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(Traject_view.this, ListView_Locaties.class);
-			Traject_view.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedRealityTraject.this, ListLocaties.class);
+			AugmentedRealityTraject.this.startActivity(myIntent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}

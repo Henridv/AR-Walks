@@ -94,6 +94,7 @@ public class Quad {
 	public void draw(GL10 gl) {
 		// Bind our only previously generated texture in this case
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+		
 
 		// Point to our buffers
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -101,6 +102,8 @@ public class Quad {
 
 		// Set the face rotation
 		gl.glFrontFace(GL10.GL_CCW);
+		gl.glEnable(GL10.GL_CULL_FACE);
+		gl.glCullFace(GL10.GL_BACK);
 
 		// Enable the vertex and texture state
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
