@@ -129,13 +129,13 @@ public class locatie_map2 extends MapActivity {
 		//updateWithNewLocation(location);
 	}
 
-	/*private void initMap(){
+	private void initMap(){
 		this.mapController.setZoom(17);
 		this.itemizedoverlay = new punten_overlay(this.draw);
 		showTrajectsOnMap();
 		//moet hier animateTo huidige locatie bij? irrelevant atm
 		//updateWithNewLocation(this.location);
-	}*/
+	}
 	
 	private void showTrajectsOnMap(){
 		Traject temp;
@@ -184,51 +184,5 @@ public class locatie_map2 extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	private void initMap() {
-		construeer();
-		myLocationOverlay = new MyLocationOverlay(this, mapView);
-		mapView.getOverlays().add(myLocationOverlay);
-
-		myLocationOverlay.enableCompass();
-
-		myLocationOverlay.runOnFirstFix(new Runnable() {
-			public void run() {
-				mapController.animateTo(myLocationOverlay.getMyLocation());
-			}
-		});
-		VopApplication app = (VopApplication) getApplicationContext();
-		Marker POI[] = app.getPunten();
-
-		for (int i = 0; i < POI.length; i++) {
-			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
-					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
-					POI[i].getTitel());
-			itemizedoverlay.addOverlay(overlayitem);
-		}
-		/*for (int i = 0; i < this.walks.size(); i++) {
-			showTrajectOnMap(this.walks.get(i));
-		}*/
-		showTrajectsOnMap();
-
-		myLocationOverlay.enableMyLocation();
-		/*if (POI.length != 0)
-			mapView.getOverlays().add(itemizedoverlay);*/
-	}
-
-	public void construeer() {
-		VopApplication app = (VopApplication) content ;	
-		Marker POI[];
-		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
-		POI = new Marker[loc.size()];
-		int j = 0;
-		for (com.vop.tools.data.Location l : loc) {
-			POI[j] = new Marker(l.getName(), l.getDescription(),
-					l.getLongitude(), l.getLatitute(),l.getAltitude(),content);
-			j++;
-		}
-		app.setPunten(POI);
 	}
 }
