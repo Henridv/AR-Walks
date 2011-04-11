@@ -47,10 +47,11 @@ public class locatie_map2 extends MapActivity {
 	punten_overlay itemizedoverlay;
 	static Context content;
 	ArrayList<Traject> walks;
-
+	Drawable draw;
+	
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
-			updateWithNewLocation(location);
+			//updateWithNewLocation(location);
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -74,87 +75,111 @@ public class locatie_map2 extends MapActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+							WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
-
-		this.mapView = (MapView) findViewById(R.id.myMapView);
+		
+		this.mapView =(MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
-
+		
+		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
-		this.mapView.setBuiltInZoomControls(true);
-		// this.mapView.displayZoomControls(true);
-		Drawable drawable1 = this.getResources().getDrawable(
-				R.drawable.androidmarker);
-		itemizedoverlay = new punten_overlay(drawable1, this);
-		this.walks = DBWrapper.getTrajects();
-		try {
-			// Create the file
-			initMap();
-		} catch (Exception e) {
-			// Print out the exception that occurred
-			Toast toast = Toast.makeText(getApplicationContext(), "hello",
-					Toast.LENGTH_SHORT);
+		
+		draw = this.getResources().getDrawable(R.drawable.androidmarker);
+		
+		try{
+			startLocationListening();
+		}catch(Exception e){
+			Toast toast = Toast.makeText(content,
+					"Er is iets fout gegaan bij het ophalen van de locatie", Toast.LENGTH_SHORT);
 			toast.show();
-			Log.w("hello", e.getMessage());
+			Log.w("Er is iets fout gegaan bij het ophalen van de locatie",e.getMessage());
 		}
-
-		this.mapController.setZoom(17);
+		
+		//haal alle trajecten binnen
+		this.walks = DBWrapper.getTrajects();
+		try{
+			initMap();
+		} catch(Exception e){
+			Toast toast = Toast.makeText(content,
+					"Er is iets fout gegaan bij het initialiseren van de map", Toast.LENGTH_SHORT);
+			toast.show();
+			Log.w("Er is iets fout gegaan bij het initialiseren van de map",e.getMessage());
+		}
+		
+		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
+	}
+	
+	//(BIJNA) AF - initialiseert locationlistening 
+	private void startLocationListening(){
 		this.context = Context.LOCATION_SERVICE;
-		this.locationManager = (LocationManager) getSystemService(context);
-
+		this.locationManager = (LocationManager) getSystemService(this.context);
+		
+		//eerst mag onze applicatie over de grootste resources beschikken, kunnen dit later altijd aanpassen
 		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE); // constant 1
-		criteria.setAltitudeRequired(false);
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(true);
 		criteria.setBearingRequired(false);
 		criteria.setCostAllowed(false);
-		criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
-
-		this.provider = locationManager.getBestProvider(criteria, true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);	
+		
+		this.provider = this.locationManager.getBestProvider(criteria,true);
 		this.location = locationManager.getLastKnownLocation(provider);
-
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, minTime, minDistance,
-				locationListener);
+		
+		//updateWithNewLocation(location);
 	}
 
-	private void showTrajectOnMap(Traject t) {
-		VopApplication app = (VopApplication) content;
-		Iterator<Point> it = t.getWalk().iterator();
-		Point tmp = new Point();
-		Marker[] POI = new Marker[t.getWalk().size()];
-		int i = 0;
-		while (it.hasNext()) {
-			tmp = it.next();
-			POI[i] = new Marker("Punt "+i,"Punt van wandeling",
-					tmp.getLongitude(),tmp.getLatitute(),tmp.getAltitude(),content);
-			i++;
+	/*private void initMap(){
+		this.mapController.setZoom(17);
+		this.itemizedoverlay = new punten_overlay(this.draw);
+		showTrajectsOnMap();
+		//moet hier animateTo huidige locatie bij? irrelevant atm
+		//updateWithNewLocation(this.location);
+	}*/
+	
+	private void showTrajectsOnMap(){
+		Traject temp;
+		ArrayList<Point> move;
+		Iterator<Point> it;
+		Point punt;
+		GeoPoint geoPunt;
+		ArrayList<Marker> allePunten = new ArrayList<Marker>();
+		Marker marker;
+		OverlayItem item;
+		for(int i=0;i<this.walks.size();i++){
+			temp = this.walks.get(i);
+			move = temp.getWalk();
+			it = move.iterator();
+			
+			while(it.hasNext()){
+				punt = it.next();
+				allePunten.add(new Marker("Punt "+i,"Punt van wandeling",
+						punt.getLongitude(),punt.getLatitute(),punt.getAltitude(),content));
+				}
 		}
-
-		for (int j = 0; j < POI.length; j++) {
-			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
-					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
-					POI[i].getInfo());
-			itemizedoverlay.addOverlay(overlayitem);
-		}
-
+			for (int j=0;j<allePunten.size();j++){
+				marker = allePunten.get(j);
+				geoPunt = new GeoPoint((int)(marker.getLat()*1E6),(int)(marker.getLng()*1E6));
+				item = new OverlayItem(geoPunt,marker.getTitel(),marker.getInfo());
+				itemizedoverlay.addOverlay(item);
+			}
+		this.mapView.getOverlays().add(itemizedoverlay);
+		System.out.println("useless, enkel voor breakpoint");
+		
 	}
+	
+	private void updateWithNewLocation(Location location){
+		if(location!=null){
 
-	private void updateWithNewLocation(Location location) {
-		if (location != null) {
-			// Create the file
-			VopApplication app = (VopApplication) getApplicationContext();
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
-			app.setAlt(location.getAltitude());
-			app.setLng(location.getLongitude());
-			app.setLat(location.getLatitude());
-			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
+			//double alt = location.getAltitude();
+			
+			GeoPoint punt = new GeoPoint((int) (lat*1E6),(int)(lng*1E6));
 			this.mapController.animateTo(punt);
 		}
 	}
-
+	
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
@@ -183,13 +208,14 @@ public class locatie_map2 extends MapActivity {
 					POI[i].getTitel());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
-		for (int i = 0; i < this.walks.size(); i++) {
+		/*for (int i = 0; i < this.walks.size(); i++) {
 			showTrajectOnMap(this.walks.get(i));
-		}
+		}*/
+		showTrajectsOnMap();
 
 		myLocationOverlay.enableMyLocation();
-		if (POI.length != 0)
-			mapView.getOverlays().add(itemizedoverlay);
+		/*if (POI.length != 0)
+			mapView.getOverlays().add(itemizedoverlay);*/
 	}
 
 	public void construeer() {
@@ -204,6 +230,5 @@ public class locatie_map2 extends MapActivity {
 			j++;
 		}
 		app.setPunten(POI);
-				
 	}
 }
