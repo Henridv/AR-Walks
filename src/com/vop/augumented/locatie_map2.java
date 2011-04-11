@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.vop.overlays.Marker;
 import com.vop.overlays.punten_overlay;
-import com.vop.overlays.wandeling_overlay;
+//import com.vop.overlays.wandeling_overlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -166,9 +166,9 @@ public class locatie_map2 extends MapActivity {
 					new GeoPoint((int)(listOfPoints.get(i).getLatitute()*1E6),
 							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
 		}
-		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
+		/*for(int j=0;j<(listOfGeoPoints.size()-1);j++){
 			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
-		}
+		}*/
 	}
 	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
 	private void showTrajectsOnMap(){

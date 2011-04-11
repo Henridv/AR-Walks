@@ -28,9 +28,10 @@
         <activity android:name="Vrienden"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="LocatieMap"></activity>
         <uses-library android:name="com.google.android.maps"/>
-        <activity android:name="Locatie_opslaan"></activity>
+        <activity android:name="LocatieOpslaan"></activity>
         <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="locatie_map2"></activity>
+        <activity android:name="TrajectOpslaan"></activity>
     </application>
 </manifest>

@@ -186,7 +186,7 @@ public class LocatieMap extends MapActivity {
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(LocatieMap.this, Locatie_opslaan.class);
+			myIntent = new Intent(LocatieMap.this, LocatieOpslaan.class);
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

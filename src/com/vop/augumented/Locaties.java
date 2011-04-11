@@ -270,7 +270,7 @@ public class Locaties extends Activity {
 			Marker.setAfstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(Locaties.this, Locatie_opslaan.class);
+			myIntent = new Intent(Locaties.this, LocatieOpslaan.class);
 			Locaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

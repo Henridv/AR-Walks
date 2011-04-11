@@ -27,10 +27,12 @@ public class TrajectOpslaan extends Activity {
 		
 		// Remove the title bar from the window.
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+		
 		// Make the windows into full screen mode.
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
+		setContentView(R.layout.trajectopslaan_layout);
 		
 		//locationmanagement
 		String context = Context.LOCATION_SERVICE;

@@ -267,7 +267,7 @@ public class AugmentedRealityLocaties extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityLocaties.this, Locatie_opslaan.class);
+			myIntent = new Intent(AugmentedRealityLocaties.this, LocatieOpslaan.class);
 			AugmentedRealityLocaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
