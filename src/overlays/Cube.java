@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 public class Cube extends Mesh {
 	public Cube(float width, float height, float depth) {

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import overlays.Marker;
+import overlays.punten_overlay;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -192,8 +195,7 @@ public class locatie_map2 extends MapActivity {
 	public void construeer() {
 		VopApplication app = (VopApplication) content ;	
 		Marker POI[];
-		ArrayList<com.vop.tools.data.Location> loc = DBWrapper
-				.getLocations(2);
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
 		POI = new Marker[loc.size()];
 		int j = 0;
 		for (com.vop.tools.data.Location l : loc) {

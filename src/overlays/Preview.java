@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,12 +11,12 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-class Preview extends SurfaceView implements SurfaceHolder.Callback {
+public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	SurfaceHolder mHolder;
 	Camera mCamera;
 	Context context1;
 
-	Preview(Context context) {
+	public Preview(Context context) {
 		super(context);
 
 		// Install a SurfaceHolder.Callback so we get notified when the

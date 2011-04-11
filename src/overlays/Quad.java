@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.opengl.GLUtils;
 
 /**
@@ -41,8 +42,8 @@ public class Quad {
 	 * Note that each face is defined, even if indices are available, because of
 	 * the texturing we want to achieve
 	 */
-	float[] vertices = new float[] { -2.5f,0.0f, -2.5f, 2.5f,0.0f, -2.5f,
-			-2.5f,0.0f, 2.5f,2.5f,0.0f, 2.5f };
+	float[] vertices = new float[] { 0.0f,2.5f, -2.5f, 0.0f,-2.5f, -2.5f,
+			0.0f,2.5f, 2.5f,0.0f,-2.5f, 2.5f };
 
 	/** The initial texture coordinates (u, v) */
 	float texture[] = { 0.0f, 2.0f, //
@@ -122,10 +123,10 @@ public class Quad {
 	 * @param context
 	 *            - The Activity context
 	 */
-	public void loadGLTexture(GL10 gl, Context context) {
+	public void loadGLTexture(GL10 gl, Context context,InputStream is) {
 		// Get the texture from the Android resource directory
-		InputStream is = context.getResources()
-				.openRawResource(R.drawable.icon);
+		/*InputStream is = context.getResources()
+				.openRawResource(R.drawable.markerandroid);*/
 		Bitmap bitmap = null;
 		try {
 			// BitmapFactory is an Android graphics utility for images
@@ -149,7 +150,7 @@ public class Quad {
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
 				GL10.GL_NEAREST);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_LINEAR);
+				GL10.GL_NEAREST);
 
 		// Different possible texture parameters, e.g. GL10.GL_CLAMP_TO_EDGE
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,

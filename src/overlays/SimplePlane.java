@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 /**
  * SimplePlane is a setup class for Mesh that creates a plane mesh.

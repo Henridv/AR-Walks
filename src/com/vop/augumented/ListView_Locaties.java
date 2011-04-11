@@ -2,8 +2,18 @@ package com.vop.augumented;
 
 import java.util.ArrayList;
 
-import android.graphics.Color;
+import overlays.Marker;
+
+import com.vop.augumented.R;
+import com.vop.tools.DBWrapper;
+import com.vop.tools.VopApplication;
+import com.vop.tools.data.Traject;
+
+import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -12,40 +22,47 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vop.tools.FullscreenActivity;
-import com.vop.tools.VopApplication;
-
-public class ListView_Locaties extends FullscreenActivity {
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+public class ListView_Locaties extends ListActivity {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		construeer();
+		super.onCreate(savedInstanceState);
 		VopApplication app = (VopApplication) getApplicationContext();
-		setContentView(R.layout.listview_locaties_layout);
-		ListView myListView = (ListView) findViewById(R.id.myListView);
-		myListView.setCacheColorHint(Color.WHITE);
-		myListView.setBackgroundColor(Color.WHITE);
-		// Create the array list of to do items
-		final ArrayList<String> todoItems = new ArrayList<String>();
-		// Create the array adapter to bind the array to the listview
-		final ArrayAdapter<String> aa;
-		aa = new ArrayAdapter<String>(this, R.layout.list_black_text, todoItems);
-		// Bind the array adapter to the listview.
-		myListView.setAdapter(aa);
+		Marker POI[] =app.getPunten();
+		String res[] = new String[POI.length];
+		for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitel(); 
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.trajecten_layout, res));
 
-		Marker POI[] = app.getPunten();
-		for (int i = 0; i < POI.length; i++) {
-			todoItems.add(0, POI[i].getTitel());
-			aa.notifyDataSetChanged();
-		}
-		myListView.setOnItemClickListener(new OnItemClickListener() {
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+
+		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				VopApplication app = (VopApplication) getApplicationContext();
 				Marker POI[] = app.getPunten();
 				// When clicked, show a toast with the TextView text
 				Toast.makeText(getApplicationContext(),
-						POI[POI.length - position - 1].getTitel(),
+						POI[position].getTitel() +" "+POI[position].getInfo(),
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+	public void construeer() {
+		VopApplication app = (VopApplication) getApplicationContext();
+		Marker POI[];
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+		POI = new Marker[loc.size()];
+		int j = 0;
+		for (com.vop.tools.data.Location l : loc) {
+			POI[j] = new Marker(l.getName(), l.getDescription(),
+					l.getLongitude(), l.getLatitute(), l.getAltitude(),
+					getApplicationContext());
+			j++;
+		}
+		app.setPunten(POI);
+		Toast toast = Toast.makeText(getApplicationContext(), "update voltooid", Toast.LENGTH_SHORT);
+		toast.show();
 	}
 }

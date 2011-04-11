@@ -1,7 +1,9 @@
 package com.vop.augumented;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,11 +14,13 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
 public class Hoofdmenu extends FullscreenActivity {
+	Vibrator vibrator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hoofdmenu_layout);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
 	@Override
@@ -31,33 +35,40 @@ public class Hoofdmenu extends FullscreenActivity {
 		}
 	}
 
+
 	// knoppen
 	public void locaties_klik(View v) {
-		Intent myIntent = new Intent(Hoofdmenu.this, Locaties.class);
+		vibrator.vibrate(30);
+		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedReality.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void trajecten_klik(View v) {
+		vibrator.vibrate(30);
 		Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void profiel_klik(View v) {
+		vibrator.vibrate(30);
 		Intent myIntent = new Intent(Hoofdmenu.this, locatie_map2.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void vrienden_klik(View v) {
-		Intent myIntent = new Intent(Hoofdmenu.this, TutorialPartI.class);
+		vibrator.vibrate(30);
+		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedReality.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void berichten_klik(View v) {
+		vibrator.vibrate(30);
 		Intent myIntent = new Intent(Hoofdmenu.this, Berichten.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void uitloggen_klik(View v) {
+		vibrator.vibrate(30);
 		VopApplication app = (VopApplication) getApplicationContext();
 		app.putState("login", "false");
 		app.putState("userid", null);

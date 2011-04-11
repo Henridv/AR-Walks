@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.vop.augumented.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
+import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
 
 import android.os.Bundle;
@@ -20,12 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Trajecten extends FullscreenListActivity {
+	ArrayList<Traject> trajecten;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// test hallo
-		ArrayList<Traject> trajecten = DBWrapper.getTrajects();
+		trajecten = DBWrapper.getTrajects();
 
 		String[] res = new String[trajecten.size()];
 		{
@@ -34,10 +36,8 @@ public class Trajecten extends FullscreenListActivity {
 						+ "aangemaakt door " + trajecten.get(i).getPerson();
 			}
 		}
-
 		setListAdapter(new ArrayAdapter<String>(this,
 				R.layout.trajecten_layout, res));
-
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 
@@ -45,8 +45,10 @@ public class Trajecten extends FullscreenListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// When clicked, show a toast with the TextView text
+				VopApplication app = (VopApplication) getApplicationContext();
+				app.setTraject(trajecten.get(position));
 				Toast.makeText(getApplicationContext(),
-						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+						trajecten.get(position).getName(), Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

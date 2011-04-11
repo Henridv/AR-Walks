@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 import java.util.ArrayList;
 
@@ -95,18 +95,18 @@ public class AugView extends View {
 		for (int i = 0; i < POI.length; i++) {
 			POI[i].bereken_zichtbaarheid(lat, lng, alt, roll);
 		}
-		RectF rectangle = new RectF(getMeasuredWidth() / 70,
+		/*RectF rectangle = new RectF(getMeasuredWidth() / 70,
 				getMeasuredHeight() / 70, 69 * getMeasuredWidth() / 70,
-				2 * getMeasuredHeight() / 10);
-		Bitmap bmp = BitmapFactory.decodeResource(getResources(),
+				2 * getMeasuredHeight() / 10);*/
+		/*Bitmap bmp = BitmapFactory.decodeResource(getResources(),
 				R.drawable.androidmarker);
 
 		canvas.drawCircle(9 * getMeasuredWidth() / 10,
 				9 * getMeasuredHeight() / 10, 20, myPaint);
 		canvas.drawCircle(9 * getMeasuredWidth() / 10,
-				9 * getMeasuredHeight() / 10, 1, kader_kleur);
+				9 * getMeasuredHeight() / 10, 1, kader_kleur);*/
 
-		for (int i = 0; i < POI.length; i++) {
+		/*for (int i = 0; i < POI.length; i++) {
 			canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
 					9 * getMeasuredHeight() / 10);
 			if (POI[i].getBinnen_afstand())
@@ -127,7 +127,7 @@ public class AugView extends View {
 				 * .getVerticale_positie() getMeasuredHeight() / 2), (float) 20,
 				 * myPaint);
 				 */
-				canvas.drawBitmap(
+				/*canvas.drawBitmap(
 						bmp,
 						getMeasuredWidth() / 2
 								+ (float) POI[i].getHorizontale_positie()
@@ -137,7 +137,7 @@ public class AugView extends View {
 								* getMeasuredHeight() / 2 - 10), null);
 			}
 
-		}
+		}*/
 
 		dichtste_punt = -1;
 		for (int i = 0; i < POI.length; i++) {
@@ -149,26 +149,26 @@ public class AugView extends View {
 					dichtste_punt = i;
 			}
 		}
-		Bitmap bmp2 = BitmapFactory.decodeResource(getResources(),
+		/*Bitmap bmp2 = BitmapFactory.decodeResource(getResources(),
 				R.drawable.marker_pos);
 		Bitmap bmp3 = BitmapFactory.decodeResource(getResources(),
-				R.drawable.arrow);
+				R.drawable.arrow);*/
 		if (dichtste_punt != -1) {
 			canvas.drawText(POI[dichtste_punt].getTitel(),
 					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
-			canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
-					9 * getMeasuredHeight() / 10);
-			canvas.drawCircle(
+			/*canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
+					9 * getMeasuredHeight() / 10);*/
+			/*canvas.drawCircle(
 					9 * getMeasuredWidth() / 10
 							+ POI[dichtste_punt].getAfstand_x(),
 					9 * getMeasuredHeight() / 10
-							+ POI[dichtste_punt].getAfstand_y(), 1, myPaint2);
-			canvas.restore();
-			canvas.drawText(
+							+ POI[dichtste_punt].getAfstand_y(), 1, myPaint2);*/
+			//canvas.restore();
+			/*canvas.drawText(
 					"afstand: "
 							+ Math.round(POI[dichtste_punt].getAfstand_marker()),
 					getMeasuredWidth() / 10, 2 * getMeasuredHeight() / 10,
-					myPaint2);
+					myPaint2);*/
 			/*
 			 * canvas.drawCircle( getMeasuredWidth() / 2 + (float)
 			 * POI[dichtste_punt] .getHorizontale_positie() getMeasuredWidth() /
@@ -176,7 +176,7 @@ public class AugView extends View {
 			 * .getVerticale_positie() * getMeasuredHeight() / 2), (float) 20,
 			 * cirkel_select);
 			 */
-			canvas.drawBitmap(bmp2, getMeasuredWidth() / 2
+			/*canvas.drawBitmap(bmp2, getMeasuredWidth() / 2
 					+ (float) POI[dichtste_punt].getHorizontale_positie()
 					* getMeasuredWidth() / 2 - 25, (float) (getMeasuredHeight()
 					/ 2 + POI[dichtste_punt].getVerticale_positie()
@@ -188,7 +188,7 @@ public class AugView extends View {
 			if (app.getState().get("adres") != null)
 				canvas.drawText("adres: " + app.getState().get("adres"),
 						5 * getMeasuredWidth() / 10,
-						15 * getMeasuredHeight() / 100, myPaint2);
+						15 * getMeasuredHeight() / 100, myPaint2);*/
 
 		}
 		/*

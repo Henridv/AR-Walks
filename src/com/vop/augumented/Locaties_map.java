@@ -3,6 +3,9 @@ package com.vop.augumented;
 import java.util.ArrayList;
 import java.util.List;
 
+import overlays.Marker;
+import overlays.punten_overlay;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -34,7 +37,7 @@ public class Locaties_map extends MapActivity {
 	Location location;
 	MapController mapController;
 	MapView mapView;
-	int minDistance = 0;
+	int minDistance = 5;
 	int minTime = 1000;
 	MyLocationOverlay myLocationOverlay;
 	punten_overlay itemizedoverlay;
@@ -79,16 +82,7 @@ public class Locaties_map extends MapActivity {
 		Drawable drawable1 = this.getResources().getDrawable(
 				R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
-		try {
-			// Create the file
-			initMap();
-		} catch (Exception e) {
-			// Print out the exception that occurred
-			Toast toast = Toast.makeText(getApplicationContext(), "hello",
-					Toast.LENGTH_SHORT);
-			toast.show();
-		}
-
+		initMap();
 		this.mapController.setZoom(17);
 		this.context = Context.LOCATION_SERVICE;
 		this.locationManager = (LocationManager) getSystemService(context);
@@ -119,7 +113,7 @@ public class Locaties_map extends MapActivity {
 			app.setLat(location.getLatitude());
 			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			this.mapController.animateTo(punt);
-			AugView.construeer();
+			app.construeer();
 		}
 	}
 
@@ -130,6 +124,8 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void initMap() {
+		VopApplication app = (VopApplication) getApplicationContext();
+		app.construeer();
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableCompass();
@@ -139,7 +135,6 @@ public class Locaties_map extends MapActivity {
 				mapController.animateTo(myLocationOverlay.getMyLocation());
 			}
 		});
-		VopApplication app = (VopApplication) getApplicationContext();
 		Marker POI[] = app.getPunten();
 
 		for (int i = 0; i < POI.length; i++) {
@@ -156,10 +151,10 @@ public class Locaties_map extends MapActivity {
 	}
 
 	private void refreshMap() {
-		construeer();
+		VopApplication app = (VopApplication) getApplicationContext();
+		app.construeer();
 		mapView.getOverlays().clear();
 		mapView.getOverlays().add(myLocationOverlay);
-		VopApplication app = (VopApplication) getApplicationContext();
 		Marker POI[] = app.getPunten();
 		for (int i = 0; i < POI.length; i++) {
 			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
@@ -181,6 +176,7 @@ public class Locaties_map extends MapActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		VopApplication app = (VopApplication) getApplicationContext();
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
@@ -192,28 +188,13 @@ public class Locaties_map extends MapActivity {
 			Locaties_map.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
-			AugView.construeer();
+			app.construeer();
 			refreshMap();
-		case R.id.lijstloc:
+		/*case R.id.lijstloc:
 			myIntent = new Intent(Locaties_map.this, ListView_Locaties.class);
-			Locaties_map.this.startActivity(myIntent);
+			Locaties_map.this.startActivity(myIntent);*/
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void construeer() {
-		VopApplication app = (VopApplication) content;
-		Marker POI[];
-		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
-		POI = new Marker[loc.size()];
-		int j = 0;
-		for (com.vop.tools.data.Location l : loc) {
-			POI[j] = new Marker(l.getName(), l.getDescription(),
-					l.getLongitude(), l.getLatitute(), l.getAltitude(),
-					getApplicationContext());
-			j++;
-		}
-		app.setPunten(POI);
 	}
 }

@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package overlays;
 
 import android.content.Context;
 import android.graphics.Canvas;
