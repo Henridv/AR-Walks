@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import com.vop.overlays.Marker;
+import com.vop.tools.data.Person;
 import com.vop.tools.data.Traject;
 
 import android.app.Application;
@@ -27,6 +28,15 @@ public class VopApplication extends Application {
 	private boolean first;
 	private int dichtste_punt;
 	private Traject traject;
+	private Person persoon;
+
+	public Person getPersoon() {
+		return persoon;
+	}
+
+	public void setPersoon(Person persoon) {
+		this.persoon = persoon;
+	}
 
 	public Traject getTraject() {
 		return traject;
