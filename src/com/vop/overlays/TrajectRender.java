@@ -1,4 +1,4 @@
-package overlays;
+package com.vop.overlays;
 
 import java.io.InputStream;
 
@@ -14,21 +14,21 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 import android.widget.Toast;
 
-public class LocatieRender implements Renderer {
+public class TrajectRender implements Renderer {
 	Activity activiteit;
 	private Quad quad;
 	private Quad quad_selected;
 
 
-	public LocatieRender(Activity act) {
+	public TrajectRender(Activity act) {
 		activiteit = act;
 		quad = new Quad();
 		quad_selected=new Quad();
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		//gl.glEnable(GL10.GL_BLEND); // enable transparency blending
-		//gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
+		gl.glEnable(GL10.GL_BLEND); // enable transparency blending
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
 		// transparency
 		InputStream is = activiteit.getResources().openRawResource(R.drawable.markerandroid);
 		InputStream is_select = activiteit.getResources().openRawResource(R.drawable.markerandroid_selected);

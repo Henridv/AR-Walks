@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import overlays.AugView;
-import overlays.Marker;
-import overlays.Preview;
 
+import com.vop.overlays.AugView;
+import com.vop.overlays.Marker;
+import com.vop.overlays.Preview;
 import com.vop.tools.VopApplication;
 
 import android.app.Activity;
@@ -230,7 +230,7 @@ public class Locaties extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(Locaties.this, Locaties_map.class);
+			Intent myIntent = new Intent(Locaties.this, LocatieMap.class);
 			Locaties.this.startActivity(myIntent);
 			finish();
 			return true;
@@ -270,7 +270,7 @@ public class Locaties extends Activity {
 			Marker.setAfstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(Locaties.this, Locatie_opslaan.class);
+			myIntent = new Intent(Locaties.this, LocatieOpslaan.class);
 			Locaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Locatie_opslaan extends FullscreenActivity {
+public class LocatieOpslaan extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

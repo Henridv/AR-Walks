@@ -1,8 +1,8 @@
 package com.vop.augumented;
-import overlays.InfoView;
-import overlays.LocatieRender;
-import overlays.Preview;
 
+import com.vop.overlays.InfoView;
+import com.vop.overlays.LocatieRender;
+import com.vop.overlays.Preview;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Context;
@@ -226,7 +226,7 @@ public class AugmentedRealityTraject extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityTraject.this, Locatie_opslaan.class);
+			myIntent = new Intent(AugmentedRealityTraject.this, LocatieOpslaan.class);
 			AugmentedRealityTraject.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

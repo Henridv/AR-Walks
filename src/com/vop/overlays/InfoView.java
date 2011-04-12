@@ -1,4 +1,4 @@
-package overlays;
+package com.vop.overlays;
 
 import android.content.Context;
 import android.graphics.Canvas;

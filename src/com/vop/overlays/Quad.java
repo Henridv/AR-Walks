@@ -1,4 +1,4 @@
-package overlays;
+package com.vop.overlays;
 
 import java.io.IOException;
 import java.io.InputStream;

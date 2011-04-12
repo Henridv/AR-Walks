@@ -51,6 +51,7 @@ public class StartupActivity extends FullscreenActivity {
 			public void run() {
 				Person p = DBWrapper.getProfile(emailbox.getText().toString(),
 						password.getText().toString());
+				app.setPersoon(p);
 				if (p != null) {
 					app.putState("login", "true");
 					app.putState("userid", p.getId().toString());

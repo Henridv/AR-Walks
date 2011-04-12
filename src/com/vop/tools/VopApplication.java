@@ -1,10 +1,13 @@
 package com.vop.tools;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
-import overlays.Marker;
 
+import com.vop.overlays.Marker;
+import com.vop.tools.data.Person;
 import com.vop.tools.data.Traject;
 
 import android.app.Application;
@@ -26,6 +29,15 @@ public class VopApplication extends Application {
 	private boolean first;
 	private int dichtste_punt;
 	private Traject traject;
+	private Person persoon;
+
+	public Person getPersoon() {
+		return persoon;
+	}
+
+	public void setPersoon(Person persoon) {
+		this.persoon = persoon;
+	}
 
 	public Traject getTraject() {
 		return traject;
@@ -183,13 +195,24 @@ public class VopApplication extends Application {
 		Marker POI[];
 		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
 		POI = new Marker[loc.size()];
-		int j = 0;
+		List<Marker> list = new ArrayList<Marker>();
+		for (com.vop.tools.data.Location l : loc) {
+			list.add(new Marker(l.getName(), l.getDescription(),
+					l.getLongitude(), l.getLatitute(), alt, lat, lng,
+					alt, roll));
+		}
+		Collections.sort(list);
+		//POI = (Marker[]) list.toArray();
+		for(int i=0;i<list.size();i++){
+			POI[i] = list.get(i);
+		}
+		/*int j = 0;
 		for (com.vop.tools.data.Location l : loc) {
 			POI[j] = new Marker(l.getName(), l.getDescription(),
 					l.getLongitude(), l.getLatitute(), alt, lat, lng,
 					alt, roll);
 			j++;
-		}
+		}*/
 		this.setPunten(POI);
 		Toast toast = Toast.makeText(getApplicationContext(), "POI inladen", Toast.LENGTH_SHORT);
 		toast.show();

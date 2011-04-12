@@ -1,14 +1,15 @@
 package com.vop.augumented;
-import overlays.InfoView;
-import overlays.Marker;
-import overlays.LocatieRender;
-import overlays.Preview;
 
+import com.vop.overlays.InfoView;
+import com.vop.overlays.LocatieRender;
+import com.vop.overlays.Marker;
+import com.vop.overlays.Preview;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -39,6 +40,10 @@ public class AugmentedRealityLocaties extends Activity {
 	InfoView infoview;
 	double killfactor = 0.1;
 	VopApplication app;
+	SensorManager sm;
+	LocationManager locationManager;
+	Sensor aSensor;
+	Sensor mfSensor;
 	
 	@Override
 	public boolean onTouchEvent(final MotionEvent ev) {
@@ -85,7 +90,7 @@ public class AugmentedRealityLocaties extends Activity {
 		super.onCreate(savedInstanceState);
 		app = (VopApplication) getApplicationContext();
 		String context = Context.LOCATION_SERVICE;
-		LocationManager locationManager = (LocationManager) getSystemService(context);
+		locationManager = (LocationManager) getSystemService(context);
 
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -132,16 +137,9 @@ public class AugmentedRealityLocaties extends Activity {
 		setContentView(layout);
 
 		// sensors
-		SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		Sensor aSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		Sensor mfSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		sm.registerListener(myAccelerometerListener, aSensor,
-				SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(myAccelerometerListener, mfSensor,
-				SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(sensorListener,
-				SensorManager.SENSOR_ORIENTATION,
-				SensorManager.SENSOR_DELAY_UI);
+		sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		aSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		mfSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -229,7 +227,7 @@ public class AugmentedRealityLocaties extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedRealityLocaties.this, Locaties_map.class);
+			Intent myIntent = new Intent(AugmentedRealityLocaties.this, LocatieMap.class);
 			AugmentedRealityLocaties.this.startActivity(myIntent);
 			finish();
 			return true;
@@ -269,7 +267,7 @@ public class AugmentedRealityLocaties extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityLocaties.this, Locatie_opslaan.class);
+			myIntent = new Intent(AugmentedRealityLocaties.this, LocatieOpslaan.class);
 			AugmentedRealityLocaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
@@ -282,5 +280,24 @@ public class AugmentedRealityLocaties extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sm.registerListener(myAccelerometerListener, aSensor,
+				SensorManager.SENSOR_DELAY_FASTEST);
+		sm.registerListener(myAccelerometerListener, mfSensor,
+				SensorManager.SENSOR_DELAY_FASTEST);
+		sm.registerListener(sensorListener,
+				SensorManager.SENSOR_ORIENTATION,
+				SensorManager.SENSOR_DELAY_UI);
+	}
+
+	@Override
+	protected void onStop() {
+		sm.unregisterListener(sensorListener);
+		sm.unregisterListener(myAccelerometerListener);
+		locationManager.removeUpdates(locationListener);
+		super.onStop();
 	}
 }

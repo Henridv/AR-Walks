@@ -2,9 +2,9 @@ package com.vop.augumented;
 
 import java.util.ArrayList;
 
-import overlays.Marker;
 
 import com.vop.augumented.R;
+import com.vop.overlays.Marker;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
