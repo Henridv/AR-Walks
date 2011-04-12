@@ -110,8 +110,8 @@ public class TrajectOpslaan extends Activity {
 			
 		}
 		else{
-			Person persoon = new Person(2,"glenn bostoen", "050822624", "passke", "glenn@hot.com");
-			Traject traject=new Traject(2, veld1.getText().toString(), persoon, walk);
+			//Person persoon = new Person(2,"Henri De Veene", "", "plain", "j");
+			Traject traject=new Traject(100, veld1.getText().toString(), app.getPersoon(), walk);
 			DBWrapper.save(traject);
 			finish();
 		}

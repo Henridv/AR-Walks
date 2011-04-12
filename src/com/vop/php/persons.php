@@ -12,7 +12,8 @@ switch($action) {
 			$query = "
 				SELECT id, name, email, phone, password
 				FROM persons
-				WHERE email = '".$_POST['email']."'";
+				WHERE email = '".$_POST['email']."'
+					AND password = '".$_POST['password']."'";
 		} else if (isset($_POST['id'])) {
 			$query = "
 				SELECT id, name, email, phone, password

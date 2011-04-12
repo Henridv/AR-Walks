@@ -7,12 +7,14 @@ import java.util.List;
 
 
 import com.vop.overlays.Marker;
+import com.vop.tools.data.Person;
 import com.vop.tools.data.Traject;
 
 import android.app.Application;
 import android.widget.Toast;
 
 public class VopApplication extends Application {
+	public final static String PREFS = "VOPPREFS"; 
 	private HashMap<String, String> state;
 	private Marker[] punten;
 	private double lng;
@@ -27,6 +29,15 @@ public class VopApplication extends Application {
 	private boolean first;
 	private int dichtste_punt;
 	private Traject traject;
+	private Person persoon;
+
+	public Person getPersoon() {
+		return persoon;
+	}
+
+	public void setPersoon(Person persoon) {
+		this.persoon = persoon;
+	}
 
 	public Traject getTraject() {
 		return traject;
