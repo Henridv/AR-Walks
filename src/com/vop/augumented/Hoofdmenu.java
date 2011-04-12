@@ -2,6 +2,7 @@ package com.vop.augumented;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -31,8 +32,7 @@ public class Hoofdmenu extends FullscreenActivity {
 		Boolean loggedIn = Boolean.parseBoolean(app.getState().get("login"));
 
 		if (loggedIn == null || !loggedIn) {
-			Intent myIntent = new Intent(Hoofdmenu.this, StartupActivity.class);
-			Hoofdmenu.this.startActivity(myIntent);
+			finish();
 		}
 	}
 
@@ -72,8 +72,14 @@ public class Hoofdmenu extends FullscreenActivity {
 		vibrator.vibrate(60);
 		app.putState("login", "false");
 		app.putState("userid", null);
-		moveTaskToBack(true);
 
+		SharedPreferences.Editor editor = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE).edit();
+		editor.remove("login");
+		editor.remove("userid");
+		editor.commit();
+
+		moveTaskToBack(true);
+		finish();
 	}
 
 	// menu openen
