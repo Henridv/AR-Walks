@@ -63,4 +63,7 @@ public class Traject {
 		walk.add(p);
 	}
 
+	public String toString() {
+		return name;
+	}
 }

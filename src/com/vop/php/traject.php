@@ -29,8 +29,6 @@ switch($action) {
 		}
 		$geom .= ")', 4326)";
 		
-		echo $geom;
-		
 		if (isset($_POST['id'])) {
 			$id = $_POST['id'];
 			$query = "
@@ -38,7 +36,7 @@ switch($action) {
 				SET
 					name='$name',
 					pers_id='$person',
-					walk=$geom,
+					walk=$geom
 				WHERE id='$id'";
 		} else {
 			$query = "
@@ -51,9 +49,8 @@ switch($action) {
 		
 	case "deltraject":
 		$query = "
-			DELETE FROM traject
+			DELETE FROM trajects
 			WHERE id = ".$_POST['id'];
-		echo $query;
 		break;
 	default:
 		die("no data available");

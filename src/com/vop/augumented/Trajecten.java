@@ -2,23 +2,25 @@ package com.vop.augumented;
 
 import java.util.ArrayList;
 
-import com.vop.augumented.R;
-import com.vop.tools.DBWrapper;
-import com.vop.tools.FullscreenListActivity;
-import com.vop.tools.VopApplication;
-import com.vop.tools.data.Traject;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+
+import com.vop.tools.DBWrapper;
+import com.vop.tools.FullscreenListActivity;
+import com.vop.tools.VopApplication;
+import com.vop.tools.data.Traject;
 
 public class Trajecten extends FullscreenListActivity {
 	ArrayList<Traject> trajecten;
@@ -26,18 +28,7 @@ public class Trajecten extends FullscreenListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// test hallo
-		trajecten = DBWrapper.getTrajects();
-
-		String[] res = new String[trajecten.size()];
-		{
-			for (int i = 0; i < trajecten.size(); i++) {
-				res[i] = "naam traject: " + trajecten.get(i).getName() + ", "
-						+ "aangemaakt door " + trajecten.get(i).getPerson();
-			}
-		}
-		setListAdapter(new ArrayAdapter<String>(this,
-				R.layout.trajecten_layout, res));
+		updateTrajects();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 
@@ -49,6 +40,36 @@ public class Trajecten extends FullscreenListActivity {
 				app.setTraject(trajecten.get(position));
 				Toast.makeText(getApplicationContext(),
 						trajecten.get(position).getName(), Toast.LENGTH_SHORT).show();
+			}
+		});
+		
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				final CharSequence[] items = {"Walk", "Edit", "Delete"};
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(Trajecten.this);
+				builder.setTitle(trajecten.get(position).toString());
+				builder.setItems(items, new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("Walk")) {
+							Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Edit")) {
+							Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Delete")) {
+							DBWrapper.delete(trajecten.get(position));
+						}
+						updateTrajects();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+				
+				return true;
 			}
 		});
 	}
@@ -72,8 +93,22 @@ public class Trajecten extends FullscreenListActivity {
 		}
 	}
 
+	/**
+	 * Updates traject list
+	 */
 	private void updateTrajects() {
-		// send request to server
+		trajecten = DBWrapper.getTrajects();
+
+		String[] res = new String[trajecten.size()];
+		{
+			for (int i = 0; i < trajecten.size(); i++) {
+				res[i] = "'" + trajecten.get(i) + "' by "
+						+ trajecten.get(i).getPerson();
+			}
+		}
+
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.trajecten_layout, res));
 	}
 
 }

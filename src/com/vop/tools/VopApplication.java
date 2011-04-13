@@ -14,7 +14,9 @@ import android.app.Application;
 import android.widget.Toast;
 
 public class VopApplication extends Application {
-	public final static String PREFS = "VOPPREFS"; 
+	public final static String PREFS = "VOPPREFS";
+	public final static String LOGTAG= "vop_log";
+	
 	private HashMap<String, String> state;
 	private Marker[] punten;
 	private double lng;
