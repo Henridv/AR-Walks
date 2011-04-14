@@ -142,6 +142,7 @@ public class locatie_map2 extends MapActivity {
 
 	private void initMap(){
 		this.mapController.setZoom(17);
+		this.mapController.animateTo(new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6)));
 		this.itemizedoverlay = new punten_overlay(this.draw);
 		showTrajectsOnMap();
 		//moet hier animateTo huidige locatie bij? irrelevant atm
@@ -161,18 +162,20 @@ public class locatie_map2 extends MapActivity {
 			listOfGeoPoints.add(
 					new GeoPoint((int)(listOfPoints.get(i).getLatitute()*1E6),
 							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
+					
 		}
 		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
+			Toast toast = Toast.makeText(content,
+					"punt op kaart", Toast.LENGTH_SHORT);
+			toast.show();
 			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
+			
 		}
 	}
 	
 	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
 	private void showTrajectsOnMap(){
 		for(int i=0;i<this.walks.size();i++){
-			Toast toast = Toast.makeText(content,
-					"Before drawpath", Toast.LENGTH_SHORT);
-			toast.show();
 			drawPath(this.walks.get(i).getWalk(),-65536);
 		}
 		
