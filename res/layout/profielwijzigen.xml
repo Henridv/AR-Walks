@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:padding="25dp">
+	<TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_x="180dip" 
+		android:layout_y="12dip"
+		android:textSize="30px"
+		android:textStyle="bold" 
+		android:text="Edit Profile">
+	</TextView>
+		<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/new_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="new name">
+		</EditText>
+	</LinearLayout>
+		<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/new_phone"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="new phone number">
+		</EditText>
+	</LinearLayout>
+		<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/new_mail"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="new e-mail">
+		</EditText>
+	</LinearLayout>
+		<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="right">
+		<Button
+		android:id="@+id/go_back"
+		android:text="Go back to main menu"
+		android:onClick="go_main" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		</Button>
+		<Button
+		android:id="@+id/save_new_profile"
+		android:text="Save new profile"
+		android:onClick="new_profile" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		</Button>
+	</LinearLayout>
+</LinearLayout>
