@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.vop.tools.DBWrapper;
@@ -31,12 +30,10 @@ public class Profiel extends FullscreenActivity {
 	    TextView email = new TextView(this);
 		email=(TextView)findViewById(R.id.mail); 
 	    email.setText("e-mail: "+p.getEmail());
-	    Button editprof = (Button)findViewById(R.id.profedit);
-
 	}
 	
 	public void edit_klik(View v) {
-		Intent myIntent = new Intent(Profiel.this, Hoofdmenu.class);
+		Intent myIntent = new Intent(Profiel.this, ProfielWijzigen.class); 
 		Profiel.this.startActivity(myIntent);
 	}
 
