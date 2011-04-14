@@ -113,9 +113,9 @@ public class locatie_map2 extends MapActivity {
 			initMap();
 		} catch(Exception e){
 			Toast toast = Toast.makeText(content,
-					"Er is iets fout gegaan bij het initialiseren van de map", Toast.LENGTH_SHORT);
+					"Er is iets fout gegaan bij het initialiseren van de kaart", Toast.LENGTH_SHORT);
 			toast.show();
-			Log.w("Er is iets fout gegaan bij het initialiseren van de map",e.getMessage());
+			Log.w("Er is iets fout gegaan bij het initialiseren van de kaart",e.getMessage());
 		}
 		
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
