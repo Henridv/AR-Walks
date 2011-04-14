@@ -23,11 +23,36 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.location.LocationManager;
+import android.content.Context;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class TrajectOpslaan extends Activity {
 	VopApplication app;
 	private ArrayList<Point> walk;
 	LocationManager locationManager;
+	
 
 
 	/** Called when the activity is first created. */
@@ -49,7 +74,19 @@ public class TrajectOpslaan extends Activity {
 		//initialiseren
 		walk = new ArrayList<Point>();
 		
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		String provider = locationManager.getBestProvider(criteria, true);
+		Location location = locationManager.getLastKnownLocation(provider);
+		updateWithNewLocation(location);
+		locationManager.requestLocationUpdates(provider, 2, 10,
+				locationListener);
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -110,15 +147,15 @@ public class TrajectOpslaan extends Activity {
 			
 		}
 		else{
-			//Person persoon = new Person(2,"Henri De Veene", "", "plain", "j");
-			Traject traject=new Traject(100, veld1.getText().toString(), app.getPersoon(), walk);
+			//Person persoon = new Person(2,"Henri De Veene", "", "test", "henri.deveene@gmail.com");
+			Traject traject=new Traject(veld1.getText().toString(), DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
 			DBWrapper.save(traject);
 			finish();
 		}
 	}
 	@Override
 	protected void onStop() {
-		locationManager.removeUpdates(locationListener);
 		super.onStop();
+		locationManager.removeUpdates(locationListener);
 	}
 }
