@@ -54,14 +54,14 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:gravity="right">
 		<Button
-		android:id="@+id/go_back"
-		android:text="Go back to main menu"
-		android:onClick="go_main" android:layout_height="fill_parent" android:layout_width="wrap_content">
-		</Button>
-		<Button
 		android:id="@+id/save_new_profile"
 		android:text="Save new profile"
 		android:onClick="new_profile" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		</Button>
+		<Button
+		android:id="@+id/go_back"
+		android:text="Go back to profile"
+		android:onClick="go_back" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 	</LinearLayout>
 </LinearLayout>

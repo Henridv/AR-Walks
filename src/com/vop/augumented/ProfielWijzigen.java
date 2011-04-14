@@ -32,9 +32,8 @@ public class ProfielWijzigen extends FullscreenActivity {
 		newemailbox.setText(p.getEmail());
 	}
 	
-	public void go_main(View v) {
-		Intent myIntent = new Intent(ProfielWijzigen.this, Hoofdmenu.class); 
-		ProfielWijzigen.this.startActivity(myIntent);
+	public void go_back(View v) {
+		finish();
 	}
 	
 	public void new_profile(View v) {
