@@ -29,9 +29,8 @@ public class Hoofdmenu extends FullscreenActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		Boolean loggedIn = Boolean.parseBoolean(app.getState().get("login"));
 
-		if (loggedIn == null || !loggedIn) {
+		if (app.getState().get("userid") == null) {
 			finish();
 		}
 	}
@@ -70,11 +69,9 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	public void uitloggen_klik(View v) {
 		vibrator.vibrate(60);
-		app.putState("login", "false");
 		app.putState("userid", null);
 
 		SharedPreferences.Editor editor = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE).edit();
-		editor.remove("login");
 		editor.remove("userid");
 		editor.commit();
 

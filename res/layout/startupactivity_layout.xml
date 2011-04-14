@@ -45,9 +45,14 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:gravity="right">
 		<Button
-		android:id="@+id/go_knop"
+		android:id="@+id/register"
+		android:text="Register"
+		android:onClick="register" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		</Button>
+		<Button
+		android:id="@+id/login"
 		android:text="Log in"
-		android:onClick="go_klik" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		android:onClick="login" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 	</LinearLayout>
 </LinearLayout>
