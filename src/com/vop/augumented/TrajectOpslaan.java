@@ -101,7 +101,7 @@ public class TrajectOpslaan extends Activity {
 			if(knop.getText().equals("stop")){
 				Toast toast = Toast.makeText(getApplicationContext(), "location is being updated", Toast.LENGTH_SHORT);
 				toast.show();
-				walk.add(new Point(location.getLatitude(), location.getLatitude(), location.getAltitude()));
+				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
 			}
 		}
 	}

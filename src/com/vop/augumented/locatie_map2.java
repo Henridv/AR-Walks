@@ -176,6 +176,7 @@ public class locatie_map2 extends MapActivity {
 	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
 	private void showTrajectsOnMap(){
 		for(int i=0;i<this.walks.size();i++){
+			ArrayList<Point> temp = this.walks.get(i).getWalk();
 			drawPath(this.walks.get(i).getWalk(),-65536);
 		}
 		
