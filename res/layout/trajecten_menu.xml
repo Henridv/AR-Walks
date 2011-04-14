@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/walk_start"
+    	android:title="Start a new walk" 
+        android:icon="@drawable/traject" />
     <item android:id="@+id/traject_update"
-          android:title="Update trajects" />
-    <item android:id="@+id/optie_2"
-          android:title="optie 2" />
+    	android:title="Update walks" 
+        android:icon="@drawable/refresh" />
 </menu>

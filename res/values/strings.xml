@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World!</string>
     <string name="app_name">AR Walks</string>
+    <string name="welcome">Welcome to the AR Walks application!</string>
 </resources>

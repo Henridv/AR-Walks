@@ -14,6 +14,14 @@ switch($action) {
 			ORDER BY id";
 		break;
 		
+	case "get_walk":
+		$id = $_POST['id'];
+		$query = "
+			SELECT id, name, pers_id as person
+			FROM trajects
+			WHERE id=$id";
+		break;
+		
 	case "addtraject":
 		$name = $_POST['name'];
 		$person = $_POST['person'];
@@ -29,8 +37,6 @@ switch($action) {
 		}
 		$geom .= ")', 4326)";
 		
-		echo $geom;
-		
 		if (isset($_POST['id'])) {
 			$id = $_POST['id'];
 			$query = "
@@ -38,7 +44,7 @@ switch($action) {
 				SET
 					name='$name',
 					pers_id='$person',
-					walk=$geom,
+					walk=$geom
 				WHERE id='$id'";
 		} else {
 			$query = "
@@ -51,16 +57,15 @@ switch($action) {
 		
 	case "deltraject":
 		$query = "
-			DELETE FROM traject
+			DELETE FROM trajects
 			WHERE id = ".$_POST['id'];
-		echo $query;
 		break;
 	default:
 		die("no data available");
 }
 
 $result = pg_query($conn, $query);
-if ($action == "trajects") {
+if ($action == "trajects" || $action == "get_walk") {
 	while ($traject = pg_fetch_assoc($result)) {
 		$id = $traject["id"];
 		

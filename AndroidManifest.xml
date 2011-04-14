@@ -33,5 +33,6 @@
         <activity android:name="AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="locatie_map2"></activity>
         <activity android:name="TrajectOpslaan" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
+        <activity android:name="EditTraject" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 </manifest>
