@@ -8,6 +8,8 @@ xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width=
 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/mail" android:layout_x="20dip" android:layout_y="160dip"></TextView>
 <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Profile" android:id="@+id/widget55" android:textSize="30px"
 android:textStyle="bold" android:layout_x="180dip" android:layout_y="12dip"></TextView>
-<Button android:id="@+id/profedit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="350dip" android:layout_y="250dip"
+<Button android:id="@+id/profedit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="250dip" android:layout_y="250dip"
        android:onClick="edit_klik" android:text="Edit Profile" />
+<Button android:id="@+id/pwedit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="350dip" android:layout_y="250dip"
+       android:onClick="password_klik" android:text="Edit Password" />
 </AbsoluteLayout>
