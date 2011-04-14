@@ -52,6 +52,7 @@ public class TrajectOpslaan extends Activity {
 	VopApplication app;
 	private ArrayList<Point> walk;
 	LocationManager locationManager;
+	Criteria criteria = new Criteria();
 	
 
 
@@ -73,20 +74,9 @@ public class TrajectOpslaan extends Activity {
 		
 		//initialiseren
 		walk = new ArrayList<Point>();
+		Traject traject= DBWrapper.getTraject(24);
 		
-		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		String provider = locationManager.getBestProvider(criteria, true);
-		Location location = locationManager.getLastKnownLocation(provider);
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 2, 10,
-				locationListener);
+		
 	}
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -109,7 +99,7 @@ public class TrajectOpslaan extends Activity {
 		if (location != null) {
 			Button knop = (Button) findViewById(R.id.startstop) ;
 			if(knop.getText().equals("stop")){
-				Toast toast = Toast.makeText(getApplicationContext(), "velden invullen", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(getApplicationContext(), "location is being updated", Toast.LENGTH_SHORT);
 				toast.show();
 				walk.add(new Point(location.getLatitude(), location.getLatitude(), location.getAltitude()));
 			}
@@ -157,5 +147,20 @@ public class TrajectOpslaan extends Activity {
 	protected void onStop() {
 		super.onStop();
 		locationManager.removeUpdates(locationListener);
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		String provider = locationManager.getBestProvider(criteria, true);
+		Location location = locationManager.getLastKnownLocation(provider);
+		updateWithNewLocation(location);
+		locationManager.requestLocationUpdates(provider, 2, 10,
+				locationListener);
 	}
 }
