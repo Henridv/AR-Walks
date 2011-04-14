@@ -29,9 +29,8 @@ public class Hoofdmenu extends FullscreenActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		Boolean loggedIn = Boolean.parseBoolean(app.getState().get("login"));
 
-		if (loggedIn == null || !loggedIn) {
+		if (app.getState().get("userid") == null) {
 			finish();
 		}
 	}
@@ -40,7 +39,7 @@ public class Hoofdmenu extends FullscreenActivity {
 	// knoppen
 	public void locaties_klik(View v) {
 		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
@@ -64,17 +63,15 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	public void berichten_klik(View v) {
 		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, Berichten.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, locatie_map2.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
 	public void uitloggen_klik(View v) {
 		vibrator.vibrate(60);
-		app.putState("login", "false");
 		app.putState("userid", null);
 
 		SharedPreferences.Editor editor = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE).edit();
-		editor.remove("login");
 		editor.remove("userid");
 		editor.commit();
 

@@ -36,5 +36,6 @@
         <activity android:name="EditTraject" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="ProfielWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="PaswoordWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="RegisterProfile" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 </manifest>

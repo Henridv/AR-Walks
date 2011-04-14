@@ -27,8 +27,8 @@ public class LocatieRender implements Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		gl.glEnable(GL10.GL_BLEND); // enable transparency blending
-		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
+		//gl.glEnable(GL10.GL_BLEND); // enable transparency blending
+		//gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA); // enable
 		// transparency
 		InputStream is = activiteit.getResources().openRawResource(R.drawable.icon);
 		InputStream is_select = activiteit.getResources().openRawResource(R.drawable.markerandroid_selected);
@@ -38,9 +38,9 @@ public class LocatieRender implements Renderer {
 		gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Yellow Background
 		gl.glClearDepthf(1.0f); // Depth Buffer Setup
-		gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
-		gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
-		//gl.glDepthFunc(GL10.GL_NEVER);
+		//gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
+		//gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
+		gl.glDepthFunc(GL10.GL_NEVER);
 
 		// Really Nice Perspective Calculations
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
@@ -60,8 +60,8 @@ public class LocatieRender implements Renderer {
 				gl.glLoadIdentity();
 				if (app.getValues() != null) {
 					gl.glLoadMatrixf(app.getValues(), 0);
-					gl.glTranslatef(POI[i].getAfstand_x()*20f,
-							POI[i].getAfstand_y()*20f, (float) (POI[i].getAlt()-app.getAlt()));
+					gl.glTranslatef(POI[i].getAfstand_x()*10f,
+							POI[i].getAfstand_y()*10f, 0);
 					if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()>0) rot = (float) (180- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
 					else if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()<0) rot = (float) (180+ (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
 					else if(POI[i].getAfstand_x() >0 && POI[i].getAfstand_y()<0) rot = (float) (360- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));

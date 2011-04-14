@@ -65,9 +65,6 @@ public class Trajecten extends FullscreenListActivity {
 						if (items[item].equals("Walk")) {
 							Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 						} else if (items[item].equals("Edit")) {
-							// Toast.makeText(Trajecten.this,
-							// "not yet implemented",
-							// Toast.LENGTH_SHORT).show();
 							Intent myIntent = new Intent(Trajecten.this, EditTraject.class);
 							myIntent.putExtra("walk_id", trajecten.get(position).getId());
 							startActivity(myIntent);

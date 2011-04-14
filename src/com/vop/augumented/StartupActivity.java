@@ -26,42 +26,37 @@ public class StartupActivity extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startupactivity_layout);
 		context = getApplicationContext();
-		
+
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
-		    public boolean onKey(View v, int keyCode, KeyEvent event) {
-		        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-		          go_klik(v);
-		          return true;
-		        }
-		        return false;
-		    }
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN)
+						&& (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					login(v);
+					return true;
+				}
+				return false;
+			}
 		});
 	}
 
-	public void go_klik(View v) {
+	public void login(View v) {
 		final EditText emailbox = (EditText) findViewById(R.id.login_email);
 		final EditText password = (EditText) findViewById(R.id.login_password);
 
 		final VopApplication app = (VopApplication) getApplicationContext();
-		final ProgressDialog dialog = ProgressDialog.show(this, "",
-				"Bezig met inloggen. Even geduld...", true);
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inloggen. Even geduld...", true);
 		new Thread() {
 			public void run() {
-				Person p = DBWrapper.getProfile(emailbox.getText().toString(),
-						password.getText().toString());
-				app.setPersoon(p);
+				Person p = DBWrapper.getProfile(emailbox.getText().toString(), password.getText().toString());
 				if (p != null) {
-					app.putState("login", "true");
 					app.putState("userid", p.getId().toString());
-					
+
 					SharedPreferences.Editor editor = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE).edit();
-					editor.putBoolean("login", true);
 					editor.putInt("userid", p.getId());
 					editor.commit();
-					
-					Intent myIntent = new Intent(StartupActivity.this,
-							Hoofdmenu.class);
+
+					Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
 					StartupActivity.this.startActivity(myIntent);
 					dialog.dismiss();
 					finish();
@@ -69,9 +64,7 @@ public class StartupActivity extends FullscreenActivity {
 					dialog.dismiss();
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getApplicationContext(),
-									"Email address and/or password not valid!",
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "Credentials not valid!", Toast.LENGTH_LONG).show();
 						}
 					});
 				}
@@ -79,6 +72,16 @@ public class StartupActivity extends FullscreenActivity {
 		}.start();
 	}
 
+	public void register(View v) {
+		EditText emailbox = (EditText) findViewById(R.id.login_email);
+		EditText password = (EditText) findViewById(R.id.login_password);
+		
+		Intent myIntent = new Intent(this, RegisterProfile.class);
+		myIntent.putExtra("email", emailbox.getText());
+		myIntent.putExtra("password", password.getText());
+		startActivity(myIntent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -89,14 +92,12 @@ public class StartupActivity extends FullscreenActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		VopApplication app = (VopApplication) getApplicationContext();
 		SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
-        
-		boolean login = prefs.getBoolean("login", false);
+
 		int userid = prefs.getInt("userid", 0);
-		if (login && userid != 0) {
-			app.putState("login", "true");
+		if (userid != 0) {
 			app.putState("userid", Integer.toString(userid));
 			Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
 			StartupActivity.this.startActivity(myIntent);
