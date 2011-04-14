@@ -36,6 +36,12 @@ public class Profiel extends FullscreenActivity {
 		Intent myIntent = new Intent(Profiel.this, ProfielWijzigen.class); 
 		Profiel.this.startActivity(myIntent);
 	}
+	
+	public void password_klik(View v){
+		Intent myIntent = new Intent(Profiel.this, PaswoordWijzigen.class); 
+		Profiel.this.startActivity(myIntent);
+		
+	}
 
 	// menu openen
 	@Override
