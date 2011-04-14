@@ -39,7 +39,6 @@ public class StartupActivity extends FullscreenActivity {
 		});
 	}
 
-	// go-klik
 	public void go_klik(View v) {
 		final EditText emailbox = (EditText) findViewById(R.id.login_email);
 		final EditText password = (EditText) findViewById(R.id.login_password);
@@ -80,7 +79,6 @@ public class StartupActivity extends FullscreenActivity {
 		}.start();
 	}
 
-	// menu openen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
