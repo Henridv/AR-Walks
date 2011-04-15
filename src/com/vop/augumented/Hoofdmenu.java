@@ -1,16 +1,23 @@
 package com.vop.augumented;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
@@ -24,6 +31,150 @@ public class Hoofdmenu extends FullscreenActivity {
 		app = (VopApplication) getApplicationContext();
 		setContentView(R.layout.hoofdmenu_layout);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		
+		//berichten
+		ImageButton berichten=(ImageButton) findViewById(R.id.berichten);
+		berichten.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				final CharSequence[] items = { "Walk", "Edit", "Delete" };
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
+				builder.setTitle("hello");
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("Walk")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Edit")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Delete")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+				return true;
+			}
+		});
+		//trajecten
+		ImageButton trajecten=(ImageButton) findViewById(R.id.trajecten);
+		trajecten.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				final CharSequence[] items = { "lijst", "toevoegen traject"};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
+				builder.setTitle("trajecten");
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("lijst")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						} else if (items[item].equals("toevoegen traject")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+				return true;
+			}
+		});
+		//locaties
+		ImageButton locaties=(ImageButton) findViewById(R.id.locaties);
+		locaties.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				final CharSequence[] items = { "augmented view", "maps", "lijst" };
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
+				builder.setTitle("locaties");
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("augmented view")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						} else if (items[item].equals("maps")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						} else if (items[item].equals("lijst")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				return true;
+			}
+		});
+		//vrienden
+		ImageButton vrienden=(ImageButton) findViewById(R.id.vrienden);
+		vrienden.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				final CharSequence[] items = { "Walk", "Edit", "Delete" };
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
+				builder.setTitle("hello");
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("Walk")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Edit")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Delete")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+				return true;
+			}
+		});
+		//profiel
+		ImageButton profiel=(ImageButton) findViewById(R.id.profiel);
+		profiel.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				final CharSequence[] items = { "Walk", "Edit", "Delete" };
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
+				builder.setTitle("hello");
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if (items[item].equals("Walk")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Edit")) {
+							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						} else if (items[item].equals("Delete")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+				return true;
+			}
+		});
+		
 	}
 
 	@Override
