@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
@@ -12,48 +12,41 @@
 		android:layout_y="12dip"
 		android:textSize="30px"
 		android:textStyle="bold" 
-		android:text="Edit Profile">
+		android:text="Edit Password">
 	</TextView>
-		<LinearLayout
+			<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<EditText
-			android:id="@+id/new_name"
+			android:id="@+id/passwordchange"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:singleLine="true">
+			android:singleLine="true"
+			android:hint="Give new password"
+			android:password="true">
 		</EditText>
 	</LinearLayout>
-		<LinearLayout
+			<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<EditText
-			android:id="@+id/new_phone"
+			android:id="@+id/passwordchange_repeat"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:singleLine="true">
-		</EditText>
-	</LinearLayout>
-		<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/new_mail"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:singleLine="true">
+			android:singleLine="true"
+			android:hint="Repeat new password"
+			android:password="true">
 		</EditText>
 	</LinearLayout>
 		<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:gravity="right">
 		<Button
-		android:id="@+id/save_new_profile"
-		android:text="Save new profile"
-		android:onClick="new_profile" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		android:id="@+id/save_new_password"
+		android:text="Save new password"
+		android:onClick="new_password" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 		<Button
 		android:id="@+id/go_back"

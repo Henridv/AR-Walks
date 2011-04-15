@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AbsoluteLayout
-android:id="@+id/widget0"
+android:id="@+id/widget57"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +22,7 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="naam"
 android:layout_x="0px"
-android:layout_y="2px"
+android:layout_y="0px"
 >
 </TextView>
 <TextView
@@ -31,7 +31,7 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="info"
 android:layout_x="0px"
-android:layout_y="82px"
+android:layout_y="87px"
 >
 </TextView>
 <EditText
@@ -40,7 +40,7 @@ android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:textSize="18sp"
 android:layout_x="0px"
-android:layout_y="22px"
+android:layout_y="23px"
 >
 </EditText>
 <EditText
@@ -49,7 +49,25 @@ android:layout_width="fill_parent"
 android:layout_height="48px"
 android:textSize="18sp"
 android:layout_x="0px"
-android:layout_y="102px"
+android:layout_y="110px"
 >
 </EditText>
+<TextView
+android:id="@+id/widget55"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="aantal punten:"
+android:layout_x="0px"
+android:layout_y="173px"
+>
+</TextView>
+<TextView
+android:id="@+id/widget56"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="1"
+android:layout_x="101px"
+android:layout_y="173px"
+>
+</TextView>
 </AbsoluteLayout>
