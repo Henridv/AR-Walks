@@ -62,16 +62,8 @@ public class ProfielWijzigen extends FullscreenActivity {
 					}
 				});
 			}  
-			}).start();  
-		Intent myIntent = new Intent(ProfielWijzigen.this, Profiel.class); 
-		ProfielWijzigen.this.startActivity(myIntent);
+			}).start(); 
+		finish();
 	}
 
-	// menu openen
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.profiel_menu, menu);
-		return true;
-	}
 }
