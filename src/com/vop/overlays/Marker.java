@@ -130,7 +130,7 @@ public class Marker implements Comparable<Marker> {
 		double lng_loc=app.getLng();
 		double alt_loc=app.getAlt();
 		
-		bereken_zichtbaarheid(lat_loc, lng_loc,alt_loc, app.getRoll());
+		bereken_zichtbaarheid(lat_loc, lng_loc,alt_loc, app.getAzimuth());
 		
 		/*float afstand_tot_punt[] = new float[3];
 		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);

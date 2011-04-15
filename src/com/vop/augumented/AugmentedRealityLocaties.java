@@ -1,20 +1,12 @@
 package com.vop.augumented;
 
-import com.vop.overlays.InfoView;
-import com.vop.overlays.LocatieRender;
-import com.vop.overlays.Marker;
-import com.vop.overlays.Preview;
-import com.vop.tools.VopApplication;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -27,37 +19,209 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class AugmentedRealityLocaties extends Activity {
-	static float r[];
-	LocatieRender renderer;
-	InfoView infoview;
+import com.vop.overlays.CameraOverlay;
+import com.vop.overlays.InfoView;
+import com.vop.overlays.Marker;
+import com.vop.overlays.OpenGLRenderer;
+import com.vop.tools.FullscreenActivity;
+import com.vop.tools.VopApplication;
+
+/**
+ * This class sets up the environment for the augmented reality
+ * 
+ * @author henridv
+ * 
+ */
+public class AugmentedRealityLocaties extends FullscreenActivity {
+	static float rotationMatrices[];
+	OpenGLRenderer openGLRenderer;
+	InfoView infoView;
 	double killfactor = 0.1;
 	VopApplication app;
 	SensorManager sm;
 	LocationManager locationManager;
-	Sensor aSensor;
-	Sensor mfSensor;
-	
+	Sensor accelSensor;
+	Sensor magneticSensor;
+	Sensor orientationSensor;
+	float[] accelerometerValues;
+	float[] magneticFieldValues;
+	String provider;
+
+	private final LocationListener locationListener = new LocationListener() {
+		public void onLocationChanged(Location location) {
+			updateWithNewLocation(location);
+		}
+
+		public void onProviderDisabled(String provider) {
+		}
+
+		public void onProviderEnabled(String provider) {
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+	};
+
+	final SensorEventListener sensorListener = new SensorEventListener() {
+		public void onSensorChanged(SensorEvent event) {
+			switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				if (accelerometerValues != null) {
+					accelerometerValues[0] = (float) (event.values[0]
+							* killfactor + accelerometerValues[0]
+							* (1 - killfactor));
+					accelerometerValues[1] = (float) (event.values[1]
+							* killfactor + accelerometerValues[1]
+							* (1 - killfactor));
+					accelerometerValues[2] = (float) (event.values[2]
+							* killfactor + accelerometerValues[2]
+							* (1 - killfactor));
+				} else
+					accelerometerValues = event.values;
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				if (magneticFieldValues != null) {
+					magneticFieldValues[0] = (float) (event.values[0]
+							* killfactor + magneticFieldValues[0]
+							* (1 - killfactor));
+					magneticFieldValues[1] = (float) (event.values[1]
+							* killfactor + magneticFieldValues[1]
+							* (1 - killfactor));
+					magneticFieldValues[2] = (float) (event.values[2]
+							* killfactor + magneticFieldValues[2]
+							* (1 - killfactor));
+				} else
+					magneticFieldValues = event.values;
+				break;
+			case Sensor.TYPE_ORIENTATION:
+				app.setAzimuth(event.values[0]);
+				infoView.invalidate();
+				break;
+			}
+
+			if (magneticFieldValues != null && accelerometerValues != null) {
+				rotationMatrices = new float[16];
+				SensorManager.getRotationMatrix(rotationMatrices, null, accelerometerValues, magneticFieldValues);
+
+				float[] outR = new float[16];
+				SensorManager.remapCoordinateSystem(rotationMatrices, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
+				app.setValues(outR);
+			}
+		}
+
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		}
+	};
+
+	/**
+	 * Called when the activity is first created.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		app = (VopApplication) getApplicationContext();
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(true);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+		provider = locationManager.getBestProvider(criteria, true);
+		if (provider == null) {
+			provider = locationManager.getBestProvider(criteria, false);
+			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
+		}
+		Location location = locationManager.getLastKnownLocation(provider);
+		updateWithNewLocation(location);
+
+		RelativeLayout layout = new RelativeLayout(this);
+
+		// Camera overlay
+		CameraOverlay cameraOverlay = new CameraOverlay(this);
+
+		// Info overlay
+		infoView = new InfoView(getApplicationContext());
+
+		// openGL overlay
+		GLSurfaceView glSurfaceView = new GLSurfaceView(this);
+
+		glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+		// glSurfaceView.setEGLConfigChooser(true);
+		glSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_LOG_GL_CALLS);
+
+		glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+		glSurfaceView.setZOrderOnTop(true);
+
+		// adding overlays to the screen
+		layout.addView(cameraOverlay);
+		// layout.addView(infoView);
+		layout.addView(glSurfaceView);
+
+		// define sensors
+		sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		accelSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		orientationSensor = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+		// Creating and attaching the renderer.
+		openGLRenderer = new OpenGLRenderer(this);
+		glSurfaceView.setRenderer(openGLRenderer);
+		setContentView(layout);
+	}
+
+	/**
+	 * Set listeners
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationManager.requestLocationUpdates(provider, 2, 10, locationListener);
+		sm.registerListener(sensorListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
+		sm.registerListener(sensorListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST);
+		sm.registerListener(sensorListener, orientationSensor, SensorManager.SENSOR_DELAY_UI);
+	}
+
+	/**
+	 * Remove listeners
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+		sm.unregisterListener(sensorListener);
+		locationManager.removeUpdates(locationListener);
+	}
+
+	/**
+	 * 
+	 * @param location
+	 */
+	private void updateWithNewLocation(Location location) {
+		if (location != null) {
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			app.setLat(location.getLatitude());
+			app.construeer();
+		}
+	}
+
 	@Override
 	public boolean onTouchEvent(final MotionEvent ev) {
 		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN: {
-			// Code on finger down
+		case MotionEvent.ACTION_DOWN:
+			// get position of touch
 			float posX = ev.getX();
 			float posY = ev.getY();
 
-			if ((posX >= 0 && posX <= infoview.getMeasuredWidth())
-					&& (posY >= 0 && posY <= 2 * infoview
-							.getMeasuredHeight() / 10)) {
+			if ((posX >= 0 && posX <= infoView.getMeasuredWidth())
+					&& (posY >= 0 && posY <= 2 * infoView.getMeasuredHeight() / 10)) {
 				// we are in the square
-				Marker punt = infoview.getDichtste_punt();
+				Marker punt = infoView.getDichtste_punt();
 				if (punt != null) {
 					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					vibrator.vibrate(60);
@@ -71,150 +235,16 @@ public class AugmentedRealityLocaties extends Activity {
 
 				// we are somewhere else on the canvas
 			}
-		}
-		case MotionEvent.ACTION_UP: {
-			// Code on finger up
-
-		}
-		case MotionEvent.ACTION_MOVE: {
-			// Code on finger move
-
-		}
+			break;
+		default:
+			break;
 		}
 		return true;
 	}
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		app = (VopApplication) getApplicationContext();
-		String context = Context.LOCATION_SERVICE;
-		locationManager = (LocationManager) getSystemService(context);
-
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		String provider = locationManager.getBestProvider(criteria, true);
-		Location location = locationManager.getLastKnownLocation(provider);
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 2, 10,
-				locationListener);
-
-		// Remove the title bar from the window.
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-		// Make the windows into full screen mode.
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		// Create a OpenGL view.
-		RelativeLayout layout = new RelativeLayout(this);
-		GLSurfaceView view = new GLSurfaceView(this);
-
-		Preview img = new Preview(this);
-		infoview=new InfoView(getApplicationContext());
-
-		Button btn = new Button(this);
-		btn.setText("click me");
-		view.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-		//view.setEGLConfigChooser(true);
-
-		view.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-		view.setZOrderOnTop(true);
-
-		layout.addView(img);
-		layout.addView(infoview);
-		layout.addView(view);
-		
-
-		// Creating and attaching the renderer.
-		renderer = new LocatieRender(this);
-		view.setRenderer(renderer);
-		setContentView(layout);
-
-		// sensors
-		sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		aSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mfSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-	}
-
-	private final LocationListener locationListener = new LocationListener() {
-		public void onLocationChanged(Location location) {
-			updateWithNewLocation(location);
-		}
-
-		public void onProviderDisabled(String provider) {
-			updateWithNewLocation(null);
-		}
-
-		public void onProviderEnabled(String provider) {
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}
-	};
-
-	private void updateWithNewLocation(Location location) {
-		if (location != null) {
-			app.setAlt(location.getAltitude());
-			app.setLng(location.getLongitude());
-			app.setLat(location.getLatitude());
-			app.construeer();
-		}
-	}
-
-	float[] accelerometerValues;
-	float[] magneticFieldValues;
-
-	final SensorEventListener myAccelerometerListener = new SensorEventListener() {
-		public void onSensorChanged(SensorEvent sensorEvent) {
-			if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-				if(accelerometerValues != null){
-					accelerometerValues[0] = (float) (sensorEvent.values[0]*killfactor+accelerometerValues[0]*(1-killfactor)); 
-					accelerometerValues[1] = (float) (sensorEvent.values[1]*killfactor+accelerometerValues[1]*(1-killfactor)); 
-					accelerometerValues[2] = (float) (sensorEvent.values[2]*killfactor+accelerometerValues[2]*(1-killfactor)); 
-				}
-				else accelerometerValues = sensorEvent.values;
-			} else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-				if(magneticFieldValues != null){
-					magneticFieldValues[0] = (float) (sensorEvent.values[0]*killfactor+magneticFieldValues[0]*(1-killfactor)); 
-					magneticFieldValues[1] = (float) (sensorEvent.values[1]*killfactor+magneticFieldValues[1]*(1-killfactor)); 
-					magneticFieldValues[2] = (float) (sensorEvent.values[2]*killfactor+magneticFieldValues[2]*(1-killfactor)); 
-				}
-				else magneticFieldValues = sensorEvent.values;
-			}
-			if (magneticFieldValues != null && accelerometerValues != null) {
-				VopApplication app = (VopApplication) getApplicationContext();
-				r = new float[16];
-				//float outr[] = new float[16];
-				SensorManager.getRotationMatrix(r, null, accelerometerValues,
-						magneticFieldValues);
-
-				float[] outR = new float[16];
-				SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y,
-						SensorManager.AXIS_MINUS_X, outR);
-				app.setValues(outR);
-			}
-		}
-
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		}
-	};
-	private final SensorListener sensorListener = new SensorListener() {
-		public void onSensorChanged(int sensor, float[] values) {
-			app.setRoll(values[0]);
-			infoview.invalidate();
-						
-			// TODO Apply the orientation changes to your application.
-		}
-
-		public void onAccuracyChanged(int sensor, int accuracy) {
-		}
-	};
+	/**
+	 * Create menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -222,6 +252,9 @@ public class AugmentedRealityLocaties extends Activity {
 		return true;
 	}
 
+	/**
+	 * Menu selection
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -280,24 +313,5 @@ public class AugmentedRealityLocaties extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
-		sm.registerListener(myAccelerometerListener, aSensor,
-				SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(myAccelerometerListener, mfSensor,
-				SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(sensorListener,
-				SensorManager.SENSOR_ORIENTATION,
-				SensorManager.SENSOR_DELAY_UI);
-	}
-
-	@Override
-	protected void onStop() {
-		sm.unregisterListener(sensorListener);
-		sm.unregisterListener(myAccelerometerListener);
-		locationManager.removeUpdates(locationListener);
-		super.onStop();
 	}
 }

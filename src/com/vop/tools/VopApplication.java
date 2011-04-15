@@ -23,7 +23,7 @@ public class VopApplication extends Application {
 	private double lat;
 	private double alt;
 
-	private float roll;
+	private float azimuth;
 	private double pitch;
 	private double heading;
 	private float output[];
@@ -33,6 +33,12 @@ public class VopApplication extends Application {
 	private Traject traject;
 	private Person persoon;
 
+	public VopApplication() {
+		super();
+		first=true;
+		state = new HashMap<String, String>();
+	}
+	
 	public Person getPersoon() {
 		return persoon;
 	}
@@ -130,12 +136,12 @@ public class VopApplication extends Application {
 		this.alt = alt;
 	}
 
-	public float getRoll() {
-		return roll;
+	public float getAzimuth() {
+		return azimuth;
 	}
 
-	public void setRoll(float roll) {
-		this.roll = roll;
+	public void setAzimuth(float azimuth) {
+		this.azimuth = azimuth;
 	}
 
 	public double getPitch() {
@@ -152,12 +158,6 @@ public class VopApplication extends Application {
 
 	public void setHeading(double heading) {
 		this.heading = heading;
-	}
-
-	public VopApplication() {
-		super();
-		first=true;
-		state = new HashMap<String, String>();
 	}
 
 	public Marker[] getPunten() {
@@ -193,32 +193,27 @@ public class VopApplication extends Application {
 		isLocked = false;
 		notify();
 	}
+	
 	public void construeer() {
+		Toast.makeText(getApplicationContext(), "POI inladen", Toast.LENGTH_SHORT).show();
 		Marker POI[];
-		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+		ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(Integer.parseInt(state.get("userid")));
 		POI = new Marker[loc.size()];
 		List<Marker> list = new ArrayList<Marker>();
 		for (com.vop.tools.data.Location l : loc) {
 			list.add(new Marker(l.getName(), l.getDescription(),
 					l.getLongitude(), l.getLatitute(), alt, lat, lng,
-					alt, roll));
+					alt, azimuth));
 		}
 		Collections.sort(list);
-		//POI = (Marker[]) list.toArray();
+
 		for(int i=0;i<list.size();i++){
 			POI[i] = list.get(i);
 		}
-		/*int j = 0;
-		for (com.vop.tools.data.Location l : loc) {
-			POI[j] = new Marker(l.getName(), l.getDescription(),
-					l.getLongitude(), l.getLatitute(), alt, lat, lng,
-					alt, roll);
-			j++;
-		}*/
+
 		this.setPunten(POI);
-		Toast toast = Toast.makeText(getApplicationContext(), "POI inladen", Toast.LENGTH_SHORT);
-		toast.show();
 	}
+
 	public void vernieuw() {
 		for (int j=0;j<punten.length;j++) {
 			punten[j] = new Marker(punten[j].getTitel(), punten[j].getInfo(),

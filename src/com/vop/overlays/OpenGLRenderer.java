@@ -5,22 +5,25 @@ import java.io.InputStream;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.app.Activity;
+import android.opengl.GLU;
+import android.opengl.GLSurfaceView.Renderer;
+
 import com.vop.augumented.R;
-import com.vop.augumented.R.drawable;
 import com.vop.tools.VopApplication;
 
-import android.app.Activity;
-import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.GLU;
-import android.widget.Toast;
-
-public class LocatieRender implements Renderer {
+/**
+ * Does the actual OpenGL rendering
+ * @author henridv
+ *
+ */
+public class OpenGLRenderer implements Renderer {
 	Activity activiteit;
 	private Quad quad;
 	private Quad quad_selected;
 
 
-	public LocatieRender(Activity act) {
+	public OpenGLRenderer(Activity act) {
 		activiteit = act;
 		quad = new Quad();
 		quad_selected=new Quad();

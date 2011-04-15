@@ -1,10 +1,8 @@
 package com.vop.augumented;
 
-import com.vop.tools.FullscreenActivity;
-
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+
+import com.vop.tools.FullscreenActivity;
 
 public class Berichten extends FullscreenActivity {
 

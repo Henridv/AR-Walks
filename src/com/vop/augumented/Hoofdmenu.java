@@ -35,8 +35,9 @@ public class Hoofdmenu extends FullscreenActivity {
 		}
 	}
 
-
-	// knoppen
+	//
+	//	Menu icons
+	//
 	public void locaties_klik(View v) {
 		vibrator.vibrate(60);
 		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
