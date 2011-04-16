@@ -77,8 +77,8 @@ public class StartupActivity extends FullscreenActivity {
 		EditText password = (EditText) findViewById(R.id.login_password);
 		
 		Intent myIntent = new Intent(this, RegisterProfile.class);
-		myIntent.putExtra("email", emailbox.getText());
-		myIntent.putExtra("password", password.getText());
+		myIntent.putExtra("email", emailbox.getText().toString());
+		myIntent.putExtra("password", password.getText().toString());
 		startActivity(myIntent);
 	}
 	
