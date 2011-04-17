@@ -8,8 +8,6 @@
 	<TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_x="180dip" 
-		android:layout_y="12dip"
 		android:textSize="30px"
 		android:textStyle="bold" 
 		android:text="Edit Profile">
