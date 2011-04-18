@@ -24,7 +24,8 @@ public class VopApplication extends Application {
 	private double alt;
 
 	private float azimuth;
-	private double pitch;
+	private float pitch;
+	private float roll;
 	private double heading;
 	private float output[];
 	private float max_afstand;
@@ -144,14 +145,22 @@ public class VopApplication extends Application {
 		this.azimuth = azimuth;
 	}
 
-	public double getPitch() {
+	public float getPitch() {
 		return pitch;
 	}
 
-	public void setPitch(double pitch) {
+	public void setPitch(float pitch) {
 		this.pitch = pitch;
 	}
 
+	public float getRoll() {
+		return roll;
+	}
+
+	public void setRoll(float roll) {
+		this.roll = roll;
+	}
+	
 	public double getHeading() {
 		return heading;
 	}

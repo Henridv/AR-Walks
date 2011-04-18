@@ -36,18 +36,16 @@ import com.vop.tools.VopApplication;
  * 
  */
 public class AugmentedRealityLocaties extends FullscreenActivity {
-	static float rotationMatrices[];
+	float[] accelerometerValues = null;
+	float[] magneticFieldValues = null;
 	OpenGLRenderer openGLRenderer;
 	InfoView infoView;
-	double killfactor = 0.1;
 	VopApplication app;
 	SensorManager sm;
 	LocationManager locationManager;
 	Sensor accelSensor;
 	Sensor magneticSensor;
 	Sensor orientationSensor;
-	float[] accelerometerValues;
-	float[] magneticFieldValues;
 	String provider;
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -67,6 +65,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 
 	final SensorEventListener sensorListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
+			double killfactor = 0.1;
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				if (accelerometerValues != null) {
@@ -79,36 +78,55 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 					accelerometerValues[2] = (float) (event.values[2]
 							* killfactor + accelerometerValues[2]
 							* (1 - killfactor));
-				} else
+				} else {
 					accelerometerValues = event.values;
+				}
 				break;
+				
 			case Sensor.TYPE_MAGNETIC_FIELD:
 				if (magneticFieldValues != null) {
-					magneticFieldValues[0] = (float) (event.values[0]
-							* killfactor + magneticFieldValues[0]
-							* (1 - killfactor));
-					magneticFieldValues[1] = (float) (event.values[1]
-							* killfactor + magneticFieldValues[1]
-							* (1 - killfactor));
-					magneticFieldValues[2] = (float) (event.values[2]
-							* killfactor + magneticFieldValues[2]
-							* (1 - killfactor));
-				} else
+					magneticFieldValues[0] = (float) (event.values[0] * killfactor
+							+ magneticFieldValues[0] * (1 - killfactor));
+					magneticFieldValues[1] = (float) (event.values[1] * killfactor
+							+ magneticFieldValues[1] * (1 - killfactor));
+					magneticFieldValues[2] = (float) (event.values[2] * killfactor
+							+ magneticFieldValues[2] * (1 - killfactor));
+				} else {
 					magneticFieldValues = event.values;
+				}
 				break;
+				
 			case Sensor.TYPE_ORIENTATION:
-				app.setAzimuth(event.values[0]);
+				//app.setAzimuth(event.values[0]);
 				infoView.invalidate();
 				break;
 			}
 
 			if (magneticFieldValues != null && accelerometerValues != null) {
-				rotationMatrices = new float[16];
-				SensorManager.getRotationMatrix(rotationMatrices, null, accelerometerValues, magneticFieldValues);
-
-				float[] outR = new float[16];
-				SensorManager.remapCoordinateSystem(rotationMatrices, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
-				app.setValues(outR);
+				float[] rotationMatrix = new float[9];
+				if (SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerValues, magneticFieldValues)) {
+					float[] outR = new float[9];
+					SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Z, SensorManager.AXIS_MINUS_X, outR);
+					app.setValues(outR);
+	
+//					float[] looking = {1.0f, 0.0f, 0.0f};
+//					Vector l = new Vector(looking);
+//					Matrix m = new Matrix(outR, 3, 3);
+//					m.transpose();
+//					l = Matrix.mult(m, l);
+//					float d = (float) Math.sqrt(l.get(0) * l.get(0) + l.get(1) * l.get(1));
+//					float cos = l.get(1) / d;
+//					float angle = (float) Math.toDegrees(Math.acos(cos));
+//					angle = (l.get(0) < 0) ? angle * -1 : angle;
+					
+					float[] orientation = new float[3];
+					SensorManager.getOrientation(outR, orientation);
+					app.setAzimuth((float) (Math.toDegrees(orientation[0]) + 360f)%360);
+					app.setPitch((float) (Math.toDegrees(orientation[1]) + 360f)%360);
+					app.setRoll((float) (Math.toDegrees(orientation[2]) + 360f)%360);
+					
+//					app.setAzimuth((angle + 360f)%360);
+				}
 			}
 		}
 
@@ -116,9 +134,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		}
 	};
 
-	/**
-	 * Called when the activity is first created.
-	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,6 +151,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		if (provider == null) {
 			provider = locationManager.getBestProvider(criteria, false);
 			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
+			startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
 		}
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
@@ -153,14 +169,15 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 
 		glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 		// glSurfaceView.setEGLConfigChooser(true);
-		glSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_LOG_GL_CALLS);
+		// glSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_LOG_GL_CALLS);
 
+		// make surface transparent and on top
 		glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		glSurfaceView.setZOrderOnTop(true);
 
 		// adding overlays to the screen
 		layout.addView(cameraOverlay);
-		// layout.addView(infoView);
+		layout.addView(infoView);
 		layout.addView(glSurfaceView);
 
 		// define sensors
@@ -242,9 +259,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		return true;
 	}
 
-	/**
-	 * Create menu
-	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -252,9 +266,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		return true;
 	}
 
-	/**
-	 * Menu selection
-	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
