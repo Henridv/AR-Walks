@@ -34,11 +34,12 @@ public class wandeling_overlay extends Overlay{
 		proj.toPixels(this.point1,punt);
 		paint.setColor(color);
 		Point punt2 = new Point();
-		proj.toPixels(this.point2,punt);
+		proj.toPixels(this.point2,punt2);
 		paint.setStrokeWidth(5);
 		paint.setAlpha(120);
 		paint.setAntiAlias(true);
-		canvas.drawPoint(punt.x, punt.y, paint);
+		//canvas.drawPoint(punt.x, punt.y, paint);
+		//canvas.drawPoint(punt2.x,punt2.y,paint);
 		canvas.drawLine(punt.x,punt.y,punt2.x,punt2.y,paint);
 		super.draw(canvas, mapView, shadow);		
 	}

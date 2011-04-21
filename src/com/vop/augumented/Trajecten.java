@@ -1,4 +1,4 @@
-package com.vop.augumented;
+	package com.vop.augumented;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,10 @@ public class Trajecten extends FullscreenListActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						if (items[item].equals("Walk")) {
-							Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+							Intent myIntent = new Intent(Trajecten.this,StartEenWandeling.class);
+							myIntent.putExtra("walk_id",trajecten.get(position).getId());
+							startActivity(myIntent);
+							//Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 						} else if (items[item].equals("Edit")) {
 							Intent myIntent = new Intent(Trajecten.this, EditTraject.class);
 							myIntent.putExtra("walk_id", trajecten.get(position).getId());

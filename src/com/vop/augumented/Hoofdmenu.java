@@ -63,7 +63,7 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	public void berichten_klik(View v) {
 		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, locatie_map2.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, StartWandeling.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 

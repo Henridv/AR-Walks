@@ -99,8 +99,8 @@ public class TrajectOpslaan extends Activity {
 		if (location != null) {
 			Button knop = (Button) findViewById(R.id.startstop) ;
 			if(knop.getText().equals("stop")){
-				Toast toast = Toast.makeText(getApplicationContext(), "location is being updated", Toast.LENGTH_SHORT);
-				toast.show();
+				/*Toast toast = Toast.makeText(getApplicationContext(), "location is being updated", Toast.LENGTH_SHORT);
+				toast.show();*/
 				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
 			}
 		}
@@ -127,7 +127,7 @@ public class TrajectOpslaan extends Activity {
 				String provider = locationManager.getBestProvider(criteria, true);
 				Location location = locationManager.getLastKnownLocation(provider);
 				updateWithNewLocation(location);
-				locationManager.requestLocationUpdates(provider, 2, 10,
+				locationManager.requestLocationUpdates(provider, 0, 0,
 						locationListener);
 			}
 			else{
@@ -160,7 +160,7 @@ public class TrajectOpslaan extends Activity {
 		String provider = locationManager.getBestProvider(criteria, true);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 2, 10,
+		locationManager.requestLocationUpdates(provider, 1000, 1,
 				locationListener);
 	}
 }
