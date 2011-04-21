@@ -18,20 +18,9 @@ public class Profiel extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profiel_layout);
-		VopApplication app = (VopApplication) getApplicationContext();
-		int id = Integer.parseInt(app.getState().get("userid"));
-		Person p = DBWrapper.getProfile(id);
-		TextView naam = new TextView(this);
-		naam=(TextView)findViewById(R.id.name); 
-	    naam.setText("name: "+p.getName());
-	    TextView tel = new TextView(this);
-		tel=(TextView)findViewById(R.id.phone); 
-	    tel.setText("phone number: "+p.getPhone());
-	    TextView email = new TextView(this);
-		email=(TextView)findViewById(R.id.mail); 
-	    email.setText("e-mail: "+p.getEmail());
+		updateProfile();
 	}
-	
+
 	public void edit_klik(View v) {
 		Intent myIntent = new Intent(Profiel.this, ProfielWijzigen.class); 
 		Profiel.this.startActivity(myIntent);
@@ -50,4 +39,26 @@ public class Profiel extends FullscreenActivity {
 		inflater.inflate(R.layout.profiel_menu, menu);
 		return true;
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateProfile();
+	}
+	
+	private void updateProfile(){
+		VopApplication app = (VopApplication) getApplicationContext();
+		int id = Integer.parseInt(app.getState().get("userid"));
+		Person p = DBWrapper.getProfile(id);
+		TextView naam = new TextView(this);
+		naam=(TextView)findViewById(R.id.profname); 
+	    naam.setText("Name: "+p.getName());
+	    TextView tel = new TextView(this);
+		tel=(TextView)findViewById(R.id.profphone); 
+	    tel.setText("Phone: "+p.getPhone());
+	    TextView email = new TextView(this);
+		email=(TextView)findViewById(R.id.profmail); 
+	    email.setText("E-mail: "+p.getEmail());
+	}
+	
 }

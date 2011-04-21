@@ -53,6 +53,7 @@ public class TrajectOpslaan extends Activity {
 	private ArrayList<Point> walk;
 	LocationManager locationManager;
 	Criteria criteria = new Criteria();
+	int aantal=0;
 	
 
 
@@ -69,12 +70,11 @@ public class TrajectOpslaan extends Activity {
 		// Make the windows into full screen mode.
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
 		setContentView(R.layout.trajectopslaan_layout);
+		
 		
 		//initialiseren
 		walk = new ArrayList<Point>();
-		Traject traject= DBWrapper.getTraject(24);
 		
 		
 	}
@@ -99,8 +99,10 @@ public class TrajectOpslaan extends Activity {
 		if (location != null) {
 			Button knop = (Button) findViewById(R.id.startstop) ;
 			if(knop.getText().equals("stop")){
-				/*Toast toast = Toast.makeText(getApplicationContext(), "location is being updated", Toast.LENGTH_SHORT);
-				toast.show();*/
+				TextView tekst = (TextView) findViewById(R.id.widget56);
+				aantal++;
+				tekst.setText(aantal+"");
+				tekst.invalidate();
 				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
 			}
 		}
@@ -137,7 +139,6 @@ public class TrajectOpslaan extends Activity {
 			
 		}
 		else{
-			//Person persoon = new Person(2,"Henri De Veene", "", "test", "henri.deveene@gmail.com");
 			Traject traject=new Traject(veld1.getText().toString(), DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
 			DBWrapper.save(traject);
 			finish();
@@ -160,7 +161,7 @@ public class TrajectOpslaan extends Activity {
 		String provider = locationManager.getBestProvider(criteria, true);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 1000, 1,
+		locationManager.requestLocationUpdates(provider, 0, 0,
 				locationListener);
 	}
 }
