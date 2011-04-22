@@ -186,7 +186,7 @@ public class AugmentedRealityTraject extends Activity {
 		VopApplication app = (VopApplication) getApplicationContext();
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedRealityTraject.this, locatie_map2.class);
+			Intent myIntent = new Intent(AugmentedRealityTraject.this, StartWandeling.class);
 			AugmentedRealityTraject.this.startActivity(myIntent);
 			finish();
 			return true;

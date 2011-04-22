@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.Application;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class VopApplication extends Application {
 	private int dichtste_punt;
 	private Traject traject;
 	private Person persoon;
+	private Marker POI[];
 
 	public VopApplication() {
 		super();
@@ -205,6 +207,21 @@ public class VopApplication extends Application {
 		}
 		Toast toast = Toast.makeText(getApplicationContext(), "POI vernieuwen", Toast.LENGTH_SHORT);
 		toast.show();
+	}
+	public void construeer2(final Activity activity) {
+				ArrayList<com.vop.tools.data.Location> loc = DBWrapper.getLocations(2);
+				POI = new Marker[loc.size()];
+				List<Marker> list = new ArrayList<Marker>();
+				for (com.vop.tools.data.Location l : loc) {
+					list.add(new Marker(l.getName(), l.getDescription(),
+							l.getLongitude(), l.getLatitute(), alt, lat, lng,
+							alt, roll));
+				}
+				Collections.sort(list);
+				for(int i=0;i<list.size();i++){
+					POI[i] = list.get(i);
+				}
+				setPunten(POI);	
 	}
 
 }

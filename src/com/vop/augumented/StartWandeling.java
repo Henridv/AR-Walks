@@ -36,13 +36,13 @@ import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 
-public class locatie_map2 extends MapActivity {
+public class StartWandeling extends MapActivity {
 	LocationManager locationManager;
 	String provider, context;
 	Location location;
 	MapController mapController;
 	MapView mapView;
-	int minDistance = 0;
+	int minDistance = 1;
 	int minTime = 1000;
 	MyLocationOverlay myLocationOverlay;
 	punten_overlay itemizedoverlay;
@@ -109,6 +109,7 @@ public class locatie_map2 extends MapActivity {
 		
 		//haal alle trajecten binnen
 		this.walks = DBWrapper.getTrajects();
+		
 		try{
 			initMap();
 		} catch(Exception e){
@@ -141,9 +142,12 @@ public class locatie_map2 extends MapActivity {
 	}
 
 	private void initMap(){
+		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		this.mapView.getOverlays().add(myLocationOverlay);
 		this.mapController.setZoom(17);
 		this.mapController.animateTo(new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6)));
 		this.itemizedoverlay = new punten_overlay(this.draw);
+		myLocationOverlay.enableMyLocation();
 		showTrajectsOnMap();
 		//moet hier animateTo huidige locatie bij? irrelevant atm
 		//updateWithNewLocation(this.location);
@@ -165,9 +169,9 @@ public class locatie_map2 extends MapActivity {
 					
 		}
 		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
-			Toast toast = Toast.makeText(content,
+			/*Toast toast = Toast.makeText(content,
 					"punt op kaart", Toast.LENGTH_SHORT);
-			toast.show();
+			toast.show();*/
 			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
 			
 		}
@@ -175,9 +179,13 @@ public class locatie_map2 extends MapActivity {
 	
 	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
 	private void showTrajectsOnMap(){
-		for(int i=0;i<this.walks.size();i++){
-			drawPath(this.walks.get(i).getWalk(),-65536);
-		}
+		//for(int i=0;i<this.walks.size();i++){
+			ArrayList<Point> temp,temp1;
+			temp = this.walks.get(0).getWalk();
+			temp1 = this.walks.get(1).getWalk();
+			drawPath(this.walks.get(0).getWalk(),-65536);
+			drawPath(this.walks.get(1).getWalk(),-16711936);
+		//}
 		
 	}
 	

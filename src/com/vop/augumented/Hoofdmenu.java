@@ -93,7 +93,7 @@ public class Hoofdmenu extends FullscreenActivity {
 			@Override
 			public boolean onLongClick(View v) {
 				// TODO Auto-generated method stub
-				final CharSequence[] items = { "augmented view", "maps", "lijst" };
+				final CharSequence[] items = { "augmented reality", "lijst","map"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
 				builder.setTitle("locaties");
@@ -101,19 +101,21 @@ public class Hoofdmenu extends FullscreenActivity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("augmented view")) {
+						if (items[item].equals("augmented realtiy")) {
 							Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						} else if (items[item].equals("maps")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
 							Hoofdmenu.this.startActivity(myIntent);
 						} else if (items[item].equals("lijst")) {
 							Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
 							Hoofdmenu.this.startActivity(myIntent);
 						}
-					}
+						else {
+							Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+						}
 				});
 				AlertDialog alert = builder.create();
+				alert.show();
 				return true;
 			}
 		});
@@ -215,7 +217,7 @@ public class Hoofdmenu extends FullscreenActivity {
 
 	public void berichten_klik(View v) {
 		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, locatie_map2.class);
+		Intent myIntent = new Intent(Hoofdmenu.this, StartWandeling.class);
 		Hoofdmenu.this.startActivity(myIntent);
 	}
 
