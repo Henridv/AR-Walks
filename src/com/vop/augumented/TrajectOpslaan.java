@@ -10,13 +10,16 @@ import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -50,12 +53,12 @@ import android.widget.Toast;
 
 public class TrajectOpslaan extends Activity {
 	VopApplication app;
-	private ArrayList<Point> walk;
 	LocationManager locationManager;
 	Criteria criteria = new Criteria();
 	int aantal=0;
+	Intent intent;
+	Button knop;
 	
-
 
 	/** Called when the activity is first created. */
 	@Override
@@ -71,66 +74,25 @@ public class TrajectOpslaan extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.trajectopslaan_layout);
-		
-		
-		//initialiseren
-		walk = new ArrayList<Point>();
-		
+		knop = (Button) findViewById(R.id.startstop) ;
+		if(app.getState().get("startstop") ==null) knop.setText("start");
+		else knop.setText("stop");
+		intent=new Intent(this,TrajectService.class);
 		
 	}
 
-	private final LocationListener locationListener = new LocationListener() {
-		public void onLocationChanged(Location location) {
-			updateWithNewLocation(location);
-		}
-
-		public void onProviderDisabled(String provider) {
-			updateWithNewLocation(null);
-		}
-
-		public void onProviderEnabled(String provider) {
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}
-	};
-
-	private void updateWithNewLocation(Location location) {
-		if (location != null) {
-			Button knop = (Button) findViewById(R.id.startstop) ;
-			if(knop.getText().equals("stop")){
-				TextView tekst = (TextView) findViewById(R.id.widget56);
-				aantal++;
-				tekst.setText(aantal+"");
-				tekst.invalidate();
-				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
-			}
-		}
-	}
 	//knop
 	public void startstop(View v) {
-		Button knop = (Button) findViewById(R.id.startstop) ;
 		TextView veld1 = (TextView) findViewById(R.id.naam);
 		TextView veld2 = (TextView) findViewById(R.id.info);
-		if(knop.getText().equals("start")){
+		if(app.getState().get("startstop") == null ){
 			if(veld1.getText().length()  > 0 && veld2.getText().length()> 0){
 				knop.setText("stop");
 				v.invalidate();
-				
-				//locationmanagement
-				String context = Context.LOCATION_SERVICE;
-				locationManager = (LocationManager) getSystemService(context);
-				Criteria criteria = new Criteria();
-				criteria.setAccuracy(Criteria.ACCURACY_FINE);
-				criteria.setAltitudeRequired(false);
-				criteria.setBearingRequired(false);
-				criteria.setCostAllowed(true);
-				criteria.setPowerRequirement(Criteria.POWER_LOW);
-				String provider = locationManager.getBestProvider(criteria, true);
-				Location location = locationManager.getLastKnownLocation(provider);
-				updateWithNewLocation(location);
-				locationManager.requestLocationUpdates(provider, 0, 0,
-						locationListener);
+				app.putState("naamtraject", veld1.getText().toString());
+				app.putState("infotraject", veld2.getText().toString());
+				startService(intent);
+				app.putState("startstop", "hello");
 			}
 			else{
 				Toast toast = Toast.makeText(getApplicationContext(), "velden invullen", Toast.LENGTH_SHORT);
@@ -139,29 +101,17 @@ public class TrajectOpslaan extends Activity {
 			
 		}
 		else{
-			Traject traject=new Traject(veld1.getText().toString(), DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
-			DBWrapper.save(traject);
+			stopService(intent);
+			app.getState().remove("startstop");
 			finish();
 		}
 	}
 	@Override
 	protected void onStop() {
 		super.onStop();
-		locationManager.removeUpdates(locationListener);
 	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		String provider = locationManager.getBestProvider(criteria, true);
-		Location location = locationManager.getLastKnownLocation(provider);
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 0, 0,
-				locationListener);
 	}
 }

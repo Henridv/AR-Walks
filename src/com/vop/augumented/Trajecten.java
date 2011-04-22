@@ -2,7 +2,9 @@
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
@@ -25,14 +27,17 @@ import com.vop.tools.data.Traject;
 
 public class Trajecten extends FullscreenListActivity {
 	ArrayList<Traject> trajecten;
+	private Activity activity;
+	private String[] res;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		updateWalks();
+		//updateWalks();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-
+		activity = this;
 		/**
 		 * Short click starts the walk in an augmented view
 		 */
@@ -117,17 +122,28 @@ public class Trajecten extends FullscreenListActivity {
 	 * Updates traject list
 	 */
 	private void updateWalks() {
-		trajecten = DBWrapper.getTrajects();
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van trajecten", true);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				trajecten = DBWrapper.getTrajects();
 
-		String[] res = new String[trajecten.size()];
-		{
-			for (int i = 0; i < trajecten.size(); i++) {
-				res[i] = "'" + trajecten.get(i) + "' by "
-						+ trajecten.get(i).getPerson();
+				res = new String[trajecten.size()];
+				{
+					for (int i = 0; i < trajecten.size(); i++) {
+						res[i] = "'" + trajecten.get(i) + "' by "
+								+ trajecten.get(i).getPerson();
+					}
+				}
+				runOnUiThread(new Runnable() {
+					public void run() {
+						dialog.dismiss();
+						setListAdapter(new ArrayAdapter<String>(activity, R.layout.trajecten_layout, res));
+					}
+				});
 			}
-		}
-
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.trajecten_layout, res));
+		}).start();
+		
 	}
-
 }

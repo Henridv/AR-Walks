@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import com.vop.augumented.R;
 import com.vop.overlays.Marker;
 import com.vop.tools.DBWrapper;
+import com.vop.tools.FullscreenActivity;
+import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,24 +28,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ListLocaties extends ListActivity {
+public class ListLocaties extends FullscreenListActivity {
 	private Activity activiteit;
 	private VopApplication app;
+	private Activity activity;
+	private String[] res;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		app = (VopApplication) getApplicationContext();
-		app.construeer();
 		super.onCreate(savedInstanceState);
-		this.activiteit = this;
-		VopApplication app = (VopApplication) getApplicationContext();
-		Marker POI[] =app.getPunten();
-		String res[] = new String[POI.length];
-		for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitel(); 
-		setListAdapter(new ArrayAdapter<String>(this,
-				R.layout.trajecten_layout, res));
-
 		ListView lv = getListView();
+		app=(VopApplication) getApplicationContext();
 		lv.setTextFilterEnabled(true);
+		activity = this;
+		updateLocaties();
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -56,5 +55,29 @@ public class ListLocaties extends ListActivity {
 				dialog.show();
 			}
 		});
+	}
+	public void updateLocaties(){
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van punten", true);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				app.construeer2(activity);
+				Marker POI[]=app.getPunten();
+				res = new String[POI.length];
+				for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitel();
+				
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						dialog.dismiss();
+						setListAdapter(new ArrayAdapter<String>(activity, R.layout.trajecten_layout, res));
+						
+					}
+				});
+				
+			}
+		}).start();
+		
 	}
 }

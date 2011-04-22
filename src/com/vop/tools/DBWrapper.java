@@ -189,6 +189,8 @@ public class DBWrapper {
 		}
 		return p;
 	}
+	
+	
 
 	/**
 	 * Get a list of locations from a person and his friends
