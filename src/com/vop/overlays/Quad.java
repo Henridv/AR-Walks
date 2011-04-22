@@ -37,9 +37,17 @@ public class Quad {
 	 * Note that each face is defined, even if indices are available, because of
 	 * the texturing we want to achieve
 	 */
-	float[] vertices = new float[] { 0.0f, 2.5f, -2.5f, 0.0f, -2.5f, -2.5f,
-			0.0f, 2.5f, 2.5f, 0.0f, -2.5f, 2.5f };
-
+//	float[] vertices = new float[] {
+//			0.0f, 2.5f, -2.5f,
+//			0.0f, -2.5f, -2.5f,
+//			0.0f, 2.5f, 2.5f,
+//			0.0f, -2.5f, 2.5f};
+	float[] vertices = new float[] {
+			0.0f, 2.0f, -2.0f,
+			0.0f, -2.0f, -2.0f,
+			0.0f, 2.0f, 2.0f,
+			0.0f, -2.0f, 2.0f
+	};
 	/** The initial texture coordinates (u, v) */
 	float texture[] = { 0.0f, 2.0f, //
 			2.0f, 2.0f, //
