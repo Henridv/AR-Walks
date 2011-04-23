@@ -66,6 +66,27 @@ public class DBWrapper {
 		}
 		return t;
 	}
+	public static ArrayList<Traject> getTrajects2() {
+		String page = "traject.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("action", "trajects"));
+
+		ArrayList<Traject> t = new ArrayList<Traject>();
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				int id = json_data.getInt("id");
+				String name = json_data.getString("name");
+				Person person = getProfile(json_data.getInt("person"));	
+				
+				t.add(new Traject(id, name, person, null));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return t;
+	}
 
 	public static Traject getTraject(int walk_id) {
 		String page = "traject.php";
@@ -112,7 +133,31 @@ public class DBWrapper {
 
 		// parse json data
 		try {
-			doPOST(page, postValues);
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
+	public static ArrayList<Person> getNotAddedPersons(int personId) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("action", "getnotaddedpeople"));
+
+		ArrayList<Person> p = new ArrayList<Person>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
@@ -236,7 +281,7 @@ public class DBWrapper {
 				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
 			}
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 		return l;
 	}
@@ -340,7 +385,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (Exception e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 	}
 

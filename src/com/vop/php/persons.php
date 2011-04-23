@@ -52,20 +52,29 @@ switch($action) {
 			WHERE id = ".$_POST['id'];
 		echo $query;
 		break;
-	
+		
 	case "friends":
+    $id = $_POST['id'];
 		$query = "
-			SELECT id, name, email, phone, password
-			FROM persons
-				INNER JOIN friends ON id=friendId
-			WHERE personId=".$_POST['id'];
+			SELECT id, name, email, phone, password FROM persons INNER JOIN friends ON id=friend_id WHERE pers_id = '$id'";
+      break;
+      
+	case "getnotaddedpeople":
+		$id = $_POST['id'];
+		$query = "
+			SELECT password,name,email,id,phone FROM persons where NOT id = '$id' EXCEPT
+      SELECT password,name,email,id,phone FROM friends INNER JOIN persons ON friend_id = id WHERE pers_id = '$id' ";
+		break;
+	
 	default:
 		die("no data available");
+		
+		
 }
 
 $result = pg_query($conn, $query);
-while ($person = pg_fetch_assoc($result))
+while ($person = pg_fetch_assoc($result)){
 	$output[] = $person;
-
+}
 print(json_encode($output));
 ?>

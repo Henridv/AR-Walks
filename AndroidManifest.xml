@@ -44,6 +44,7 @@
         <activity android:name="HuidigeLocatieOpslaan">
             <intent-filter></intent-filter>
         </activity>
+        <activity android:name="ToevoegenVriend"></activity>
         
     </application>
 </manifest>

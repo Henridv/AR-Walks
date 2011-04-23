@@ -91,6 +91,7 @@ public class Vrienden extends FullscreenListActivity {
 			return true;
 		default:
 			//add a friend!!
+			
 			return super.onOptionsItemSelected(item);
 		}
 	}

@@ -133,23 +133,23 @@ public class Hoofdmenu extends FullscreenActivity {
 			@Override
 			public boolean onLongClick(View v) {
 				// TODO Auto-generated method stub
-				final CharSequence[] items = { "Walk", "Edit", "Delete" };
+				final CharSequence[] items = { "friends","add friend"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("hello");
+				builder.setTitle("friends");
 				builder.setItems(items, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("Walk")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Edit")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Delete")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						if (items[item].equals("friends")) {
+							Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
+							Hoofdmenu.this.startActivity(myIntent);
 						}
-					}
-				});
+						else if (items[item].equals("add friend")){
+							Intent myIntent = new Intent(Hoofdmenu.this, ToevoegenVriend.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+				}});
 				AlertDialog alert = builder.create();
 				alert.show();
 				return true;

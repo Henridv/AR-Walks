@@ -64,7 +64,6 @@ switch ($action) {
 		$query = "
 			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt FROM locations
 			WHERE NOT(pers_id = '$pers_id') AND name = '$name' ";
-		echo $query;
 		break;
 }
 
