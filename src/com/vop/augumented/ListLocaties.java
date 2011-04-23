@@ -1,5 +1,7 @@
 package com.vop.augumented;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -11,32 +13,32 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.vop.overlays.Marker;
+import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 
 public class ListLocaties extends FullscreenListActivity {
-	private VopApplication app;
 	private Activity activity;
 	private String[] res;
+	ArrayList<com.vop.tools.data.Location> loc;
+	VopApplication app;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ListView lv = getListView();
-		app=(VopApplication) getApplicationContext();
 		lv.setTextFilterEnabled(true);
+		app=(VopApplication) getApplicationContext();
 		activity = this;
 		updateLocaties();
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				VopApplication app = (VopApplication) getApplicationContext();
-				Marker POI[] = app.getPunten();
 				// When clicked, show a dialog with the TextView text
 				AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-				dialog.setTitle(POI[position].getTitel());
-				dialog.setMessage(POI[position].getInfo());
+				dialog.setTitle(loc.get(position).getName());
+				dialog.setMessage(loc.get(position).getDescription());
 				dialog.show();
 			}
 		});
@@ -47,10 +49,9 @@ public class ListLocaties extends FullscreenListActivity {
 			
 			@Override
 			public void run() {
-				app.construeer2(activity);
-				Marker POI[]=app.getPunten();
-				res = new String[POI.length];
-				for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitel();
+				loc = DBWrapper.getLocationsFriends(Integer.parseInt(app.getState().get("userid")));
+				res = new String[loc.size()];
+				for(int i = 0;i<res.length;i++) res[i] = loc.get(i).getName();
 				
 				runOnUiThread(new Runnable() {
 					@Override

@@ -44,7 +44,8 @@
         <activity android:name="HuidigeLocatieOpslaan">
             <intent-filter></intent-filter>
         </activity>
-        <activity android:name="ToevoegenVriend"></activity>
+        <activity android:name="ToevoegenVriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="ProfielFriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
         
     </application>
 </manifest>

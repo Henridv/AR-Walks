@@ -49,7 +49,7 @@ public class Vrienden extends FullscreenListActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-				final CharSequence[] items = { "Send Message", "Delete" };
+				final CharSequence[] items = { "Send Message", "Delete","profiel"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(Vrienden.this);
 				builder.setTitle(vrienden.get(position).getName());
@@ -62,6 +62,11 @@ public class Vrienden extends FullscreenListActivity {
 						} else if (items[item].equals("Delete")) {
 							DBWrapper.delete(vrienden.get(position));
 							updateFriends();
+						}
+						else if (items[item].equals("profiel")){
+							Intent myIntent = new Intent(Vrienden.this,ProfielFriend.class);
+							myIntent.putExtra("profielid",vrienden.get(position).getId());
+							Vrienden.this.startActivity(myIntent);
 						}
 					}
 				});

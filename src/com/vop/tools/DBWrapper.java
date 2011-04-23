@@ -164,12 +164,12 @@ public class DBWrapper {
 		return p;
 	}
 
-	public static void addFriend(Person p1, Person p2) {
+	public static void addFriend(int p1, int p2) {
 		String page = "persons.php";
 
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id1", Integer.toString(p1.getId())));
-		postValues.add(new BasicNameValuePair("id2", Integer.toString(p2.getId())));
+		postValues.add(new BasicNameValuePair("id_1", Integer.toString(p1)));
+		postValues.add(new BasicNameValuePair("id_2", Integer.toString(p2)));
 
 		postValues.add(new BasicNameValuePair("action", "addfriend"));
 
@@ -263,13 +263,34 @@ public class DBWrapper {
 		}
 		return l;
 	}
+	public static ArrayList<Location> getLocationsFriends(int personId) {
+		String page = "locations.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(personId)));
+
+		postValues.add(new BasicNameValuePair("action", "getlocfriends"));
+
+		ArrayList<Location> l = new ArrayList<Location>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return l;
+	}
 	public static ArrayList<Location> getLocationsHuidigVrienden(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("userid", Integer.toString(personId)));
 		postValues.add(new BasicNameValuePair("name", "huidig"));
 
-		postValues.add(new BasicNameValuePair("action", "getlocfriends"));
+		postValues.add(new BasicNameValuePair("action", "getlochuidigfriends"));
 
 		ArrayList<Location> l = new ArrayList<Location>();
 

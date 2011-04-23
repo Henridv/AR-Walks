@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
@@ -32,14 +36,34 @@ public class ToevoegenVriend extends FullscreenListActivity {
 		activity = this;
 		updateNotAddedPersons();
 
-		lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// When clicked, show a dialog with the TextView text
-				AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-				dialog.setTitle("test");
-				dialog.setMessage("test");
-				dialog.show();
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				final CharSequence[] items = { "add","profiel"};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(ToevoegenVriend.this);
+				builder.setTitle(res[position]);
+				builder.setItems(items, new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int item) {
+						if(items[item].equals("add")){
+							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p.get(position).getId());
+							updateNotAddedPersons();
+						}
+						else if(items[item].equals("profiel")){
+							Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
+							myIntent.putExtra("profielid",p.get(position).getId());
+							ToevoegenVriend.this.startActivity(myIntent);
+						}
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+
+				return true;
 			}
 		});
 	}
