@@ -1,8 +1,8 @@
 package com.vop.augumented;
 
 import com.vop.overlays.InfoView;
-import com.vop.overlays.LocatieRender;
-import com.vop.overlays.Preview;
+import com.vop.overlays.OpenGLRenderer;
+import com.vop.overlays.CameraOverlay;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +29,7 @@ import android.widget.RelativeLayout;
 
 public class AugmentedRealityTraject extends Activity {
 	static float r[];
-	LocatieRender renderer;
+	OpenGLRenderer renderer;
 	InfoView infoview;
 	double killfactor = 0.1;
 	
@@ -64,7 +64,7 @@ public class AugmentedRealityTraject extends Activity {
 		RelativeLayout layout = new RelativeLayout(this);
 		GLSurfaceView view = new GLSurfaceView(this);
 
-		Preview img = new Preview(this);
+		CameraOverlay img = new CameraOverlay(this);
 		infoview=new InfoView(getApplicationContext());
 
 		Button btn = new Button(this);
@@ -81,7 +81,7 @@ public class AugmentedRealityTraject extends Activity {
 		
 
 		// Creating and attaching the renderer.
-		renderer = new LocatieRender(this);
+		renderer = new OpenGLRenderer(this);
 		view.setRenderer(renderer);
 		setContentView(layout);
 
@@ -164,7 +164,7 @@ public class AugmentedRealityTraject extends Activity {
 	private final SensorListener sensorListener = new SensorListener() {
 		public void onSensorChanged(int sensor, float[] values) {
 			VopApplication app = (VopApplication) getApplicationContext();
-			app.setRoll(values[0]);
+			app.setAzimuth(values[0]);
 			infoview.invalidate();
 						
 			// TODO Apply the orientation changes to your application.

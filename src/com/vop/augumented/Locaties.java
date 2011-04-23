@@ -25,7 +25,7 @@ import java.util.Locale;
 
 import com.vop.overlays.AugView;
 import com.vop.overlays.Marker;
-import com.vop.overlays.Preview;
+import com.vop.overlays.CameraOverlay;
 import com.vop.tools.VopApplication;
 
 import android.app.Activity;
@@ -52,7 +52,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Locaties extends Activity {
-	private Preview mPreview;
+	private CameraOverlay mPreview;
 	AugView compassView;
 	SensorManager sensorManager;
 	LocationManager locationManager;
@@ -105,7 +105,7 @@ public class Locaties extends Activity {
 
 		// Create our Preview view and set it as the content of our activity.
 
-		mPreview = new Preview(this);
+		mPreview = new CameraOverlay(this);
 		compassView = new AugView(getApplicationContext());
 
 		setContentView(mPreview);
@@ -182,7 +182,7 @@ public class Locaties extends Activity {
 		if (compassView != null) {
 			VopApplication app = (VopApplication) getApplicationContext();
 			app.setHeading(_heading);
-			app.setRoll(_roll);
+			app.setAzimuth(_roll);
 			app.setPitch(_pitch);
 			compassView.invalidate();
 		}

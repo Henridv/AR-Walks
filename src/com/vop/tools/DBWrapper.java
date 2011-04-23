@@ -32,7 +32,6 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class DBWrapper {
-	private static String log_tag = "AR Walks";
 
 	/**
 	 * Get all trajects from the database
@@ -63,7 +62,7 @@ public class DBWrapper {
 				t.add(new Traject(id, name, person, walk));
 			}
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return t;
 	}
@@ -91,7 +90,7 @@ public class DBWrapper {
 
 			t = new Traject(id, name, person, walk);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return t;
 	}
@@ -115,7 +114,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
@@ -133,7 +132,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -159,7 +158,7 @@ public class DBWrapper {
 				p = new Person(json_data.getInt("id"), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email"));
 			}
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
@@ -185,7 +184,7 @@ public class DBWrapper {
 				p = new Person(json_data.getInt("id"), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email"));
 			}
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
@@ -215,7 +214,7 @@ public class DBWrapper {
 				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
 			}
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return l;
 	}
@@ -267,7 +266,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -293,7 +292,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -320,7 +319,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -365,7 +364,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -389,7 +388,7 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(log_tag, "Error parsing data " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -411,14 +410,13 @@ public class DBWrapper {
 		// http post
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/"
-					+ page);
+			HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/" + page);
 			httppost.setEntity(new UrlEncodedFormEntity(postValues));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 		} catch (Exception e) {
-			Log.e(log_tag, "Error in http connection " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error in http connection " + e.toString());
 		}
 
 		// convert response to string
@@ -433,7 +431,7 @@ public class DBWrapper {
 
 			result = sb.toString();
 		} catch (Exception e) {
-			Log.e(log_tag, "Error converting result " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error converting result " + e.toString());
 		}
 		return new JSONArray(result);
 	}

@@ -4,7 +4,7 @@
 	<item android:id= "@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
 	<item android:id= "@+id/lijstloc" android:title="lijst" android:icon="@drawable/locatie_toevoegen" />
 	<item android:id="@+id/group1" android:title="afstand" android:icon="@drawable/liniaal">
-		<menu>
+		<menu android:id="@+id/distance">
 			<group android:checkableBehavior="single">
 				<item android:id="@+id/m_500" android:title="500m" />
 				<item android:id="@+id/km_1" android:title="1km" />

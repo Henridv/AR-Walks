@@ -109,13 +109,13 @@ public class Marker implements Comparable<Marker> {
 
 	public Marker(String naam, String com, double longitude, double latitude,
 			double altitude, double lat_loc, double lng_loc, double alt_loc,
-			double roll) {
+			double azimuth) {
 		titel = naam;
 		info = com;
 		lat = latitude;
 		lng = longitude;
 		alt = altitude;
-		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, roll);
+		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, azimuth);
 	}
 
 	public Marker(String naam, String com, double longitude, double latitude,
@@ -130,7 +130,7 @@ public class Marker implements Comparable<Marker> {
 		double lng_loc=app.getLng();
 		double alt_loc=app.getAlt();
 		
-		bereken_zichtbaarheid(lat_loc, lng_loc,alt_loc, app.getRoll());
+		bereken_zichtbaarheid(lat_loc, lng_loc,alt_loc, app.getAzimuth());
 		
 		/*float afstand_tot_punt[] = new float[3];
 		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
@@ -149,7 +149,7 @@ public class Marker implements Comparable<Marker> {
 	}
 	
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
-			double alt_loc, double roll) {
+			double alt_loc, double azimuth) {
 		double hoek;
 		zichtbaarheid = false;
 		horizontale_positie = -1;
@@ -176,49 +176,49 @@ public class Marker implements Comparable<Marker> {
 			if (lat - lat_loc > 0) {
 				if (lng - lng_loc > 0) {
 					hoek = Math.atan(x / y) / (2 * PI) * 360;
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						horizontale_positie = (hoek - roll)
+					if (Math.abs(hoek - azimuth) < angle_of_view_horizontal)
+						horizontale_positie = (hoek - azimuth)
 								/ (angle_of_view_horizontal);
-					else if (Math.abs(hoek + (360 - roll)) < angle_of_view_horizontal)
-						horizontale_positie = Math.abs(hoek + (360 - roll))
+					else if (Math.abs(hoek + (360 - azimuth)) < angle_of_view_horizontal)
+						horizontale_positie = Math.abs(hoek + (360 - azimuth))
 								/ (angle_of_view_horizontal);
 				} else if (lng - lng_loc < 0) {
 					hoek = 360 - Math.atan(x / y) / (2 * PI) * 360;
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						horizontale_positie = (hoek - roll)
+					if (Math.abs(hoek - azimuth) < angle_of_view_horizontal)
+						horizontale_positie = (hoek - azimuth)
 								/ (angle_of_view_horizontal);
 					else {
 						hoek = Math.atan(x / y) / (2 * PI) * 360;
-						if (Math.abs(hoek + roll) < angle_of_view_horizontal)
-							horizontale_positie = -Math.abs(hoek + roll)
+						if (Math.abs(hoek + azimuth) < angle_of_view_horizontal)
+							horizontale_positie = -Math.abs(hoek + azimuth)
 									/ (angle_of_view_horizontal / 2);
 					}
-				} else if (roll < angle_of_view_horizontal)
-					horizontale_positie = -roll / (angle_of_view_horizontal);
-				else if (Math.abs(360 - roll) < angle_of_view_horizontal)
-					horizontale_positie = Math.abs(roll - 360)
+				} else if (azimuth < angle_of_view_horizontal)
+					horizontale_positie = -azimuth / (angle_of_view_horizontal);
+				else if (Math.abs(360 - azimuth) < angle_of_view_horizontal)
+					horizontale_positie = Math.abs(azimuth - 360)
 							/ (angle_of_view_horizontal);
 			} else if (lat - lat_loc < 0) {
 				if (lng - lng_loc > 0) {
 					hoek = 90 + Math.abs(Math.atan(y / x) / (2 * PI) * 360);
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						horizontale_positie = (hoek - roll)
+					if (Math.abs(hoek - azimuth) < angle_of_view_horizontal)
+						horizontale_positie = (hoek - azimuth)
 								/ (angle_of_view_horizontal);
 				} else if (lng - lng_loc < 0) {
 					hoek = 180 + ((Math.atan(x / y) / (2 * PI) * 360));
-					if (Math.abs(hoek - roll) < angle_of_view_horizontal)
-						horizontale_positie = (hoek - roll)
+					if (Math.abs(hoek - azimuth) < angle_of_view_horizontal)
+						horizontale_positie = (hoek - azimuth)
 								/ (angle_of_view_horizontal);
-				} else if (Math.abs(roll - 180) < angle_of_view_horizontal)
-					horizontale_positie = (180 - roll)
+				} else if (Math.abs(azimuth - 180) < angle_of_view_horizontal)
+					horizontale_positie = (180 - azimuth)
 							/ (angle_of_view_horizontal);
 			} else if (lng - lng_loc > 0) {
-				if (Math.abs(roll - 90) < angle_of_view_horizontal)
-					horizontale_positie = (90 - roll)
+				if (Math.abs(azimuth - 90) < angle_of_view_horizontal)
+					horizontale_positie = (90 - azimuth)
 							/ (angle_of_view_horizontal);
 			} else if (lng - lng_loc < 0) {
-				if (Math.abs(roll - 270) < angle_of_view_horizontal)
-					horizontale_positie = (270 - roll)
+				if (Math.abs(azimuth - 270) < angle_of_view_horizontal)
+					horizontale_positie = (270 - azimuth)
 							/ (angle_of_view_horizontal);
 			}
 			if (horizontale_positie != -1) {

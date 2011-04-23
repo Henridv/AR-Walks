@@ -1,32 +1,18 @@
 package com.vop.augumented;
 
-import java.util.ArrayList;
-
-
-import com.vop.augumented.R;
-import com.vop.overlays.Marker;
-import com.vop.tools.DBWrapper;
-import com.vop.tools.FullscreenActivity;
-import com.vop.tools.FullscreenListActivity;
-import com.vop.tools.VopApplication;
-import com.vop.tools.data.Traject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
+
+import com.vop.overlays.Marker;
+import com.vop.tools.FullscreenListActivity;
+import com.vop.tools.VopApplication;
 
 public class ListLocaties extends FullscreenListActivity {
 	private Activity activiteit;
@@ -48,7 +34,7 @@ public class ListLocaties extends FullscreenListActivity {
 					int position, long id) {
 				VopApplication app = (VopApplication) getApplicationContext();
 				Marker POI[] = app.getPunten();
-				// When clicked, show a toast with the TextView text
+				// When clicked, show a dialog with the TextView text
 				AlertDialog.Builder dialog = new AlertDialog.Builder(activiteit);
 				dialog.setTitle(POI[position].getTitel());
 				dialog.setMessage(POI[position].getInfo());

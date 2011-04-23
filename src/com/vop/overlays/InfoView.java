@@ -22,7 +22,6 @@ public class InfoView extends View {
 			return null;
 	}
 
-
 	public InfoView(Context context) {
 		super(context);
 		app = (VopApplication) context;
@@ -34,10 +33,11 @@ public class InfoView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// instellingen van de paint die gebruikt wordt voor de cirkels en tekst
+		/*
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		double roll = app.getRoll();
+		double roll = app.getAzimuth();
 
 		Marker POI[];
 
@@ -65,6 +65,13 @@ public class InfoView extends View {
 			//app.setDichtste_punt(dichtste_punt);
 			canvas.drawText(POI[dichtste_punt].getTitel(),
 					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
-		}
+		}*/
+		Paint paint = new Paint();
+		paint.setColor(Color.RED);
+		paint.setStyle(Paint.Style.FILL_AND_STROKE);
+		paint.setTextSize(12);
+		canvas.drawText("" + (int)app.getAzimuth() + "°", getMeasuredWidth() / 10, getMeasuredHeight() / 10, paint);
+		//canvas.drawText("roll: " + app.getRoll(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 15, paint);
+		//canvas.drawText("pitch: " + app.getPitch(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 30, paint);
 	}
 }

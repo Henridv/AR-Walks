@@ -182,7 +182,7 @@ public class LocatieMap extends MapActivity {
 		vibrator.vibrate(60);
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
-			Intent myIntent = new Intent(LocatieMap.this, Locaties.class);
+			Intent myIntent = new Intent(LocatieMap.this, AugmentedRealityLocaties.class);
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:

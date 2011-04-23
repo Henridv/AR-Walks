@@ -5,16 +5,11 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.opengl.GLUtils;
 
 /**
@@ -37,14 +32,22 @@ public class Quad {
 	private int[] textures = new int[1];
 
 	/**
-	 * The initial vertex definitio
+	 * The initial vertex definition
 	 * 
 	 * Note that each face is defined, even if indices are available, because of
 	 * the texturing we want to achieve
 	 */
-	float[] vertices = new float[] { 0.0f,2.5f, -2.5f, 0.0f,-2.5f, -2.5f,
-			0.0f,2.5f, 2.5f,0.0f,-2.5f, 2.5f };
-
+//	float[] vertices = new float[] {
+//			0.0f, 2.5f, -2.5f,
+//			0.0f, -2.5f, -2.5f,
+//			0.0f, 2.5f, 2.5f,
+//			0.0f, -2.5f, 2.5f};
+	float[] vertices = new float[] {
+			0.0f, 2.0f, -2.0f,
+			0.0f, -2.0f, -2.0f,
+			0.0f, 2.0f, 2.0f,
+			0.0f, -2.0f, 2.0f
+	};
 	/** The initial texture coordinates (u, v) */
 	float texture[] = { 0.0f, 2.0f, //
 			2.0f, 2.0f, //
@@ -54,7 +57,7 @@ public class Quad {
 
 	/** The initial indices definition */
 	private byte indices[] = {
-			// Faces definition
+	// Faces definition
 			0, 1, 3, 0, 3, 2, // Face front
 	};
 
@@ -94,7 +97,6 @@ public class Quad {
 	public void draw(GL10 gl) {
 		// Bind our only previously generated texture in this case
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-		
 
 		// Point to our buffers
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -110,8 +112,7 @@ public class Quad {
 		gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
 
 		// Draw the vertices as triangles, based on the Index Buffer information
-		gl.glDrawElements(GL10.GL_TRIANGLES, indices.length,
-				GL10.GL_UNSIGNED_BYTE, indexBuffer);
+		gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
 
 		// Disable the client state before leaving
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
@@ -126,10 +127,12 @@ public class Quad {
 	 * @param context
 	 *            - The Activity context
 	 */
-	public void loadGLTexture(GL10 gl, Context context,InputStream is) {
+	public void loadGLTexture(GL10 gl, Context context, InputStream is) {
 		// Get the texture from the Android resource directory
-		/*InputStream is = context.getResources()
-				.openRawResource(R.drawable.markerandroid);*/
+		/*
+		 * InputStream is = context.getResources()
+		 * .openRawResource(R.drawable.markerandroid);
+		 */
 		Bitmap bitmap = null;
 		try {
 			// BitmapFactory is an Android graphics utility for images
@@ -150,16 +153,12 @@ public class Quad {
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 
 		// Create Nearest Filtered Texture
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
-				GL10.GL_NEAREST);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NEAREST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
 
 		// Different possible texture parameters, e.g. GL10.GL_CLAMP_TO_EDGE
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,
-				GL10.GL_CLAMP_TO_EDGE);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T,
-				GL10.GL_CLAMP_TO_EDGE);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
 
 		// Use the Android GLUtils to specify a two-dimensional texture image
 		// from our bitmap

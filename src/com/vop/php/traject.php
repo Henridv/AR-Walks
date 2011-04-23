@@ -81,6 +81,7 @@ if ($action == "trajects" || $action == "get_walk") {
 			FROM trajects
 			WHERE id=$id";
 		$point_res = pg_query($conn, $query);
+		$walk = array();
 		while ($point = pg_fetch_assoc($point_res)) {
 			$walk[] = $point;
 		}
