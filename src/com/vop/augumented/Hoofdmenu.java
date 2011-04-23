@@ -93,7 +93,7 @@ public class Hoofdmenu extends FullscreenActivity {
 			@Override
 			public boolean onLongClick(View v) {
 				// TODO Auto-generated method stub
-				final CharSequence[] items = { "augmented reality", "lijst","map"};
+				final CharSequence[] items = { "augmented reality", "lijst","map","locatie opslaan","huidig opslaan"};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
 				builder.setTitle("locaties");
@@ -108,8 +108,16 @@ public class Hoofdmenu extends FullscreenActivity {
 							Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
 							Hoofdmenu.this.startActivity(myIntent);
 						}
-						else {
+						else if(items[item].equals("map")){
 							Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+						else if(items[item].equals("locatie opslaan")){
+							Intent myIntent = new Intent(Hoofdmenu.this, LocatieOpslaan.class);
+							Hoofdmenu.this.startActivity(myIntent);
+						}
+						else{
+							Intent myIntent = new Intent(Hoofdmenu.this, HuidigeLocatieOpslaan.class);
 							Hoofdmenu.this.startActivity(myIntent);
 						}
 						}

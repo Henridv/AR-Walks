@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+android:id="@+id/widget0"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+>
+<Button
+android:id="@+id/widget27"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Button"
+android:onClick="go_klik"
+android:layout_x="120px"
+android:layout_y="52px"
+>
+</Button>
+</AbsoluteLayout>

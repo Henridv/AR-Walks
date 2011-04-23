@@ -50,6 +50,22 @@ switch ($action) {
 			WHERE id = ".$_POST['id'];
 		echo $query;
 		break;
+	case "delloc2":
+		$pers_id = $_POST['userid'];
+		$name = $_POST['name'];
+		$query = "
+			DELETE FROM locations
+			WHERE name = '$name' AND pers_id = '$pers_id'";
+		echo $query;
+		break;
+	case "getlocfriends":
+		$pers_id = $_POST['userid'];
+		$name = $_POST['name'];
+		$query = "
+			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt FROM locations
+			WHERE NOT(pers_id = '$pers_id') AND name = '$name' ";
+		echo $query;
+		break;
 }
 
 $result = pg_query($conn, $query);
