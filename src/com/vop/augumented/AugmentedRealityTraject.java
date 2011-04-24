@@ -154,7 +154,7 @@ public class AugmentedRealityTraject extends Activity {
 				float[] outR = new float[16];
 				SensorManager.remapCoordinateSystem(r, SensorManager.AXIS_Y,
 						SensorManager.AXIS_MINUS_X, outR);
-				app.setValues(outR);
+				app.setRotationMatrix(outR);
 			}
 		}
 

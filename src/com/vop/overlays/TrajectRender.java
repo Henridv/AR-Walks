@@ -57,8 +57,8 @@ public class TrajectRender implements Renderer {
 			POI = app.getPunten();
 			for (int i = 0; i < POI.length; i++) {
 				gl.glLoadIdentity();
-				if (app.getValues() != null) {
-					gl.glLoadMatrixf(app.getValues(), 0);
+				if (app.getRotationMatrix() != null) {
+					gl.glLoadMatrixf(app.getRotationMatrix(), 0);
 					gl.glTranslatef(POI[i].getAfstand_x()*20f,
 							POI[i].getAfstand_y()*20f, 0);
 					

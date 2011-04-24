@@ -220,7 +220,7 @@ public class StartEenWandeling extends MapActivity {
 			for (int j=0;j<allePunten.size();j++){
 				marker = allePunten.get(j);
 				geoPunt = new GeoPoint((int)(marker.getLat()*1E6),(int)(marker.getLng()*1E6));
-				item = new OverlayItem(geoPunt,marker.getTitel(),marker.getInfo());
+				item = new OverlayItem(geoPunt,marker.getTitle(),marker.getInfo());
 				itemizedoverlay.addOverlay(item);
 			}
 		this.mapView.getOverlays().add(itemizedoverlay);

@@ -36,22 +36,17 @@ public class NewOpenGLRenderer extends GLSurfaceView implements Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);	
 		gl.glLoadIdentity();					//Reset The Current Modelview Matrix
 
-		float[] rotMatrix = app.getValues();
+		float[] rotMatrix = app.getRotationMatrix();
 		if (rotMatrix != null) {
-			gl.glLoadMatrixf(rotMatrix, 0);
 			Marker[] POI = app.getPunten();
 			for (int i = 0; i < POI.length; i++) {
-				float rotation;
-				gl.glTranslatef(POI[i].getAfstand_x()*10f, POI[i].getAfstand_y()*10f, 0);
-				if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()>0) rotation = (float) (180- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
-				else if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()<0) rotation = (float) (180+ (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
-				else if(POI[i].getAfstand_x() >0 && POI[i].getAfstand_y()<0) rotation = (float) (360- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
-				else rotation = (float) (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x())));
-				gl.glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+				// TODO: implement altitude 
+				gl.glLoadMatrixf(rotMatrix, 0);
+				gl.glRotatef(-POI[i].getRotation(), 0, 0, 1.0f);
+				gl.glTranslatef(0, POI[i].getDistance(), 0);
 				placemarker.draw(gl);
 			}
 		}
-
 	}
 
 	@Override
@@ -89,6 +84,12 @@ public class NewOpenGLRenderer extends GLSurfaceView implements Renderer {
 
 }
 
+
+/**
+ * This class provides the rendering of a placemarker
+ * @author henridv
+ *
+ */
 class Placemarker {
 
 	/** The buffer holding the vertices */
@@ -102,19 +103,19 @@ class Placemarker {
 
 	/** The initial vertex definition */
 	private float vertices[] = {
-			0.0f, -1.0f, -1.0f, // Bottom Left
-			0.0f, -1.0f, 1.0f, // Bottom Right
-			0.0f, 1.0f, -1.0f, // Top Left
-			0.0f, 1.0f, 1.0f // Top Right
+			-1.0f, 0.0f, -1.0f,	// Bottom Left
+			1.0f, 0.0f, -1.0f,	// Bottom Right
+			1.0f, 0.0f, 1.0f,	// Top Right
+			-1.0f, 0.0f, 1.0f	// Top Left
 	};
 	
 	/** The initial texture coordinates (u, v) */	
     private float texture[] = {    		
 			//Mapping coordinates for the vertices
-			1.0f, 1.0f,
-			1.0f, 0.0f,
-			0.0f, 1.0f,
-			0.0f, 0.0f
+			1.0f, 1.0f,	// bottom left
+			0.0f, 1.0f,	// bottom right
+			0.0f, 0.0f,	// top right
+			1.0f, 0.0f	// top left
     };
     
 	/** Our texture pointer */
@@ -123,7 +124,7 @@ class Placemarker {
     /** The initial indices definition */
     private byte indices[] = {
 			//Faces definition
-    		0,1,3, 0,3,2 			//Face front
+    		0,1,2, 0,2,3 			//Face front
     };
 	
 	/**

@@ -4,6 +4,7 @@ import com.vop.tools.VopApplication;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 public class Marker implements Comparable<Marker> {
 	private double lat;
@@ -14,140 +15,42 @@ public class Marker implements Comparable<Marker> {
 	private float afstand_x;
 	private float afstand_y;
 	private Boolean binnen_afstand;
-
-	public Boolean getBinnen_afstand() {
-		return binnen_afstand;
-	}
-
-	public float getAfstand_x() {
-		return afstand_x;
-	}
-
-	public float getAfstand_y() {
-		return afstand_y;
-	}
-
-	public double getAfstand_marker() {
-		return afstand_marker;
-	}
-
-	public boolean isZichtbaarheid() {
-		return zichtbaarheid;
-	}
-
 	private double verticale_positie;
-
-	public double getVerticale_positie() {
-		return verticale_positie;
-	}
-
-	public void setVerticale_positie(double verticale_positie) {
-		this.verticale_positie = verticale_positie;
-	}
-
-	public double getHorizontale_positie() {
-		return horizontale_positie;
-	}
-
-	public void setHorizontale_positie(double horizontale_positie) {
-		this.horizontale_positie = horizontale_positie;
-	}
-
 	private double horizontale_positie;
 	private double PI = 4.0 * Math.atan(1.0);
-	private String titel;
-
-	public String getTitel() {
-		return titel;
-	}
-
-	public void setTitel(String titel) {
-		this.titel = titel;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
-	}
-
+	private String title;
 	private String info;
-
 	double angle_of_view_horizontal = 54.4 / 2;
 	double angle_of_view_vertical = 37.8 / 2;
-	private static double afstand;
+	private float distance;
+	private float angle;
 
-	public static void setAfstand(double afstand) {
-		Marker.afstand = afstand;
+	public Marker(String title, String info, double longitude, double latitude,
+			double altitude, Context context) {
+		this.title = title;
+		this.info = info;
+		lat = latitude;
+		lng = longitude;
+		alt = altitude;
+		VopApplication app = (VopApplication) context;
+		double lat_loc = app.getLat();
+		double lng_loc = app.getLng();
+		double alt_loc = app.getAlt();
+
+		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, app.getAzimuth());
 	}
 
-	public double getLat() {
-		return lat;
-	}
-
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public void setLng(double lng) {
-		this.lng = lng;
-	}
-
-	public double getAlt() {
-		return alt;
-	}
-
-	public void setAlt(double alt) {
-		this.alt = alt;
-	}
-
-	public Marker(String naam, String com, double longitude, double latitude,
+	public Marker(String title, String info, double longitude, double latitude,
 			double altitude, double lat_loc, double lng_loc, double alt_loc,
 			double azimuth) {
-		titel = naam;
-		info = com;
+		this.title = title;
+		this.info = info;
 		lat = latitude;
 		lng = longitude;
 		alt = altitude;
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, azimuth);
 	}
 
-	public Marker(String naam, String com, double longitude, double latitude,
-			double altitude, Context context) {
-		titel = naam;
-		info = com;
-		lat = latitude;
-		lng = longitude;
-		alt = altitude;
-		VopApplication app = (VopApplication) context;
-		double lat_loc=app.getLat();
-		double lng_loc=app.getLng();
-		double alt_loc=app.getAlt();
-		
-		bereken_zichtbaarheid(lat_loc, lng_loc,alt_loc, app.getAzimuth());
-		
-		/*float afstand_tot_punt[] = new float[3];
-		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
-		afstand_x = afstand_tot_punt[0];
-		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc,
-				afstand_tot_punt);
-		afstand_y = afstand_tot_punt[0];
-		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
-		afstand_marker = afstand_tot_punt[0];
-		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
-		if (lat - lat_loc < 0)
-			afstand_y *= -1;
-		if (lng - lng_loc < 0)
-			afstand_x *= -1;*/
-	}
-	
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double azimuth) {
 		double hoek;
@@ -159,13 +62,12 @@ public class Marker implements Comparable<Marker> {
 		float afstand_tot_punt[] = new float[3];
 		Location.distanceBetween(lat, lng, lat, lng_loc, afstand_tot_punt);
 		afstand_x = afstand_tot_punt[0];
-		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc,
-				afstand_tot_punt);
+		Location.distanceBetween(lat, lng_loc, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_y = afstand_tot_punt[0];
 		Location.distanceBetween(lat, lng, lat_loc, lng_loc, afstand_tot_punt);
 		afstand_marker = afstand_tot_punt[0];
-		afstand_x = (float) (afstand_x * 1.0 /afstand_marker);
-		afstand_y = (float) (afstand_y * 1.0 /afstand_marker);
+		afstand_x = (float) (afstand_x * 1.0 / afstand_marker);
+		afstand_y = (float) (afstand_y * 1.0 / afstand_marker);
 		if (lat - lat_loc < 0)
 			afstand_y *= -1;
 		if (lng - lng_loc < 0)
@@ -230,8 +132,134 @@ public class Marker implements Comparable<Marker> {
 
 	@Override
 	public int compareTo(Marker another) {
-		if(this.afstand_marker >another.getAfstand_marker()) return 1;
-		else if (this.afstand_marker >another.getAfstand_marker()) return -1;
-		else return 0;
+		if (this.afstand_marker > another.getAfstand_marker())
+			return 1;
+		else if (this.afstand_marker > another.getAfstand_marker())
+			return -1;
+		else
+			return 0;
+	}
+
+	public double getAfstand_marker() {
+		return afstand_marker;
+	}
+
+	public float getAfstand_x() {
+		return afstand_x;
+	}
+
+	public float getAfstand_y() {
+		return afstand_y;
+	}
+
+	public double getAlt() {
+		return alt;
+	}
+
+	public Boolean getBinnen_afstand() {
+		return binnen_afstand;
+	}
+
+	public double getHorizontale_positie() {
+		return horizontale_positie;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public double getVerticale_positie() {
+		return verticale_positie;
+	}
+
+	public boolean isZichtbaarheid() {
+		return zichtbaarheid;
+	}
+
+	public void setAlt(double alt) {
+		this.alt = alt;
+	}
+
+	public void setHorizontale_positie(double horizontale_positie) {
+		this.horizontale_positie = horizontale_positie;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setVerticale_positie(double verticale_positie) {
+		this.verticale_positie = verticale_positie;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public static float getAfstand() {
+		return 0;
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static void setAfstand(float a) {
+		return;
+	}
+	/**
+	 * Deel Henri
+	 */
+	
+	public Marker(com.vop.tools.data.Location l, float lat, float lng, float alt) {
+		this.title = l.getName();
+		this.info = l.getDescription();
+		this.lat = l.getLatitute();
+		this.lng = l.getLongitude();
+		
+		update(lat, lng);
+	}
+
+	public float getDistance() {
+		return distance;
+	}
+
+	public float getRotation() {
+		return angle;
+	}
+	
+	/**
+	 * Updates the distance and bearing
+	 * @param lat - current latitude
+	 * @param lng - current longitude
+	 */
+	public void update(float lat, float lng) {
+		float[] results = new float[3];
+		Location.distanceBetween(lat, lng, this.lat, this.lng, results);
+		this.distance = results[0]/5000f * 10f + 10f;
+		this.angle = (results[1] + results[2]) / 2f;
+		Log.i(VopApplication.LOGTAG, this.title + ": " + angle);
 	}
 }

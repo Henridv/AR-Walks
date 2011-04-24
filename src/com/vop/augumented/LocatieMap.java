@@ -141,8 +141,8 @@ public class LocatieMap extends MapActivity {
 		for (int i = 0; i < POI.length; i++) {
 			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
 					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
-					POI[i].getTitel());
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(),
+					POI[i].getTitle());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 
@@ -159,7 +159,7 @@ public class LocatieMap extends MapActivity {
 		for (int i = 0; i < POI.length; i++) {
 			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
 					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitel(),
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(),
 					POI[i].getAlt()+" "+POI[i].getInfo());
 			
 			itemizedoverlay.addOverlay(overlayitem);

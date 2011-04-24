@@ -28,7 +28,7 @@ public class VopApplication extends Application {
 	private float pitch;
 	private float roll;
 	private double heading;
-	private float output[];
+	private float rotationMatrix[];
 	private float max_afstand;
 	private int dichtste_punt;
 	private Traject traject;
@@ -68,30 +68,26 @@ public class VopApplication extends Application {
 		this.max_afstand = max_afstand;
 	}
 
+	/**
+	 * @deprecated Use {@link #getRotationMatrix()} instead
+	 */
 	public synchronized float[] getValues() {
-		return output;
+		return getRotationMatrix();
 	}
 
+	public synchronized float[] getRotationMatrix() {
+		return rotationMatrix;
+	}
+
+	/**
+	 * @deprecated Use {@link #setRotationMatrix(float[])} instead
+	 */
 	public synchronized void setValues(float[] values) {
-		/*
-		 * if(this.output != null){ for(int i = 0;i<16;i++){ this.output[i] =
-		 * (float) (0.535144118 * values[i] -0.132788237 * input_1[i]
-		 * -0.402355882 * input_2[i] -0.154508496 * output_1[i] -0.0625 *
-		 * output_2[i]); } input_2 = input_1; input_1 = values; output_2 =
-		 * output_1; output_1 = output; } else{ input_2 = values; input_1 =
-		 * values; output_2 = values; output_1 = values; this.output = values; }
-		 */
-		// this.output = values;
-		/*
-		 * if(first == false){ histo[i]= values; for(int j=0;j<16;j++){
-		 * output[j]= 0; for(int k=0;k<10;k++) output[j]+=histo[k][j];
-		 * output[j]= (float) (output[j]*1.0/50); } i = i+1; if(i == 50) i =0; }
-		 * else{ first=false; i =0; histo = new float[50][16]; for(int j
-		 * =0;j<50;j++){ histo[j] = values; } output = values;
-		 * 
-		 * }
-		 */
-		this.output = values.clone();
+		setRotationMatrix(values);
+	}
+
+	public synchronized void setRotationMatrix(float[] values) {
+		this.rotationMatrix = values.clone();
 	}
 
 	public double getLng() {
@@ -169,7 +165,8 @@ public class VopApplication extends Application {
 	public String putState(String k, String v) {
 		return state.put(k, v);
 	}
-
+	
+	/*
 	private boolean isLocked = false;
 
 	public synchronized void lock() throws InterruptedException {
@@ -182,8 +179,8 @@ public class VopApplication extends Application {
 	public synchronized void unlock() {
 		isLocked = false;
 		notify();
-	}
-
+	}*/
+	
 	public void construeer() {
 		Toast.makeText(getApplicationContext(), "POI inladen", Toast.LENGTH_SHORT).show();
 		
@@ -192,7 +189,8 @@ public class VopApplication extends Application {
 		
 		List<Marker> list = new ArrayList<Marker>();
 		for (Location l : loc) {
-			list.add(new Marker(l.getName(), l.getDescription(), l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, azimuth));
+			//list.add(new Marker(l.getName(), l.getDescription(), l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, azimuth));
+			list.add(new Marker(l, (float)lat, (float)lng, (float)alt));
 		}
 
 		Collections.sort(list);
@@ -203,7 +201,7 @@ public class VopApplication extends Application {
 
 	public void vernieuw() {
 		for (int j = 0; j < punten.length; j++) {
-			punten[j] = new Marker(punten[j].getTitel(), punten[j].getInfo(), punten[j].getLng(), punten[j].getLat(), punten[j].getAlt(), getApplicationContext());
+			punten[j] = new Marker(punten[j].getTitle(), punten[j].getInfo(), punten[j].getLng(), punten[j].getLat(), punten[j].getAlt(), getApplicationContext());
 		}
 		Toast toast = Toast.makeText(getApplicationContext(), "POI vernieuwen", Toast.LENGTH_SHORT);
 		toast.show();

@@ -27,7 +27,6 @@ import com.vop.overlays.CameraOverlay;
 import com.vop.overlays.InfoView;
 import com.vop.overlays.Marker;
 import com.vop.overlays.NewOpenGLRenderer;
-import com.vop.overlays.OpenGLRenderer;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
@@ -67,7 +66,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 
 	final SensorEventListener sensorListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
-			double killfactor = 0.2;
+			double killfactor = 0.05;
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				if (accelerometerValues != null) {
@@ -114,19 +113,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 				if (SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerValues, magneticFieldValues)) {
 					float[] outR = new float[16];
 					SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
-					app.setValues(outR);
-
-					// float[] looking = {1.0f, 0.0f, 0.0f};
-					// Vector l = new Vector(looking);
-					// Matrix m = new Matrix(outR, 3, 3);
-					// m.transpose();
-					// l = Matrix.mult(m, l);
-					// float d = (float) Math.sqrt(l.get(0) * l.get(0) +
-					// l.get(1) * l.get(1));
-					// float cos = l.get(1) / d;
-					// float angle = (float) Math.toDegrees(Math.acos(cos));
-					// angle = (l.get(0) < 0) ? angle * -1 : angle;
-					// app.setAzimuth((angle + 360f)%360);
+					app.setRotationMatrix(outR);
 
 					float[] orientation = new float[3];
 					SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
@@ -156,10 +143,10 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		criteria.setCostAllowed(true);
 		criteria.setPowerRequirement(Criteria.POWER_HIGH);
 		provider = locationManager.getBestProvider(criteria, true);
-		if (provider == null) {
-			provider = locationManager.getBestProvider(criteria, false);
+		while (provider == null) {
 			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
 			startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+			provider = locationManager.getBestProvider(criteria, true);
 		}
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
@@ -251,7 +238,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					vibrator.vibrate(60);
 					AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-					dialog.setTitle(punt.getTitel());
+					dialog.setTitle(punt.getTitle());
 					dialog.setMessage(punt.getInfo());
 					dialog.show();
 				}

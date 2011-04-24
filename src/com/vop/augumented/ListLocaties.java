@@ -15,7 +15,6 @@ import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 
 public class ListLocaties extends FullscreenListActivity {
-	private Activity activiteit;
 	private VopApplication app;
 	private Activity activity;
 	private String[] res;
@@ -35,8 +34,8 @@ public class ListLocaties extends FullscreenListActivity {
 				VopApplication app = (VopApplication) getApplicationContext();
 				Marker POI[] = app.getPunten();
 				// When clicked, show a dialog with the TextView text
-				AlertDialog.Builder dialog = new AlertDialog.Builder(activiteit);
-				dialog.setTitle(POI[position].getTitel());
+				AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+				dialog.setTitle(POI[position].getTitle());
 				dialog.setMessage(POI[position].getInfo());
 				dialog.show();
 			}
@@ -51,7 +50,7 @@ public class ListLocaties extends FullscreenListActivity {
 				app.construeer2(activity);
 				Marker POI[]=app.getPunten();
 				res = new String[POI.length];
-				for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitel();
+				for(int i = 0;i<POI.length;i++) res[i] = POI[i].getTitle();
 				
 				runOnUiThread(new Runnable() {
 					@Override
