@@ -27,6 +27,7 @@ import com.vop.tools.data.Person;
 public class Vrienden extends FullscreenListActivity {
 
 	static ArrayList<Person> vrienden;
+	private VopApplication app;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Vrienden extends FullscreenListActivity {
 		updateFriends();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+		app=(VopApplication) getApplicationContext();
 		
 		
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -60,13 +62,16 @@ public class Vrienden extends FullscreenListActivity {
 						if (items[item].equals("Send Message")) {
 							Toast.makeText(Vrienden.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 						} else if (items[item].equals("Delete")) {
-							DBWrapper.delete(vrienden.get(position));
+							DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")),vrienden.get(position).getId());
 							updateFriends();
 						}
 						else if (items[item].equals("profiel")){
 							Intent myIntent = new Intent(Vrienden.this,ProfielFriend.class);
 							myIntent.putExtra("profielid",vrienden.get(position).getId());
 							Vrienden.this.startActivity(myIntent);
+						}
+						else if(items[item].equals("delete")){
+							
 						}
 					}
 				});

@@ -25,7 +25,8 @@ public class ToevoegenVriend extends FullscreenListActivity {
 	private VopApplication app;
 	private Activity activity;
 	private String[] res;
-	ArrayList<Person> p;
+	ArrayList<Person> p1;
+	ArrayList<Person> p2;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,15 +50,30 @@ public class ToevoegenVriend extends FullscreenListActivity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
-						if(items[item].equals("add")){
-							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p.get(position).getId());
-							updateNotAddedPersons();
+						if(position > p2.size()-1){
+							int pos = position - p2.size();
+							if(items[item].equals("add")){
+								DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p1.get(pos).getId());
+								updateNotAddedPersons();
+							}
+							else if(items[item].equals("profiel")){
+								Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
+								myIntent.putExtra("profielid",p1.get(pos).getId());
+								ToevoegenVriend.this.startActivity(myIntent);
+							}
 						}
-						else if(items[item].equals("profiel")){
-							Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
-							myIntent.putExtra("profielid",p.get(position).getId());
-							ToevoegenVriend.this.startActivity(myIntent);
+						else{
+							if(items[item].equals("add")){
+								DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p2.get(position).getId());
+								updateNotAddedPersons();
+							}
+							else if(items[item].equals("profiel")){
+								Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
+								myIntent.putExtra("profielid",p2.get(position).getId());
+								ToevoegenVriend.this.startActivity(myIntent);
+							}
 						}
+						
 					}
 				});
 				AlertDialog alert = builder.create();
@@ -73,9 +89,11 @@ public class ToevoegenVriend extends FullscreenListActivity {
 			
 			@Override
 			public void run() {
-				p=DBWrapper.getNotAddedPersons(Integer.parseInt(app.getState().get("userid")));
-				res=new String[p.size()];
-				for(int i=0;i<res.length;i++)res[i]=p.get(i).getEmail();
+				p1=DBWrapper.getNotAddedPersons(Integer.parseInt(app.getState().get("userid")));
+				p2=DBWrapper.getPeopelWhoAddedYou(Integer.parseInt(app.getState().get("userid")));
+				res=new String[p1.size()+p2.size()];
+				for(int i=0;i<p2.size();i++)res[i]=p2.get(i).getEmail()+" +++";
+				for(int i=0;i<p1.size();i++) res[i+p2.size()]=p1.get(i).getEmail();
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {

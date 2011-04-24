@@ -15,6 +15,15 @@ switch ($action) {
 			ORDER BY id";
 		break;
 		
+		case "getlocfriends":
+		$pers_id = $_POST['pers_id'];
+		$query = "
+			select foo1.id,foo1.name,foo1.description,foo1.pers_id,foo1.date,lat,lng,alt from (select id,name,description,pers_id,date,x(position) as lat,y(position) as lng, Z(position) as alt
+      FROM locations) as foo1 INNER JOIN 
+      (SELECT * FROM (SELECT pers_id FROM friends WHERE friend_id='$pers_id ' INTERSECT 
+      SELECT friend_id FROM friends WHERE pers_id='$pers_id ') AS foo  INNER JOIN persons ON foo.pers_id=persons.id) AS foo2 ON foo1.pers_id=foo2.pers_id";
+		break;
+		
 	case "addloc":
 		$name = $_POST['name'];
 		$descr = $_POST['description'];
@@ -58,7 +67,7 @@ switch ($action) {
 			WHERE name = '$name' AND pers_id = '$pers_id'";
 		echo $query;
 		break;
-	case "getlocfriends":
+	case "getlochuidigfriends":
 		$pers_id = $_POST['userid'];
 		$name = $_POST['name'];
 		$query = "

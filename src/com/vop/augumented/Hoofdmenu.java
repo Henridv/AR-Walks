@@ -1,30 +1,32 @@
 package com.vop.augumented;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnLongClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.vop.tools.DBWrapper;
+import com.vop.popup.ActionItem;
+import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
 public class Hoofdmenu extends FullscreenActivity {
 	Vibrator vibrator;
 	VopApplication app;
-
+	final ActionItem actie1 = new ActionItem();
+	final ActionItem actie2 = new ActionItem();
+	final ActionItem actie3 = new ActionItem();
+	final ActionItem actie4 = new ActionItem();
+	final ActionItem actie5 = new ActionItem();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,157 +36,225 @@ public class Hoofdmenu extends FullscreenActivity {
 		
 		//berichten
 		ImageButton berichten=(ImageButton) findViewById(R.id.berichten);
-		berichten.setOnLongClickListener(new OnLongClickListener() {
+		berichten.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				final CharSequence[] items = { "Walk", "Edit", "Delete" };
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("hello");
-				builder.setItems(items, new OnClickListener() {
-
+			public void onClick(View v) {
+				vibrator.vibrate(60);
+				QuickAction qa = new QuickAction(v);
+				
+				actie1.setTitle("lijst berichten");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("Walk")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Edit")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Delete")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						}
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Toast.makeText(Hoofdmenu.this, "lijst berichten" , Toast.LENGTH_SHORT).show();
 					}
 				});
-				AlertDialog alert = builder.create();
-				alert.show();
-				return true;
+				actie2.setTitle("AR berichten");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Toast.makeText(Hoofdmenu.this, "AR berichten" , Toast.LENGTH_SHORT).show();
+					}
+				});
+				actie3.setTitle("map berichten");
+				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Toast.makeText(Hoofdmenu.this, "map berichten" , Toast.LENGTH_SHORT).show();
+					}
+				});
+				actie4.setTitle("bericht maken");
+				actie4.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Toast.makeText(Hoofdmenu.this, "bericht maken" , Toast.LENGTH_SHORT).show();
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.addActionItem(actie3);
+				qa.addActionItem(actie4);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
 		});
 		//trajecten
 		ImageButton trajecten=(ImageButton) findViewById(R.id.trajecten);
-		trajecten.setOnLongClickListener(new OnLongClickListener() {
+		trajecten.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				final CharSequence[] items = { "lijst", "toevoegen traject"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("trajecten");
-				builder.setItems(items, new OnClickListener() {
-
+			public void onClick(View v) {
+				vibrator.vibrate(60);
+				QuickAction qa = new QuickAction(v);
+				
+				actie1.setTitle("lijst trajecten");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("lijst")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						} else if (items[item].equals("toevoegen traject")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}}
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
 				});
-				AlertDialog alert = builder.create();
-				alert.show();
-				return true;
+				actie2.setTitle("toevoegen traject");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
 		});
 		//locaties
 		ImageButton locaties=(ImageButton) findViewById(R.id.locaties);
-		locaties.setOnLongClickListener(new OnLongClickListener() {
+		locaties.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				final CharSequence[] items = { "augmented reality", "lijst","map","locatie opslaan","huidig opslaan"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("locaties");
-				builder.setItems(items, new OnClickListener() {
-
+			public void onClick(View v) {
+				vibrator.vibrate(60);
+				QuickAction qa = new QuickAction(v);
+				
+				actie1.setTitle("AR locaties");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("augmented realtiy")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						} else if (items[item].equals("lijst")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-						else if(items[item].equals("map")){
-							Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-						else if(items[item].equals("locatie opslaan")){
-							Intent myIntent = new Intent(Hoofdmenu.this, LocatieOpslaan.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-						else{
-							Intent myIntent = new Intent(Hoofdmenu.this, HuidigeLocatieOpslaan.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-						}
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
 				});
-				AlertDialog alert = builder.create();
-				alert.show();
-				return true;
+				actie2.setTitle("lijst locaties");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				actie3.setTitle("map locaties");
+				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				actie4.setTitle("toevoegen locaties");
+				actie4.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, LocatieOpslaan.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				actie5.setTitle("huidige locatie bijhouden");
+				actie5.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, HuidigeLocatieOpslaan.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.addActionItem(actie3);
+				qa.addActionItem(actie4);
+				qa.addActionItem(actie5);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
 		});
 		//vrienden
 		ImageButton vrienden=(ImageButton) findViewById(R.id.vrienden);
-		vrienden.setOnLongClickListener(new OnLongClickListener() {
+		vrienden.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				final CharSequence[] items = { "friends","add friend"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("friends");
-				builder.setItems(items, new OnClickListener() {
-
+			public void onClick(View v) {
+				vibrator.vibrate(60);
+				QuickAction qa = new QuickAction(v);
+				
+				actie1.setTitle("lijst vrienden");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("friends")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-						else if (items[item].equals("add friend")){
-							Intent myIntent = new Intent(Hoofdmenu.this, ToevoegenVriend.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
-				}});
-				AlertDialog alert = builder.create();
-				alert.show();
-				return true;
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				actie2.setTitle("vriend toevoegen");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, ToevoegenVriend.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
 		});
 		//profiel
 		ImageButton profiel=(ImageButton) findViewById(R.id.profiel);
-		profiel.setOnLongClickListener(new OnLongClickListener() {
+		profiel.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
-			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
-				final CharSequence[] items = { "Walk", "Edit", "Delete" };
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Hoofdmenu.this);
-				builder.setTitle("hello");
-				builder.setItems(items, new OnClickListener() {
-
+			public void onClick(View v) {
+				vibrator.vibrate(60);
+				QuickAction qa = new QuickAction(v);
+				
+				actie1.setTitle("profiel");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("Walk")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Edit")) {
-							Toast.makeText(Hoofdmenu.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Delete")) {
-							Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
-							Hoofdmenu.this.startActivity(myIntent);
-						}
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, Profiel.class);
+						Hoofdmenu.this.startActivity(myIntent);
 					}
 				});
-				AlertDialog alert = builder.create();
-				alert.show();
-				return true;
+				actie2.setTitle("profiel bewerken");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, ProfielWijzigen.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				actie3.setTitle("wachtwoord wijzigen");
+				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, PaswoordWijzigen.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.addActionItem(actie3);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
-		});
-		
+		});		
 	}
 
 	@Override
@@ -195,40 +265,6 @@ public class Hoofdmenu extends FullscreenActivity {
 			finish();
 		}
 	}
-
-	//
-	//	Menu icons
-	//
-	public void locaties_klik(View v) {
-		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
-		Hoofdmenu.this.startActivity(myIntent);
-	}
-
-	public void trajecten_klik(View v) {
-		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
-		Hoofdmenu.this.startActivity(myIntent);
-	}
-
-	public void profiel_klik(View v) {
-		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, Profiel.class);
-		Hoofdmenu.this.startActivity(myIntent);
-	}
-
-	public void vrienden_klik(View v) {
-		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
-		Hoofdmenu.this.startActivity(myIntent);
-	}
-
-	public void berichten_klik(View v) {
-		vibrator.vibrate(60);
-		Intent myIntent = new Intent(Hoofdmenu.this, StartWandeling.class);
-		Hoofdmenu.this.startActivity(myIntent);
-	}
-
 	public void uitloggen_klik(View v) {
 		vibrator.vibrate(60);
 		app.putState("userid", null);

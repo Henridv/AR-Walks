@@ -163,6 +163,27 @@ public class DBWrapper {
 		}
 		return p;
 	}
+	
+	public static ArrayList<Person> getPeopelWhoAddedYou(int personId) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("action", "getpeoplewhoaddedyou"));
+
+		ArrayList<Person> p = new ArrayList<Person>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
 
 	public static void addFriend(int p1, int p2) {
 		String page = "persons.php";
@@ -425,6 +446,21 @@ public class DBWrapper {
 			return;
 
 		postValues.add(new BasicNameValuePair("action", "deluser"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+	}
+	public static void deleteFriend(int id1,int id2) {
+		String page = "persons.php";
+
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(id1)));
+		postValues.add(new BasicNameValuePair("idfriend", Integer.toString(id2)));
+		postValues.add(new BasicNameValuePair("action", "delfriend"));
 
 		// Post data
 		try {
