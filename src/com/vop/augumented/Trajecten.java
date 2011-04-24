@@ -127,7 +127,7 @@ public class Trajecten extends FullscreenListActivity {
 			
 			@Override
 			public void run() {
-				trajecten = DBWrapper.getTrajects();
+				trajecten = DBWrapper.getTrajects2();
 
 				res = new String[trajecten.size()];
 				{

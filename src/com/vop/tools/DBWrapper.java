@@ -66,6 +66,27 @@ public class DBWrapper {
 		}
 		return t;
 	}
+	public static ArrayList<Traject> getTrajects2() {
+		String page = "traject.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("action", "trajects"));
+
+		ArrayList<Traject> t = new ArrayList<Traject>();
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				int id = json_data.getInt("id");
+				String name = json_data.getString("name");
+				Person person = getProfile(json_data.getInt("person"));	
+				
+				t.add(new Traject(id, name, person, null));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return t;
+	}
 
 	public static Traject getTraject(int walk_id) {
 		String page = "traject.php";
@@ -112,19 +133,64 @@ public class DBWrapper {
 
 		// parse json data
 		try {
-			doPOST(page, postValues);
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
+	public static ArrayList<Person> getNotAddedPersons(int personId) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("action", "getnotaddedpeople"));
+
+		ArrayList<Person> p = new ArrayList<Person>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
+	
+	public static ArrayList<Person> getPeopelWhoAddedYou(int personId) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("action", "getpeoplewhoaddedyou"));
+
+		ArrayList<Person> p = new ArrayList<Person>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p.add(new Person(Integer.parseInt(json_data.getString("id")), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email")));
+			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return p;
 	}
 
-	public static void addFriend(Person p1, Person p2) {
+	public static void addFriend(int p1, int p2) {
 		String page = "persons.php";
 
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("id1", Integer.toString(p1.getId())));
-		postValues.add(new BasicNameValuePair("id2", Integer.toString(p2.getId())));
+		postValues.add(new BasicNameValuePair("id_1", Integer.toString(p1)));
+		postValues.add(new BasicNameValuePair("id_2", Integer.toString(p2)));
 
 		postValues.add(new BasicNameValuePair("action", "addfriend"));
 
@@ -218,6 +284,49 @@ public class DBWrapper {
 		}
 		return l;
 	}
+	public static ArrayList<Location> getLocationsFriends(int personId) {
+		String page = "locations.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(personId)));
+
+		postValues.add(new BasicNameValuePair("action", "getlocfriends"));
+
+		ArrayList<Location> l = new ArrayList<Location>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return l;
+	}
+	public static ArrayList<Location> getLocationsHuidigVrienden(int personId) {
+		String page = "locations.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("userid", Integer.toString(personId)));
+		postValues.add(new BasicNameValuePair("name", "huidig"));
+
+		postValues.add(new BasicNameValuePair("action", "getlochuidigfriends"));
+
+		ArrayList<Location> l = new ArrayList<Location>();
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+			}
+		} catch (JSONException e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
+		return l;
+	}
 
 	/**
 	 * Save a location
@@ -303,11 +412,23 @@ public class DBWrapper {
 
 	/**
 	 * Delete a location
-	 * 
+	 * glenn bostoen
 	 * @param l
 	 */
 	public static void delete(Location l) {
-		// TODO: delete location
+		// TODO: delete location(glenn bostoen)
+		String page = "locations.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("name", l.getName().toString()));
+		postValues.add(new BasicNameValuePair("userid", Integer.toString((l.getPersId()))));
+		postValues.add(new BasicNameValuePair("action", "delloc2"));
+		
+		// delete location
+		try {
+			doPOST(page, postValues);
+		} catch (Exception e) {
+			Log.e("log_tag", "Error parsing data " + e.toString());
+		}
 	}
 
 	/**
@@ -325,6 +446,21 @@ public class DBWrapper {
 			return;
 
 		postValues.add(new BasicNameValuePair("action", "deluser"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+	}
+	public static void deleteFriend(int id1,int id2) {
+		String page = "persons.php";
+
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(id1)));
+		postValues.add(new BasicNameValuePair("idfriend", Integer.toString(id2)));
+		postValues.add(new BasicNameValuePair("action", "delfriend"));
 
 		// Post data
 		try {

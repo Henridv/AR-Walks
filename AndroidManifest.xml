@@ -12,6 +12,7 @@
 
     <application android:icon="@drawable/appicon" android:label="@string/app_name" android:name="com.vop.tools.VopApplication">
         <service android:enabled="true" android:name="TrajectService"/>
+        <service android:enabled="true" android:name="HuidigeLocatieService"/>
         <activity android:icon="@drawable/appicon" 
         android:name="StartupActivity" 
         android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
@@ -40,5 +41,11 @@
         <activity android:name="PaswoordWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="RegisterProfile" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="StartEenWandeling"></activity>
+        <activity android:name="HuidigeLocatieOpslaan">
+            <intent-filter></intent-filter>
+        </activity>
+        <activity android:name="ToevoegenVriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="ProfielFriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        
     </application>
 </manifest>

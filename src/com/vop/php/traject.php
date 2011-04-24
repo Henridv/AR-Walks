@@ -14,6 +14,13 @@ switch($action) {
 			ORDER BY id";
 		break;
 		
+	case "trajects2":
+		$query = "
+			SELECT id, name, pers_id as person
+			FROM trajects
+			ORDER BY id";
+		break;
+		
 	case "get_walk":
 		$id = $_POST['id'];
 		$query = "
