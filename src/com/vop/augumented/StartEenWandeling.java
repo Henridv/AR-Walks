@@ -111,7 +111,7 @@ public class StartEenWandeling extends MapActivity {
 		}
 		
 		//haal alle trajecten binnen
-		this.walks = DBWrapper.getTrajects();
+		//this.walks = DBWrapper.getTrajects();
 		
 		try{
 			initMap();

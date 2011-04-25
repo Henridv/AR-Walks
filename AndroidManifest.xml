@@ -46,6 +46,7 @@
         </activity>
         <activity android:name="ToevoegenVriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
         <activity android:name="ProfielFriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="TrajectOpslaanZien"></activity>
         
     </application>
 </manifest>

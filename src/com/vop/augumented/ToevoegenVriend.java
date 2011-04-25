@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.vop.popup.ActionItem;
+import com.vop.popup.QuickAction;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
@@ -27,6 +32,12 @@ public class ToevoegenVriend extends FullscreenListActivity {
 	private String[] res;
 	ArrayList<Person> p1;
 	ArrayList<Person> p2;
+	Vibrator vibrator;
+	
+	QuickAction qa;
+	static private ActionItem actie1=new ActionItem();
+	static private ActionItem actie2=new ActionItem();
+	private int positie;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,57 @@ public class ToevoegenVriend extends FullscreenListActivity {
 		lv.setTextFilterEnabled(true);
 		activity = this;
 		updateNotAddedPersons();
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		
+		//menu opstartten
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				vibrator.vibrate(60);
+				positie=position;
+				qa = new QuickAction(view);
+				
+				actie1.setTitle("profiel bekijken");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						if(positie > p2.size()-1){
+							int pos = positie - p2.size();
+							Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
+							myIntent.putExtra("profielid",p1.get(pos).getId());
+							ToevoegenVriend.this.startActivity(myIntent);		
+						}
+						else{
+							Intent myIntent = new Intent(ToevoegenVriend.this,ProfielFriend.class);
+							myIntent.putExtra("profielid",p2.get(positie).getId());
+							ToevoegenVriend.this.startActivity(myIntent);
+						}
+					}
+				});
+				actie2.setTitle("bericht verzenden");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						if(positie > p2.size()-1){
+							int pos = positie - p2.size();
+							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p1.get(pos).getId());
+							updateNotAddedPersons();		
+						}
+						else{
+							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p2.get(positie).getId());
+							updateNotAddedPersons();
+						}
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
+			}
+		});
 
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
