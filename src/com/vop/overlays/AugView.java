@@ -154,7 +154,7 @@ public class AugView extends View {
 		Bitmap bmp3 = BitmapFactory.decodeResource(getResources(),
 				R.drawable.arrow);*/
 		if (dichtste_punt != -1) {
-			canvas.drawText(POI[dichtste_punt].getTitel(),
+			canvas.drawText(POI[dichtste_punt].getTitle(),
 					getMeasuredWidth() / 10, getMeasuredHeight() / 10, myPaint2);
 			/*canvas.rotate((float) roll, 9 * getMeasuredWidth() / 10,
 					9 * getMeasuredHeight() / 10);*/

@@ -61,8 +61,8 @@ public class OpenGLRenderer implements Renderer {
 			POI = app.getPunten();
 			for (int i = 0; i < POI.length; i++) {
 				gl.glLoadIdentity();
-				if (app.getValues() != null) {
-					gl.glLoadMatrixf(app.getValues(), 0);
+				if (app.getRotationMatrix() != null) {
+					gl.glLoadMatrixf(app.getRotationMatrix(), 0);
 					gl.glTranslatef(POI[i].getAfstand_x()*10f,
 							POI[i].getAfstand_y()*10f, 0);
 					if(POI[i].getAfstand_x() <0 && POI[i].getAfstand_y()>0) rot = (float) (180- (Math.toDegrees(Math.atan(POI[i].getAfstand_y()/POI[i].getAfstand_x()))));
