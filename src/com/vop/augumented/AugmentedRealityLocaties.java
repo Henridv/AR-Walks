@@ -42,11 +42,10 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 	Renderer openGLRenderer;
 	InfoView infoView;
 	VopApplication app;
-	SensorManager sm;
+	SensorManager sensorManager;
 	LocationManager locationManager;
 	Sensor accelSensor;
 	Sensor magneticSensor;
-	Sensor orientationSensor;
 	String provider;
 
 	private final LocationListener locationListener = new LocationListener() {
@@ -66,7 +65,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 
 	final SensorEventListener sensorListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
-			double killfactor = 0.05;
+			double killfactor = 0.075;
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				if (accelerometerValues != null) {
@@ -98,11 +97,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 					magneticFieldValues = event.values.clone();
 				break;
 
-			case Sensor.TYPE_ORIENTATION:
-				// app.setAzimuth(event.values[0]);
-				infoView.invalidate();
-				break;
-
 			default:
 				break;
 			}
@@ -115,12 +109,14 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 					SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
 					app.setRotationMatrix(outR);
 
+					// calculate azimuth
 					float[] orientation = new float[3];
 					SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
 					SensorManager.getOrientation(outR, orientation);
 					app.setAzimuth((float) (Math.toDegrees(orientation[0]) + 360f) % 360);
 					app.setPitch((float) (Math.toDegrees(orientation[1]) + 360f) % 360);
 					app.setRoll((float) (Math.toDegrees(orientation[2]) + 360f) % 360);
+					infoView.invalidate();
 				}
 			}
 		}
@@ -143,6 +139,8 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		criteria.setCostAllowed(true);
 		criteria.setPowerRequirement(Criteria.POWER_HIGH);
 		provider = locationManager.getBestProvider(criteria, true);
+		
+		// Only continue when an enabled location provider is found
 		while (provider == null) {
 			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
 			startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
@@ -161,10 +159,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 
 		// openGL overlay
 		GLSurfaceView glSurfaceView = new GLSurfaceView(this);
-
 		glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-		// glSurfaceView.setEGLConfigChooser(true);
-		// glSurfaceView.setDebugFlags(GLSurfaceView.DEBUG_LOG_GL_CALLS);
 
 		// make surface transparent and on top
 		glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -176,10 +171,9 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		layout.addView(glSurfaceView);
 
 		// define sensors
-		sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		accelSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		magneticSensor = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		orientationSensor = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// Creating and attaching the renderer.
 		openGLRenderer = new NewOpenGLRenderer(this);
@@ -194,9 +188,8 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 	protected void onResume() {
 		super.onResume();
 		locationManager.requestLocationUpdates(provider, 2, 10, locationListener);
-		sm.registerListener(sensorListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(sensorListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST);
-		sm.registerListener(sensorListener, orientationSensor, SensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(sensorListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
+		sensorManager.registerListener(sensorListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	/**
@@ -205,14 +198,10 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		sm.unregisterListener(sensorListener);
+		sensorManager.unregisterListener(sensorListener);
 		locationManager.removeUpdates(locationListener);
 	}
 
-	/**
-	 * 
-	 * @param location
-	 */
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
 			app.setAlt(location.getAltitude());

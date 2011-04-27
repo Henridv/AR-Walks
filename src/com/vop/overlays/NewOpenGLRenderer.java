@@ -16,6 +16,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
 import android.opengl.GLSurfaceView.Renderer;
+import android.util.Log;
 
 import com.vop.augumented.R;
 import com.vop.tools.VopApplication;
@@ -40,11 +41,14 @@ public class NewOpenGLRenderer extends GLSurfaceView implements Renderer {
 		if (rotMatrix != null) {
 			Marker[] POI = app.getPunten();
 			for (int i = 0; i < POI.length; i++) {
-				// TODO: implement altitude 
+				//float alt_diff = (float) (app.getAlt() - POI[i].getAlt());
+				if (!POI[i].isVisible(app.getAzimuth()))
+					continue;
 				gl.glLoadMatrixf(rotMatrix, 0);
 				gl.glRotatef(-POI[i].getRotation(), 0, 0, 1.0f);
-				gl.glTranslatef(0, POI[i].getDistance(), 0);
+				gl.glTranslatef(0, POI[i].getDistance()/5000f * 10f + 10f, 0f);
 				placemarker.draw(gl);
+				Log.i(VopApplication.LOGTAG, "altitude: " + app.getAlt());
 			}
 		}
 	}

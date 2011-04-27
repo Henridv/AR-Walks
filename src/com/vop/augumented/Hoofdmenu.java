@@ -265,6 +265,7 @@ public class Hoofdmenu extends FullscreenActivity {
 			finish();
 		}
 	}
+	
 	public void uitloggen_klik(View v) {
 		vibrator.vibrate(60);
 		app.putState("userid", null);

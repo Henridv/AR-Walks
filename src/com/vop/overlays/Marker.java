@@ -1,10 +1,9 @@
 package com.vop.overlays;
 
-import com.vop.tools.VopApplication;
-
 import android.content.Context;
 import android.location.Location;
-import android.util.Log;
+
+import com.vop.tools.VopApplication;
 
 public class Marker implements Comparable<Marker> {
 	private double lat;
@@ -22,7 +21,7 @@ public class Marker implements Comparable<Marker> {
 	private String info;
 	double angle_of_view_horizontal = 54.4 / 2;
 	double angle_of_view_vertical = 37.8 / 2;
-	private float distance;
+	private float distance, max_distance, min_distance;
 	private float angle;
 
 	public Marker(String title, String info, double longitude, double latitude,
@@ -229,15 +228,18 @@ public class Marker implements Comparable<Marker> {
 	public static void setAfstand(float a) {
 		return;
 	}
+	
 	/**
 	 * Deel Henri
 	 */
-	
+
 	public Marker(com.vop.tools.data.Location l, float lat, float lng, float alt) {
 		this.title = l.getName();
 		this.info = l.getDescription();
 		this.lat = l.getLatitute();
 		this.lng = l.getLongitude();
+		max_distance = 5000f;
+		min_distance = 1f;
 		
 		update(lat, lng);
 	}
@@ -258,8 +260,18 @@ public class Marker implements Comparable<Marker> {
 	public void update(float lat, float lng) {
 		float[] results = new float[3];
 		Location.distanceBetween(lat, lng, this.lat, this.lng, results);
-		this.distance = results[0]/5000f * 10f + 10f;
-		this.angle = (results[1] + results[2]) / 2f;
-		Log.i(VopApplication.LOGTAG, this.title + ": " + angle);
+		this.distance = results[0];
+		this.angle = ((results[1] + results[2]) / 2f + 360f)%360f;
+	}
+
+	public boolean isVisible(float azimuth) {
+		if (distance > max_distance || distance < min_distance) return false;
+		else return true;
+//		else return Math.abs(angle - azimuth) < angle_of_view_horizontal;
+	}
+	
+	@Override
+	public String toString() {
+		return title + " (" + distance + ", " + angle + ")";
 	}
 }

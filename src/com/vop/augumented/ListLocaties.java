@@ -48,7 +48,7 @@ public class ListLocaties extends FullscreenListActivity {
 			
 			@Override
 			public void run() {
-				loc = DBWrapper.getLocationsFriends(Integer.parseInt(app.getState().get("userid")));
+				loc = DBWrapper.getLocations(Integer.parseInt(app.getState().get("userid")));
 				res = new String[loc.size()];
 				for(int i = 0;i<res.length;i++) res[i] = loc.get(i).getName();
 				

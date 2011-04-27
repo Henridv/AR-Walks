@@ -189,7 +189,6 @@ public class VopApplication extends Application {
 		
 		List<Marker> list = new ArrayList<Marker>();
 		for (Location l : loc) {
-			//list.add(new Marker(l.getName(), l.getDescription(), l.getLongitude(), l.getLatitute(), alt, lat, lng, alt, azimuth));
 			list.add(new Marker(l, (float)lat, (float)lng, (float)alt));
 		}
 

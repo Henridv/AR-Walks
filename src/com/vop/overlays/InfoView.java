@@ -71,7 +71,7 @@ public class InfoView extends View {
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
 		paint.setTextSize(12);
 		canvas.drawText("" + (int)app.getAzimuth() + "°", getMeasuredWidth() / 10, getMeasuredHeight() / 10, paint);
-		//canvas.drawText("roll: " + app.getRoll(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 15, paint);
-		//canvas.drawText("pitch: " + app.getPitch(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 30, paint);
+		canvas.drawText("" + app.getLat(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 15, paint);
+		canvas.drawText("" + app.getLng(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 30, paint);
 	}
 }

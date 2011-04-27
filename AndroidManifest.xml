@@ -30,7 +30,7 @@
         <activity android:name="LocatieMap"></activity>
         <uses-library android:name="com.google.android.maps"/>
         <activity android:name="LocatieOpslaan"></activity>
-        <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
         <activity android:name="AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="StartWandeling"></activity>
         <activity android:name="TrajectOpslaan" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
