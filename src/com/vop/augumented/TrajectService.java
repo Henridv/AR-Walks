@@ -42,12 +42,14 @@ public class TrajectService extends Service {
 	};
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-				Toast.makeText(this, "nieuw punt", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "nieuw punt", Toast.LENGTH_SHORT).show();
 				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
+				app.setHuidige_walk(walk);
 			}
 		}	
 	@Override
 	public void onCreate() {
+		app = (VopApplication) getApplicationContext();
 		Toast.makeText(this, "My Service Created", Toast.LENGTH_LONG).show();
 		Log.d(TAG, "onCreate");
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -55,13 +57,12 @@ public class TrajectService extends Service {
 		criteria.setAltitudeRequired(false);
 		criteria.setBearingRequired(false);
 		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
 		String provider = locationManager.getBestProvider(criteria, true);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
 		locationManager.requestLocationUpdates(provider, 100, 1,
 				locationListener);
-		app = (VopApplication) getApplicationContext();
 		
 	}
 	@Override

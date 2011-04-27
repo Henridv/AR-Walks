@@ -110,8 +110,18 @@ public class Hoofdmenu extends FullscreenActivity {
 						Hoofdmenu.this.startActivity(myIntent);
 					}
 				});
+				actie3.setTitle("huidig traject");
+				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaanZien.class);
+						Hoofdmenu.this.startActivity(myIntent);
+					}
+				});
 				qa.addActionItem(actie1);
 				qa.addActionItem(actie2);
+				qa.addActionItem(actie3);
 				qa.setAnimStyle(QuickAction.ANIM_AUTO);
 				qa.show();
 			}

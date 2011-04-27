@@ -3,10 +3,12 @@ package com.vop.augumented;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.vop.popup.ActionItem;
+import com.vop.popup.QuickAction;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
@@ -28,6 +32,11 @@ public class Vrienden extends FullscreenListActivity {
 
 	static ArrayList<Person> vrienden;
 	private VopApplication app;
+	static private ActionItem actie1=new ActionItem();
+	static private ActionItem actie2=new ActionItem();
+	static private ActionItem actie3=new ActionItem();
+	Vibrator vibrator;
+	private int positie;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,52 +45,51 @@ public class Vrienden extends FullscreenListActivity {
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		app=(VopApplication) getApplicationContext();
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		
-		
+		//menu opstartten
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// When clicked, show a toast with the TextView text
-				Toast.makeText(Vrienden.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
-		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					final int position, long id) {
-				final CharSequence[] items = { "Send Message", "Delete","profiel"};
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(Vrienden.this);
-				builder.setTitle(vrienden.get(position).getName());
-				builder.setItems(items, new OnClickListener() {
-
+				vibrator.vibrate(60);
+				positie=position;
+				QuickAction qa = new QuickAction(view);
+				
+				actie1.setTitle("profiel bekijken");
+				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int item) {
-						if (items[item].equals("Send Message")) {
-							Toast.makeText(Vrienden.this, "not yet implemented", Toast.LENGTH_SHORT).show();
-						} else if (items[item].equals("Delete")) {
-							DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")),vrienden.get(position).getId());
-							updateFriends();
-						}
-						else if (items[item].equals("profiel")){
-							Intent myIntent = new Intent(Vrienden.this,ProfielFriend.class);
-							myIntent.putExtra("profielid",vrienden.get(position).getId());
-							Vrienden.this.startActivity(myIntent);
-						}
-						else if(items[item].equals("delete")){
-							
-						}
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Intent myIntent = new Intent(Vrienden.this,ProfielFriend.class);
+						myIntent.putExtra("profielid",vrienden.get(positie).getId());
+						Vrienden.this.startActivity(myIntent);
 					}
 				});
-				AlertDialog alert = builder.create();
-				alert.show();
-
-				return true;
+				actie2.setTitle("bericht verzenden");
+				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						Toast.makeText(Vrienden.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+					}
+				});
+				actie3.setTitle("vriend verwijderen");
+				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						vibrator.vibrate(60);
+						DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")),vrienden.get(positie).getId());
+						updateFriends();
+					}
+				});
+				qa.addActionItem(actie1);
+				qa.addActionItem(actie2);
+				qa.addActionItem(actie3);
+				qa.setAnimStyle(QuickAction.ANIM_AUTO);
+				qa.show();
 			}
 		});
-
 	}
 
 	// menu openen

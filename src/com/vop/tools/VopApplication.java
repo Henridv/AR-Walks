@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.vop.overlays.Marker;
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
+import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 
 public class VopApplication extends Application {
@@ -34,6 +35,17 @@ public class VopApplication extends Application {
 	private Traject traject;
 	private Person persoon;
 	private Marker POI[];
+	private ArrayList<Point> huidige_walk;
+	
+	
+
+	public ArrayList<Point> getHuidige_walk() {
+		return huidige_walk;
+	}
+
+	public void setHuidige_walk(ArrayList<Point> huidige_walk) {
+		this.huidige_walk = huidige_walk;
+	}
 
 	public VopApplication() {
 		super();

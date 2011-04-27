@@ -186,9 +186,9 @@ public class AugmentedRealityTraject extends Activity {
 		VopApplication app = (VopApplication) getApplicationContext();
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedRealityTraject.this, StartWandeling.class);
-			AugmentedRealityTraject.this.startActivity(myIntent);
-			finish();
+			//Intent myIntent = new Intent(AugmentedRealityTraject.this, StartWandeling.class);
+			//AugmentedRealityTraject.this.startActivity(myIntent);
+			//finish();
 			return true;
 		case R.id.km_1:
 			if (item.isChecked())
@@ -226,15 +226,15 @@ public class AugmentedRealityTraject extends Activity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityTraject.this, LocatieOpslaan.class);
-			AugmentedRealityTraject.this.startActivity(myIntent);
+			//myIntent = new Intent(AugmentedRealityTraject.this, LocatieOpslaan.class);
+			//AugmentedRealityTraject.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
 			app.construeer();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(AugmentedRealityTraject.this, ListLocaties.class);
-			AugmentedRealityTraject.this.startActivity(myIntent);
+			//myIntent = new Intent(AugmentedRealityTraject.this, ListLocaties.class);
+			//AugmentedRealityTraject.this.startActivity(myIntent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}

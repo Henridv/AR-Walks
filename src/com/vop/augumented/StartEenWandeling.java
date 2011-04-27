@@ -28,6 +28,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.vop.overlays.WandelingOverlay2;
 import com.vop.overlays.wandeling_overlay;
 import com.vop.overlays.punten_overlay;
 import com.vop.overlays.Marker;
@@ -101,33 +102,10 @@ public class StartEenWandeling extends MapActivity {
 		
 		draw = this.getResources().getDrawable(R.drawable.androidmarker);
 		
-		try{
-			startLocationListening();
-		}catch(Exception e){
-			Toast toast = Toast.makeText(content,
-					"Er is iets fout gegaan bij het ophalen van de locatie", Toast.LENGTH_SHORT);
-			toast.show();
-			Log.w("Foute start locationlistening",e.getMessage());
-		}
-		
-		//haal alle trajecten binnen
-		this.walks = DBWrapper.getTrajects();
-		
-		try{
-			initMap();
-		} catch(Exception e){
-			Toast toast = Toast.makeText(content,
-					"Er is iets fout gegaan bij het initialiseren van de kaart", Toast.LENGTH_SHORT);
-			toast.show();
-			Log.w("Foute init",e.getMessage());
-		}
-		if (walk_id == 0)
-			finish();
-		else {
-			t = DBWrapper.getTraject(walk_id);
-			if (t == null)
-				finish();
-		}
+		startLocationListening();
+		initMap();
+		t = DBWrapper.getTraject(walk_id);
+
 		drawPath(t.getWalk(), -65536);
 		
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
@@ -176,64 +154,13 @@ public class StartEenWandeling extends MapActivity {
 							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
 					
 		}
-		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
-			/*Toast toast = Toast.makeText(content,
-					"punt op kaart", Toast.LENGTH_SHORT);
-			toast.show();*/
-			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
-			
-		}
-	}
-	
-	//twee verschillende methodes - eerste niet gecheckt maar met verbinding tussen punten
-	private void showTrajectsOnMap(){
-		//for(int i=0;i<this.walks.size();i++){
-			ArrayList<Point> temp,temp1;
-			temp = this.walks.get(0).getWalk();
-			temp1 = this.walks.get(1).getWalk();
-			drawPath(this.walks.get(0).getWalk(),-65536);
-			drawPath(this.walks.get(1).getWalk(),-16711936);
-		//}
-		
-	}
-	
-	private void showTrajectsOnMap2(){
-		Traject temp;
-		ArrayList<Point> move;
-		Iterator<Point> it;
-		Point punt;
-		GeoPoint geoPunt;
-		ArrayList<Marker> allePunten = new ArrayList<Marker>();
-		Marker marker;
-		OverlayItem item;
-		for(int i=0;i<this.walks.size();i++){
-			temp = this.walks.get(i);
-			move = temp.getWalk();
-			it = move.iterator();
-			
-			while(it.hasNext()){
-				punt = it.next();
-				allePunten.add(new Marker("Punt "+i,"Punt van wandeling",
-						punt.getLongitude(),punt.getLatitute(),punt.getAltitude(),content));
-				}
-		}
-			for (int j=0;j<allePunten.size();j++){
-				marker = allePunten.get(j);
-				geoPunt = new GeoPoint((int)(marker.getLat()*1E6),(int)(marker.getLng()*1E6));
-				item = new OverlayItem(geoPunt,marker.getTitle(),marker.getInfo());
-				itemizedoverlay.addOverlay(item);
-			}
-		this.mapView.getOverlays().add(itemizedoverlay);
-		System.out.println("useless, enkel voor breakpoint");
-		
-	}
-	
+		overlays.add(new WandelingOverlay2(listOfGeoPoints,color));
+	}		
 	private void updateWithNewLocation(Location location){
 		if(location!=null){
 
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
-			//double alt = location.getAltitude();
 			
 			GeoPoint punt = new GeoPoint((int) (lat*1E6),(int)(lng*1E6));
 			this.mapController.animateTo(punt);
