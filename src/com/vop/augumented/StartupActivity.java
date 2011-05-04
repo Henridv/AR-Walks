@@ -1,10 +1,17 @@
 package com.vop.augumented;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,7 +19,11 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Util;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -26,13 +37,15 @@ import com.vop.tools.data.Person;
  */
 public class StartupActivity extends FullscreenActivity {
 	static Context context;
+	Facebook facebook = new Facebook("128192193922051");
+	Activity activity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startupactivity_layout);
 		context = getApplicationContext();
-
+		activity = this;
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -41,8 +54,68 @@ public class StartupActivity extends FullscreenActivity {
 					login(v);
 					return true;
 				}
+
 				return false;
 			}
+		});
+	}
+	public void facebook(View v) {
+		facebook.authorize(this, new String[] { "email", "read_stream",
+				"publish_stream" }, new DialogListener() {
+
+			@Override
+			public void onComplete(Bundle values) {
+				// TODO Auto-generated method stub
+				Bundle b = new Bundle();
+			    b.putString("access_token", facebook.getAccessToken());
+			    b.putString("query", "SELECT first_name,last_name,contact_email FROM user where uid=me()");
+			    try {
+					String myResult = Util.openUrl("https://api.facebook.com/method/fql.query", "GET", b);
+					try {
+						JSONArray json=new JSONArray(myResult);
+						String first_name = (String)json.getJSONObject(0).get("first_name");
+						String last_name = (String)json.getJSONObject(0).get("last_name");
+						String contact_email = (String)json.getJSONObject(0).get("contact_email");
+						String phone = "unknown";
+						Person p = DBWrapper.getProfile(contact_email);
+						//Log.e("p==null", first_name+" "+last_name+" "+contact_email+" "+phone);
+						if (p == null) {
+							Log.e("p==null", first_name+" "+last_name+" "+contact_email+" "+phone);
+						}
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					Log.e("hello",myResult);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFacebookError(FacebookError e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onError(DialogError e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onCancel() {
+				// TODO Auto-generated method stub
+
+			}
+
 		});
 	}
 

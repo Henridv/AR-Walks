@@ -5,6 +5,7 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,11 +13,13 @@ import android.view.View;
 import android.widget.EditText;
 
 public class SaveLocation extends FullscreenActivity {
+	Intent intent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locatie_opslaan_layout);
+		intent=new Intent(this,HuidigeLocatieService.class);
 	}
 
 	// menu openen
@@ -41,5 +44,15 @@ public class SaveLocation extends FullscreenActivity {
 		Location loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
 		DBWrapper.save(loc);
 		finish();
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		startService(intent);
+	}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		stopService(intent);
 	}
 }
