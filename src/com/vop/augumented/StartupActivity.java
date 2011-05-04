@@ -5,8 +5,6 @@ import java.net.MalformedURLException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,14 +12,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
-import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Util;
@@ -184,16 +181,22 @@ public class StartupActivity extends FullscreenActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		VopApplication app = (VopApplication) getApplicationContext();
-		SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
-
-		int userid = prefs.getInt("userid", 0);
-		if (userid != 0) {
-			app.putState("userid", Integer.toString(userid));
-			Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
-			StartupActivity.this.startActivity(myIntent);
+		
+		// first check if the user is online
+		if (!app.isOnline()) {
+			Toast.makeText(this, "You have no connection. Try again later.", Toast.LENGTH_LONG).show();
 			finish();
+		} else {
+			SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
+
+			int userid = prefs.getInt("userid", 0);
+			if (userid != 0) {
+				app.putState("userid", Integer.toString(userid));
+				Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
+				StartupActivity.this.startActivity(myIntent);
+				finish();
+			}
 		}
 	}
 }

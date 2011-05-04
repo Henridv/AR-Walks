@@ -11,11 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
-/**
- * save location
- * @author gbostoen
- *
- */
+
 public class SaveLocation extends FullscreenActivity {
 	Intent intent;
 
@@ -33,21 +29,19 @@ public class SaveLocation extends FullscreenActivity {
 		inflater.inflate(R.layout.berichten_menu, menu);
 		return true;
 	}
-	/**
-	 * button action
-	 * @param v
-	 */
-	public void go_klik(View v) {
-		EditText titel_edit = (EditText) findViewById(R.id.titel);
-		String titel = titel_edit.getText().toString();
-		EditText info_edit = (EditText) findViewById(R.id.info);
-		String info = info_edit.getText().toString();
+
+	public void saveLocation(View v) {
+		EditText name = (EditText) findViewById(R.id.loc_name);
+		String locName = name.getText().toString();
+		EditText descr = (EditText) findViewById(R.id.loc_descr);
+		String locDescr = descr.getText().toString();
+		
 		VopApplication app = (VopApplication) getApplicationContext();
 		Integer id = Integer.parseInt(app.getState().get("userid"));
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		Location loc = new Location(titel, info, lat, lng, alt, "default", id);
+		Location loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
 		DBWrapper.save(loc);
 		finish();
 	}

@@ -24,6 +24,15 @@ public class Marker implements Comparable<Marker> {
 	private float distance, max_distance, min_distance;
 	private float angle;
 
+	/**
+	 * @deprecated
+	 * @param title
+	 * @param info
+	 * @param longitude
+	 * @param latitude
+	 * @param altitude
+	 * @param context
+	 */
 	public Marker(String title, String info, double longitude, double latitude,
 			double altitude, Context context) {
 		this.title = title;
@@ -39,6 +48,18 @@ public class Marker implements Comparable<Marker> {
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, app.getAzimuth());
 	}
 
+	/**
+	 * @deprecated
+	 * @param title
+	 * @param info
+	 * @param longitude
+	 * @param latitude
+	 * @param altitude
+	 * @param lat_loc
+	 * @param lng_loc
+	 * @param alt_loc
+	 * @param azimuth
+	 */
 	public Marker(String title, String info, double longitude, double latitude,
 			double altitude, double lat_loc, double lng_loc, double alt_loc,
 			double azimuth) {
@@ -50,6 +71,13 @@ public class Marker implements Comparable<Marker> {
 		bereken_zichtbaarheid(lat_loc, lng_loc, alt_loc, azimuth);
 	}
 
+	/**
+	 * @deprecated
+	 * @param lat_loc
+	 * @param lng_loc
+	 * @param alt_loc
+	 * @param azimuth
+	 */
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double azimuth) {
 		double hoek;
@@ -130,10 +158,10 @@ public class Marker implements Comparable<Marker> {
 	}
 
 	@Override
-	public int compareTo(Marker another) {
-		if (this.afstand_marker > another.getAfstand_marker())
+	public int compareTo(Marker marker2) {
+		if (this.distance > marker2.getDistance())
 			return 1;
-		else if (this.afstand_marker > another.getAfstand_marker())
+		else if (this.distance < marker2.getDistance())
 			return -1;
 		else
 			return 0;
@@ -266,8 +294,7 @@ public class Marker implements Comparable<Marker> {
 
 	public boolean isVisible(float azimuth) {
 		if (distance > max_distance || distance < min_distance) return false;
-		else return true;
-//		else return Math.abs(angle - azimuth) < angle_of_view_horizontal;
+		else return Math.abs(angle - azimuth) < angle_of_view_horizontal;
 	}
 	
 	@Override
