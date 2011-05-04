@@ -142,7 +142,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 			startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
 			provider = locationManager.getBestProvider(criteria, true);
 		}
-		Location location = locationManager.getLastKnownLocation(provider);
+		Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		updateWithNewLocation(location);
 
 		RelativeLayout layout = new RelativeLayout(this);
@@ -151,7 +151,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		CameraOverlay cameraOverlay = new CameraOverlay(this);
 
 		// Info overlay
-		infoView = new InfoView(getApplicationContext());
+		infoView = new InfoView(this);
 
 		// openGL overlay
 		GLSurfaceView glSurfaceView = new GLSurfaceView(this);

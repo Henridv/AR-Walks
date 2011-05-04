@@ -1,12 +1,7 @@
 package com.vop.augumented;
 
-import com.vop.overlays.InfoView;
-import com.vop.overlays.OpenGLRenderer;
-import com.vop.overlays.CameraOverlay;
-import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +23,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.vop.overlays.CameraOverlay;
+import com.vop.overlays.InfoView;
+import com.vop.overlays.NewOpenGLRenderer;
+import com.vop.tools.VopApplication;
+
 public class AugmentedRealityTraject extends Activity {
 	static float r[];
-	OpenGLRenderer renderer;
+	Renderer renderer;
 	InfoView infoview;
 	double killfactor = 0.1;
 	
@@ -81,7 +82,7 @@ public class AugmentedRealityTraject extends Activity {
 		
 
 		// Creating and attaching the renderer.
-		renderer = new OpenGLRenderer(this);
+		renderer = new NewOpenGLRenderer(this);
 		view.setRenderer(renderer);
 		setContentView(layout);
 

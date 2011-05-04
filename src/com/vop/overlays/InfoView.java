@@ -1,13 +1,15 @@
 package com.vop.overlays;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.Paint.Align;
+import android.view.MotionEvent;
 import android.view.View;
+
 import com.vop.tools.VopApplication;
 
 /**
@@ -17,43 +19,37 @@ import com.vop.tools.VopApplication;
  *
  */
 public class InfoView extends View {
-	static private Context kontekst;
 	VopApplication app;
-
-//	private int dichtste_punt;
-
-//	public Marker getDichtste_punt() {
-//		if (dichtste_punt != -1) {
-//			VopApplication app = (VopApplication) kontekst;
-//			Marker POI[] = app.getPunten();
-//			return POI[dichtste_punt];
-//		} else
-//			return null;
-//	}
 
 	public InfoView(Context context) {
 		super(context);
-		app = (VopApplication) context;
-		kontekst = context;
+		app = (VopApplication) context.getApplicationContext();
 		app.construeer();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		// draw bearing background
+		Rect r = new Rect(10, 10, 50, 40);
+		Paint bgPaint = new Paint();
+		bgPaint.setARGB(100, 255, 255, 255);
+		canvas.drawRect(r, bgPaint);
+		
+		// draw bearing
 		Paint paint = new Paint();
-		paint.setColor(Color.RED);
+		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
 		paint.setTextSize(12);
-		canvas.drawText("" + (int)app.getAzimuth() + "°", getMeasuredWidth() / 10, getMeasuredHeight() / 10, paint);
-//		canvas.drawText("" + app.getLat(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 15, paint);
-//		canvas.drawText("" + app.getLng(), getMeasuredWidth() / 10, getMeasuredHeight() / 10 + 30, paint);
-		
+		paint.setTextAlign(Align.CENTER);
+		canvas.drawText("" + (int)app.getAzimuth() + "°", 30, 30, paint);
+
 		paint.setTextSize(20);
 		paint.setColor(Color.BLACK);
 		paint.setTextAlign(Align.CENTER);
-		Rect r = new Rect(0, getMeasuredHeight() - 80, getMeasuredWidth(), getMeasuredHeight());
-		Paint bgPaint = new Paint();
+		r = new Rect(0, getMeasuredHeight() - 80, getMeasuredWidth(), getMeasuredHeight());
 		bgPaint.setColor(Color.WHITE);
+		
+		// only show info about centered location
 		if (app.getCenter() != null) {
 			canvas.drawRect(r, bgPaint);
 			canvas.drawText(app.getCenter().getTitle(), getMeasuredWidth() / 2, getMeasuredHeight() - 30, paint);
@@ -61,4 +57,19 @@ public class InfoView extends View {
 			canvas.drawText("", getMeasuredWidth() / 2, getMeasuredHeight() - 30, paint);
 		}
 	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getY() >= getMeasuredHeight() - 30) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this.getContext());
+			dialog.setTitle(app.getCenter().getTitle());
+			dialog.setMessage(app.getCenter().getInfo());
+			dialog.show();
+		}
+		
+		// event was handled so we return true
+		return true;
+	}
+	
+	
 }
