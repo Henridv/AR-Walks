@@ -22,6 +22,14 @@ switch($action) {
 		}
 		break;
 		
+		case "profileFacebook":
+      $email = $_POST['email'];
+			$query = "
+				SELECT id, name, email, phone, password
+				FROM persons
+				WHERE email = '$email'";
+		break;
+		
 	case "adduser":
 		$name = $_POST['name'];
 		$email = $_POST['email'];
