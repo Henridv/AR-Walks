@@ -18,7 +18,11 @@ import android.widget.Toast;
 
 
 
-
+/**
+ * save a traject
+ * @author gbostoen
+ *
+ */
 public class TrajectOpslaan extends Activity {
 	VopApplication app;
 	Intent intent;
@@ -72,7 +76,10 @@ public class TrajectOpslaan extends Activity {
 		
 	}
 
-	//knop
+	/**
+	 * start/stop action
+	 * @param v
+	 */
 	public void startstop(View v) {
 		TextView veld1 = (TextView) findViewById(R.id.naam);
 		TextView veld2 = (TextView) findViewById(R.id.info);

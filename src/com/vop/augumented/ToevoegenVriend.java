@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -25,7 +24,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-
+/**
+ * add a friend
+ * @author gbostoen
+ *
+ */
 public class ToevoegenVriend extends FullscreenListActivity {
 	private VopApplication app;
 	private Activity activity;
@@ -145,7 +148,10 @@ public class ToevoegenVriend extends FullscreenListActivity {
 			}
 		});
 	}
-	public void updateNotAddedPersons(){
+	/**
+	 * update all persons in list
+	 */
+	private void updateNotAddedPersons(){
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van personen", true);
 		new Thread(new Runnable() {
 			

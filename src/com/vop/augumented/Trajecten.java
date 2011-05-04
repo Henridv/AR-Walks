@@ -24,7 +24,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
-
+/**
+ * tours
+ * @author gbostoen
+ *
+ */
 public class Trajecten extends FullscreenListActivity {
 	ArrayList<Traject> trajecten;
 	private Activity activity;

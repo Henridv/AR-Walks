@@ -24,7 +24,11 @@ import com.vop.overlays.punten_overlay;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
-
+/**
+ * preview of current traject
+ * @author gbostoen
+ *
+ */
 public class TrajectOpslaanZien extends MapActivity {
 	LocationManager locationManager;
 	String provider, context;
@@ -101,7 +105,9 @@ public class TrajectOpslaanZien extends MapActivity {
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
 	}
 	
-	//(BIJNA) AF - initialiseert locationlistening 
+	/**
+	 * location listening
+	 */
 	private void startLocationListening(){
 		this.context = Context.LOCATION_SERVICE;
 		this.locationManager = (LocationManager) getSystemService(this.context);
@@ -119,7 +125,9 @@ public class TrajectOpslaanZien extends MapActivity {
 		
 		//updateWithNewLocation(location);
 	}
-
+	/**
+	 * initialize map
+	 */
 	private void initMap(){
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		this.mapView.getOverlays().add(myLocationOverlay);
@@ -149,7 +157,11 @@ public class TrajectOpslaanZien extends MapActivity {
 		overlays.add(new WandelingOverlay2(listOfGeoPoints,color));
 		overlays.add(myLocationOverlay);
 		mapView.invalidate();
-	}		
+	}
+	/**
+	 * update traject on map when location changed
+	 * @param location
+	 */
 	private void updateWithNewLocation(Location location){
 		if(location!=null){
 

@@ -17,7 +17,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-
+/**
+ * start screen
+ * @author gbostoen
+ *
+ */
 public class StartupActivity extends FullscreenActivity {
 	static Context context;
 
@@ -39,7 +43,10 @@ public class StartupActivity extends FullscreenActivity {
 			}
 		});
 	}
-
+	/**
+	 * login action
+	 * @param v
+	 */
 	public void login(View v) {
 		final EditText emailbox = (EditText) findViewById(R.id.login_email);
 		final EditText password = (EditText) findViewById(R.id.login_password);
@@ -71,7 +78,10 @@ public class StartupActivity extends FullscreenActivity {
 			}
 		}.start();
 	}
-
+	/**
+	 * register action
+	 * @param v
+	 */
 	public void register(View v) {
 		EditText emailbox = (EditText) findViewById(R.id.login_email);
 		EditText password = (EditText) findViewById(R.id.login_password);

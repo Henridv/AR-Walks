@@ -10,7 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
-
+/**
+ * save location
+ * @author gbostoen
+ *
+ */
 public class SaveLocation extends FullscreenActivity {
 
 	@Override
@@ -26,7 +30,10 @@ public class SaveLocation extends FullscreenActivity {
 		inflater.inflate(R.layout.berichten_menu, menu);
 		return true;
 	}
-
+	/**
+	 * button action
+	 * @param v
+	 */
 	public void go_klik(View v) {
 		EditText titel_edit = (EditText) findViewById(R.id.titel);
 		String titel = titel_edit.getText().toString();

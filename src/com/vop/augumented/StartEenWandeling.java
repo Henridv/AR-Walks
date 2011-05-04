@@ -1,41 +1,34 @@
 package com.vop.augumented;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 import com.vop.overlays.WandelingOverlay2;
 import com.vop.overlays.punten_overlay;
-import com.vop.overlays.Marker;
 import com.vop.tools.DBWrapper;
-import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
-
+/**
+ * start a tour
+ * @author gbostoen
+ *
+ */
 public class StartEenWandeling extends MapActivity {
 	LocationManager locationManager;
 	String provider, context;
@@ -109,8 +102,9 @@ public class StartEenWandeling extends MapActivity {
 		
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
 	}
-	
-	//(BIJNA) AF - initialiseert locationlistening 
+	/**
+	 * location listening
+	 */
 	private void startLocationListening(){
 		this.context = Context.LOCATION_SERVICE;
 		this.locationManager = (LocationManager) getSystemService(this.context);
@@ -128,7 +122,9 @@ public class StartEenWandeling extends MapActivity {
 		
 		//updateWithNewLocation(location);
 	}
-
+	/**
+	 * initialize the map
+	 */
 	private void initMap(){
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		this.mapView.getOverlays().add(myLocationOverlay);
@@ -154,7 +150,11 @@ public class StartEenWandeling extends MapActivity {
 					
 		}
 		overlays.add(new WandelingOverlay2(listOfGeoPoints,color));
-	}		
+	}
+	/**
+	 * updating location
+	 * @param location
+	 */
 	private void updateWithNewLocation(Location location){
 		if(location!=null){
 

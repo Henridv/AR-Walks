@@ -66,6 +66,10 @@ public class DBWrapper {
 		}
 		return t;
 	}
+	/**
+	 * faster loading of tracks
+	 * @return track
+	 */
 	public static ArrayList<Traject> getTrajects2() {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -87,7 +91,11 @@ public class DBWrapper {
 		}
 		return t;
 	}
-
+	/**
+	 * get a certain track with id
+	 * @param walk_id
+	 * @return
+	 */
 	public static Traject getTraject(int walk_id) {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -143,6 +151,11 @@ public class DBWrapper {
 		}
 		return p;
 	}
+	/**
+	 * get list of not added persons on the network
+	 * @param personId
+	 * @return list of persons
+	 */
 	public static ArrayList<Person> getNotAddedPersons(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -163,7 +176,11 @@ public class DBWrapper {
 		}
 		return p;
 	}
-	
+	/**
+	 * get list of people who added you as a friend
+	 * @param personId
+	 * @return list of people you might know
+	 */
 	public static ArrayList<Person> getPeopelWhoAddedYou(int personId) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -184,7 +201,11 @@ public class DBWrapper {
 		}
 		return p;
 	}
-
+	/**
+	 * add a person as friend in the friends table
+	 * @param p1
+	 * @param p2
+	 */
 	public static void addFriend(int p1, int p2) {
 		String page = "persons.php";
 
@@ -284,6 +305,11 @@ public class DBWrapper {
 		}
 		return l;
 	}
+	/**
+	 * get locations of friends
+	 * @param personId
+	 * @return list of locations
+	 */
 	public static ArrayList<Location> getLocationsFriends(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -305,6 +331,11 @@ public class DBWrapper {
 		}
 		return l;
 	}
+	/**
+	 * get current location of friends
+	 * @param personId
+	 * @return
+	 */
 	public static ArrayList<Location> getLocationsHuidigVrienden(int personId) {
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -356,6 +387,13 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+	/**
+	 * save current location
+	 * @param pers_id
+	 * @param lat
+	 * @param lng
+	 * @param alt
+	 */
 	public static void saveHuidig(int pers_id,double lat,double lng,double alt) {
 		String page = "recentelocatie.php";
 
@@ -473,6 +511,11 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+	/**
+	 * delete a person as friend
+	 * @param id1
+	 * @param id2
+	 */
 	public static void deleteFriend(int id1,int id2) {
 		String page = "persons.php";
 

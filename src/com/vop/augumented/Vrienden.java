@@ -2,11 +2,8 @@ package com.vop.augumented;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -16,10 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
@@ -27,7 +22,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-
+/**
+ * friends
+ * @author gbostoen
+ *
+ */
 public class Vrienden extends FullscreenListActivity {
 
 	static ArrayList<Person> vrienden;
@@ -119,7 +118,9 @@ public class Vrienden extends FullscreenListActivity {
 		super.onResume();
 		updateFriends();
 	}
-	
+	/**
+	 * update current friends
+	 */
 	private void updateFriends(){
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
