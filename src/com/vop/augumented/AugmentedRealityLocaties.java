@@ -198,6 +198,10 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		locationManager.removeUpdates(locationListener);
 	}
 
+	/**
+	 * This method is called whenever the current location is updated
+	 * @param location
+	 */
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
 			app.setAlt(location.getAltitude());

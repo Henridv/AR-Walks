@@ -1,4 +1,4 @@
-	package com.vop.augumented;
+package com.vop.augumented;
 
 import java.util.ArrayList;
 
@@ -24,24 +24,27 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
+
 /**
  * tours
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class Trajecten extends FullscreenListActivity {
 	ArrayList<Traject> trajecten;
 	private Activity activity;
 	private String[] res;
-	
+	private ArrayAdapter<Traject> adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//updateWalks();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+		
 		activity = this;
+		
 		/**
 		 * Short click starts the walk in an augmented view
 		 */
@@ -72,17 +75,17 @@ public class Trajecten extends FullscreenListActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						if (items[item].equals("Walk")) {
-							Intent myIntent = new Intent(Trajecten.this,StartEenWandeling.class);
-							myIntent.putExtra("walk_id",trajecten.get(position).getId());
+							Intent myIntent = new Intent(Trajecten.this, StartEenWandeling.class);
+							myIntent.putExtra("walk_id", trajecten.get(position).getId());
 							Trajecten.this.startActivity(myIntent);
-							//Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 						} else if (items[item].equals("Edit")) {
 							Intent myIntent = new Intent(Trajecten.this, EditTraject.class);
 							myIntent.putExtra("walk_id", trajecten.get(position).getId());
 							startActivity(myIntent);
 						} else if (items[item].equals("Delete")) {
 							DBWrapper.delete(trajecten.get(position));
-							updateWalks();
+							trajecten.remove(position);
+							adapter.notifyDataSetChanged();
 						}
 					}
 				});
@@ -128,7 +131,7 @@ public class Trajecten extends FullscreenListActivity {
 	private void updateWalks() {
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van trajecten", true);
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				trajecten = DBWrapper.getTrajects2();
@@ -143,11 +146,12 @@ public class Trajecten extends FullscreenListActivity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						dialog.dismiss();
-						setListAdapter(new ArrayAdapter<String>(activity, R.layout.trajecten_layout, res));
+						adapter = new ArrayAdapter<Traject>(activity, R.layout.trajecten_layout, trajecten);
+						setListAdapter(adapter);
 					}
 				});
 			}
 		}).start();
-		
+
 	}
 }
