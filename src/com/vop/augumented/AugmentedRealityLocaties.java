@@ -1,6 +1,5 @@
 package com.vop.augumented;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -15,17 +14,14 @@ import android.location.LocationManager;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.vop.overlays.CameraOverlay;
 import com.vop.overlays.InfoView;
-import com.vop.overlays.Marker;
 import com.vop.overlays.NewOpenGLRenderer;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -139,7 +135,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		criteria.setCostAllowed(true);
 		criteria.setPowerRequirement(Criteria.POWER_HIGH);
 		provider = locationManager.getBestProvider(criteria, true);
-		
+
 		// Only continue when an enabled location provider is found
 		while (provider == null) {
 			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
@@ -209,38 +205,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 			app.setLat(location.getLatitude());
 			app.construeer();
 		}
-	}
-
-	@Override
-	public boolean onTouchEvent(final MotionEvent ev) {
-		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			// get position of touch
-			float posX = ev.getX();
-			float posY = ev.getY();
-
-			if ((posX >= 0 && posX <= infoView.getMeasuredWidth())
-					&& (posY >= 0 && posY <= 2 * infoView.getMeasuredHeight() / 10)) {
-				// we are in the square
-				Marker punt = infoView.getDichtste_punt();
-				if (punt != null) {
-					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-					vibrator.vibrate(60);
-					AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-					dialog.setTitle(punt.getTitle());
-					dialog.setMessage(punt.getInfo());
-					dialog.show();
-				}
-
-			} else {
-
-				// we are somewhere else on the canvas
-			}
-			break;
-		default:
-			break;
-		}
-		return true;
 	}
 
 	@Override

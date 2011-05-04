@@ -7,6 +7,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 import com.vop.overlays.Marker;
@@ -36,6 +38,7 @@ public class VopApplication extends Application {
 	private Person persoon;
 	private Marker POI[];
 	private ArrayList<Point> huidige_walk;
+	private Marker center;
 	
 	
 
@@ -231,6 +234,25 @@ public class VopApplication extends Application {
 					POI[i] = list.get(i);
 				}
 				setPunten(POI);	
+	}
+	
+	/**
+	 * check if user is online
+	 * @return TRUE if user is connected
+	 */
+	public boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+
+	}
+
+	public Marker getCenter() {
+		return center;
+	}
+
+	public void setCenter(Marker marker) {
+		this.center = marker;
+		
 	}
 
 }
