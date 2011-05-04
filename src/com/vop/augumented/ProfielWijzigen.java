@@ -2,10 +2,7 @@ package com.vop.augumented;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +12,11 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 
-
+/**
+ * change profile
+ * @author gbostoen
+ *
+ */
 public class ProfielWijzigen extends FullscreenActivity {
 
 	@Override
@@ -32,11 +33,17 @@ public class ProfielWijzigen extends FullscreenActivity {
 		newphonebox.setText(p.getPhone());
 		newemailbox.setText(p.getEmail());
 	}
-	
+	/**
+	 * back action
+	 * @param v
+	 */
 	public void go_back(View v) {
 		finish();
 	}
-	
+	/**
+	 * new profile action
+	 * @param v
+	 */
 	public void new_profile(View v) {
 		final ProgressDialog wachten = ProgressDialog.show(this, "",
 				"Editing profile. Please be patient...", true);

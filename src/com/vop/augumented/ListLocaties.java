@@ -16,6 +16,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 
+/**
+ * alternative list view of locations
+ * @author gbostoen
+ *
+ */
 public class ListLocaties extends FullscreenListActivity {
 	private Activity activity;
 	private String[] res;
@@ -42,7 +47,10 @@ public class ListLocaties extends FullscreenListActivity {
 			}
 		});
 	}
-	public void updateLocaties(){
+	/**
+	 * updating locations in new thread
+	 */
+	private void updateLocaties(){
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van punten", true);
 		new Thread(new Runnable() {
 			

@@ -11,7 +11,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-
+/**
+ * profile
+ * @author gbostoen
+ *
+ */
 public class Profiel extends FullscreenActivity {
 
 	@Override
@@ -20,12 +24,18 @@ public class Profiel extends FullscreenActivity {
 		setContentView(R.layout.profiel_layout);
 		updateProfile();
 	}
-
+	/**
+	 * edit action
+	 * @param v
+	 */
 	public void edit_klik(View v) {
 		Intent myIntent = new Intent(Profiel.this, ProfielWijzigen.class); 
 		Profiel.this.startActivity(myIntent);
 	}
-	
+	/**
+	 * password action
+	 * @param v
+	 */
 	public void password_klik(View v){
 		Intent myIntent = new Intent(Profiel.this, PaswoordWijzigen.class); 
 		Profiel.this.startActivity(myIntent);
@@ -45,7 +55,9 @@ public class Profiel extends FullscreenActivity {
 		super.onResume();
 		updateProfile();
 	}
-	
+	/**
+	 * method that updates profile
+	 */
 	private void updateProfile(){
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));

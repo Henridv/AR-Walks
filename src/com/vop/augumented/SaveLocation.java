@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 
-public class LocatieOpslaan extends FullscreenActivity {
+public class SaveLocation extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

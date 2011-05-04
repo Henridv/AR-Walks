@@ -1,12 +1,17 @@
 package com.vop.augumented;
 
 import com.vop.tools.VopApplication;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+/**
+ * save current location
+ * @author gbostoen
+ *
+ */
 
 public class HuidigeLocatieOpslaan extends Activity{
 	VopApplication app;
@@ -22,6 +27,10 @@ public class HuidigeLocatieOpslaan extends Activity{
 		else knop.setText("stop");
 		intent=new Intent(this,HuidigeLocatieService.class);
 	}
+	/**
+	 * action when button pressed
+	 * @param v
+	 */
 	public void go_klik(View v) {
 		if(app.getState().get("starthuidig") == null ){
 			knop.setText("stop");

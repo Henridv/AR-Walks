@@ -295,7 +295,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityLocaties.this, LocatieOpslaan.class);
+			myIntent = new Intent(AugmentedRealityLocaties.this, SaveLocation.class);
 			AugmentedRealityLocaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

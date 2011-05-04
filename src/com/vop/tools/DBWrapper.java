@@ -356,6 +356,24 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+	public static void saveHuidig(int pers_id,double lat,double lng,double alt) {
+		String page = "recentelocatie.php";
+
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("pers_id",Integer.toString(pers_id)));
+		postValues.add(new BasicNameValuePair("lat", Double.toString(lat)));
+		postValues.add(new BasicNameValuePair("lng", Double.toString(lng)));
+		postValues.add(new BasicNameValuePair("alt", Double.toString(alt)));
+
+		postValues.add(new BasicNameValuePair("action", "huidigelocatie"));
+
+		// Post data
+		try {
+			doPOST(page, postValues);
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+	}
 
 	/**
 	 * Save a person
@@ -409,6 +427,7 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+
 
 	/**
 	 * Delete a location

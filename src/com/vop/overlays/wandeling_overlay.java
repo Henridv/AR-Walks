@@ -2,7 +2,6 @@ package com.vop.overlays;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 
 import com.google.android.maps.GeoPoint;

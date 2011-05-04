@@ -2,10 +2,7 @@ package com.vop.augumented;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +12,11 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 
-
+/**
+ * changing password
+ * @author gbostoen
+ *
+ */
 public class PaswoordWijzigen extends FullscreenActivity {
 
 	@Override
@@ -26,11 +27,17 @@ public class PaswoordWijzigen extends FullscreenActivity {
 		int id = Integer.parseInt(app.getState().get("userid"));
 		Person p = DBWrapper.getProfile(id);
 	}
-	
+	/**
+	 * go back action
+	 * @param v
+	 */
 	public void go_back(View v) {
 		finish();
 	}
-	
+	/**
+	 * confirm action
+	 * @param v
+	 */
 	public void new_password(View v) {
 		final ProgressDialog wachten = ProgressDialog.show(this, "",
 				"Editing password. Please be patient...", true);

@@ -29,7 +29,6 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.overlays.WandelingOverlay2;
-import com.vop.overlays.wandeling_overlay;
 import com.vop.overlays.punten_overlay;
 import com.vop.overlays.Marker;
 import com.vop.tools.DBWrapper;

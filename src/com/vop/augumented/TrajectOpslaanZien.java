@@ -11,17 +11,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.vop.overlays.wandeling_overlay;
+import com.vop.overlays.WandelingOverlay2;
 import com.vop.overlays.punten_overlay;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
@@ -79,6 +77,7 @@ public class TrajectOpslaanZien extends MapActivity {
 		content = getApplicationContext();
 		super.onCreate(savedInstanceState);
 		app=(VopApplication) getApplicationContext();
+		int walk_id = getIntent().getIntExtra("walk_id", 0); //nummer van traject
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 							WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,15 +85,19 @@ public class TrajectOpslaanZien extends MapActivity {
 		
 		this.mapView =(MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
-		this.mapView.setBuiltInZoomControls(true);
-		this.mapView.setSatellite(false);
 		
-		//locatie updaten
+		this.mapView.setBuiltInZoomControls(true);
+		this.mapView.setSatellite(true);
+		this.mapView.setStreetView(true);
+		
+		draw = this.getResources().getDrawable(R.drawable.androidmarker);
+		
 		startLocationListening();
-		//initialiseren van de map
 		initMap();
-		//tekenen van het traject
-		drawPath(app.getHuidige_walk(), -65536);
+		//t = DBWrapper.getTraject(walk_id);
+
+		if(app.getHuidige_walk() != null) drawPath(app.getHuidige_walk(), -65536);
+		
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
 	}
 	
@@ -106,18 +109,21 @@ public class TrajectOpslaanZien extends MapActivity {
 		//eerst mag onze applicatie over de grootste resources beschikken, kunnen dit later altijd aanpassen
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(false);
+		criteria.setAltitudeRequired(true);
 		criteria.setBearingRequired(false);
 		criteria.setCostAllowed(false);
 		criteria.setPowerRequirement(Criteria.POWER_HIGH);	
 		
 		this.provider = this.locationManager.getBestProvider(criteria,true);
+		this.location = locationManager.getLastKnownLocation(provider);
+		
+		//updateWithNewLocation(location);
 	}
 
 	private void initMap(){
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		this.mapView.getOverlays().add(myLocationOverlay);
-		this.mapController.setZoom(17);
+		this.mapController.setZoom(19);
 		this.mapController.animateTo(new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6)));
 		this.itemizedoverlay = new punten_overlay(this.draw);
 		myLocationOverlay.enableMyLocation();
@@ -130,9 +136,8 @@ public class TrajectOpslaanZien extends MapActivity {
 	
 	@SuppressWarnings("unchecked") //door drawline functie in wandeling_overlay
 	private void drawPath(ArrayList<Point>listOfPoints, int color){
-		//ophalen van de overlays
+		
 		List overlays = this.mapView.getOverlays();
-		//verwijderen van de overlays
 		overlays.clear();
 		ArrayList<GeoPoint> listOfGeoPoints = new ArrayList<GeoPoint>();
 		for(int i=0;i<listOfPoints.size();i++){
@@ -141,26 +146,20 @@ public class TrajectOpslaanZien extends MapActivity {
 							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
 					
 		}
-		for(int j=0;j<(listOfGeoPoints.size()-1);j++){
-			overlays.add(new wandeling_overlay(listOfGeoPoints.get(j),listOfGeoPoints.get(j+1),color));
-			
-		}
-		//toevoegen van overlays aan de kaart
+		overlays.add(new WandelingOverlay2(listOfGeoPoints,color));
 		overlays.add(myLocationOverlay);
-		//kaart hertekenen(updates worden erop geplaatst moet standaard uitgevoerd worden)
 		mapView.invalidate();
-	}
-
+	}		
 	private void updateWithNewLocation(Location location){
 		if(location!=null){
+
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
 			
 			GeoPoint punt = new GeoPoint((int) (lat*1E6),(int)(lng*1E6));
 			this.mapController.animateTo(punt);
+			if(app.getHuidige_walk() != null) drawPath(app.getHuidige_walk(), -65536);
 			
-			//hertekenen om update te verkrijgen van huidig traject
-			drawPath(app.getHuidige_walk(), -65536);
 		}
 	}
 	

@@ -9,6 +9,11 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.data.Traject;
 
+/**
+ * change existing traject
+ * @author gbostoen
+ *
+ */
 public class EditTraject extends FullscreenActivity {
 	private Traject t;
 	private EditText te;
@@ -30,7 +35,10 @@ public class EditTraject extends FullscreenActivity {
 		te.setText(t.getName());
 		tv.setText(t.getName());
 	}
-	
+	/**
+	 * action when button is pressed
+	 * @param v
+	 */
 	public void saveWalk(View v) {
 		String name = te.getText().toString();
 		t.setName(name);

@@ -27,22 +27,26 @@ public class TrajectService extends Service {
 	Criteria criteria = new Criteria();   
 	
 	private final LocationListener locationListener = new LocationListener() {
+		@Override
 		public void onLocationChanged(Location location) {
 			updateWithNewLocation(location);
 		}
+		@Override
 		public void onProviderDisabled(String provider) {
 			updateWithNewLocation(null);
 		}
 
+		@Override
 		public void onProviderEnabled(String provider) {
 		}
 
+		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	};
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-				Toast.makeText(this, "nieuw punt", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(this, "nieuw punt", Toast.LENGTH_SHORT).show();
 				walk.add(new Point(location.getLatitude(), location.getLongitude(), location.getAltitude()));
 				app.setHuidige_walk(walk);
 			}

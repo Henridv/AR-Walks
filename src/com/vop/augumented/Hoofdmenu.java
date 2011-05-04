@@ -18,6 +18,12 @@ import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
+
+/**
+ * main menu
+ * @author gbostoen
+ *
+ */
 public class Hoofdmenu extends FullscreenActivity {
 	Vibrator vibrator;
 	VopApplication app;
@@ -167,7 +173,7 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, LocatieOpslaan.class);
+						Intent myIntent = new Intent(Hoofdmenu.this, SaveLocation.class);
 						Hoofdmenu.this.startActivity(myIntent);
 					}
 				});
@@ -275,7 +281,10 @@ public class Hoofdmenu extends FullscreenActivity {
 			finish();
 		}
 	}
-	
+	/**
+	 * log out action
+	 * @param v
+	 */
 	public void uitloggen_klik(View v) {
 		vibrator.vibrate(60);
 		app.putState("userid", null);
@@ -287,7 +296,7 @@ public class Hoofdmenu extends FullscreenActivity {
 		moveTaskToBack(true);
 		finish();
 	}
-
+	
 	// menu openen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

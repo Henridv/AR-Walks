@@ -7,9 +7,12 @@ import android.widget.TextView;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
-import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
-
+/**
+ * profile of friend
+ * @author gbostoen
+ *
+ */
 public class ProfielFriend extends FullscreenActivity {
 
 	@Override
@@ -34,7 +37,6 @@ public class ProfielFriend extends FullscreenActivity {
 	}
 	
 	private void updateProfile(){
-		VopApplication app = (VopApplication) getApplicationContext();
 		int id = getIntent().getIntExtra("profielid", 0);
 		Person p = DBWrapper.getProfile(id);
 		TextView naam = new TextView(this);

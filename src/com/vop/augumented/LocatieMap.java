@@ -1,9 +1,5 @@
 package com.vop.augumented;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -18,20 +14,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.overlays.Marker;
 import com.vop.overlays.punten_overlay;
-import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 
+/**
+ * locations projected on a map
+ * @author gbostoen
+ *
+ */
 public class LocatieMap extends MapActivity {
 	LocationManager locationManager;
 	String provider, context;
@@ -104,7 +102,10 @@ public class LocatieMap extends MapActivity {
 		locationManager.requestLocationUpdates(provider, minTime, minDistance,
 				locationListener);
 	}
-
+	/**
+	 * update current location on the map
+	 * @param location
+	 */
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
 			// Create the file
@@ -124,7 +125,9 @@ public class LocatieMap extends MapActivity {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	/**
+	 * initialize the map
+	 */
 	private void initMap() {
 		app.construeer();
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
@@ -150,7 +153,9 @@ public class LocatieMap extends MapActivity {
 		if (POI.length != 0)
 			mapView.getOverlays().add(itemizedoverlay);
 	}
-
+	/**
+	 * method to refresh map with the latest points
+	 */
 	private void refreshMap() {
 		app.construeer();
 		mapView.getOverlays().clear();
@@ -186,7 +191,7 @@ public class LocatieMap extends MapActivity {
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(LocatieMap.this, LocatieOpslaan.class);
+			myIntent = new Intent(LocatieMap.this, SaveLocation.class);
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:

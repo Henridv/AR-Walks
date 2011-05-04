@@ -48,7 +48,6 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class Locaties extends Activity {
@@ -270,7 +269,7 @@ public class Locaties extends Activity {
 			Marker.setAfstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(Locaties.this, LocatieOpslaan.class);
+			myIntent = new Intent(Locaties.this, SaveLocation.class);
 			Locaties.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
