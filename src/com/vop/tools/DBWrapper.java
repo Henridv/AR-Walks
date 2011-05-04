@@ -249,6 +249,24 @@ public class DBWrapper {
 		}
 		return p;
 	}
+	public static Person getProfile(String email) {
+		String page = "persons.php";
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("action", "profileFacebook"));
+		postValues.add(new BasicNameValuePair("email", email));
+
+		Person p = null;
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				p = new Person(json_data.getInt("id"), json_data.getString("name"), json_data.getString("phone"), json_data.getString("password"), json_data.getString("email"));
+			}
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return p;
+	}
 
 	/**
 	 * Get a single profile

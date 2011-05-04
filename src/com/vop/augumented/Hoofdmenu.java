@@ -318,4 +318,5 @@ public class Hoofdmenu extends FullscreenActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
 }

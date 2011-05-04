@@ -25,7 +25,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 /**
- * start a tour
+ * start a track
  * @author gbostoen
  *
  */

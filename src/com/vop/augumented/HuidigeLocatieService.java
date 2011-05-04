@@ -1,7 +1,6 @@
 package com.vop.augumented;
 
 
-import com.vop.tools.DBWrapper;
 import com.vop.tools.VopApplication;
 import android.app.Service;
 import android.content.Context;
@@ -42,7 +41,12 @@ public class HuidigeLocatieService extends Service {
 	};
 	private void updateWithNewLocation(Location location) {
 		if (location != null) {
-			DBWrapper.saveHuidig(Integer.parseInt(app.getState().get("userid")), location.getLatitude(), location.getLongitude(), location.getAltitude());					
+			//DBWrapper.saveHuidig(Integer.parseInt(app.getState().get("userid")), location.getLatitude(), location.getLongitude(), location.getAltitude());					
+			VopApplication app = (VopApplication) getApplicationContext();
+			app.setLat(location.getLatitude());
+			app.setAlt(location.getAltitude());
+			app.setLng(location.getLongitude());
+			
 		}
 	}
 	@Override
@@ -59,7 +63,7 @@ public class HuidigeLocatieService extends Service {
 		String provider = locationManager.getBestProvider(criteria, true);
 		Location location = locationManager.getLastKnownLocation(provider);
 		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, 100, 1,
+		locationManager.requestLocationUpdates(provider, 100, 2,
 				locationListener);
 		Log.e(TAG, "oncreate afgehandeld");
 		
