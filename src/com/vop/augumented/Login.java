@@ -5,9 +5,12 @@ import java.net.MalformedURLException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,11 +22,12 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
+import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -59,7 +63,7 @@ public class Login extends FullscreenActivity {
 			}
 		});
 	}
-	
+
 	public void facebook(View v) {
 		facebook.authorize(this, new String[] { "email", "read_stream",
 				"publish_stream" }, new DialogListener() {
@@ -68,28 +72,30 @@ public class Login extends FullscreenActivity {
 			public void onComplete(Bundle values) {
 				// TODO Auto-generated method stub
 				Bundle b = new Bundle();
-			    b.putString("access_token", facebook.getAccessToken());
-			    b.putString("query", "SELECT first_name,last_name,contact_email FROM user where uid=me()");
-			    try {
+				b.putString("access_token", facebook.getAccessToken());
+				b.putString("query", "SELECT first_name,last_name,contact_email FROM user where uid=me()");
+				try {
 					String myResult = Util.openUrl("https://api.facebook.com/method/fql.query", "GET", b);
 					try {
-						JSONArray json=new JSONArray(myResult);
-						String first_name = (String)json.getJSONObject(0).get("first_name");
-						String last_name = (String)json.getJSONObject(0).get("last_name");
-						String contact_email = (String)json.getJSONObject(0).get("contact_email");
+						JSONArray json = new JSONArray(myResult);
+						String first_name = (String) json.getJSONObject(0).get("first_name");
+						String last_name = (String) json.getJSONObject(0).get("last_name");
+						String contact_email = (String) json.getJSONObject(0).get("contact_email");
 						String phone = "unknown";
 						Person p = DBWrapper.getProfile(contact_email);
-						//Log.e("p==null", first_name+" "+last_name+" "+contact_email+" "+phone);
+						// Log.e("p==null",
+						// first_name+" "+last_name+" "+contact_email+" "+phone);
 						if (p == null) {
-							Log.e("p==null", first_name+" "+last_name+" "+contact_email+" "+phone);
+							Log.e("p==null", first_name + " " + last_name + " "
+									+ contact_email + " " + phone);
 						}
-						
+
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					Log.e("hello",myResult);
+
+					Log.e("hello", myResult);
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -183,11 +189,22 @@ public class Login extends FullscreenActivity {
 	protected void onResume() {
 		super.onResume();
 		VopApplication app = (VopApplication) getApplicationContext();
-		
+
 		// first check if the user is online
 		if (!app.isOnline()) {
-			Toast.makeText(this, "You have no connection. Try again later.", Toast.LENGTH_LONG).show();
-			finish();
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle("No connection");
+			dialog.setMessage("You have no connection to the internet. Please, try again later.");
+			dialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+
+				}
+			});
+			dialog.setCancelable(false);
+			dialog.show();
 		} else {
 			SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
 

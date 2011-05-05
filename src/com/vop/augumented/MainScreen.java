@@ -281,8 +281,6 @@ public class MainScreen extends FullscreenActivity {
 		app.stopLocationService();
 	}
 	
-
-
 	@Override
 	public void onStart() {
 		super.onStart();

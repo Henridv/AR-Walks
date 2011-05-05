@@ -151,7 +151,8 @@ public class VopApplication extends Application {
 	 */
 	public boolean isOnline() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+		if (cm.getActiveNetworkInfo() == null) return false;
+		else return cm.getActiveNetworkInfo().isConnectedOrConnecting();
 
 	}
 
@@ -250,8 +251,10 @@ public class VopApplication extends Application {
 	 * location throughout the lifetime of the application.
 	 */
 	public void startLocationService() {
-		locationServiceIntent = new Intent(this, LocationService.class);
-		startService(locationServiceIntent);
+		if (locationServiceIntent != null) {
+			locationServiceIntent = new Intent(this, LocationService.class);
+			startService(locationServiceIntent);
+		}
 	}
 
 	/**
