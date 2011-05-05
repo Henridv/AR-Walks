@@ -1,7 +1,7 @@
 package com.vop.tools.data;
 
 /**
- * Represents a person
+ * Represents a Person
  * 
  * @author henri
  * 

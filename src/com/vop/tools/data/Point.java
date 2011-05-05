@@ -1,5 +1,11 @@
 package com.vop.tools.data;
 
+/**
+ * Represents a Point (lat, lng, alt).
+ * 
+ * @author henridv
+ * 
+ */
 public class Point {
 	protected Double latitute;
 	protected Double longitude;
@@ -46,7 +52,7 @@ public class Point {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "{" + latitute + ", " + longitude + ", " + altitude + "}";

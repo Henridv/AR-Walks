@@ -30,7 +30,7 @@ import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 
 /**
- * start screen
+ * Login screen. This is the launcher activity.
  * 
  * @author gbostoen
  * 

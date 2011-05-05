@@ -2,6 +2,12 @@ package com.vop.tools;
 
 import java.util.EventListener;
 
+/**
+ * A listener interface for location updates
+ * 
+ * @author henridv
+ * 
+ */
 public interface LocationListener extends EventListener {
 
 	/**

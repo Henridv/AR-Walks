@@ -152,6 +152,5 @@ public class Trajecten extends FullscreenListActivity {
 				});
 			}
 		}).start();
-
 	}
 }

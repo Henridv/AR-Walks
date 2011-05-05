@@ -1,5 +1,11 @@
 package com.vop.tools.data;
 
+/**
+ * Represents a Location. It has a Point and extra information.
+ * 
+ * @author henridv
+ * 
+ */
 public class Location extends Point {
 	private final Integer id;
 	private String name;

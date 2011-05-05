@@ -121,6 +121,7 @@ public class LocationService extends Service {
 			updateWithNewLocation(locationGPS);
 
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 2, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 2, locationListener);
 	}
 
 	@Override
