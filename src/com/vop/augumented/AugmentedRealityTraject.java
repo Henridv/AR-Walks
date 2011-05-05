@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 
 import com.vop.overlays.CameraOverlay;
 import com.vop.overlays.InfoView;
-import com.vop.overlays.NewOpenGLRenderer;
+import com.vop.overlays.LocationRenderer;
 import com.vop.tools.VopApplication;
 
 public class AugmentedRealityTraject extends Activity {
@@ -82,7 +82,7 @@ public class AugmentedRealityTraject extends Activity {
 		
 
 		// Creating and attaching the renderer.
-		renderer = new NewOpenGLRenderer(this);
+		renderer = new LocationRenderer(this);
 		view.setRenderer(renderer);
 		setContentView(layout);
 

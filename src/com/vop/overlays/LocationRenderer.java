@@ -21,15 +21,15 @@ import com.vop.augumented.R;
 import com.vop.tools.VopApplication;
 
 /**
- * The OpenGLRenderer draws points on the screen
+ * An OpenGL Renderer that draws Points Of Interest on the screen
  * @author henridv
  *
  */
-public class NewOpenGLRenderer extends GLSurfaceView implements Renderer {
+public class LocationRenderer extends GLSurfaceView implements Renderer {
 	private Placemarker placemarker;
 	private VopApplication app;
 
-	public NewOpenGLRenderer(Context appContext) {
+	public LocationRenderer(Context appContext) {
 		super(appContext);
 		app = (VopApplication) appContext.getApplicationContext();
 		placemarker = new Placemarker();

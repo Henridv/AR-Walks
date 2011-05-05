@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.vop.overlays.CameraOverlay;
 import com.vop.overlays.InfoView;
-import com.vop.overlays.NewOpenGLRenderer;
+import com.vop.overlays.LocationRenderer;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
@@ -133,7 +133,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// Creating and attaching the renderer.
-		openGLRenderer = new NewOpenGLRenderer(this);
+		openGLRenderer = new LocationRenderer(this);
 		glSurfaceView.setRenderer(openGLRenderer);
 		setContentView(layout);
 	}
