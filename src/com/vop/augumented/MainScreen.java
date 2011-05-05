@@ -1,6 +1,5 @@
 package com.vop.augumented;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,13 +17,14 @@ import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 
-
 /**
- * main menu
+ * This is the main menu of the application. It contains six buttons, each with
+ * its submenus.
+ * 
  * @author gbostoen
- *
+ * 
  */
-public class Hoofdmenu extends FullscreenActivity {
+public class MainScreen extends FullscreenActivity {
 	Vibrator vibrator;
 	VopApplication app;
 	final ActionItem actie1 = new ActionItem();
@@ -32,29 +32,31 @@ public class Hoofdmenu extends FullscreenActivity {
 	final ActionItem actie3 = new ActionItem();
 	final ActionItem actie4 = new ActionItem();
 	final ActionItem actie5 = new ActionItem();
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (VopApplication) getApplicationContext();
+		app.startLocationService();
+		
 		setContentView(R.layout.hoofdmenu_layout);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		
-		//berichten
-		ImageButton berichten=(ImageButton) findViewById(R.id.berichten);
+
+		// berichten
+		ImageButton berichten = (ImageButton) findViewById(R.id.berichten);
 		berichten.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				QuickAction qa = new QuickAction(v);
-				
+
 				actie1.setTitle("lijst berichten");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(Hoofdmenu.this, "lijst berichten" , Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainScreen.this, "lijst berichten", Toast.LENGTH_SHORT).show();
 					}
 				});
 				actie2.setTitle("AR berichten");
@@ -62,7 +64,7 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(Hoofdmenu.this, "AR berichten" , Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainScreen.this, "AR berichten", Toast.LENGTH_SHORT).show();
 					}
 				});
 				actie3.setTitle("map berichten");
@@ -70,7 +72,7 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(Hoofdmenu.this, "map berichten" , Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainScreen.this, "map berichten", Toast.LENGTH_SHORT).show();
 					}
 				});
 				actie4.setTitle("bericht maken");
@@ -78,7 +80,7 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(Hoofdmenu.this, "bericht maken" , Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainScreen.this, "bericht maken", Toast.LENGTH_SHORT).show();
 					}
 				});
 				qa.addActionItem(actie1);
@@ -89,22 +91,22 @@ public class Hoofdmenu extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		//trajecten
-		ImageButton trajecten=(ImageButton) findViewById(R.id.trajecten);
+		// trajecten
+		ImageButton trajecten = (ImageButton) findViewById(R.id.trajecten);
 		trajecten.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				QuickAction qa = new QuickAction(v);
-				
+
 				actie1.setTitle("lijst trajecten");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, Trajecten.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, Trajecten.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie2.setTitle("toevoegen traject");
@@ -112,8 +114,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaan.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, TrajectOpslaan.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie3.setTitle("huidig traject");
@@ -121,8 +123,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, TrajectOpslaanZien.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, TrajectOpslaanZien.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				qa.addActionItem(actie1);
@@ -132,22 +134,22 @@ public class Hoofdmenu extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		//locaties
-		ImageButton locaties=(ImageButton) findViewById(R.id.locaties);
+		// locaties
+		ImageButton locaties = (ImageButton) findViewById(R.id.locaties);
 		locaties.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				QuickAction qa = new QuickAction(v);
-				
+
 				actie1.setTitle("AR locaties");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, AugmentedRealityLocaties.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, AugmentedRealityLocaties.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie2.setTitle("lijst locaties");
@@ -155,8 +157,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, ListLocaties.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, ListLocaties.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie3.setTitle("map locaties");
@@ -164,8 +166,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, LocatieMap.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, LocatieMap.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie4.setTitle("toevoegen locaties");
@@ -173,8 +175,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, SaveLocation.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, SaveLocation.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie5.setTitle("huidige locatie bijhouden");
@@ -182,8 +184,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, HuidigeLocatieOpslaan.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, HuidigeLocatieOpslaan.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				qa.addActionItem(actie1);
@@ -195,22 +197,22 @@ public class Hoofdmenu extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		//vrienden
-		ImageButton vrienden=(ImageButton) findViewById(R.id.vrienden);
+		// vrienden
+		ImageButton vrienden = (ImageButton) findViewById(R.id.vrienden);
 		vrienden.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				QuickAction qa = new QuickAction(v);
-				
+
 				actie1.setTitle("lijst vrienden");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, Vrienden.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, Vrienden.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie2.setTitle("vriend toevoegen");
@@ -218,8 +220,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, ToevoegenVriend.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, ToevoegenVriend.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				qa.addActionItem(actie1);
@@ -228,22 +230,22 @@ public class Hoofdmenu extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		//profiel
-		ImageButton profiel=(ImageButton) findViewById(R.id.profiel);
+		// profiel
+		ImageButton profiel = (ImageButton) findViewById(R.id.profiel);
 		profiel.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				QuickAction qa = new QuickAction(v);
-				
+
 				actie1.setTitle("profiel");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, Profiel.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, Profiel.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie2.setTitle("profiel bewerken");
@@ -251,8 +253,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, ProfielWijzigen.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, ProfielWijzigen.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				actie3.setTitle("wachtwoord wijzigen");
@@ -260,8 +262,8 @@ public class Hoofdmenu extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Hoofdmenu.this, PaswoordWijzigen.class);
-						Hoofdmenu.this.startActivity(myIntent);
+						Intent myIntent = new Intent(MainScreen.this, PaswoordWijzigen.class);
+						MainScreen.this.startActivity(myIntent);
 					}
 				});
 				qa.addActionItem(actie1);
@@ -270,8 +272,16 @@ public class Hoofdmenu extends FullscreenActivity {
 				qa.setAnimStyle(QuickAction.ANIM_AUTO);
 				qa.show();
 			}
-		});		
+		});
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		app.stopLocationService();
+	}
+	
+
 
 	@Override
 	public void onStart() {
@@ -281,8 +291,10 @@ public class Hoofdmenu extends FullscreenActivity {
 			finish();
 		}
 	}
+
 	/**
 	 * log out action
+	 * 
 	 * @param v
 	 */
 	public void uitloggen_klik(View v) {
@@ -296,7 +308,7 @@ public class Hoofdmenu extends FullscreenActivity {
 		moveTaskToBack(true);
 		finish();
 	}
-	
+
 	// menu openen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -310,13 +322,13 @@ public class Hoofdmenu extends FullscreenActivity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.optie_1:
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"u selecteerde:" + item.getTitle(), Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getApplicationContext(), "u selecteerde:"
+					+ item.getTitle(), Toast.LENGTH_SHORT);
 			toast.show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 }

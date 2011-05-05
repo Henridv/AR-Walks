@@ -13,16 +13,16 @@
 
     <application android:icon="@drawable/appicon" android:label="@string/app_name" android:name="com.vop.tools.VopApplication">
         <service android:enabled="true" android:name="TrajectService"/>
-        <service android:enabled="true" android:name="HuidigeLocatieService"/>
+        <service android:enabled="true" android:name="LocationService"/>
         <activity android:icon="@drawable/appicon" 
-        android:name="StartupActivity" 
+        android:name="Login" 
         android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:name="Hoofdmenu"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="MainScreen"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
         <activity android:name="Berichten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
         <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar" android:configChanges="keyboardHidden|orientation"></activity>

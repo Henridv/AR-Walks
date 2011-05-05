@@ -7,10 +7,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
@@ -18,12 +14,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.vop.overlays.CameraOverlay;
 import com.vop.overlays.InfoView;
 import com.vop.overlays.NewOpenGLRenderer;
 import com.vop.tools.FullscreenActivity;
+import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 
 /**
@@ -32,32 +28,15 @@ import com.vop.tools.VopApplication;
  * @author henridv
  * 
  */
-public class AugmentedRealityLocaties extends FullscreenActivity {
+public class AugmentedRealityLocaties extends FullscreenActivity implements LocationListener {
 	float[] accelerometerValues = null;
 	float[] magneticFieldValues = null;
 	Renderer openGLRenderer;
 	InfoView infoView;
 	VopApplication app;
 	SensorManager sensorManager;
-	LocationManager locationManager;
 	Sensor accelSensor;
 	Sensor magneticSensor;
-	String provider;
-
-	private final LocationListener locationListener = new LocationListener() {
-		public void onLocationChanged(Location location) {
-			updateWithNewLocation(location);
-		}
-
-		public void onProviderDisabled(String provider) {
-		}
-
-		public void onProviderEnabled(String provider) {
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}
-	};
 
 	final SensorEventListener sensorListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
@@ -126,24 +105,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 
 		app = (VopApplication) getApplicationContext();
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setAltitudeRequired(true);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_HIGH);
-		provider = locationManager.getBestProvider(criteria, true);
-
-		// Only continue when an enabled location provider is found
-		while (provider == null) {
-			Toast.makeText(this, "Please, turn on GPS", Toast.LENGTH_SHORT).show();
-			startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
-			provider = locationManager.getBestProvider(criteria, true);
-		}
-		Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		updateWithNewLocation(location);
 
 		RelativeLayout layout = new RelativeLayout(this);
 
@@ -183,9 +144,9 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		locationManager.requestLocationUpdates(provider, 2, 10, locationListener);
 		sensorManager.registerListener(sensorListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
 		sensorManager.registerListener(sensorListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST);
+		app.addLocationListener(this);
 	}
 
 	/**
@@ -195,20 +156,7 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 	protected void onStop() {
 		super.onStop();
 		sensorManager.unregisterListener(sensorListener);
-		locationManager.removeUpdates(locationListener);
-	}
-
-	/**
-	 * This method is called whenever the current location is updated
-	 * @param location
-	 */
-	private void updateWithNewLocation(Location location) {
-		if (location != null) {
-			app.setAlt(location.getAltitude());
-			app.setLng(location.getLongitude());
-			app.setLat(location.getLatitude());
-			app.construeer();
-		}
+		app.removeLocationListener(this);
 	}
 
 	@Override
@@ -276,5 +224,10 @@ public class AugmentedRealityLocaties extends FullscreenActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void locationUpdated() {
+		app.construeer();
 	}
 }

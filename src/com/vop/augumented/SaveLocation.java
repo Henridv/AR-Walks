@@ -19,7 +19,7 @@ public class SaveLocation extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locatie_opslaan_layout);
-		intent=new Intent(this,HuidigeLocatieService.class);
+		intent=new Intent(this,LocationService.class);
 	}
 
 	// menu openen

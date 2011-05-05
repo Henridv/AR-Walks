@@ -25,7 +25,7 @@ public class HuidigeLocatieOpslaan extends Activity{
 		knop = (Button) findViewById(R.id.widget27) ;
 		if(app.getState().get("starthuidig") ==null) knop.setText("start");
 		else knop.setText("stop");
-		intent=new Intent(this,HuidigeLocatieService.class);
+		intent=new Intent(this,LocationService.class);
 	}
 	/**
 	 * action when button pressed

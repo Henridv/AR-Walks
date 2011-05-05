@@ -35,7 +35,7 @@ import com.vop.tools.data.Person;
  * @author gbostoen
  * 
  */
-public class StartupActivity extends FullscreenActivity {
+public class Login extends FullscreenActivity {
 	static Context context;
 	Facebook facebook = new Facebook("128192193922051");
 	Activity activity;
@@ -59,6 +59,7 @@ public class StartupActivity extends FullscreenActivity {
 			}
 		});
 	}
+	
 	public void facebook(View v) {
 		facebook.authorize(this, new String[] { "email", "read_stream",
 				"publish_stream" }, new DialogListener() {
@@ -140,8 +141,8 @@ public class StartupActivity extends FullscreenActivity {
 					editor.putInt("userid", p.getId());
 					editor.commit();
 
-					Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
-					StartupActivity.this.startActivity(myIntent);
+					Intent myIntent = new Intent(Login.this, MainScreen.class);
+					Login.this.startActivity(myIntent);
 					dialog.dismiss();
 					finish();
 				} else {
@@ -193,8 +194,8 @@ public class StartupActivity extends FullscreenActivity {
 			int userid = prefs.getInt("userid", 0);
 			if (userid != 0) {
 				app.putState("userid", Integer.toString(userid));
-				Intent myIntent = new Intent(StartupActivity.this, Hoofdmenu.class);
-				StartupActivity.this.startActivity(myIntent);
+				Intent myIntent = new Intent(Login.this, MainScreen.class);
+				Login.this.startActivity(myIntent);
 				finish();
 			}
 		}
