@@ -1,5 +1,6 @@
 package com.vop.augumented;
 
+import com.vop.services.LocationService;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;

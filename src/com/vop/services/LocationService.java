@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.services;
 
 import android.app.Service;
 import android.content.Context;
@@ -37,6 +37,7 @@ public class LocationService extends Service {
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	};
+	private Location currentBestLocation;
 
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
 
@@ -126,6 +127,7 @@ public class LocationService extends Service {
 
 	@Override
 	public void onDestroy() {
+		locationManager.removeUpdates(locationListener);
 		Toast.makeText(this, "Location service stopped", Toast.LENGTH_SHORT).show();
 	}
 
@@ -142,7 +144,8 @@ public class LocationService extends Service {
 	 *            New location
 	 */
 	private void updateWithNewLocation(Location location) {
-		if (location != null) {
+		if (location != null && isBetterLocation(location, currentBestLocation)) {
+			this.currentBestLocation = location;
 			VopApplication app = (VopApplication) getApplicationContext();
 			app.setLocation(location.getLatitude(), location.getLongitude(), location.getAltitude());
 		}

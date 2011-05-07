@@ -211,7 +211,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, Vrienden.class);
+						Intent myIntent = new Intent(MainScreen.this, Friends.class);
 						MainScreen.this.startActivity(myIntent);
 					}
 				});

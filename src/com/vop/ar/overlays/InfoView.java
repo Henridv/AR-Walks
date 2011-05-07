@@ -1,4 +1,4 @@
-package com.vop.overlays;
+package com.vop.ar.overlays;
 
 import android.app.AlertDialog;
 import android.content.Context;

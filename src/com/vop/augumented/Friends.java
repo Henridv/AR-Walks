@@ -27,7 +27,7 @@ import com.vop.tools.data.Person;
  * @author gbostoen
  *
  */
-public class Vrienden extends FullscreenListActivity {
+public class Friends extends FullscreenListActivity {
 
 	static ArrayList<Person> vrienden;
 	private VopApplication app;
@@ -60,9 +60,9 @@ public class Vrienden extends FullscreenListActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Vrienden.this,ProfielFriend.class);
+						Intent myIntent = new Intent(Friends.this,ProfielFriend.class);
 						myIntent.putExtra("profielid",vrienden.get(positie).getId());
-						Vrienden.this.startActivity(myIntent);
+						Friends.this.startActivity(myIntent);
 					}
 				});
 				actie2.setTitle("bericht verzenden");
@@ -70,7 +70,7 @@ public class Vrienden extends FullscreenListActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(Vrienden.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						Toast.makeText(Friends.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 					}
 				});
 				actie3.setTitle("vriend verwijderen");

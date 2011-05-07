@@ -11,8 +11,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
-import com.vop.augumented.LocationService;
-import com.vop.overlays.Marker;
+import com.vop.ar.overlays.Marker;
+import com.vop.services.LocationService;
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Point;
@@ -251,7 +251,7 @@ public class VopApplication extends Application {
 	 * location throughout the lifetime of the application.
 	 */
 	public void startLocationService() {
-		if (locationServiceIntent != null) {
+		if (locationServiceIntent == null) {
 			locationServiceIntent = new Intent(this, LocationService.class);
 			startService(locationServiceIntent);
 		}

@@ -1,5 +1,6 @@
 package com.vop.augumented;
 
+import com.vop.services.LocationService;
 import com.vop.tools.VopApplication;
 import android.app.Activity;
 import android.content.Intent;

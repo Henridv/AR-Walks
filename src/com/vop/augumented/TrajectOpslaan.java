@@ -1,5 +1,6 @@
 package com.vop.augumented;
 
+import com.vop.services.TrackService;
 import com.vop.tools.VopApplication;
 
 import android.app.Activity;
@@ -72,7 +73,7 @@ public class TrajectOpslaan extends Activity {
 		knop = (Button) findViewById(R.id.startstop) ;
 		if(app.getState().get("startstop") ==null) knop.setText("start");
 		else knop.setText("stop");
-		intent=new Intent(this,TrajectService.class);
+		intent=new Intent(this,TrackService.class);
 		
 	}
 

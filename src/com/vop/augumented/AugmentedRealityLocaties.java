@@ -15,9 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
-import com.vop.overlays.CameraOverlay;
-import com.vop.overlays.InfoView;
-import com.vop.overlays.LocationRenderer;
+import com.vop.ar.overlays.CameraOverlay;
+import com.vop.ar.overlays.InfoView;
+import com.vop.ar.overlays.LocationRenderer;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
