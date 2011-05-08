@@ -30,8 +30,8 @@
         <activity android:name="com.vop.ar.LocatieMap"></activity>
         <uses-library android:name="com.google.android.maps"/>
         <activity android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar" android:name="com.vop.ar.SaveLocation"></activity>
-        <activity android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:name="com.vop.ar.ListLocaties"></activity>
-        <activity android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" android:name="com.vop.ar.AugmentedRealityLocaties"></activity>
+        <activity android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:name="ListLocaties"></activity>
+        <activity android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" android:name="com.vop.ar.AugmentedReality"></activity>
         <activity android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:name="com.vop.ar.TrajectOpslaan"></activity>
         <activity android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar" android:name="com.vop.ar.EditTraject"></activity>
         <activity android:name="com.vop.arwalks.EditProfile" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>

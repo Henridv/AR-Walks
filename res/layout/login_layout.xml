@@ -25,7 +25,8 @@
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
 			android:singleLine="true"
-			android:hint="Email address">
+			android:hint="Email address"
+			android:inputType="textEmailAddress">
 		</EditText>
 	</LinearLayout>
 	<LinearLayout
@@ -56,7 +57,7 @@
 		</Button>
 		<Button
 		android:id="@+id/facebook"
-		android:text="facebook"
+		android:text="Use Facebook login"
 		android:onClick="facebook" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 	</LinearLayout>

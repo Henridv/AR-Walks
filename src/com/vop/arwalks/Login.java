@@ -6,18 +6,14 @@ import java.net.MalformedURLException;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
@@ -28,7 +24,6 @@ import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 import com.facebook.android.Facebook.DialogListener;
-import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -41,16 +36,13 @@ import com.vop.tools.data.Person;
  * 
  */
 public class Login extends FullscreenActivity {
-	static Context context;
 	Facebook facebook = new Facebook("128192193922051");
-	Activity activity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.startupactivity_layout);
-		context = getApplicationContext();
-		activity = this;
+		setContentView(R.layout.login_layout);
+
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -137,7 +129,7 @@ public class Login extends FullscreenActivity {
 		final EditText password = (EditText) findViewById(R.id.login_password);
 
 		final VopApplication app = (VopApplication) getApplicationContext();
-		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inloggen. Even geduld...", true);
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Logging in. Please wait...", true);
 		new Thread() {
 			public void run() {
 				Person p = DBWrapper.getProfile(emailbox.getText().toString(), password.getText().toString());
@@ -156,7 +148,7 @@ public class Login extends FullscreenActivity {
 					dialog.dismiss();
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getApplicationContext(), "Credentials not valid!", Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(), "Credentials are not valid.", Toast.LENGTH_LONG).show();
 						}
 					});
 				}
@@ -177,13 +169,6 @@ public class Login extends FullscreenActivity {
 		myIntent.putExtra("email", emailbox.getText().toString());
 		myIntent.putExtra("password", password.getText().toString());
 		startActivity(myIntent);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.hoofdmenu_menu, menu);
-		return true;
 	}
 
 	@Override

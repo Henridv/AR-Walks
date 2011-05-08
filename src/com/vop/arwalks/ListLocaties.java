@@ -1,4 +1,4 @@
-package com.vop.ar;
+package com.vop.arwalks;
 
 import java.util.ArrayList;
 
@@ -12,28 +12,28 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 
 /**
  * alternative list view of locations
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class ListLocaties extends FullscreenListActivity {
 	private Activity activity;
 	private String[] res;
 	ArrayList<com.vop.tools.data.Location> loc;
 	VopApplication app;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		app=(VopApplication) getApplicationContext();
+		app = (VopApplication) getApplicationContext();
 		activity = this;
 		updateLocaties();
 
@@ -48,29 +48,31 @@ public class ListLocaties extends FullscreenListActivity {
 			}
 		});
 	}
+
 	/**
 	 * updating locations in new thread
 	 */
-	private void updateLocaties(){
+	private void updateLocaties() {
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van punten", true);
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				loc = DBWrapper.getLocations(Integer.parseInt(app.getState().get("userid")));
 				res = new String[loc.size()];
-				for(int i = 0;i<res.length;i++) res[i] = loc.get(i).getName();
-				
+				for (int i = 0; i < res.length; i++)
+					res[i] = loc.get(i).getName();
+
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						dialog.dismiss();
 						setListAdapter(new ArrayAdapter<String>(activity, R.layout.trajecten_layout, res));
-						
+
 					}
 				});
 			}
 		}).start();
-		
+
 	}
 }

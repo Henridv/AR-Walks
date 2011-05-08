@@ -23,6 +23,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.ar.overlays.Marker;
 import com.vop.ar.overlays.punten_overlay;
+import com.vop.arwalks.ListLocaties;
 import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 
@@ -188,7 +189,7 @@ public class LocatieMap extends MapActivity {
 		vibrator.vibrate(60);
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
-			Intent myIntent = new Intent(LocatieMap.this, AugmentedRealityLocaties.class);
+			Intent myIntent = new Intent(LocatieMap.this, AugmentedReality.class);
 			LocatieMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:

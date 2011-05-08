@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import com.vop.ar.overlays.CameraOverlay;
 import com.vop.ar.overlays.InfoView;
 import com.vop.ar.overlays.LocationRenderer;
+import com.vop.ar.overlays.TrackRenderer;
+import com.vop.arwalks.ListLocaties;
 import com.vop.arwalks.R;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.LocationListener;
@@ -29,7 +31,7 @@ import com.vop.tools.VopApplication;
  * @author henridv
  * 
  */
-public class AugmentedRealityLocaties extends FullscreenActivity implements LocationListener {
+public class AugmentedReality extends FullscreenActivity implements LocationListener {
 	float[] accelerometerValues = null;
 	float[] magneticFieldValues = null;
 	Renderer openGLRenderer;
@@ -104,6 +106,8 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		String type = getIntent().getExtras().get("type").toString();
+		if (type == null) type = "locations";
 
 		app = (VopApplication) getApplicationContext();
 
@@ -125,7 +129,6 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 
 		// adding overlays to the screen
 		layout.addView(cameraOverlay);
-		layout.addView(infoView);
 		layout.addView(glSurfaceView);
 
 		// define sensors
@@ -134,7 +137,12 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// Creating and attaching the renderer.
-		openGLRenderer = new LocationRenderer(this);
+		if (type.equals("locations")) {
+			openGLRenderer = new LocationRenderer(this);
+			layout.addView(infoView);
+		} else if (type.equals("track")) {
+			openGLRenderer = new TrackRenderer(this);
+		}
 		glSurfaceView.setRenderer(openGLRenderer);
 		setContentView(layout);
 	}
@@ -172,8 +180,8 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedRealityLocaties.this, LocatieMap.class);
-			AugmentedRealityLocaties.this.startActivity(myIntent);
+			Intent myIntent = new Intent(AugmentedReality.this, LocatieMap.class);
+			AugmentedReality.this.startActivity(myIntent);
 			finish();
 			return true;
 		case R.id.km_1:
@@ -212,15 +220,15 @@ public class AugmentedRealityLocaties extends FullscreenActivity implements Loca
 			app.setMax_afstand(500);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(AugmentedRealityLocaties.this, SaveLocation.class);
-			AugmentedRealityLocaties.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedReality.this, SaveLocation.class);
+			AugmentedReality.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
 			app.construeer();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(AugmentedRealityLocaties.this, ListLocaties.class);
-			AugmentedRealityLocaties.this.startActivity(myIntent);
+			myIntent = new Intent(AugmentedReality.this, ListLocaties.class);
+			AugmentedReality.this.startActivity(myIntent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

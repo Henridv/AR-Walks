@@ -261,8 +261,10 @@ public class VopApplication extends Application {
 	 * Stop the location service.
 	 */
 	public void stopLocationService() {
-		if (locationServiceIntent != null)
+		if (locationServiceIntent != null) {
 			stopService(locationServiceIntent);
+			locationServiceIntent = null;
+		}
 	}
 
 	public void addLocationListener(LocationListener locationListener) {
