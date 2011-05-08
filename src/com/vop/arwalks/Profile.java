@@ -1,25 +1,47 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.TextView;
 
+import com.vop.ar.PaswoordWijzigen;
+import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
+import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 /**
- * profile of friend
+ * profile
  * @author gbostoen
  *
  */
-public class ProfielFriend extends FullscreenActivity {
+public class Profile extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.profielfriendlayout);
+		setContentView(R.layout.profiel_layout);
 		updateProfile();
+	}
+	/**
+	 * edit action
+	 * @param v
+	 */
+	public void edit_klik(View v) {
+		Intent myIntent = new Intent(Profile.this, EditProfile.class); 
+		Profile.this.startActivity(myIntent);
+	}
+	/**
+	 * password action
+	 * @param v
+	 */
+	public void password_klik(View v){
+		Intent myIntent = new Intent(Profile.this, PaswoordWijzigen.class); 
+		Profile.this.startActivity(myIntent);
+		
 	}
 
 	// menu openen
@@ -35,9 +57,12 @@ public class ProfielFriend extends FullscreenActivity {
 		super.onResume();
 		updateProfile();
 	}
-	
+	/**
+	 * method that updates profile
+	 */
 	private void updateProfile(){
-		int id = getIntent().getIntExtra("profielid", 0);
+		VopApplication app = (VopApplication) getApplicationContext();
+		int id = Integer.parseInt(app.getState().get("userid"));
 		Person p = DBWrapper.getProfile(id);
 		TextView naam = new TextView(this);
 		naam=(TextView)findViewById(R.id.profname); 

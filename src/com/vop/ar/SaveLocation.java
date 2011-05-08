@@ -1,5 +1,6 @@
-package com.vop.augumented;
+package com.vop.ar;
 
+import com.vop.arwalks.R;
 import com.vop.services.LocationService;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;

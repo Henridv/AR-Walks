@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
 
 import android.app.ProgressDialog;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
@@ -17,7 +18,7 @@ import com.vop.tools.data.Person;
  * @author gbostoen
  *
  */
-public class ProfielWijzigen extends FullscreenActivity {
+public class EditProfile extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

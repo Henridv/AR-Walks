@@ -1,5 +1,6 @@
-package com.vop.augumented;
+package com.vop.ar;
 
+import com.vop.arwalks.R;
 import com.vop.services.TrackService;
 import com.vop.tools.VopApplication;
 

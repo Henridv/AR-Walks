@@ -1,6 +1,6 @@
 package com.vop.popup;
 
-import com.vop.augumented.R;
+import com.vop.arwalks.R;
 
 import android.content.Context;
 

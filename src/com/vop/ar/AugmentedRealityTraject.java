@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.ar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import com.vop.ar.overlays.CameraOverlay;
 import com.vop.ar.overlays.InfoView;
 import com.vop.ar.overlays.LocationRenderer;
+import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 
 public class AugmentedRealityTraject extends Activity {

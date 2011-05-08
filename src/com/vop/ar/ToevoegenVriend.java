@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.ar;
 
 import java.util.ArrayList;
 
@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.vop.arwalks.R;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.DBWrapper;

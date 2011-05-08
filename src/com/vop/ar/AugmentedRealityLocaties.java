@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.ar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.vop.ar.overlays.CameraOverlay;
 import com.vop.ar.overlays.InfoView;
 import com.vop.ar.overlays.LocationRenderer;
+import com.vop.arwalks.R;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;

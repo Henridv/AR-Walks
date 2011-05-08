@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,6 +28,7 @@ import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 import com.facebook.android.Facebook.DialogListener;
+import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;

@@ -1,7 +1,8 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
 import android.os.Bundle;
 
+import com.vop.arwalks.R;
 import com.vop.tools.FullscreenActivity;
 
 public class Messages extends FullscreenActivity {

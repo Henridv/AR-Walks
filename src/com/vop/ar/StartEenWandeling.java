@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.ar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.vop.ar.overlays.WandelingOverlay2;
 import com.vop.ar.overlays.punten_overlay;
+import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;

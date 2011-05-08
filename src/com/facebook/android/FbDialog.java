@@ -38,7 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.android.Facebook.DialogListener;
-import com.vop.augumented.R;
+import com.vop.arwalks.R;
 
 public class FbDialog extends Dialog {
 

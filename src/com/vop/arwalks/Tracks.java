@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.vop.ar.EditTraject;
+import com.vop.ar.StartEenWandeling;
+import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
@@ -31,7 +34,7 @@ import com.vop.tools.data.Traject;
  * @author gbostoen
  * 
  */
-public class Trajecten extends FullscreenListActivity {
+public class Tracks extends FullscreenListActivity {
 	ArrayList<Traject> trajecten;
 	private Activity activity;
 	private String[] res;
@@ -54,7 +57,7 @@ public class Trajecten extends FullscreenListActivity {
 				// When clicked, show a toast with the TextView text
 				VopApplication app = (VopApplication) getApplicationContext();
 				app.setTraject(trajecten.get(position));
-				Toast.makeText(Trajecten.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Tracks.this, "not yet implemented", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -68,18 +71,18 @@ public class Trajecten extends FullscreenListActivity {
 					final int position, long id) {
 				final CharSequence[] items = { "Walk", "Edit", "Delete" };
 
-				AlertDialog.Builder builder = new AlertDialog.Builder(Trajecten.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(Tracks.this);
 				builder.setTitle(trajecten.get(position).toString());
 				builder.setItems(items, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						if (items[item].equals("Walk")) {
-							Intent myIntent = new Intent(Trajecten.this, StartEenWandeling.class);
+							Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
 							myIntent.putExtra("walk_id", trajecten.get(position).getId());
-							Trajecten.this.startActivity(myIntent);
+							Tracks.this.startActivity(myIntent);
 						} else if (items[item].equals("Edit")) {
-							Intent myIntent = new Intent(Trajecten.this, EditTraject.class);
+							Intent myIntent = new Intent(Tracks.this, EditTraject.class);
 							myIntent.putExtra("walk_id", trajecten.get(position).getId());
 							startActivity(myIntent);
 						} else if (items[item].equals("Delete")) {

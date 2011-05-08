@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.vop.augumented"
+      package="com.vop.arwalks"
       android:versionCode="2" android:versionName="early alpha">
     <uses-sdk android:minSdkVersion="7" />
     <uses-feature android:name="android.hardware.camera" />
@@ -15,39 +15,39 @@
         <service android:enabled="true" android:name="com.vop.services.TrackService"/>
         <service android:enabled="true" android:name="com.vop.services.LocationService"/>
         <activity android:icon="@drawable/appicon" 
-        android:name="Login" 
+        android:name="com.vop.augumented.Login" 
         android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:name="MainScreen"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
-        <activity android:name="Messages"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
-        <activity android:name="Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="Friends"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="LocatieMap"></activity>
+        <activity android:name="com.vop.augumented.MainScreen"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="com.vop.augumented.Messages"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.augumented.Trajecten"  android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="com.vop.augumented.Locaties"  android:theme="@android:style/Theme.Light.NoTitleBar" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.augumented.Profiel"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.Friends"  android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.LocatieMap"></activity>
         <uses-library android:name="com.google.android.maps"/>
-        <activity android:name="SaveLocation" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
-        <activity android:name="AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="StartWandeling"></activity>
-        <activity android:name="TrajectOpslaan" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
+        <activity android:name="com.vop.augumented.SaveLocation" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.ListLocaties" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.vop.augumented.AugmentedRealityLocaties" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.augumented.StartWandeling"></activity>
+        <activity android:name="com.vop.augumented.TrajectOpslaan" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape">
             <intent-filter></intent-filter>
         </activity>
-        <activity android:name="EditTraject" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="ProfielWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="PaswoordWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="RegisterProfile" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="StartEenWandeling"></activity>
-        <activity android:name="HuidigeLocatieOpslaan">
+        <activity android:name="com.vop.augumented.EditTraject" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.ProfielWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.PaswoordWijzigen" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.RegisterProfile" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.augumented.StartEenWandeling"></activity>
+        <activity android:name="com.vop.augumented.HuidigeLocatieOpslaan">
             <intent-filter></intent-filter>
         </activity>
-        <activity android:name="ToevoegenVriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
-        <activity android:name="ProfielFriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
-        <activity android:name="TrajectOpslaanZien"></activity>
+        <activity android:name="com.vop.augumented.ToevoegenVriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="com.vop.augumented.ProfielFriend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" ></activity>
+        <activity android:name="com.vop.ar.TrajectOpslaanZien"></activity>
         
     </application>
 </manifest>

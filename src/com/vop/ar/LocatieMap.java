@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.ar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.ar.overlays.Marker;
 import com.vop.ar.overlays.punten_overlay;
+import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 
 /**

@@ -1,4 +1,4 @@
-package com.vop.augumented;
+package com.vop.arwalks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,16 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.vop.ar.AugmentedRealityLocaties;
+import com.vop.ar.HuidigeLocatieOpslaan;
+import com.vop.ar.ListLocaties;
+import com.vop.ar.LocatieMap;
+import com.vop.ar.PaswoordWijzigen;
+import com.vop.ar.SaveLocation;
+import com.vop.ar.ToevoegenVriend;
+import com.vop.ar.TrajectOpslaan;
+import com.vop.ar.TrajectOpslaanZien;
+import com.vop.arwalks.R;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
@@ -105,7 +115,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, Trajecten.class);
+						Intent myIntent = new Intent(MainScreen.this, Tracks.class);
 						MainScreen.this.startActivity(myIntent);
 					}
 				});
@@ -244,7 +254,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, Profiel.class);
+						Intent myIntent = new Intent(MainScreen.this, Profile.class);
 						MainScreen.this.startActivity(myIntent);
 					}
 				});
@@ -253,7 +263,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, ProfielWijzigen.class);
+						Intent myIntent = new Intent(MainScreen.this, EditProfile.class);
 						MainScreen.this.startActivity(myIntent);
 					}
 				});

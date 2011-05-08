@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import com.vop.augumented.R;
+import com.vop.arwalks.R;
 
 /**
  * Popup window, shows action list as icon and text (QuickContact / Twitter app). 
