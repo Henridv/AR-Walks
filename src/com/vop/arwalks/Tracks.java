@@ -16,16 +16,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.vop.ar.EditTraject;
 import com.vop.ar.StartEenWandeling;
-import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
-import com.vop.tools.VopApplication;
 import com.vop.tools.data.Traject;
 
 /**
@@ -35,7 +32,7 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class Tracks extends FullscreenListActivity {
-	ArrayList<Traject> trajecten;
+	ArrayList<Traject> tracks;
 	private Activity activity;
 	private String[] res;
 	private ArrayAdapter<Traject> adapter;
@@ -45,19 +42,18 @@ public class Tracks extends FullscreenListActivity {
 		super.onCreate(savedInstanceState);
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		
+
 		activity = this;
-		
+
 		/**
 		 * Short click starts the walk in an augmented view
 		 */
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// When clicked, show a toast with the TextView text
-				VopApplication app = (VopApplication) getApplicationContext();
-				app.setTraject(trajecten.get(position));
-				Toast.makeText(Tracks.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+				Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
+				myIntent.putExtra("walk_id", tracks.get(position).getId());
+				Tracks.this.startActivity(myIntent);
 			}
 		});
 
@@ -72,22 +68,22 @@ public class Tracks extends FullscreenListActivity {
 				final CharSequence[] items = { "Walk", "Edit", "Delete" };
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(Tracks.this);
-				builder.setTitle(trajecten.get(position).toString());
+				builder.setTitle(tracks.get(position).toString());
 				builder.setItems(items, new OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						if (items[item].equals("Walk")) {
 							Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
-							myIntent.putExtra("walk_id", trajecten.get(position).getId());
+							myIntent.putExtra("walk_id", tracks.get(position).getId());
 							Tracks.this.startActivity(myIntent);
 						} else if (items[item].equals("Edit")) {
 							Intent myIntent = new Intent(Tracks.this, EditTraject.class);
-							myIntent.putExtra("walk_id", trajecten.get(position).getId());
+							myIntent.putExtra("walk_id", tracks.get(position).getId());
 							startActivity(myIntent);
 						} else if (items[item].equals("Delete")) {
-							DBWrapper.delete(trajecten.get(position));
-							trajecten.remove(position);
+							DBWrapper.delete(tracks.get(position));
+							tracks.remove(position);
 							adapter.notifyDataSetChanged();
 						}
 					}
@@ -98,6 +94,7 @@ public class Tracks extends FullscreenListActivity {
 				return true;
 			}
 		});
+		updateWalks();
 	}
 
 	@Override
@@ -120,36 +117,27 @@ public class Tracks extends FullscreenListActivity {
 	}
 
 	/**
-	 * Update every time the activity is resumed
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		updateWalks();
-	}
-
-	/**
 	 * Updates traject list
 	 */
 	private void updateWalks() {
-		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van trajecten", true);
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading tracks. Please wait...", true);
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				trajecten = DBWrapper.getTrajects2();
+				tracks = DBWrapper.getTrajects2();
 
-				res = new String[trajecten.size()];
+				res = new String[tracks.size()];
 				{
-					for (int i = 0; i < trajecten.size(); i++) {
-						res[i] = "'" + trajecten.get(i) + "' by "
-								+ trajecten.get(i).getPerson();
+					for (int i = 0; i < tracks.size(); i++) {
+						res[i] = "'" + tracks.get(i) + "' by "
+								+ tracks.get(i).getPerson();
 					}
 				}
 				runOnUiThread(new Runnable() {
 					public void run() {
 						dialog.dismiss();
-						adapter = new ArrayAdapter<Traject>(activity, R.layout.trajecten_layout, trajecten);
+						adapter = new ArrayAdapter<Traject>(activity, R.layout.trajecten_layout, tracks);
 						setListAdapter(adapter);
 					}
 				});

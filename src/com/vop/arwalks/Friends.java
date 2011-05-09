@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.vop.ar.ProfielFriend;
+import com.vop.ar.FriendProfile;
 import com.vop.arwalks.R;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
@@ -62,7 +62,7 @@ public class Friends extends FullscreenListActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Friends.this,ProfielFriend.class);
+						Intent myIntent = new Intent(Friends.this,FriendProfile.class);
 						myIntent.putExtra("profielid",vrienden.get(positie).getId());
 						Friends.this.startActivity(myIntent);
 					}

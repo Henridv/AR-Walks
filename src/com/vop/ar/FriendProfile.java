@@ -14,7 +14,7 @@ import com.vop.tools.data.Person;
  * @author gbostoen
  *
  */
-public class ProfielFriend extends FullscreenActivity {
+public class FriendProfile extends FullscreenActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

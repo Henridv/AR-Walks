@@ -13,7 +13,6 @@ import com.vop.ar.AugmentedReality;
 import com.vop.ar.LocatieMap;
 import com.vop.ar.PaswoordWijzigen;
 import com.vop.ar.SaveLocation;
-import com.vop.ar.ToevoegenVriend;
 import com.vop.ar.TrajectOpslaan;
 import com.vop.ar.TrajectOpslaanZien;
 import com.vop.popup.ActionItem;
@@ -231,12 +230,12 @@ public class MainScreen extends FullscreenActivity {
 						qa.dismiss();
 					}
 				});
-				actie2.setTitle("Add frined");
+				actie2.setTitle("Add friend");
 				actie2.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, ToevoegenVriend.class);
+						Intent myIntent = new Intent(MainScreen.this, AddFriend.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}

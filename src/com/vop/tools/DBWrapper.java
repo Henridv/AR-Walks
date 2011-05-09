@@ -34,7 +34,7 @@ import com.vop.tools.data.Traject;
 public class DBWrapper {
 
 	/**
-	 * Get all trajects from the database
+	 * Get all tracks from the database
 	 * 
 	 * @return
 	 */

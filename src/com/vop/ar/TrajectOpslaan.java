@@ -18,12 +18,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
 /**
  * save a traject
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class TrajectOpslaan extends Activity {
 	VopApplication app;
@@ -36,17 +35,15 @@ public class TrajectOpslaan extends Activity {
 	long when;
 	private static final int HELLO_ID = 1;
 	Notification notification;
-	
-	
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		//standaard
+		// standaard
 		super.onCreate(savedInstanceState);
 		app = (VopApplication) getApplicationContext();
-		
-		//initialisatie van notification
+
+		// initialisatie van notification
 		ns = Context.NOTIFICATION_SERVICE;
 		mNotificationManager = (NotificationManager) getSystemService(ns);
 		icon = R.drawable.appicon;
@@ -58,65 +55,64 @@ public class TrajectOpslaan extends Activity {
 		CharSequence contentText = "traject wordt opgenomen!";
 		Intent notificationIntent = new Intent(this, TrajectOpslaan.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.flags=Notification.FLAG_NO_CLEAR;
+		notification.flags = Notification.FLAG_NO_CLEAR;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		
-		
-		
-		
+
 		// Remove the title bar from the window.
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		// Make the windows into full screen mode.
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.trajectopslaan_layout);
-		knop = (Button) findViewById(R.id.startstop) ;
-		if(app.getState().get("startstop") ==null) knop.setText("start");
-		else knop.setText("stop");
-		intent=new Intent(this,TrackService.class);
-		
+		knop = (Button) findViewById(R.id.startstop);
+		if (app.getState().get("startstop") == null)
+			knop.setText("start");
+		else
+			knop.setText("stop");
+		intent = new Intent(this, TrackService.class);
+
 	}
 
 	/**
 	 * start/stop action
+	 * 
 	 * @param v
 	 */
 	public void startstop(View v) {
 		TextView veld1 = (TextView) findViewById(R.id.naam);
 		TextView veld2 = (TextView) findViewById(R.id.info);
-		if(app.getState().get("startstop") == null ){
-			if(veld1.getText().length()  > 0 && veld2.getText().length()> 0){
+		if (app.getState().get("startstop") == null) {
+			if (veld1.getText().length() > 0 && veld2.getText().length() > 0) {
 				knop.setText("stop");
 				v.invalidate();
 				app.putState("naamtraject", veld1.getText().toString());
 				app.putState("infotraject", veld2.getText().toString());
 				startService(intent);
 				app.putState("startstop", "hello");
-				
-				//notification manager starten
+
+				// notification manager starten
 				mNotificationManager.notify(HELLO_ID, notification);
 
-			}
-			else{
+			} else {
 				Toast toast = Toast.makeText(getApplicationContext(), "velden invullen", Toast.LENGTH_SHORT);
 				toast.show();
 			}
-			
-		}
-		else{
+
+		} else {
 			stopService(intent);
 			app.getState().remove("startstop");
-			
-			//notificatie beindigen
+
+			// notificatie beindigen
 			mNotificationManager.cancel(HELLO_ID);
 			finish();
 		}
 	}
+
 	@Override
 	protected void onStop() {
 		super.onStop();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
