@@ -24,14 +24,6 @@ public class SaveLocation extends FullscreenActivity {
 		intent = new Intent(this, LocationService.class);
 	}
 
-	// menu openen
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.berichten_menu, menu);
-		return true;
-	}
-
 	public void saveLocation(View v) {
 		EditText name = (EditText) findViewById(R.id.loc_name);
 		String locName = name.getText().toString();

@@ -25,14 +25,6 @@ public class FriendProfile extends FullscreenActivity {
 		updateProfile();
 	}
 
-	// menu openen
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.profiel_menu, menu);
-		return true;
-	}
-
 	@Override
 	public void onResume() {
 		super.onResume();

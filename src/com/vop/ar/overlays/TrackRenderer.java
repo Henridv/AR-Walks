@@ -11,6 +11,7 @@ import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Location;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
 
@@ -23,42 +24,36 @@ import com.vop.tools.data.Traject;
 public class TrackRenderer extends GLSurfaceView implements Renderer {
 	private Placemarker placemarker;
 	private VopApplication app;
-	private Traject track;
+	private List<Marker> POI;
 
 	public TrackRenderer(Context appContext) {
 		super(appContext);
 		app = (VopApplication) appContext.getApplicationContext();
 		placemarker = new Placemarker();
-		track = app.getTraject();
+		Traject track = app.getTraject();
+		for (Point p : track.getWalk()) {
+			POI.add(new Marker(new Location(null, null, p.getLatitute(), p.getLongitude(), p.getAltitude(), null, 0), (float) app.getLat(), (float) app.getLng(), (float) app.getAlt()));
+		}
 	}
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
-		int center = -1;
-		float diff_min = 360f;
 		// Clear Screen And Depth Buffer
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity(); // Reset The Current Modelview Matrix
 
 		float[] rotMatrix = app.getRotationMatrix();
-		List<Point> POI = track.getWalk();
-		// if (rotMatrix != null) {
-		// for (int i = 0; i < POI.size(); i++) {
-		// // float alt_diff = (float) (app.getAlt() - POI[i].getAlt());
-		// if (!POI.get(i).isVisible(app.getAzimuth()))
-		// continue;
-		//
-		// if (Math.abs(POI.get(i).getRotation() - app.getAzimuth()) < diff_min)
-		// {
-		// diff_min = Math.abs(POI.get(i).getRotation() - app.getAzimuth());
-		// center = i;
-		// }
-		// gl.glLoadMatrixf(rotMatrix, 0);
-		// gl.glRotatef(-POI.get(i).getRotation(), 0, 0, 1.0f);
-		// gl.glTranslatef(0, POI.get(i).getDistance() / 5000f * 10f + 10f, 0f);
-		// placemarker.draw(gl);
-		// }
-		// }
+		if (rotMatrix != null) {
+			for (int i = 0; i < POI.size(); i++) {
+				if (!POI.get(i).isVisible(app.getAzimuth()))
+					continue;
+
+				gl.glLoadMatrixf(rotMatrix, 0);
+				gl.glRotatef(-POI.get(i).getRotation(), 0, 0, 1.0f);
+				gl.glTranslatef(0, POI.get(i).getDistance() / 5000f * 10f + 10f, 0f);
+				placemarker.draw(gl);
+			}
+		}
 	}
 
 	@Override

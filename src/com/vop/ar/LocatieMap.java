@@ -3,10 +3,6 @@ package com.vop.ar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -26,6 +22,7 @@ import com.vop.ar.overlays.punten_overlay;
 import com.vop.arwalks.ListLocaties;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
+import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 
 /**
@@ -34,42 +31,16 @@ import com.vop.tools.VopApplication;
  * @author gbostoen
  * 
  */
-public class LocatieMap extends MapActivity {
-	LocationManager locationManager;
-	String provider, context;
-	Location location;
-	MapController mapController;
-	MapView mapView;
-	int minDistance = 5;
-	int minTime = 1000;
-	MyLocationOverlay myLocationOverlay;
-	punten_overlay itemizedoverlay;
-	Context content;
-	VopApplication app;
-
-	private final LocationListener locationListener = new LocationListener() {
-		public void onLocationChanged(Location location) {
-			updateWithNewLocation(location);
-		}
-
-		public void onProviderDisabled(String provider) {
-
-		}
-
-		public void onProviderEnabled(String provider) {
-
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-
-		}
-
-	};
+public class LocatieMap extends MapActivity implements LocationListener {
+	private MapController mapController;
+	private MapView mapView;
+	private MyLocationOverlay myLocationOverlay;
+	private punten_overlay itemizedoverlay;
+	private VopApplication app;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		content = getApplicationContext();
 		app = (VopApplication) getApplicationContext();
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -87,38 +58,6 @@ public class LocatieMap extends MapActivity {
 		itemizedoverlay = new punten_overlay(drawable1, this);
 		initMap();
 		this.mapController.setZoom(17);
-		this.context = Context.LOCATION_SERVICE;
-		this.locationManager = (LocationManager) getSystemService(context);
-
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE); // constant 1
-		criteria.setAltitudeRequired(false);
-		criteria.setBearingRequired(false);
-		criteria.setCostAllowed(false);
-		criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
-
-		this.provider = locationManager.getBestProvider(criteria, true);
-		this.location = locationManager.getLastKnownLocation(provider);
-
-		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
-	}
-
-	/**
-	 * update current location on the map
-	 * 
-	 * @param location
-	 */
-	private void updateWithNewLocation(Location location) {
-		if (location != null) {
-			// Create the file
-			double lat = location.getLatitude();
-			double lng = location.getLongitude();
-			app.setLocation(location.getLatitude(), location.getLongitude(), location.getAltitude());
-			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
-			this.mapController.animateTo(punt);
-			app.construeer();
-		}
 	}
 
 	@Override
@@ -206,5 +145,14 @@ public class LocatieMap extends MapActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void locationUpdated() {
+		double lat = app.getLat();
+		double lng = app.getLng();
+		GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
+		this.mapController.animateTo(punt);
+		app.construeer();
 	}
 }

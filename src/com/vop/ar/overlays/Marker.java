@@ -262,10 +262,14 @@ public class Marker implements Comparable<Marker> {
 		return;
 	}
 
-	/**
-	 * Deel Henri
-	 */
 
+	/**
+	 * Construct a Marker object.
+	 * @param l POI
+	 * @param lat current latitude
+	 * @param lng current longitude
+	 * @param alt current altitude
+	 */
 	public Marker(com.vop.tools.data.Location l, float lat, float lng, float alt) {
 		this.title = l.getName();
 		this.info = l.getDescription();
