@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.vop.ar.PaswoordWijzigen;
 import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;

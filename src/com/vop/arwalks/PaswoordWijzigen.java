@@ -1,4 +1,4 @@
-package com.vop.ar;
+package com.vop.arwalks;
 
 
 import android.app.ProgressDialog;

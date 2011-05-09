@@ -1,4 +1,4 @@
-package com.vop.ar;
+package com.vop.arwalks;
 
 import java.util.ArrayList;
 import java.util.List;

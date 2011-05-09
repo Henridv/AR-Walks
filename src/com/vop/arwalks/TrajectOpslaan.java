@@ -1,4 +1,4 @@
-package com.vop.ar;
+package com.vop.arwalks;
 
 import com.vop.arwalks.R;
 import com.vop.services.TrackService;

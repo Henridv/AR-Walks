@@ -25,6 +25,7 @@ import com.vop.ar.overlays.Marker;
 import com.vop.ar.overlays.punten_overlay;
 import com.vop.arwalks.ListLocaties;
 import com.vop.arwalks.R;
+import com.vop.arwalks.SaveLocation;
 import com.vop.tools.VopApplication;
 
 /**

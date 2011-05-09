@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.vop.ar.FriendProfile;
 import com.vop.arwalks.R;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;

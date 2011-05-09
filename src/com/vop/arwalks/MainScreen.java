@@ -11,10 +11,6 @@ import android.widget.Toast;
 
 import com.vop.ar.AugmentedReality;
 import com.vop.ar.LocatieMap;
-import com.vop.ar.PaswoordWijzigen;
-import com.vop.ar.SaveLocation;
-import com.vop.ar.TrajectOpslaan;
-import com.vop.ar.TrajectOpslaanZien;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
