@@ -66,8 +66,10 @@ public class DBWrapper {
 		}
 		return t;
 	}
+
 	/**
 	 * faster loading of tracks
+	 * 
 	 * @return track
 	 */
 	public static ArrayList<Traject> getTrajects2() {
@@ -82,8 +84,8 @@ public class DBWrapper {
 				JSONObject json_data = jArray.getJSONObject(i);
 				int id = json_data.getInt("id");
 				String name = json_data.getString("name");
-				Person person = getProfile(json_data.getInt("person"));	
-				
+				Person person = getProfile(json_data.getInt("person"));
+
 				t.add(new Traject(id, name, person, null));
 			}
 		} catch (JSONException e) {
@@ -91,8 +93,10 @@ public class DBWrapper {
 		}
 		return t;
 	}
+
 	/**
 	 * get a certain track with id
+	 * 
 	 * @param walk_id
 	 * @return
 	 */
@@ -151,8 +155,10 @@ public class DBWrapper {
 		}
 		return p;
 	}
+
 	/**
 	 * get list of not added persons on the network
+	 * 
 	 * @param personId
 	 * @return list of persons
 	 */
@@ -176,8 +182,10 @@ public class DBWrapper {
 		}
 		return p;
 	}
+
 	/**
 	 * get list of people who added you as a friend
+	 * 
 	 * @param personId
 	 * @return list of people you might know
 	 */
@@ -201,8 +209,10 @@ public class DBWrapper {
 		}
 		return p;
 	}
+
 	/**
 	 * add a person as friend in the friends table
+	 * 
 	 * @param p1
 	 * @param p2
 	 */
@@ -249,6 +259,7 @@ public class DBWrapper {
 		}
 		return p;
 	}
+
 	public static Person getProfile(String email) {
 		String page = "persons.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -293,8 +304,6 @@ public class DBWrapper {
 		}
 		return p;
 	}
-	
-	
 
 	/**
 	 * Get a list of locations from a person and his friends
@@ -323,8 +332,10 @@ public class DBWrapper {
 		}
 		return l;
 	}
+
 	/**
 	 * get locations of friends
+	 * 
 	 * @param personId
 	 * @return list of locations
 	 */
@@ -349,8 +360,10 @@ public class DBWrapper {
 		}
 		return l;
 	}
+
 	/**
 	 * get current location of friends
+	 * 
 	 * @param personId
 	 * @return
 	 */
@@ -405,18 +418,21 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+
 	/**
 	 * save current location
+	 * 
 	 * @param pers_id
 	 * @param lat
 	 * @param lng
 	 * @param alt
 	 */
-	public static void saveHuidig(int pers_id,double lat,double lng,double alt) {
+	public static void saveHuidig(int pers_id, double lat, double lng,
+			double alt) {
 		String page = "recentelocatie.php";
 
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("pers_id",Integer.toString(pers_id)));
+		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(pers_id)));
 		postValues.add(new BasicNameValuePair("lat", Double.toString(lat)));
 		postValues.add(new BasicNameValuePair("lng", Double.toString(lng)));
 		postValues.add(new BasicNameValuePair("alt", Double.toString(alt)));
@@ -484,10 +500,9 @@ public class DBWrapper {
 		}
 	}
 
-
 	/**
-	 * Delete a location
-	 * glenn bostoen
+	 * Delete a location glenn bostoen
+	 * 
 	 * @param l
 	 */
 	public static void delete(Location l) {
@@ -497,7 +512,7 @@ public class DBWrapper {
 		postValues.add(new BasicNameValuePair("name", l.getName().toString()));
 		postValues.add(new BasicNameValuePair("userid", Integer.toString((l.getPersId()))));
 		postValues.add(new BasicNameValuePair("action", "delloc2"));
-		
+
 		// delete location
 		try {
 			doPOST(page, postValues);
@@ -529,12 +544,14 @@ public class DBWrapper {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
+
 	/**
 	 * delete a person as friend
+	 * 
 	 * @param id1
 	 * @param id2
 	 */
-	public static void deleteFriend(int id1,int id2) {
+	public static void deleteFriend(int id1, int id2) {
 		String page = "persons.php";
 
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -592,13 +609,15 @@ public class DBWrapper {
 		// http post
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/" + page);
+			HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/"
+					+ page);
 			httppost.setEntity(new UrlEncodedFormEntity(postValues));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 		} catch (Exception e) {
-			Log.e(VopApplication.LOGTAG, "Error in http connection " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error in http connection "
+					+ e.toString());
 		}
 
 		// convert response to string
@@ -613,7 +632,8 @@ public class DBWrapper {
 
 			result = sb.toString();
 		} catch (Exception e) {
-			Log.e(VopApplication.LOGTAG, "Error converting result " + e.toString());
+			Log.e(VopApplication.LOGTAG, "Error converting result "
+					+ e.toString());
 		}
 		return new JSONArray(result);
 	}

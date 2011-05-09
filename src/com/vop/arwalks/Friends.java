@@ -54,9 +54,9 @@ public class Friends extends FullscreenListActivity {
 					int position, long id) {
 				vibrator.vibrate(60);
 				positie=position;
-				QuickAction qa = new QuickAction(view);
+				final QuickAction qa = new QuickAction(view);
 				
-				actie1.setTitle("profiel bekijken");
+				actie1.setTitle("View profile");
 				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
@@ -65,23 +65,26 @@ public class Friends extends FullscreenListActivity {
 						Intent myIntent = new Intent(Friends.this,FriendProfile.class);
 						myIntent.putExtra("profielid",vrienden.get(positie).getId());
 						Friends.this.startActivity(myIntent);
+						qa.dismiss();
 					}
 				});
-				actie2.setTitle("bericht verzenden");
+				actie2.setTitle("Send message");
 				actie2.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
 						Toast.makeText(Friends.this, "not yet implemented", Toast.LENGTH_SHORT).show();
+						qa.dismiss();
 					}
 				});
-				actie3.setTitle("vriend verwijderen");
+				actie3.setTitle("Remove friend");
 				actie3.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
 						DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")),vrienden.get(positie).getId());
 						updateFriends();
+						qa.dismiss();
 					}
 				});
 				qa.addActionItem(actie1);

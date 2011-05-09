@@ -48,7 +48,7 @@ public class VopApplication extends Application {
 	private Marker center;
 
 	private Intent locationServiceIntent;
-	
+
 	private ArrayList<LocationListener> locationListeners;
 
 	public VopApplication() {
@@ -151,8 +151,10 @@ public class VopApplication extends Application {
 	 */
 	public boolean isOnline() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (cm.getActiveNetworkInfo() == null) return false;
-		else return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+		if (cm.getActiveNetworkInfo() == null)
+			return false;
+		else
+			return cm.getActiveNetworkInfo().isConnectedOrConnecting();
 
 	}
 
@@ -270,7 +272,7 @@ public class VopApplication extends Application {
 	public void addLocationListener(LocationListener locationListener) {
 		this.locationListeners.add(locationListener);
 	}
-	
+
 	public void removeLocationListener(LocationListener locationListener) {
 		locationListeners.remove(locationListener);
 	}
