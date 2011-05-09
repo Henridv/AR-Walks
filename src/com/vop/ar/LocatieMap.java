@@ -155,4 +155,22 @@ public class LocatieMap extends MapActivity implements LocationListener {
 		this.mapController.animateTo(punt);
 		app.construeer();
 	}
+	
+	/**
+	 * Set listeners
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		app.addLocationListener(this);
+	}
+
+	/**
+	 * Remove listeners
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+		app.removeLocationListener(this);
+	}
 }

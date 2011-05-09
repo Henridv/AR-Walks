@@ -100,4 +100,22 @@ public class TrajectOpslaanZien extends MapActivity implements
 		if (app.getHuidige_walk() != null)
 			drawPath(app.getHuidige_walk(), -65536);
 	}
+	
+	/**
+	 * Set listeners
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		app.addLocationListener(this);
+	}
+
+	/**
+	 * Remove listeners
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+		app.removeLocationListener(this);
+	}
 }

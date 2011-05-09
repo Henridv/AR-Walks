@@ -1,18 +1,15 @@
 package com.vop.arwalks;
 
-import com.vop.arwalks.R;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
 import com.vop.services.LocationService;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.EditText;
 
 public class SaveLocation extends FullscreenActivity {
 	Intent intent;

@@ -2,12 +2,9 @@ package com.vop.arwalks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
