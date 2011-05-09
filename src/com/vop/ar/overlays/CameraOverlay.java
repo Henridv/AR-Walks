@@ -11,13 +11,15 @@ import android.view.SurfaceView;
 
 /**
  * Used to overlay the camera
+ * 
  * @author henridv
- *
+ * 
  */
-public class CameraOverlay extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraOverlay extends SurfaceView implements
+		SurfaceHolder.Callback {
 	private SurfaceHolder mHolder;
 	private Camera mCamera;
-	
+
 	public CameraOverlay(Context context) {
 		super(context);
 
@@ -60,8 +62,7 @@ public class CameraOverlay extends SurfaceView implements SurfaceHolder.Callback
 
 		List<Size> sizes = parameters.getSupportedPreviewSizes();
 		Size optimalSize_horizontaal = getOptimalPreviewSize(sizes, w, h);
-		parameters.setPreviewSize(optimalSize_horizontaal.width,
-				optimalSize_horizontaal.height);
+		parameters.setPreviewSize(optimalSize_horizontaal.width, optimalSize_horizontaal.height);
 		mCamera.setParameters(parameters);
 		mCamera.startPreview();
 	}

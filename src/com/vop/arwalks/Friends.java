@@ -23,18 +23,20 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
+
 /**
  * friends
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class Friends extends FullscreenListActivity {
 
 	static ArrayList<Person> vrienden;
 	private VopApplication app;
-	static private ActionItem actie1=new ActionItem();
-	static private ActionItem actie2=new ActionItem();
-	static private ActionItem actie3=new ActionItem();
+	static private ActionItem actie1 = new ActionItem();
+	static private ActionItem actie2 = new ActionItem();
+	static private ActionItem actie3 = new ActionItem();
 	Vibrator vibrator;
 	private int positie;
 
@@ -44,25 +46,25 @@ public class Friends extends FullscreenListActivity {
 		updateFriends();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		app=(VopApplication) getApplicationContext();
+		app = (VopApplication) getApplicationContext();
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		
-		//menu opstartten
+
+		// menu opstartten
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				vibrator.vibrate(60);
-				positie=position;
+				positie = position;
 				final QuickAction qa = new QuickAction(view);
-				
+
 				actie1.setTitle("View profile");
-				//actie1.setIcon(getResources().getDrawable(R.drawable.chart));
+				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
 				actie1.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(Friends.this,FriendProfile.class);
-						myIntent.putExtra("profielid",vrienden.get(positie).getId());
+						Intent myIntent = new Intent(Friends.this, FriendProfile.class);
+						myIntent.putExtra("profielid", vrienden.get(positie).getId());
 						Friends.this.startActivity(myIntent);
 						qa.dismiss();
 					}
@@ -81,7 +83,7 @@ public class Friends extends FullscreenListActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")),vrienden.get(positie).getId());
+						DBWrapper.deleteFriend(Integer.parseInt(app.getState().get("userid")), vrienden.get(positie).getId());
 						updateFriends();
 						qa.dismiss();
 					}
@@ -111,21 +113,22 @@ public class Friends extends FullscreenListActivity {
 			updateFriends();
 			return true;
 		default:
-			//add a friend!!
-			
+			// add a friend!!
+
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		updateFriends();
 	}
+
 	/**
 	 * update current friends
 	 */
-	private void updateFriends(){
+	private void updateFriends() {
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
 
@@ -138,8 +141,7 @@ public class Friends extends FullscreenListActivity {
 			}
 		}
 
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.vrienden_layout,
-				res));
-		
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.vrienden_layout, res));
+
 	}
 }

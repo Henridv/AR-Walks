@@ -21,7 +21,7 @@ public class SaveLocation extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locatie_opslaan_layout);
-		intent=new Intent(this,LocationService.class);
+		intent = new Intent(this, LocationService.class);
 	}
 
 	// menu openen
@@ -37,7 +37,7 @@ public class SaveLocation extends FullscreenActivity {
 		String locName = name.getText().toString();
 		EditText descr = (EditText) findViewById(R.id.loc_descr);
 		String locDescr = descr.getText().toString();
-		
+
 		VopApplication app = (VopApplication) getApplicationContext();
 		Integer id = Integer.parseInt(app.getState().get("userid"));
 		double lng = app.getLng();
@@ -47,11 +47,13 @@ public class SaveLocation extends FullscreenActivity {
 		DBWrapper.save(loc);
 		finish();
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		startService(intent);
 	}
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

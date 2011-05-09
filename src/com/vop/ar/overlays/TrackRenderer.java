@@ -42,22 +42,23 @@ public class TrackRenderer extends GLSurfaceView implements Renderer {
 
 		float[] rotMatrix = app.getRotationMatrix();
 		List<Point> POI = track.getWalk();
-//		if (rotMatrix != null) {
-//			for (int i = 0; i < POI.size(); i++) {
-//				// float alt_diff = (float) (app.getAlt() - POI[i].getAlt());
-//				if (!POI.get(i).isVisible(app.getAzimuth()))
-//					continue;
-//
-//				if (Math.abs(POI.get(i).getRotation() - app.getAzimuth()) < diff_min) {
-//					diff_min = Math.abs(POI.get(i).getRotation() - app.getAzimuth());
-//					center = i;
-//				}
-//				gl.glLoadMatrixf(rotMatrix, 0);
-//				gl.glRotatef(-POI.get(i).getRotation(), 0, 0, 1.0f);
-//				gl.glTranslatef(0, POI.get(i).getDistance() / 5000f * 10f + 10f, 0f);
-//				placemarker.draw(gl);
-//			}
-//		}
+		// if (rotMatrix != null) {
+		// for (int i = 0; i < POI.size(); i++) {
+		// // float alt_diff = (float) (app.getAlt() - POI[i].getAlt());
+		// if (!POI.get(i).isVisible(app.getAzimuth()))
+		// continue;
+		//
+		// if (Math.abs(POI.get(i).getRotation() - app.getAzimuth()) < diff_min)
+		// {
+		// diff_min = Math.abs(POI.get(i).getRotation() - app.getAzimuth());
+		// center = i;
+		// }
+		// gl.glLoadMatrixf(rotMatrix, 0);
+		// gl.glRotatef(-POI.get(i).getRotation(), 0, 0, 1.0f);
+		// gl.glTranslatef(0, POI.get(i).getDistance() / 5000f * 10f + 10f, 0f);
+		// placemarker.draw(gl);
+		// }
+		// }
 	}
 
 	@Override

@@ -32,7 +32,8 @@ import com.vop.tools.VopApplication;
  * @author henridv
  * 
  */
-public class AugmentedReality extends FullscreenActivity implements LocationListener {
+public class AugmentedReality extends FullscreenActivity implements
+		LocationListener {
 	float[] accelerometerValues = null;
 	float[] magneticFieldValues = null;
 	Renderer openGLRenderer;
@@ -108,7 +109,8 @@ public class AugmentedReality extends FullscreenActivity implements LocationList
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String type = getIntent().getExtras().get("type").toString();
-		if (type == null) type = "locations";
+		if (type == null)
+			type = "locations";
 
 		app = (VopApplication) getApplicationContext();
 

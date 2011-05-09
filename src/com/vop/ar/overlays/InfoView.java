@@ -13,10 +13,11 @@ import android.view.View;
 import com.vop.tools.VopApplication;
 
 /**
- * This overlay presents information to the user.
- * It contains the viewing angle and info about closest location
+ * This overlay presents information to the user. It contains the viewing angle
+ * and info about closest location
+ * 
  * @author henridv
- *
+ * 
  */
 public class InfoView extends View {
 	VopApplication app;
@@ -34,21 +35,21 @@ public class InfoView extends View {
 		Paint bgPaint = new Paint();
 		bgPaint.setARGB(100, 255, 255, 255);
 		canvas.drawRect(r, bgPaint);
-		
+
 		// draw bearing
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
 		paint.setTextSize(12);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText("" + (int)app.getAzimuth() + "°", 30, 30, paint);
+		canvas.drawText("" + (int) app.getAzimuth() + "°", 30, 30, paint);
 
 		paint.setTextSize(20);
 		paint.setColor(Color.BLACK);
 		paint.setTextAlign(Align.CENTER);
 		r = new Rect(0, getMeasuredHeight() - 80, getMeasuredWidth(), getMeasuredHeight());
 		bgPaint.setColor(Color.WHITE);
-		
+
 		// only show info about centered location
 		if (app.getCenter() != null) {
 			canvas.drawRect(r, bgPaint);
@@ -66,10 +67,9 @@ public class InfoView extends View {
 			dialog.setMessage(app.getCenter().getInfo());
 			dialog.show();
 		}
-		
+
 		// event was handled so we return true
 		return true;
 	}
-	
-	
+
 }

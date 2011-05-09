@@ -3,7 +3,6 @@ package com.vop.arwalks;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
@@ -20,7 +19,6 @@ import com.vop.ar.overlays.punten_overlay;
 import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
 
 /**
  * preview of current traject
@@ -48,7 +46,7 @@ public class TrajectOpslaanZien extends MapActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (VopApplication) getApplicationContext();
-		//int walk_id = getIntent().getIntExtra("walk_id", 0); // nummer van
+		// int walk_id = getIntent().getIntExtra("walk_id", 0); // nummer van
 		// traject
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

@@ -131,6 +131,7 @@ public class Login extends FullscreenActivity {
 		final VopApplication app = (VopApplication) getApplicationContext();
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Logging in. Please wait...", true);
 		new Thread() {
+			@Override
 			public void run() {
 				Person p = DBWrapper.getProfile(emailbox.getText().toString(), password.getText().toString());
 				if (p != null) {

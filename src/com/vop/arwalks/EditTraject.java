@@ -12,13 +12,15 @@ import com.vop.tools.data.Traject;
 
 /**
  * change existing traject
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class EditTraject extends FullscreenActivity {
 	private Traject t;
 	private EditText te;
-	
+
+	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
 		setContentView(R.layout.edit_walk);
@@ -36,8 +38,10 @@ public class EditTraject extends FullscreenActivity {
 		te.setText(t.getName());
 		tv.setText(t.getName());
 	}
+
 	/**
 	 * action when button is pressed
+	 * 
 	 * @param v
 	 */
 	public void saveWalk(View v) {

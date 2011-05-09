@@ -3,7 +3,6 @@ package com.vop.arwalks;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
@@ -25,10 +24,12 @@ import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Traject;
+
 /**
  * start a track
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class StartEenWandeling extends MapActivity {
 	LocationManager locationManager;
@@ -44,7 +45,7 @@ public class StartEenWandeling extends MapActivity {
 	ArrayList<Traject> walks;
 	Drawable draw;
 	Traject t;
-	
+
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
 			updateWithNewLocation(location);
@@ -63,108 +64,111 @@ public class StartEenWandeling extends MapActivity {
 		}
 
 	};
-	
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	//////////////////////////////////////
-	//			INITIALISATIE			//
-	//////////////////////////////////////
-	
+	// ////////////////////////////////////
+	// INITIALISATIE //
+	// ////////////////////////////////////
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		content = getApplicationContext();
 		super.onCreate(savedInstanceState);
-		int walk_id = getIntent().getIntExtra("walk_id", 0); //nummer van traject
+		int walk_id = getIntent().getIntExtra("walk_id", 0); // nummer van
+		// traject
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-							WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
-		
-		this.mapView =(MapView) findViewById(R.id.myMapView);
+
+		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
-		
+
 		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
-		
+
 		draw = this.getResources().getDrawable(R.drawable.androidmarker);
-		
+
 		startLocationListening();
 		initMap();
 		t = DBWrapper.getTraject(walk_id);
 
 		drawPath(t.getWalk(), -65536);
-		
+
 		this.locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
 	}
+
 	/**
 	 * location listening
 	 */
-	private void startLocationListening(){
+	private void startLocationListening() {
 		this.context = Context.LOCATION_SERVICE;
 		this.locationManager = (LocationManager) getSystemService(this.context);
-		
-		//eerst mag onze applicatie over de grootste resources beschikken, kunnen dit later altijd aanpassen
+
+		// eerst mag onze applicatie over de grootste resources beschikken,
+		// kunnen dit later altijd aanpassen
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		criteria.setAltitudeRequired(true);
 		criteria.setBearingRequired(false);
 		criteria.setCostAllowed(false);
-		criteria.setPowerRequirement(Criteria.POWER_HIGH);	
-		
-		this.provider = this.locationManager.getBestProvider(criteria,true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+
+		this.provider = this.locationManager.getBestProvider(criteria, true);
 		this.location = locationManager.getLastKnownLocation(provider);
-		
-		//updateWithNewLocation(location);
+
+		// updateWithNewLocation(location);
 	}
+
 	/**
 	 * initialize the map
 	 */
-	private void initMap(){
+	private void initMap() {
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		this.mapView.getOverlays().add(myLocationOverlay);
 		this.mapController.setZoom(17);
-		this.mapController.animateTo(new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6)));
+		this.mapController.animateTo(new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6)));
 		this.itemizedoverlay = new punten_overlay(this.draw);
 		myLocationOverlay.enableMyLocation();
-		}
-	
-	
-	//////////////////////////////////////
-	//				FUNCTIES 			//
-	//////////////////////////////////////
-	
-	@SuppressWarnings("unchecked") //door drawline functie in wandeling_overlay
-	private void drawPath(ArrayList<Point>listOfPoints, int color){
+	}
+
+	// ////////////////////////////////////
+	// FUNCTIES //
+	// ////////////////////////////////////
+
+	@SuppressWarnings("unchecked")
+	// door drawline functie in wandeling_overlay
+	private void drawPath(ArrayList<Point> listOfPoints, int color) {
 		List overlays = this.mapView.getOverlays();
 		ArrayList<GeoPoint> listOfGeoPoints = new ArrayList<GeoPoint>();
-		for(int i=0;i<listOfPoints.size();i++){
-			listOfGeoPoints.add(
-					new GeoPoint((int)(listOfPoints.get(i).getLatitute()*1E6),
-							     (int)(listOfPoints.get(i).getLongitude()*1E6)));
-					
+		for (int i = 0; i < listOfPoints.size(); i++) {
+			listOfGeoPoints.add(new GeoPoint((int) (listOfPoints.get(i).getLatitute() * 1E6), (int) (listOfPoints.get(i).getLongitude() * 1E6)));
+
 		}
-		overlays.add(new WandelingOverlay2(listOfGeoPoints,color));
+		overlays.add(new WandelingOverlay2(listOfGeoPoints, color));
 	}
+
 	/**
 	 * updating location
+	 * 
 	 * @param location
 	 */
-	private void updateWithNewLocation(Location location){
-		if(location!=null){
+	private void updateWithNewLocation(Location location) {
+		if (location != null) {
 
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
-			
-			GeoPoint punt = new GeoPoint((int) (lat*1E6),(int)(lng*1E6));
+
+			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			this.mapController.animateTo(punt);
 		}
 	}
-	
+
 }

@@ -30,8 +30,9 @@ import com.vop.tools.VopApplication;
 
 /**
  * locations projected on a map
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class LocatieMap extends MapActivity {
 	LocationManager locationManager;
@@ -72,8 +73,7 @@ public class LocatieMap extends MapActivity {
 		app = (VopApplication) getApplicationContext();
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
 
 		this.mapView = (MapView) findViewById(R.id.myMapView);
@@ -83,8 +83,7 @@ public class LocatieMap extends MapActivity {
 		this.mapView.setStreetView(true);
 		this.mapView.setBuiltInZoomControls(true);
 		// this.mapView.displayZoomControls(true);
-		Drawable drawable1 = this.getResources().getDrawable(
-				R.drawable.androidmarker);
+		Drawable drawable1 = this.getResources().getDrawable(R.drawable.androidmarker);
 		itemizedoverlay = new punten_overlay(drawable1, this);
 		initMap();
 		this.mapController.setZoom(17);
@@ -102,11 +101,12 @@ public class LocatieMap extends MapActivity {
 		this.location = locationManager.getLastKnownLocation(provider);
 
 		updateWithNewLocation(location);
-		locationManager.requestLocationUpdates(provider, minTime, minDistance,
-				locationListener);
+		locationManager.requestLocationUpdates(provider, minTime, minDistance, locationListener);
 	}
+
 	/**
 	 * update current location on the map
+	 * 
 	 * @param location
 	 */
 	private void updateWithNewLocation(Location location) {
@@ -128,6 +128,7 @@ public class LocatieMap extends MapActivity {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	/**
 	 * initialize the map
 	 */
@@ -145,10 +146,8 @@ public class LocatieMap extends MapActivity {
 		Marker POI[] = app.getPunten();
 
 		for (int i = 0; i < POI.length; i++) {
-			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
-					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(),
-					POI[i].getTitle());
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6), (int) (POI[i].getLng() * 1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(), POI[i].getTitle());
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 
@@ -156,6 +155,7 @@ public class LocatieMap extends MapActivity {
 		if (POI.length != 0)
 			mapView.getOverlays().add(itemizedoverlay);
 	}
+
 	/**
 	 * method to refresh map with the latest points
 	 */
@@ -165,11 +165,10 @@ public class LocatieMap extends MapActivity {
 		mapView.getOverlays().add(myLocationOverlay);
 		Marker POI[] = app.getPunten();
 		for (int i = 0; i < POI.length; i++) {
-			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6),
-					(int) (POI[i].getLng() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(),
-					POI[i].getAlt()+" "+POI[i].getInfo());
-			
+			GeoPoint punt = new GeoPoint((int) (POI[i].getLat() * 1E6), (int) (POI[i].getLng() * 1E6));
+			OverlayItem overlayitem = new OverlayItem(punt, POI[i].getTitle(), POI[i].getAlt()
+					+ " " + POI[i].getInfo());
+
 			itemizedoverlay.addOverlay(overlayitem);
 		}
 		mapView.getOverlays().add(itemizedoverlay);

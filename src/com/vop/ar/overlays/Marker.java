@@ -33,6 +33,7 @@ public class Marker implements Comparable<Marker> {
 	 * @param altitude
 	 * @param context
 	 */
+	@Deprecated
 	public Marker(String title, String info, double longitude, double latitude,
 			double altitude, Context context) {
 		this.title = title;
@@ -60,6 +61,7 @@ public class Marker implements Comparable<Marker> {
 	 * @param alt_loc
 	 * @param azimuth
 	 */
+	@Deprecated
 	public Marker(String title, String info, double longitude, double latitude,
 			double altitude, double lat_loc, double lng_loc, double alt_loc,
 			double azimuth) {
@@ -78,6 +80,7 @@ public class Marker implements Comparable<Marker> {
 	 * @param alt_loc
 	 * @param azimuth
 	 */
+	@Deprecated
 	public void bereken_zichtbaarheid(double lat_loc, double lng_loc,
 			double alt_loc, double azimuth) {
 		double hoek;
@@ -246,17 +249,19 @@ public class Marker implements Comparable<Marker> {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public static float getAfstand() {
 		return 0;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public static void setAfstand(float a) {
 		return;
 	}
-	
+
 	/**
 	 * Deel Henri
 	 */
@@ -268,7 +273,7 @@ public class Marker implements Comparable<Marker> {
 		this.lng = l.getLongitude();
 		max_distance = 5000f;
 		min_distance = 1f;
-		
+
 		update(lat, lng);
 	}
 
@@ -279,24 +284,29 @@ public class Marker implements Comparable<Marker> {
 	public float getRotation() {
 		return angle;
 	}
-	
+
 	/**
 	 * Updates the distance and bearing
-	 * @param lat - current latitude
-	 * @param lng - current longitude
+	 * 
+	 * @param lat
+	 *            - current latitude
+	 * @param lng
+	 *            - current longitude
 	 */
 	public void update(float lat, float lng) {
 		float[] results = new float[3];
 		Location.distanceBetween(lat, lng, this.lat, this.lng, results);
 		this.distance = results[0];
-		this.angle = ((results[1] + results[2]) / 2f + 360f)%360f;
+		this.angle = ((results[1] + results[2]) / 2f + 360f) % 360f;
 	}
 
 	public boolean isVisible(float azimuth) {
-		if (distance > max_distance || distance < min_distance) return false;
-		else return Math.abs(angle - azimuth) < angle_of_view_horizontal;
+		if (distance > max_distance || distance < min_distance)
+			return false;
+		else
+			return Math.abs(angle - azimuth) < angle_of_view_horizontal;
 	}
-	
+
 	@Override
 	public String toString() {
 		return title + " (" + distance + ", " + angle + ")";

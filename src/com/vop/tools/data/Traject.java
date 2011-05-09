@@ -63,6 +63,7 @@ public class Traject {
 		walk.add(p);
 	}
 
+	@Override
 	public String toString() {
 		return name;
 	}

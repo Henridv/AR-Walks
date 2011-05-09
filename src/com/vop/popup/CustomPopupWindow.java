@@ -19,8 +19,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
- * This class does most of the work of wrapping the {@link PopupWindow} so it's simpler to use. 
- * Edited by Lorensius. W. L. T
+ * This class does most of the work of wrapping the {@link PopupWindow} so it's
+ * simpler to use. Edited by Lorensius. W. L. T
  * 
  * @author qberticus
  * 
@@ -31,7 +31,7 @@ public class CustomPopupWindow {
 	private View root;
 	private Drawable background = null;
 	protected final WindowManager windowManager;
-	
+
 	/**
 	 * Create a QuickAction
 	 * 
@@ -49,35 +49,37 @@ public class CustomPopupWindow {
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
 					CustomPopupWindow.this.window.dismiss();
-					
+
 					return true;
 				}
-				
+
 				return false;
 			}
 		});
 
 		windowManager = (WindowManager) anchor.getContext().getSystemService(Context.WINDOW_SERVICE);
-		
+
 		onCreate();
 	}
 
 	/**
-	 * Anything you want to have happen when created. Probably should create a view and setup the event listeners on
-	 * child views.
+	 * Anything you want to have happen when created. Probably should create a
+	 * view and setup the event listeners on child views.
 	 */
-	protected void onCreate() {}
+	protected void onCreate() {
+	}
 
 	/**
 	 * In case there is stuff to do right before displaying.
 	 */
-	protected void onShow() {}
+	protected void onShow() {
+	}
 
 	protected void preShow() {
 		if (root == null) {
 			throw new IllegalStateException("setContentView was not called with a view to display.");
 		}
-		
+
 		onShow();
 
 		if (background == null) {
@@ -86,12 +88,13 @@ public class CustomPopupWindow {
 			window.setBackgroundDrawable(background);
 		}
 
-		// if using PopupWindow#setBackgroundDrawable this is the only values of the width and hight that make it work
+		// if using PopupWindow#setBackgroundDrawable this is the only values of
+		// the width and hight that make it work
 		// otherwise you need to set the background of the root viewgroup
 		// and set the popupwindow background to an empty BitmapDrawable
-		
-		window.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-		window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+		window.setWidth(LayoutParams.WRAP_CONTENT);
+		window.setHeight(LayoutParams.WRAP_CONTENT);
 		window.setTouchable(true);
 		window.setFocusable(true);
 		window.setOutsideTouchable(true);
@@ -111,7 +114,7 @@ public class CustomPopupWindow {
 	 */
 	public void setContentView(View root) {
 		this.root = root;
-		
+
 		window.setContentView(root);
 	}
 
@@ -121,9 +124,8 @@ public class CustomPopupWindow {
 	 * @param layoutResID
 	 */
 	public void setContentView(int layoutResID) {
-		LayoutInflater inflator =
-				(LayoutInflater) anchor.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+		LayoutInflater inflator = (LayoutInflater) anchor.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
 		setContentView(inflator.inflate(layoutResID, null));
 	}
 
@@ -182,32 +184,31 @@ public class CustomPopupWindow {
 		int[] location = new int[2];
 		anchor.getLocationOnScreen(location);
 
-		Rect anchorRect =
-				new Rect(location[0], location[1], location[0] + anchor.getWidth(), location[1]
-					+ anchor.getHeight());
+		Rect anchorRect = new Rect(location[0], location[1], location[0]
+				+ anchor.getWidth(), location[1] + anchor.getHeight());
 
 		root.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		root.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		
-		int rootWidth 		= root.getMeasuredWidth();
-		int rootHeight 		= root.getMeasuredHeight();
 
-		int screenWidth 	= windowManager.getDefaultDisplay().getWidth();
-		//int screenHeight 	= windowManager.getDefaultDisplay().getHeight();
+		int rootWidth = root.getMeasuredWidth();
+		int rootHeight = root.getMeasuredHeight();
 
-		int xPos 			= ((screenWidth - rootWidth) / 2) + xOffset;
-		int yPos	 		= anchorRect.top - rootHeight + yOffset;
+		int screenWidth = windowManager.getDefaultDisplay().getWidth();
+		// int screenHeight = windowManager.getDefaultDisplay().getHeight();
+
+		int xPos = ((screenWidth - rootWidth) / 2) + xOffset;
+		int yPos = anchorRect.top - rootHeight + yOffset;
 
 		// display on bottom
 		if (rootHeight > anchorRect.top) {
 			yPos = anchorRect.bottom + yOffset;
-			
+
 			window.setAnimationStyle(R.style.Animations_PopDownMenu_Center);
 		}
 
 		window.showAtLocation(anchor, Gravity.NO_GRAVITY, xPos, yPos);
 	}
-	
+
 	public void dismiss() {
 		window.dismiss();
 	}

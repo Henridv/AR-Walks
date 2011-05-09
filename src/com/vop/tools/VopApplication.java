@@ -166,6 +166,7 @@ public class VopApplication extends Application {
 	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
 	 * @param alt
 	 */
+	@Deprecated
 	public void setAlt(double alt) {
 		this.alt = alt;
 	}
@@ -191,6 +192,7 @@ public class VopApplication extends Application {
 	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
 	 * @param lat
 	 */
+	@Deprecated
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
@@ -199,6 +201,7 @@ public class VopApplication extends Application {
 	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
 	 * @param lng
 	 */
+	@Deprecated
 	public void setLng(double lng) {
 		this.lng = lng;
 	}

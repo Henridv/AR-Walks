@@ -12,10 +12,12 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
+
 /**
  * profile
+ * 
  * @author gbostoen
- *
+ * 
  */
 public class Profile extends FullscreenActivity {
 
@@ -25,22 +27,26 @@ public class Profile extends FullscreenActivity {
 		setContentView(R.layout.profiel_layout);
 		updateProfile();
 	}
+
 	/**
 	 * edit action
+	 * 
 	 * @param v
 	 */
 	public void edit_klik(View v) {
-		Intent myIntent = new Intent(Profile.this, EditProfile.class); 
+		Intent myIntent = new Intent(Profile.this, EditProfile.class);
 		Profile.this.startActivity(myIntent);
 	}
+
 	/**
 	 * password action
+	 * 
 	 * @param v
 	 */
-	public void password_klik(View v){
-		Intent myIntent = new Intent(Profile.this, PaswoordWijzigen.class); 
+	public void password_klik(View v) {
+		Intent myIntent = new Intent(Profile.this, EditPassword.class);
 		Profile.this.startActivity(myIntent);
-		
+
 	}
 
 	// menu openen
@@ -50,28 +56,29 @@ public class Profile extends FullscreenActivity {
 		inflater.inflate(R.layout.profiel_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		updateProfile();
 	}
+
 	/**
 	 * method that updates profile
 	 */
-	private void updateProfile(){
+	private void updateProfile() {
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
 		Person p = DBWrapper.getProfile(id);
 		TextView naam = new TextView(this);
-		naam=(TextView)findViewById(R.id.profname); 
-	    naam.setText("Name: "+p.getName());
-	    TextView tel = new TextView(this);
-		tel=(TextView)findViewById(R.id.profphone); 
-	    tel.setText("Phone: "+p.getPhone());
-	    TextView email = new TextView(this);
-		email=(TextView)findViewById(R.id.profmail); 
-	    email.setText("E-mail: "+p.getEmail());
+		naam = (TextView) findViewById(R.id.profname);
+		naam.setText("Name: " + p.getName());
+		TextView tel = new TextView(this);
+		tel = (TextView) findViewById(R.id.profphone);
+		tel.setText("Phone: " + p.getPhone());
+		TextView email = new TextView(this);
+		email = (TextView) findViewById(R.id.profmail);
+		email.setText("E-mail: " + p.getEmail());
 	}
-	
+
 }

@@ -12,8 +12,9 @@ import com.vop.tools.VopApplication;
 
 /**
  * An OpenGL Renderer that draws Points Of Interest on the screen
+ * 
  * @author henridv
- *
+ * 
  */
 public class LocationRenderer extends GLSurfaceView implements Renderer {
 	private Placemarker placemarker;

@@ -42,7 +42,7 @@ public class MainScreen extends FullscreenActivity {
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				final QuickAction qa = new QuickAction(v);
-				
+
 				ActionItem msg_view = new ActionItem();
 				ActionItem actie2 = new ActionItem();
 				ActionItem actie3 = new ActionItem();
@@ -92,7 +92,7 @@ public class MainScreen extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		
+
 		// tracks
 		ImageButton trajecten = (ImageButton) findViewById(R.id.trajecten);
 		trajecten.setOnClickListener(new android.view.View.OnClickListener() {
@@ -100,7 +100,7 @@ public class MainScreen extends FullscreenActivity {
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				final QuickAction qa = new QuickAction(v);
-				
+
 				ActionItem actie1 = new ActionItem();
 				ActionItem actie2 = new ActionItem();
 				ActionItem actie3 = new ActionItem();
@@ -142,7 +142,7 @@ public class MainScreen extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		
+
 		// AR
 		ImageButton locaties = (ImageButton) findViewById(R.id.locaties);
 		locaties.setOnClickListener(new android.view.View.OnClickListener() {
@@ -205,7 +205,7 @@ public class MainScreen extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		
+
 		// friends
 		ImageButton vrienden = (ImageButton) findViewById(R.id.vrienden);
 		vrienden.setOnClickListener(new android.view.View.OnClickListener() {
@@ -242,7 +242,7 @@ public class MainScreen extends FullscreenActivity {
 				qa.show();
 			}
 		});
-		
+
 		// profile
 		ImageButton profiel = (ImageButton) findViewById(R.id.profiel);
 		profiel.setOnClickListener(new android.view.View.OnClickListener() {
@@ -279,7 +279,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, PaswoordWijzigen.class);
+						Intent myIntent = new Intent(MainScreen.this, EditPassword.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}
