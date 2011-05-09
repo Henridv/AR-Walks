@@ -3,7 +3,6 @@ package com.vop.arwalks;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,8 +14,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.vop.ar.overlays.WandelingOverlay2;
-import com.vop.ar.overlays.punten_overlay;
-import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
 
@@ -31,8 +28,6 @@ public class TrajectOpslaanZien extends MapActivity implements
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
-	private punten_overlay itemizedoverlay;
-	private Drawable draw;
 	private VopApplication app;
 
 	@Override
@@ -59,8 +54,6 @@ public class TrajectOpslaanZien extends MapActivity implements
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
 
-		draw = this.getResources().getDrawable(R.drawable.androidmarker);
-
 		initMap();
 		// t = DBWrapper.getTraject(walk_id);
 
@@ -77,7 +70,6 @@ public class TrajectOpslaanZien extends MapActivity implements
 		this.mapView.getOverlays().add(myLocationOverlay);
 		this.mapController.setZoom(19);
 		this.mapController.animateTo(new GeoPoint((int) (app.getLat() * 1E6), (int) (app.getLng() * 1E6)));
-		this.itemizedoverlay = new punten_overlay(this.draw);
 		myLocationOverlay.enableMyLocation();
 	}
 

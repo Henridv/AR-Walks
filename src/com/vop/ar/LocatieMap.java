@@ -114,9 +114,7 @@ public class LocatieMap extends MapActivity {
 			// Create the file
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
-			app.setAlt(location.getAltitude());
-			app.setLng(location.getLongitude());
-			app.setLat(location.getLatitude());
+			app.setLocation(location.getLatitude(), location.getLongitude(), location.getAltitude());
 			GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 			this.mapController.animateTo(punt);
 			app.construeer();
