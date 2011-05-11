@@ -17,16 +17,7 @@ public class AddMessage extends FullscreenActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.profielwijzigen);
-		VopApplication app = (VopApplication) getApplicationContext();
-		int id = Integer.parseInt(app.getState().get("userid"));
-		Person p = DBWrapper.getProfile(id);
-		final EditText newnamebox = (EditText) findViewById(R.id.new_name);
-		final EditText newphonebox = (EditText) findViewById(R.id.new_phone);
-		final EditText newemailbox = (EditText) findViewById(R.id.new_mail);
-		newnamebox.setText(p.getName());
-		newphonebox.setText(p.getPhone());
-		newemailbox.setText(p.getEmail());
+		setContentView(R.layout.addmessage);
 	}
 
 	/**
@@ -37,30 +28,36 @@ public class AddMessage extends FullscreenActivity{
 	public void go_back(View v) {
 		finish();
 	}
-
-	/**
-	 * new profile action
-	 * 
-	 * @param v
-	 */
-	public void new_profile(View v) {
-		final ProgressDialog wachten = ProgressDialog.show(this, "", "Editing profile. Please be patient...", true);
-		final EditText newnamebox = (EditText) findViewById(R.id.new_name);
-		final EditText newphonebox = (EditText) findViewById(R.id.new_phone);
-		final EditText newemailbox = (EditText) findViewById(R.id.new_mail);
+	
+	public void with_picture(View v){
+		Toast.makeText(AddMessage.this, "Met foto", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void without_picture(View v){
+		final ProgressDialog wachten = ProgressDialog.show(this, "", "Saving location and info. Please be patient...", true);
+		final EditText locationName = (EditText) findViewById(R.id.loca_name);
+		final EditText locationDescription = (EditText) findViewById(R.id.loca_descr);
+		final EditText extraInformation = (EditText) findViewById(R.id.new_text);
 		new Thread(new Runnable() {
 			public void run() {
 				VopApplication app = (VopApplication) getApplicationContext();
 				int id = Integer.parseInt(app.getState().get("userid"));
-				Person p = DBWrapper.getProfile(id);
+				String locName = locationName.getText().toString();
+				String locDescr = locationDescription.getText().toString();
+				String extraInfo = locationDescription.getText().toString();
+				
+				//hier functie voor op te slaan naar databank- met henri overleggen
+				/*DBWrapper.save(id,lat,lng,alt,)
+				runOnUiThread(new)
 				p.setName(newnamebox.getText().toString());
 				p.setPhone(newphonebox.getText().toString());
 				p.setEmail(newemailbox.getText().toString());
-				DBWrapper.save(p);
-				wachten.dismiss();
+				DBWrapper.save(p);*/
+				
+				//wachten.dismiss();->wa doet da?
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(getApplicationContext(), "Changing profile succeeded!", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), "Location with extra information added!", Toast.LENGTH_LONG).show();
 
 					}
 				});

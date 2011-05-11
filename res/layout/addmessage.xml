@@ -12,6 +12,30 @@
 		android:textStyle="bold" 
 		android:text="Add message">
 	</TextView>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/loca_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="Location name">
+		</EditText>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/loca_descr"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="Description">
+		</EditText>
+	</LinearLayout>
 		<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
@@ -20,7 +44,8 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:singleLine="true">
+			android:singleLine="true"
+			android:hint="Message">
 		</EditText>
 		</LinearLayout>
 		<LinearLayout
