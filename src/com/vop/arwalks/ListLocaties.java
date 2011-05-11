@@ -67,8 +67,7 @@ public class ListLocaties extends FullscreenListActivity {
 					@Override
 					public void run() {
 						dialog.dismiss();
-						setListAdapter(new ArrayAdapter<String>(activity, R.layout.trajecten_layout, res));
-
+						setListAdapter(new ArrayAdapter<String>(activity, R.layout.list_layout, res));
 					}
 				});
 			}

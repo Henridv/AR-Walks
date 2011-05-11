@@ -469,7 +469,6 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 
@@ -481,6 +480,9 @@ public class DBWrapper {
 	public static void save(Traject t) {
 		String page = "traject.php";
 
+		// when no walk is made nothing can be saved
+		if (t.getWalk().size() == 0) return;
+		
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (t.getId() != null)
 			postValues.add(new BasicNameValuePair("id", Integer.toString(t.getId())));
@@ -496,7 +498,6 @@ public class DBWrapper {
 		try {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
-			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 	}
 

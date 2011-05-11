@@ -184,7 +184,7 @@ public class VopApplication extends Application {
 		this.heading = heading;
 	}
 
-	public void setHuidige_walk(ArrayList<Point> huidige_walk) {
+	public void setCurrentTrack(ArrayList<Point> huidige_walk) {
 		this.huidige_walk = huidige_walk;
 	}
 

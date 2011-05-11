@@ -1,8 +1,15 @@
 package com.vop.services;
 
+import java.io.IOException;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,6 +17,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.vop.arwalks.MainScreen;
+import com.vop.arwalks.R;
 import com.vop.tools.VopApplication;
 
 /**
@@ -20,8 +29,9 @@ import com.vop.tools.VopApplication;
  * 
  */
 public class LocationService extends Service {
-	VopApplication app;
-	LocationManager locationManager;
+	private static final int HELLO_ID = 1;
+	private VopApplication app;
+	private LocationManager locationManager;
 
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
@@ -38,6 +48,9 @@ public class LocationService extends Service {
 		}
 	};
 	private Location currentBestLocation;
+	private Notification notification;
+	private NotificationManager mNotificationManager;
+	private PendingIntent contentIntent;
 
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
 
@@ -112,13 +125,34 @@ public class LocationService extends Service {
 	@Override
 	public void onCreate() {
 		app = (VopApplication) getApplicationContext();
+
+		String ns = Context.NOTIFICATION_SERVICE;
+		int icon = R.drawable.appicon;
+		long when = System.currentTimeMillis();
+		CharSequence tickerText = "Location service started";
+		CharSequence contentTitle = "AR Walks Location";
+		CharSequence contentText = "No location found yet";
+
+		mNotificationManager = (NotificationManager) getSystemService(ns);
+
+		notification = new Notification(icon, tickerText, when);
+		notification.flags |= Notification.FLAG_ONGOING_EVENT
+				| Notification.FLAG_NO_CLEAR;
+
+		Intent notificationIntent = new Intent(this, MainScreen.class);
+		contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+		notification.setLatestEventInfo(app, contentTitle, contentText, contentIntent);
+
+		mNotificationManager.notify(HELLO_ID, notification);
+		
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 		Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		Location locationWIFI = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		if (isBetterLocation(locationWIFI, locationGPS))
+		if (locationWIFI != null && isBetterLocation(locationWIFI, locationGPS))
 			updateWithNewLocation(locationWIFI);
-		else
+		else if (locationGPS != null)
 			updateWithNewLocation(locationGPS);
 
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 2, locationListener);
@@ -128,6 +162,7 @@ public class LocationService extends Service {
 	@Override
 	public void onDestroy() {
 		locationManager.removeUpdates(locationListener);
+		mNotificationManager.cancel(HELLO_ID);
 		Toast.makeText(this, "Location service stopped", Toast.LENGTH_SHORT).show();
 	}
 
@@ -146,8 +181,24 @@ public class LocationService extends Service {
 	private void updateWithNewLocation(Location location) {
 		if (location != null && isBetterLocation(location, currentBestLocation)) {
 			this.currentBestLocation = location;
-			VopApplication app = (VopApplication) getApplicationContext();
 			app.setLocation(location.getLatitude(), location.getLongitude(), location.getAltitude());
+
+			// Update notification
+			Geocoder g = new Geocoder(getApplicationContext());
+			String address = "";
+			try {
+				Address add = g.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
+				int i = add.getMaxAddressLineIndex();
+				for (int j=0; j<i; j++) {
+					if (j != 0) address += ", ";
+					address += add.getAddressLine(j);
+				}
+			} catch (IOException e) {
+			}
+			if (!address.equals("") && contentIntent != null) {
+				notification.setLatestEventInfo(app, "AR Walks Location", address, contentIntent);
+				mNotificationManager.notify(HELLO_ID, notification);
+			}
 		}
 	}
 }
