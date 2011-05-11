@@ -20,18 +20,39 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class TrackService extends Service implements LocationListener {
-	ArrayList<Point> walk = new ArrayList<Point>();
-	VopApplication app;
+	private static boolean RUNNING;
+	private ArrayList<Point> walk;
+	private VopApplication app;
+	
+	private static String name;
+
+	/**
+	 * @param name the name to set
+	 */
+	public static void setName(String name) {
+		TrackService.name = name;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public static String getName() {
+		return name;
+	}
 
 	@Override
 	public void onCreate() {
 		app = (VopApplication) getApplicationContext();
+		app.addLocationListener(this);
+		walk = new ArrayList<Point>();
 	}
 
 	@Override
 	public void onDestroy() {
-		Traject traject = new Traject(app.getState().get("naamtraject"), DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
+		app.removeLocationListener(this);
+		Traject traject = new Traject(name, DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
 		DBWrapper.save(traject);
+		RUNNING = false;
 	}
 
 	@Override
@@ -41,8 +62,18 @@ public class TrackService extends Service implements LocationListener {
 	}
 
 	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		RUNNING = true;
+		return super.onStartCommand(intent, flags, startId);
+	}
+
+	@Override
 	public void locationUpdated() {
 		walk.add(new Point(app.getLat(), app.getLng(), app.getAlt()));
-		app.setHuidige_walk(walk);
+		app.setCurrentTrack(walk);
+	}
+
+	public static boolean isRunning() {
+		return RUNNING;
 	}
 }

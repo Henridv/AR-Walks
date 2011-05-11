@@ -135,7 +135,7 @@ public class Tracks extends FullscreenListActivity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						dialog.dismiss();
-						adapter = new ArrayAdapter<Traject>(activity, R.layout.trajecten_layout, tracks);
+						adapter = new ArrayAdapter<Traject>(activity, R.layout.list_layout, tracks);
 						setListAdapter(adapter);
 					}
 				});

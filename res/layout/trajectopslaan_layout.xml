@@ -1,73 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
-android:id="@+id/widget57"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-<Button
-android:id="@+id/startstop"
-android:layout_width="wrap_content"
-android:layout_height="30px"
-android:text="start"
-android:onClick="startstop"
-android:textSize="10sp"
-android:layout_x="260px"
-android:layout_y="162px"
->
-</Button>
-<TextView
-android:id="@+id/widget32"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="naam"
-android:layout_x="0px"
-android:layout_y="0px"
->
-</TextView>
-<TextView
-android:id="@+id/widget33"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="info"
-android:layout_x="0px"
-android:layout_y="87px"
->
-</TextView>
-<EditText
-android:id="@+id/naam"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textSize="18sp"
-android:layout_x="0px"
-android:layout_y="23px"
->
-</EditText>
-<EditText
-android:id="@+id/info"
-android:layout_width="fill_parent"
-android:layout_height="48px"
-android:textSize="18sp"
-android:layout_x="0px"
-android:layout_y="110px"
->
-</EditText>
-<TextView
-android:id="@+id/widget55"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="aantal punten:"
-android:layout_x="0px"
-android:layout_y="173px"
->
-</TextView>
-<TextView
-android:id="@+id/widget56"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="1"
-android:layout_x="101px"
-android:layout_y="173px"
->
-</TextView>
-</AbsoluteLayout>
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="25dp"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical">
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:paddingBottom="25dp"
+			android:gravity="center_horizontal">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Add track"
+			android:textSize="25dp">
+		</TextView>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<EditText
+			android:id="@+id/track_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="Track name">
+		</EditText>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="right">
+		<Button
+			android:id="@+id/toggleRecording"
+			android:text="Start recording"
+			android:onClick="startstop"
+			android:layout_height="fill_parent"
+			android:layout_width="wrap_content">
+		</Button>
+	</LinearLayout>
+</LinearLayout>
