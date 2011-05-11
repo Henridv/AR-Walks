@@ -75,12 +75,14 @@ public class MainScreen extends FullscreenActivity {
 						qa.dismiss();
 					}
 				});
-				msg_send.setTitle("Send message");
+				msg_send.setTitle("Add message");
 				msg_send.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(MainScreen.this, "bericht maken", Toast.LENGTH_SHORT).show();
+						Intent myIntent = new Intent(MainScreen.this, AddMessage.class);
+						myIntent.putExtra("type", "locations");
+						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
