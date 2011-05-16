@@ -41,6 +41,6 @@
         <activity android:name="TrajectOpslaanZien"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.AugmentedReality"	android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.LocatieMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="AddMessage"></activity>
+        <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 </manifest>
