@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -37,9 +39,11 @@ import com.vop.tools.data.Person;
  */
 public class Login extends FullscreenActivity {
 	Facebook facebook = new Facebook("128192193922051");
+	Activity activity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		this.activity=this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_layout);
 
@@ -76,11 +80,20 @@ public class Login extends FullscreenActivity {
 						String contact_email = (String) json.getJSONObject(0).get("contact_email");
 						String phone = "unknown";
 						Person p = DBWrapper.getProfile(contact_email);
-						// Log.e("p==null",
-						// first_name+" "+last_name+" "+contact_email+" "+phone);
-						if (p == null) {
-							Log.e("p==null", first_name + " " + last_name + " "
-									+ contact_email + " " + phone);
+						if (p != null) {
+							EditText emailbox = (EditText) findViewById(R.id.login_email);
+							EditText password = (EditText) findViewById(R.id.login_password);
+							emailbox.setText(contact_email);
+							password.setText("watskeburt");
+							login(null);
+						}
+						else{
+							DBWrapper.save(new Person(first_name+last_name, phone, "watskeburt", contact_email));
+							EditText emailbox = (EditText) findViewById(R.id.login_email);
+							EditText password = (EditText) findViewById(R.id.login_password);
+							emailbox.setText(contact_email);
+							password.setText("watskeburt");
+							login(null);
 						}
 
 					} catch (JSONException e) {
