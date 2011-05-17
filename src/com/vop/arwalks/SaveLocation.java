@@ -32,7 +32,7 @@ public class SaveLocation extends FullscreenActivity {
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		Location loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
+		Location loc = new Location(locName, locDescr, lat, lng, alt, id);
 		DBWrapper.save(loc);
 		finish();
 	}

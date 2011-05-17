@@ -1,6 +1,7 @@
 package com.vop.tools;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -325,7 +326,16 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+				l.add(new Location(
+						json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("description"),
+						json_data.getDouble("lat"),
+						json_data.getDouble("lng"),
+						json_data.getDouble("alt"),
+						json_data.getString("date"),
+						json_data.getInt("pers_id"),
+						(File) json_data.get("image")));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
@@ -353,39 +363,19 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+				l.add(new Location(
+						json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("description"),
+						json_data.getDouble("lat"),
+						json_data.getDouble("lng"),
+						json_data.getDouble("alt"),
+						json_data.getString("date"),
+						json_data.getInt("pers_id"),
+						(File) json_data.get("image")));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
-		}
-		return l;
-	}
-
-	/**
-	 * get current location of friends
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	public static ArrayList<Location> getLocationsHuidigVrienden(int personId) {
-		String page = "locations.php";
-		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("userid", Integer.toString(personId)));
-		postValues.add(new BasicNameValuePair("name", "huidig"));
-
-		postValues.add(new BasicNameValuePair("action", "getlochuidigfriends"));
-
-		ArrayList<Location> l = new ArrayList<Location>();
-
-		// parse json data
-		try {
-			JSONArray jArray = doPOST(page, postValues);
-			for (int i = 0; i < jArray.length(); i++) {
-				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
-			}
-		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 		return l;
 	}
@@ -481,8 +471,9 @@ public class DBWrapper {
 		String page = "traject.php";
 
 		// when no walk is made nothing can be saved
-		if (t.getWalk().size() == 0) return;
-		
+		if (t.getWalk().size() == 0)
+			return;
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (t.getId() != null)
 			postValues.add(new BasicNameValuePair("id", Integer.toString(t.getId())));
