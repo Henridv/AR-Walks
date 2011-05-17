@@ -1,6 +1,7 @@
 package com.vop.tools;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -9,8 +10,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -325,7 +329,16 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+				l.add(new Location(
+						json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("description"),
+						json_data.getDouble("lat"),
+						json_data.getDouble("lng"),
+						json_data.getDouble("alt"),
+						json_data.getString("date"),
+						json_data.getInt("pers_id"),
+						null));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
@@ -353,39 +366,19 @@ public class DBWrapper {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
+				l.add(new Location(
+						json_data.getInt("id"),
+						json_data.getString("name"),
+						json_data.getString("description"),
+						json_data.getDouble("lat"),
+						json_data.getDouble("lng"),
+						json_data.getDouble("alt"),
+						json_data.getString("date"),
+						json_data.getInt("pers_id"),
+						(File) json_data.get("image")));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
-		}
-		return l;
-	}
-
-	/**
-	 * get current location of friends
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	public static ArrayList<Location> getLocationsHuidigVrienden(int personId) {
-		String page = "locations.php";
-		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("userid", Integer.toString(personId)));
-		postValues.add(new BasicNameValuePair("name", "huidig"));
-
-		postValues.add(new BasicNameValuePair("action", "getlochuidigfriends"));
-
-		ArrayList<Location> l = new ArrayList<Location>();
-
-		// parse json data
-		try {
-			JSONArray jArray = doPOST(page, postValues);
-			for (int i = 0; i < jArray.length(); i++) {
-				JSONObject json_data = jArray.getJSONObject(i);
-				l.add(new Location(json_data.getInt("id"), json_data.getString("name"), json_data.getString("description"), json_data.getDouble("lat"), json_data.getDouble("lng"), json_data.getDouble("alt"), json_data.getString("date"), json_data.getInt("pers_id")));
-			}
-		} catch (JSONException e) {
-			Log.e("log_tag", "Error parsing data " + e.toString());
 		}
 		return l;
 	}
@@ -406,8 +399,11 @@ public class DBWrapper {
 		postValues.add(new BasicNameValuePair("lat", Double.toString(l.getLatitute())));
 		postValues.add(new BasicNameValuePair("lng", Double.toString(l.getLongitude())));
 		postValues.add(new BasicNameValuePair("alt", Double.toString(l.getAltitude())));
-		postValues.add(new BasicNameValuePair("date", l.getDate()));
+		if (l.getDate() != null)
+			postValues.add(new BasicNameValuePair("date", l.getDate()));
 		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(l.getPersId())));
+		if (l.getImg() != null)
+			postValues.add(new BasicNameValuePair("image", l.getImg().getAbsolutePath()));
 
 		postValues.add(new BasicNameValuePair("action", "addloc"));
 
@@ -481,8 +477,9 @@ public class DBWrapper {
 		String page = "traject.php";
 
 		// when no walk is made nothing can be saved
-		if (t.getWalk().size() == 0) return;
-		
+		if (t.getWalk().size() == 0)
+			return;
+
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		if (t.getId() != null)
 			postValues.add(new BasicNameValuePair("id", Integer.toString(t.getId())));
@@ -502,17 +499,19 @@ public class DBWrapper {
 	}
 
 	/**
-	 * Delete a location glenn bostoen
+	 * Delete a location
 	 * 
 	 * @param l
 	 */
 	public static void delete(Location l) {
-		// TODO: delete location(glenn bostoen)
 		String page = "locations.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("name", l.getName().toString()));
-		postValues.add(new BasicNameValuePair("userid", Integer.toString((l.getPersId()))));
-		postValues.add(new BasicNameValuePair("action", "delloc2"));
+		if (l.getId() != null)
+			postValues.add(new BasicNameValuePair("id", Integer.toString(l.getId())));
+		else
+			return;
+		
+		postValues.add(new BasicNameValuePair("action", "delloc"));
 
 		// delete location
 		try {
@@ -607,18 +606,29 @@ public class DBWrapper {
 		String result = "";
 		InputStream is = null;
 
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/" + page);
+		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
 		// http post
 		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/"
-					+ page);
-			httppost.setEntity(new UrlEncodedFormEntity(postValues));
+			for (int i = 0; i < postValues.size(); i++) {
+				if (postValues.get(i).getName().equalsIgnoreCase("image")) {
+					// If the key equals to "image", we use FileBody to transfer the data
+					entity.addPart(postValues.get(i).getName(), new FileBody(new File(postValues.get(i).getValue())));
+				} else {
+					// Normal string data
+					entity.addPart(postValues.get(i).getName(), new StringBody(postValues.get(i).getValue()));
+				}
+			}
+
+			httppost.setEntity(entity);
 			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
+			HttpEntity responseEntity = response.getEntity();
+			is = responseEntity.getContent();
 		} catch (Exception e) {
-			Log.e(VopApplication.LOGTAG, "Error in http connection "
-					+ e.toString());
+			Log.e(VopApplication.LOGTAG, "Error in http connection");
+			Log.e(VopApplication.LOGTAG, e.getMessage());
 		}
 
 		// convert response to string

@@ -1,5 +1,7 @@
 package com.vop.tools.data;
 
+import java.io.File;
+
 /**
  * Represents a Location. It has a Point and extra information.
  * 
@@ -12,8 +14,12 @@ public class Location extends Point {
 	private String description;
 	private String date;
 	private Integer pers_id;
+	private File img;
 
 	/**
+	 * Create a Location with all fields. This constructor is only used when a
+	 * location is retrieved from the database.
+	 * 
 	 * @param id
 	 * @param name
 	 * @param description
@@ -25,32 +31,45 @@ public class Location extends Point {
 	 */
 	public Location(Integer id, String name, String description,
 			Double latitute, Double longitude, Double altitude, String date,
-			Integer persId) {
+			Integer persId, File img) {
 		super(latitute, longitude, altitude);
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.date = date;
-		pers_id = persId;
+		this.pers_id = persId;
+		this.img = img;
 	}
 
 	/**
+	 * A location with no image.
+	 * 
 	 * @param name
 	 * @param description
 	 * @param latitute
 	 * @param longitude
 	 * @param altitude
-	 * @param date
 	 * @param persId
 	 */
 	public Location(String name, String description, Double latitute,
-			Double longitude, Double altitude, String date, Integer persId) {
-		super(latitute, longitude, altitude);
-		this.id = null;
-		this.name = name;
-		this.description = description;
-		this.date = date;
-		pers_id = persId;
+			Double longitude, Double altitude, Integer persId) {
+		this(null, name, description, latitute, longitude, altitude, null, persId, null);
+	}
+
+	/**
+	 * Create a Location with an image (photo)
+	 * 
+	 * @param name
+	 * @param description
+	 * @param latitude
+	 * @param longitude
+	 * @param altitude
+	 * @param persId
+	 * @param img
+	 */
+	public Location(String name, String description, Double latitude,
+			Double longitude, Double altitude, Integer persId, File img) {
+		this(null, name, description, latitude, longitude, altitude, null, persId, img);
 	}
 
 	public String getDate() {
@@ -87,5 +106,13 @@ public class Location extends Point {
 
 	public void setPersId(Integer persId) {
 		pers_id = persId;
+	}
+
+	public void setImg(File img) {
+		this.img = img;
+	}
+
+	public File getImg() {
+		return img;
 	}
 }

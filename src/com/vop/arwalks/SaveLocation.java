@@ -56,7 +56,7 @@ public class SaveLocation extends FullscreenActivity {
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
+		//loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
 
 		facebook.authorize(this, new String[] { "email", "read_stream",
 				"publish_stream" }, new DialogListener() {
@@ -118,6 +118,9 @@ public class SaveLocation extends FullscreenActivity {
 			}
 		});
 		
+		Location loc = new Location(locName, locDescr, lat, lng, alt, id);
+		DBWrapper.save(loc);
+		finish();
 	}
 
 	@Override
