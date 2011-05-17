@@ -103,5 +103,9 @@ $result = pg_query($conn, $query);
 while ($person = pg_fetch_assoc($result)){
 	$output[] = $person;
 }
-print(json_encode($output));
+
+if (isset($output) && !empty($output))
+	print(json_encode($output));
+else
+	echo "[]";
 ?>

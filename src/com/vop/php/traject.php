@@ -90,6 +90,6 @@ if ($action == "trajects" || $action == "get_walk") {
 	}
 	print(json_encode($output));
 } else {
-	echo "OK";
+	echo "[]";
 }
 ?>
