@@ -17,7 +17,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * start a track
@@ -29,7 +29,7 @@ public class StartEenWandeling extends MapActivity implements LocationListener {
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
-	private Traject t;
+	private Track t;
 	private VopApplication app;
 
 	@Override

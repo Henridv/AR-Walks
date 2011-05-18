@@ -3,19 +3,19 @@ package com.vop.tools.data;
 import java.util.ArrayList;
 
 /**
- * Represents a Traject
+ * Represents a Track
  * 
  * @author henri
  * 
  */
-public class Traject {
+public class Track {
 
 	private final Integer id;
 	private String name;
 	private Person person;
 	private ArrayList<Point> walk;
 
-	public Traject(Integer id, String name, Person person, ArrayList<Point> walk) {
+	public Track(Integer id, String name, Person person, ArrayList<Point> walk) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -23,7 +23,7 @@ public class Traject {
 		this.walk = walk;
 	}
 
-	public Traject(String name, Person person, ArrayList<Point> walk) {
+	public Track(String name, Person person, ArrayList<Point> walk) {
 		super();
 		this.id = null;
 		this.name = name;

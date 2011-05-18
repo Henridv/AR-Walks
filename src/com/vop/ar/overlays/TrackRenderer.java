@@ -13,7 +13,7 @@ import android.opengl.GLSurfaceView.Renderer;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * An OpenGL Renderer that draws a track on the screen
@@ -30,7 +30,7 @@ public class TrackRenderer extends GLSurfaceView implements Renderer {
 		super(appContext);
 		app = (VopApplication) appContext.getApplicationContext();
 		placemarker = new Placemarker();
-		Traject track = app.getTraject();
+		Track track = app.getTraject();
 		for (Point p : track.getWalk()) {
 			POI.add(new Marker(new Location(null, null, p.getLatitute(), p.getLongitude(), p.getAltitude(), 0), (float) app.getLat(), (float) app.getLng(), (float) app.getAlt()));
 		}

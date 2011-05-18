@@ -1,9 +1,15 @@
 package com.vop.tools;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -26,7 +32,7 @@ import android.util.Log;
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * This class provides an abstraction of the database. HTML connections are
@@ -42,12 +48,12 @@ public class DBWrapper {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<Traject> getTrajects() {
+	public static ArrayList<Track> getTrajects() {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "trajects"));
 
-		ArrayList<Traject> t = new ArrayList<Traject>();
+		ArrayList<Track> t = new ArrayList<Track>();
 		try {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
@@ -63,7 +69,7 @@ public class DBWrapper {
 					walk.add(new Point(walkObject.getDouble("lat"), walkObject.getDouble("lng"), walkObject.getDouble("alt")));
 				}
 
-				t.add(new Traject(id, name, person, walk));
+				t.add(new Track(id, name, person, walk));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
@@ -76,12 +82,12 @@ public class DBWrapper {
 	 * 
 	 * @return track
 	 */
-	public static ArrayList<Traject> getTrajects2() {
+	public static ArrayList<Track> getTrajects2() {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "trajects"));
 
-		ArrayList<Traject> t = new ArrayList<Traject>();
+		ArrayList<Track> t = new ArrayList<Track>();
 		try {
 			JSONArray jArray = doPOST(page, postValues);
 			for (int i = 0; i < jArray.length(); i++) {
@@ -90,7 +96,7 @@ public class DBWrapper {
 				String name = json_data.getString("name");
 				Person person = getProfile(json_data.getInt("person"));
 
-				t.add(new Traject(id, name, person, null));
+				t.add(new Track(id, name, person, null));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
@@ -104,13 +110,13 @@ public class DBWrapper {
 	 * @param walk_id
 	 * @return
 	 */
-	public static Traject getTraject(int walk_id) {
+	public static Track getTraject(int walk_id) {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("id", Integer.toString(walk_id)));
 		postValues.add(new BasicNameValuePair("action", "get_walk"));
 
-		Traject t = null;
+		Track t = null;
 		try {
 			JSONArray jArray = doPOST(page, postValues);
 			JSONObject json_data = jArray.getJSONObject(0);
@@ -125,7 +131,7 @@ public class DBWrapper {
 				walk.add(new Point(walkObject.getDouble("lat"), walkObject.getDouble("lng"), walkObject.getDouble("alt")));
 			}
 
-			t = new Traject(id, name, person, walk);
+			t = new Track(id, name, person, walk);
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
@@ -338,13 +344,14 @@ public class DBWrapper {
 						json_data.getDouble("alt"),
 						json_data.getString("date"),
 						json_data.getInt("pers_id"),
-						null));
+						getImage(json_data.getString("image"))));
 			}
 		} catch (JSONException e) {
 			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
 		}
 		return l;
 	}
+
 
 	/**
 	 * get locations of friends
@@ -416,34 +423,6 @@ public class DBWrapper {
 	}
 
 	/**
-	 * save current location
-	 * 
-	 * @param pers_id
-	 * @param lat
-	 * @param lng
-	 * @param alt
-	 */
-	public static void saveHuidig(int pers_id, double lat, double lng,
-			double alt) {
-		String page = "recentelocatie.php";
-
-		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
-		postValues.add(new BasicNameValuePair("pers_id", Integer.toString(pers_id)));
-		postValues.add(new BasicNameValuePair("lat", Double.toString(lat)));
-		postValues.add(new BasicNameValuePair("lng", Double.toString(lng)));
-		postValues.add(new BasicNameValuePair("alt", Double.toString(alt)));
-
-		postValues.add(new BasicNameValuePair("action", "huidigelocatie"));
-
-		// Post data
-		try {
-			doPOST(page, postValues);
-		} catch (JSONException e) {
-			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
-		}
-	}
-
-	/**
 	 * Save a person
 	 * 
 	 * @param p
@@ -469,11 +448,11 @@ public class DBWrapper {
 	}
 
 	/**
-	 * Save a traject
+	 * Save a track
 	 * 
 	 * @param t
 	 */
-	public static void save(Traject t) {
+	public static void save(Track t) {
 		String page = "traject.php";
 
 		// when no walk is made nothing can be saved
@@ -568,11 +547,11 @@ public class DBWrapper {
 	}
 
 	/**
-	 * Delete a traject
+	 * Delete a track
 	 * 
 	 * @param t
 	 */
-	public static void delete(Traject t) {
+	public static void delete(Track t) {
 		String page = "traject.php";
 
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
@@ -614,7 +593,8 @@ public class DBWrapper {
 		try {
 			for (int i = 0; i < postValues.size(); i++) {
 				if (postValues.get(i).getName().equalsIgnoreCase("image")) {
-					// If the key equals to "image", we use FileBody to transfer the data
+					// If the key equals to "image", we use FileBody to transfer
+					// the data
 					entity.addPart(postValues.get(i).getName(), new FileBody(new File(postValues.get(i).getValue())));
 				} else {
 					// Normal string data
@@ -628,7 +608,7 @@ public class DBWrapper {
 			is = responseEntity.getContent();
 		} catch (Exception e) {
 			Log.e(VopApplication.LOGTAG, "Error in http connection");
-			Log.e(VopApplication.LOGTAG, e.getMessage());
+			Log.e(VopApplication.LOGTAG, "ERROR: " + e.getMessage());
 		}
 
 		// convert response to string
@@ -647,5 +627,37 @@ public class DBWrapper {
 					+ e.toString());
 		}
 		return new JSONArray(result);
+	}
+
+	/**
+	 * Retrieve an image from the server
+	 * 
+	 * @param filename
+	 *            filename on the server of the image
+	 * @return
+	 */
+	private static File getImage(String filename) {
+		String localFilename = new File(filename).getName();
+		File img = new File("/sdcard/vop/tmp/" + localFilename);
+		new File("/sdcard/vop/tmp/").mkdirs();
+		
+		if (!img.exists()) {
+			try {
+				URL imageUrl = new URL("http://move.ugent.be/~vop/" + filename);
+				InputStream in = imageUrl.openStream();
+				OutputStream out = new BufferedOutputStream(new FileOutputStream(img));
+	
+				for (int b; (b = in.read()) != -1;) {
+					out.write(b);
+				}
+				out.close();
+				in.close();
+			} catch (MalformedURLException e) {
+				img = null;
+			} catch (IOException e) {
+				img = null;
+			}
+		}
+		return img;
 	}
 }

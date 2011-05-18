@@ -10,7 +10,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * This service keeps track of the current track. When the service is stopped
@@ -50,8 +50,8 @@ public class TrackService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		app.removeLocationListener(this);
-		Traject traject = new Traject(name, DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
-		DBWrapper.save(traject);
+		Track track = new Track(name, DBWrapper.getProfile(Integer.parseInt(app.getState().get("userid"))), walk);
+		DBWrapper.save(track);
 		RUNNING = false;
 	}
 

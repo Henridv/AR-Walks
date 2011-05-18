@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * change existing traject
@@ -17,7 +17,7 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class EditTraject extends FullscreenActivity {
-	private Traject t;
+	private Track t;
 	private EditText te;
 
 	@Override

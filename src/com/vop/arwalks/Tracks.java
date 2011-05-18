@@ -21,7 +21,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * tours
@@ -30,10 +30,10 @@ import com.vop.tools.data.Traject;
  * 
  */
 public class Tracks extends FullscreenListActivity {
-	ArrayList<Traject> tracks;
+	ArrayList<Track> tracks;
 	private Activity activity;
 	private String[] res;
-	private ArrayAdapter<Traject> adapter;
+	private ArrayAdapter<Track> adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -135,7 +135,7 @@ public class Tracks extends FullscreenListActivity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						dialog.dismiss();
-						adapter = new ArrayAdapter<Traject>(activity, R.layout.list_layout, tracks);
+						adapter = new ArrayAdapter<Track>(activity, R.layout.list_layout, tracks);
 						setListAdapter(adapter);
 					}
 				});

@@ -16,7 +16,7 @@ import com.vop.services.LocationService;
 import com.vop.tools.data.Location;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Point;
-import com.vop.tools.data.Traject;
+import com.vop.tools.data.Track;
 
 /**
  * An Android Application extending Application. It provides functions to
@@ -42,7 +42,7 @@ public class VopApplication extends Application {
 	private float rotationMatrix[];
 	private float max_afstand;
 	private int dichtste_punt;
-	private Traject traject;
+	private Track track;
 	private Person persoon;
 	private ArrayList<Point> huidige_walk;
 	private Marker center;
@@ -140,8 +140,8 @@ public class VopApplication extends Application {
 		return state;
 	}
 
-	public Traject getTraject() {
-		return traject;
+	public Track getTraject() {
+		return track;
 	}
 
 	/**
@@ -247,8 +247,8 @@ public class VopApplication extends Application {
 		this.state = state;
 	}
 
-	public void setTraject(Traject traject) {
-		this.traject = traject;
+	public void setTraject(Track track) {
+		this.track = track;
 	}
 
 	/**

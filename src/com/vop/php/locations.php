@@ -9,7 +9,7 @@ $action = $_POST['action'];
 switch ($action) {
 	case "getloc":
 		$query = "
-			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt
+			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
 			FROM locations
 			WHERE pers_id = '".$_POST['id']."'
 			ORDER BY id";
@@ -45,6 +45,7 @@ switch ($action) {
 					position=GeomFromText('POINT($lat $lng $alt)', 4326)
 				WHERE id='$id'";
 		} else {
+			// upload image
 			if (isset($_FILES['image'])) {
 			    // Upload dir
 			    $imagedir = "images/";
