@@ -676,8 +676,8 @@ public class DBWrapper {
 	 */
 	private static File getImage(String filename) {
 		String localFilename = new File(filename).getName();
-		File img = new File(Environment.getExternalStorageDirectory() + "/vop/tmp/" + localFilename);
-		new File(Environment.getExternalStorageDirectory() + "/vop/tmp/").mkdirs();
+		File img = new File(Environment.getExternalStorageDirectory(), "/vop/tmp/" + localFilename);
+		new File(Environment.getExternalStorageDirectory(), "/vop/tmp/").mkdirs();
 		
 		if (!img.exists()) {
 			try {
