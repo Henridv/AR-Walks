@@ -28,7 +28,7 @@ public class EditTraject extends FullscreenActivity {
 		if (walk_id == 0)
 			finish();
 		else {
-			t = DBWrapper.getTraject(walk_id);
+			t = DBWrapper.getTrack(walk_id);
 			if (t == null)
 				finish();
 		}

@@ -110,7 +110,7 @@ public class DBWrapper {
 	 * @param walk_id
 	 * @return
 	 */
-	public static Track getTraject(int walk_id) {
+	public static Track getTrack(int walk_id) {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("id", Integer.toString(walk_id)));
@@ -326,7 +326,7 @@ public class DBWrapper {
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("id", Integer.toString(personId)));
 
-		postValues.add(new BasicNameValuePair("action", "getloc"));
+		postValues.add(new BasicNameValuePair("action", "getlocs"));
 
 		ArrayList<Location> l = new ArrayList<Location>();
 
@@ -352,7 +352,41 @@ public class DBWrapper {
 		return l;
 	}
 
+	/** 
+	 * Get one location specified by id
+	 * @param id
+	 * @return
+	 */
+	public static Location getLocation(int id) {
+		String page = "locations.php";
+		
+		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
+		postValues.add(new BasicNameValuePair("id", Integer.toString(id)));
 
+		postValues.add(new BasicNameValuePair("action", "getloc"));
+
+		Location l = null;
+
+		// parse json data
+		try {
+			JSONArray jArray = doPOST(page, postValues);
+			JSONObject json_data = jArray.getJSONObject(0);
+			l = new Location(
+					json_data.getInt("id"),
+					json_data.getString("name"),
+					json_data.getString("description"),
+					json_data.getDouble("lat"),
+					json_data.getDouble("lng"),
+					json_data.getDouble("alt"),
+					json_data.getString("date"),
+					json_data.getInt("pers_id"),
+					getImage(json_data.getString("image")));
+		} catch (JSONException e) {
+			Log.e(VopApplication.LOGTAG, "Error parsing data " + e.toString());
+		}
+		return l;
+	}
+	
 	/**
 	 * get locations of friends
 	 * 

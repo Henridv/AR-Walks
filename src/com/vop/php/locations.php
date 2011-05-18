@@ -7,7 +7,8 @@ if (!isset($_POST['action']))
 $action = $_POST['action'];
 
 switch ($action) {
-	case "getloc":
+	// get all locations from one person
+	case "getlocs":
 		$query = "
 			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
 			FROM locations
@@ -15,6 +16,15 @@ switch ($action) {
 			ORDER BY id";
 		break;
 		
+	// get one location
+	case "getloc":
+		$query = "
+			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
+			FROM locations
+			WHERE id = '".$_POST['id']."'";
+		break;
+		
+	// get location of friends
 	case "getlocfriends":
 		$pers_id = $_POST['pers_id'];
 		$query = "

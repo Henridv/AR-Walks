@@ -62,7 +62,7 @@ public class StartEenWandeling extends MapActivity implements LocationListener {
 		this.mapView.setStreetView(true);
 
 		initMap();
-		t = DBWrapper.getTraject(walk_id);
+		t = DBWrapper.getTrack(walk_id);
 
 		drawPath(t.getWalk(), -65536);
 	}

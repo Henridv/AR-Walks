@@ -180,7 +180,7 @@ public class LocationService extends Service {
 	 */
 	private void updateWithNewLocation(Location location) {
 		if (location != null && isBetterLocation(location, currentBestLocation)) {
-			this.currentBestLocation = location;
+			this.currentBestLocation = new Location(location);
 			app.setLocation(location.getLatitude(), location.getLongitude(), location.getAltitude());
 
 			// Update notification

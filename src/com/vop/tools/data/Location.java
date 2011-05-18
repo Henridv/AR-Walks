@@ -115,4 +115,15 @@ public class Location extends Point {
 	public File getImg() {
 		return img;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Location) {
+			return ((Location) o).getId().equals(this.id);
+		} else {
+			return super.equals(o);
+		}
+	}
+	
+	
 }
