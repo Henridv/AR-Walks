@@ -67,4 +67,19 @@ public class Track {
 	public String toString() {
 		return name;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof Track) {
+			return ((Track) o).getId().equals(this.id);
+		} else {
+			return super.equals(o);
+		}
+	}
+	
+	
 }

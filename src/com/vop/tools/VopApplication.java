@@ -140,7 +140,7 @@ public class VopApplication extends Application {
 		return state;
 	}
 
-	public Track getTraject() {
+	public Track getTrack() {
 		return track;
 	}
 
@@ -247,7 +247,7 @@ public class VopApplication extends Application {
 		this.state = state;
 	}
 
-	public void setTraject(Track track) {
+	public void setTrack(Track track) {
 		this.track = track;
 	}
 

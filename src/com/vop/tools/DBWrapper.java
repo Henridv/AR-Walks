@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.vop.tools.data.Location;
@@ -128,7 +129,10 @@ public class DBWrapper {
 			JSONArray walkArray = json_data.getJSONArray("walk");
 			for (int j = 0; j < walkArray.length(); j++) {
 				JSONObject walkObject = walkArray.getJSONObject(j);
-				walk.add(new Point(walkObject.getDouble("lat"), walkObject.getDouble("lng"), walkObject.getDouble("alt")));
+				walk.add(new Point(
+						walkObject.getDouble("lat"),
+						walkObject.getDouble("lng"),
+						walkObject.getDouble("alt")));
 			}
 
 			t = new Track(id, name, person, walk);
@@ -672,8 +676,8 @@ public class DBWrapper {
 	 */
 	private static File getImage(String filename) {
 		String localFilename = new File(filename).getName();
-		File img = new File("/sdcard/vop/tmp/" + localFilename);
-		new File("/sdcard/vop/tmp/").mkdirs();
+		File img = new File(Environment.getDataDirectory() + "/vop/tmp/" + localFilename);
+		new File(Environment.getDataDirectory() + "/vop/tmp/").mkdirs();
 		
 		if (!img.exists()) {
 			try {

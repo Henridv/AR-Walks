@@ -1,5 +1,6 @@
 package com.vop.ar.overlays;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -30,9 +31,14 @@ public class TrackRenderer extends GLSurfaceView implements Renderer {
 		super(appContext);
 		app = (VopApplication) appContext.getApplicationContext();
 		placemarker = new Placemarker();
-		Track track = app.getTraject();
+		Track track = app.getTrack();
+		POI = new ArrayList<Marker>();
 		for (Point p : track.getWalk()) {
-			POI.add(new Marker(new Location(null, null, p.getLatitute(), p.getLongitude(), p.getAltitude(), 0), (float) app.getLat(), (float) app.getLng(), (float) app.getAlt()));
+			POI.add(new Marker(
+					new Location(null, null, p.getLatitute(), p.getLongitude(), p.getAltitude(), 0),
+					(float) app.getLat(),
+					(float) app.getLng(),
+					(float) app.getAlt()));
 		}
 	}
 

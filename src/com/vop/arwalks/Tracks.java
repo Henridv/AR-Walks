@@ -19,8 +19,10 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import com.vop.ar.AugmentedReality;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
+import com.vop.tools.VopApplication;
 import com.vop.tools.data.Track;
 
 /**
@@ -72,8 +74,12 @@ public class Tracks extends FullscreenListActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						if (items[item].equals("Walk")) {
-							Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
-							myIntent.putExtra("walk_id", tracks.get(position).getId());
+							Intent myIntent = new Intent(Tracks.this, AugmentedReality.class);
+							
+							myIntent.putExtra("type", "track");
+							VopApplication app = (VopApplication) getApplicationContext();
+							app.setTrack(DBWrapper.getTrack(tracks.get(position).getId()));
+							
 							Tracks.this.startActivity(myIntent);
 						} else if (items[item].equals("Edit")) {
 							Intent myIntent = new Intent(Tracks.this, EditTraject.class);
