@@ -53,7 +53,7 @@ public class ListLocaties extends FullscreenListActivity {
 	 * updating locations in new thread
 	 */
 	private void updateLocaties() {
-		final ProgressDialog dialog = ProgressDialog.show(this, "", "Bezig met inladen van punten", true);
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading locations. Please wait...", true);
 		new Thread(new Runnable() {
 
 			@Override
