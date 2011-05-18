@@ -51,9 +51,9 @@ public class Messages extends FullscreenListActivity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				/*Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
+				Intent myIntent = new Intent(Messages.this, MessagesOnMap.class);
 				myIntent.putExtra("id", locations.get(position).getId());
-				Tracks.this.startActivity(myIntent);*/
+				Messages.this.startActivity(myIntent);
 			}
 		});
 
