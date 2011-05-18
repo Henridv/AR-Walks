@@ -15,13 +15,11 @@ import android.provider.MediaStore.Images.Media;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
-import com.vop.tools.data.Person;
+import com.vop.tools.data.Location;
 
 public class AddMessage extends FullscreenActivity{
 
@@ -33,6 +31,11 @@ public class AddMessage extends FullscreenActivity{
 	protected EditText locationDescription;
 	protected EditText extraInformation;
 	
+	protected String locName;
+	protected String locDescr;
+	protected VopApplication app;
+	protected int id;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +44,6 @@ public class AddMessage extends FullscreenActivity{
 		_path = Environment.getExternalStorageDirectory() +"/images/example.jpg";
 		locationName = (EditText) findViewById(R.id.loca_name);
 		locationDescription = (EditText) findViewById(R.id.loca_descr);
-		extraInformation = (EditText) findViewById(R.id.new_text);
 	}
 
 	/**
@@ -54,29 +56,30 @@ public class AddMessage extends FullscreenActivity{
 	}
 	
 	public void with_picture(View v){
-		String locName = locationName.getText().toString();
-		String locDescr = locationDescription.getText().toString();
-		String extraInfo = locationDescription.getText().toString();
-		if(locName.equals("")||locDescr.equals("")||extraInfo.equals("")){
+		app = (VopApplication) getApplicationContext();
+		id = Integer.parseInt(app.getState().get("userid"));
+		locName = locationName.getText().toString();
+		locDescr = locationDescription.getText().toString();
+		if(locName.equals("")||locDescr.equals("")){
 			Toast.makeText(getApplicationContext(), "Fill in all fields!", Toast.LENGTH_LONG).show();
 		}
 		else{
 			startCameraActivity();
 			
+			
 		}
 	}
 	
 	public void without_picture(View v){
-		final ProgressDialog wachten = ProgressDialog.show(this, "", "Saving location and info. Please be patient...", true);
+		final ProgressDialog waiting = ProgressDialog.show(this, "", "Saving location and info. Please be patient...", true);
 		new Thread(new Runnable() {
 			public void run() {
-				VopApplication app = (VopApplication) getApplicationContext();
-				int id = Integer.parseInt(app.getState().get("userid"));
-				String locName = locationName.getText().toString();
-				String locDescr = locationDescription.getText().toString();
-				String extraInfo = locationDescription.getText().toString();
+				app = (VopApplication) getApplicationContext();
+				id = Integer.parseInt(app.getState().get("userid"));
+				locName = locationName.getText().toString();
+				locDescr = locationDescription.getText().toString();
 				
-				//sendInformation(Location location, locName,locDescr,extraInfo, null);
+				DBWrapper.save(new Location(locName,locDescr,app.getLat(),app.getLng(),app.getAlt(),id));
 
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -91,9 +94,10 @@ public class AddMessage extends FullscreenActivity{
 	
 	protected void startCameraActivity(){
 		File file = new File(_path);
-		if(!file.exists()){
-			file.mkdir();
-		}
+		new File(Environment.getExternalStorageDirectory() +"/images/").mkdirs();
+//		if(!file.exists()){
+//			file.mkdirs();
+//		}
 		
 		Uri outputFileUri = Uri.fromFile(file);
 		
@@ -114,7 +118,7 @@ public class AddMessage extends FullscreenActivity{
 	}
 	
 	protected void onPhotoTaken(){
-		//sendInformation(Location location,locName,locDescr,extraInfo,image)
+		DBWrapper.save(new Location(locName,locDescr,app.getLat(),app.getLng(),app.getAlt(),id,new File(_path)));
 		Toast.makeText(getApplicationContext(), "Location with extra information added!", Toast.LENGTH_LONG).show();
 	}
 	
