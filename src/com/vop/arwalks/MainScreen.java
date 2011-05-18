@@ -53,7 +53,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, ListLocaties.class);
+						Intent myIntent = new Intent(MainScreen.this, Messages.class);
 						myIntent.putExtra("type", "locations");
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();

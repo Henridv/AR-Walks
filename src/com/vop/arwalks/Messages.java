@@ -23,6 +23,7 @@ import android.content.DialogInterface.OnClickListener;
 import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
+import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
 
 public class Messages extends FullscreenListActivity {
@@ -31,12 +32,15 @@ public class Messages extends FullscreenListActivity {
 	private Activity activity;
 	private String[] res;
 	private ArrayAdapter<Location> adapter;
+	VopApplication app;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (VopApplication) getApplicationContext();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+		updateWalks();
 
 		activity = this;
 
@@ -113,29 +117,28 @@ public class Messages extends FullscreenListActivity {
 
 	/**
 	 * Updates traject list
-	 
+	*/ 
 	private void updateWalks() {
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading tracks. Please wait...", true);
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				tracks = DBWrapper.getTrajects2();
+				locations = DBWrapper.getLocations(Integer.parseInt(app.getState().get("userid")));
 
-				res = new String[tracks.size()];
-				{
-					for (int i = 0; i < tracks.size(); i++) {
-						res[i] = "'" + tracks.get(i) + "' by "
-								+ tracks.get(i).getPerson();
-					}
-				}
+				res = new String[locations.size()];
+				for (int i = 0; i < res.length; i++)
+					res[i] = locations.get(i).getName();
+
 				runOnUiThread(new Runnable() {
+					@Override
 					public void run() {
 						dialog.dismiss();
-						adapter = new ArrayAdapter<Track>(activity, R.layout.list_layout, tracks);
-						setListAdapter(adapter);
+						setListAdapter(new ArrayAdapter<String>(activity, R.layout.list_layout, res));
 					}
-				});
+				});			
 			}
-		*/
+		});
+	}
+		
 }
