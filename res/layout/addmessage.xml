@@ -39,14 +39,6 @@
 		<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/new_text"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:singleLine="true"
-			android:hint="Message">
-		</EditText>
 		</LinearLayout>
 		<LinearLayout
 		android:layout_width="fill_parent"
