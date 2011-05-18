@@ -25,6 +25,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
+import com.vop.tools.data.Track;
 
 public class Messages extends FullscreenListActivity {
 
@@ -77,7 +78,7 @@ public class Messages extends FullscreenListActivity {
 							myIntent.putExtra("id", locations.get(position).getId());
 							Messages.this.startActivity(myIntent);
 						} else if (items[item].equals("Edit")) {
-							Intent myIntent = new Intent(Messages.this, EditTraject.class);
+							Intent myIntent = new Intent(Messages.this, EditMessage.class);
 							myIntent.putExtra("id", locations.get(position).getId());
 							startActivity(myIntent);
 						} else if (items[item].equals("Delete")) {
@@ -99,7 +100,7 @@ public class Messages extends FullscreenListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.trajecten_menu, menu);
+		inflater.inflate(R.layout.message_menu, menu);
 		return true;
 	}
 
@@ -107,7 +108,7 @@ public class Messages extends FullscreenListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-		case R.id.traject_update:
+		case R.id.message_update:
 			//updateWalks();
 			return true;
 		default:
@@ -119,7 +120,7 @@ public class Messages extends FullscreenListActivity {
 	 * Updates traject list
 	*/ 
 	private void updateWalks() {
-		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading tracks. Please wait...", true);
+		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading messages. Please wait...", true);
 		new Thread(new Runnable() {
 
 			@Override
@@ -134,11 +135,12 @@ public class Messages extends FullscreenListActivity {
 					@Override
 					public void run() {
 						dialog.dismiss();
-						setListAdapter(new ArrayAdapter<String>(activity, R.layout.list_layout, res));
+						adapter = new ArrayAdapter<Location>(activity, R.layout.list_layout, locations);
+						setListAdapter(adapter);
 					}
 				});			
 			}
-		});
+		}).start();
 	}
 		
 }

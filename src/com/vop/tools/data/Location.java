@@ -71,6 +71,10 @@ public class Location extends Point {
 			Double longitude, Double altitude, Integer persId, File img) {
 		this(null, name, description, latitude, longitude, altitude, null, persId, img);
 	}
+	
+	public String toString(){
+		return this.name;
+	}
 
 	public String getDate() {
 		return date;

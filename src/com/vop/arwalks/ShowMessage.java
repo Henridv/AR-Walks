@@ -17,6 +17,7 @@ import com.vop.tools.data.Location;
 public class ShowMessage extends FullscreenActivity{
 
 	private Location l;
+	protected Bitmap bMap;
 
 	@Override
 	public void onCreate(Bundle b) {
@@ -36,7 +37,7 @@ public class ShowMessage extends FullscreenActivity{
 		TextView description = (TextView) findViewById(R.id.messagedescription);
 		description.setText(l.getDescription());
 		TextView date = (TextView) findViewById(R.id.messagedate);
-		date.setText(l.getDate());
+		date.setText(l.getDate().substring(0,10));
 		ImageView image = (ImageView) findViewById(R.id.messageimage);
 		BitmapFactory.Options options = new BitmapFactory.Options();
 	    options.inSampleSize = 4;
@@ -45,7 +46,7 @@ public class ShowMessage extends FullscreenActivity{
 		try {
 			in = new FileInputStream(l.getImg());
 			BufferedInputStream buf = new BufferedInputStream(in);
-	        Bitmap bMap = BitmapFactory.decodeStream(buf);
+	        bMap = BitmapFactory.decodeStream(buf);
 	        image.setImageBitmap(bMap);
 	        if (in != null) {
 	         	in.close();
@@ -56,5 +57,13 @@ public class ShowMessage extends FullscreenActivity{
 		} catch (Exception e) {} 
 
 	}
+
 	
+	public void onDestroy(){
+		super.onDestroy();
+		try{
+		bMap.recycle();
+		} catch(Exception e){}
+		
+	}
 }

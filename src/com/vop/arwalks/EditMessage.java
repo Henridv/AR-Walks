@@ -12,7 +12,8 @@ import com.vop.tools.data.Location;
 public class EditMessage extends FullscreenActivity{
 
 	private Location l;
-	private EditText te;
+	private EditText newName;
+	private EditText newDescription;
 
 	@Override
 	public void onCreate(Bundle b) {
@@ -26,11 +27,14 @@ public class EditMessage extends FullscreenActivity{
 			if (l == null)
 				finish();
 		}
+		
+		TextView titel = (TextView) findViewById(R.id.message_title);
+		titel.setText(l.getName());
+		newName = (EditText) findViewById(R.id.message_new_name);
+		newName.setText(l.getName());
+		newDescription = (EditText) findViewById(R.id.message_new_description);
+		newDescription.setText(l.getName());
 
-		te = (EditText) findViewById(R.id.walk_name);
-		TextView tv = (TextView) findViewById(R.id.walk_title);
-		te.setText(l.getName());
-		tv.setText(l.getName());
 	}
 
 	/**
@@ -39,8 +43,10 @@ public class EditMessage extends FullscreenActivity{
 	 * @param v
 	 */
 	public void saveMessage(View v) {
-		String name = te.getText().toString();
+		String name = newName.getText().toString();
+		String description = newName.getText().toString();
 		l.setName(name);
+		l.setDescription(description);
 		DBWrapper.save(l);
 		finish();
 	}

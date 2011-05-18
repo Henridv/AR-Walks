@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/post_message"
+    	android:title="Post a message" 
+        android:icon="@drawable/bericht" />
+    <item android:id="@+id/message_update"
+    	android:title="Update messages" 
+        android:icon="@drawable/refresh" />
+</menu>

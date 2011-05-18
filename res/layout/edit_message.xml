@@ -10,7 +10,7 @@
 		android:layout_height="wrap_content" android:paddingBottom="25dp"
 			android:gravity="center_horizontal">
 		<TextView
-			android:id="@+id/location_name"
+			android:id="@+id/message_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="25dp">
@@ -20,11 +20,20 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<EditText
-			android:id="@+id/location_description"
+			android:id="@+id/message_new_name"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:singleLine="true">
+			android:singleLine="true"
+			android:hint="Enter name">
+		</EditText>
+		<EditText
+			android:id="@+id/message_new_description"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:hint="Enter name">
 		</EditText>
 	</LinearLayout>
 	<LinearLayout
@@ -32,7 +41,7 @@
 		android:layout_height="wrap_content" android:gravity="right">
 		<Button
 		android:text="Save"
-		android:onClick="saveMessage" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		android:onClick="saveWalk" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 	</LinearLayout>
 </LinearLayout>
