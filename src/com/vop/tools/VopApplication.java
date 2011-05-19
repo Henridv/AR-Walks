@@ -9,11 +9,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.widget.Toast;
 
-import com.vop.ar.overlays.Marker;
 import com.vop.services.LocationService;
 import com.vop.tools.data.Location;
+import com.vop.tools.data.Marker;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
@@ -41,10 +40,9 @@ public class VopApplication extends Application {
 	private double heading;
 	private float rotationMatrix[];
 	private float max_afstand;
-	private int dichtste_punt;
 	private Track track;
 	private Person persoon;
-	private ArrayList<Point> huidige_walk;
+	private ArrayList<Point> currentTrack;
 	private Marker center;
 
 	private Intent locationServiceIntent;
@@ -57,14 +55,12 @@ public class VopApplication extends Application {
 		locationListeners = new ArrayList<LocationListener>();
 	}
 
-	public void construeer() {
-		Toast.makeText(getApplicationContext(), "POI inladen", Toast.LENGTH_SHORT).show();
-
-		ArrayList<Location> loc = DBWrapper.getLocations(Integer.parseInt(state.get("userid")));
-		Marker POI[] = new Marker[loc.size()];
+	public void getPOIs() {
+		ArrayList<Location> locations = DBWrapper.getLocations(Integer.parseInt(state.get("userid")));
+		Marker POI[] = new Marker[locations.size()];
 
 		List<Marker> list = new ArrayList<Marker>();
-		for (Location l : loc) {
+		for (Location l : locations) {
 			list.add(new Marker(l, (float) lat, (float) lng, (float) alt));
 		}
 
@@ -82,20 +78,20 @@ public class VopApplication extends Application {
 		return azimuth;
 	}
 
+	/**
+	 * Returns the centered POI
+	 * @return
+	 */
 	public Marker getCenter() {
 		return center;
-	}
-
-	public int getDichtste_punt() {
-		return dichtste_punt;
 	}
 
 	public double getHeading() {
 		return heading;
 	}
 
-	public ArrayList<Point> getHuidige_walk() {
-		return huidige_walk;
+	public ArrayList<Point> getCurrentTrack() {
+		return currentTrack;
 	}
 
 	public double getLat() {
@@ -162,15 +158,6 @@ public class VopApplication extends Application {
 		return state.put(k, v);
 	}
 
-	/**
-	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
-	 * @param alt
-	 */
-	@Deprecated
-	public void setAlt(double alt) {
-		this.alt = alt;
-	}
-
 	public void setAzimuth(float azimuth) {
 		this.azimuth = azimuth;
 	}
@@ -185,25 +172,7 @@ public class VopApplication extends Application {
 	}
 
 	public void setCurrentTrack(ArrayList<Point> huidige_walk) {
-		this.huidige_walk = huidige_walk;
-	}
-
-	/**
-	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
-	 * @param lat
-	 */
-	@Deprecated
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	/**
-	 * @deprecated Use {@link #setLocation(lat, lng, alt)} instead
-	 * @param lng
-	 */
-	@Deprecated
-	public void setLng(double lng) {
-		this.lng = lng;
+		this.currentTrack = huidige_walk;
 	}
 
 	public void setLocation(double lat, double lng, double alt) {

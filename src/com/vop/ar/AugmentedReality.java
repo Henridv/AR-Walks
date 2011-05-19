@@ -19,7 +19,7 @@ import com.vop.ar.overlays.CameraOverlay;
 import com.vop.ar.overlays.InfoView;
 import com.vop.ar.overlays.LocationRenderer;
 import com.vop.ar.overlays.TrackRenderer;
-import com.vop.arwalks.ListLocaties;
+import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
 import com.vop.tools.FullscreenActivity;
@@ -183,7 +183,7 @@ public class AugmentedReality extends FullscreenActivity implements
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.kaart:
-			Intent myIntent = new Intent(AugmentedReality.this, LocatieMap.class);
+			Intent myIntent = new Intent(AugmentedReality.this, LocationMap.class);
 			AugmentedReality.this.startActivity(myIntent);
 			finish();
 			return true;
@@ -227,10 +227,10 @@ public class AugmentedReality extends FullscreenActivity implements
 			AugmentedReality.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
-			app.construeer();
+			app.getPOIs();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(AugmentedReality.this, ListLocaties.class);
+			myIntent = new Intent(AugmentedReality.this, Locations.class);
 			AugmentedReality.this.startActivity(myIntent);
 			return true;
 		default:
@@ -240,6 +240,6 @@ public class AugmentedReality extends FullscreenActivity implements
 
 	@Override
 	public void locationUpdated() {
-		app.construeer();
+		app.getPOIs();
 	}
 }

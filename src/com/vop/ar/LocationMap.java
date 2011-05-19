@@ -17,21 +17,19 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
-import com.vop.ar.overlays.Marker;
 import com.vop.ar.overlays.punten_overlay;
-import com.vop.arwalks.ListLocaties;
+import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Marker;
 
 /**
- * locations projected on a map
- * 
- * @author gbostoen
+ * Shows locations on a map
  * 
  */
-public class LocatieMap extends MapActivity implements LocationListener {
+public class LocationMap extends MapActivity implements LocationListener {
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
@@ -70,7 +68,7 @@ public class LocatieMap extends MapActivity implements LocationListener {
 	 * initialize the map
 	 */
 	private void initMap() {
-		app.construeer();
+		app.getPOIs();
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableCompass();
@@ -97,7 +95,7 @@ public class LocatieMap extends MapActivity implements LocationListener {
 	 * method to refresh map with the latest points
 	 */
 	private void refreshMap() {
-		app.construeer();
+		app.getPOIs();
 		mapView.getOverlays().clear();
 		mapView.getOverlays().add(myLocationOverlay);
 		Marker POI[] = app.getPunten();
@@ -126,20 +124,20 @@ public class LocatieMap extends MapActivity implements LocationListener {
 		vibrator.vibrate(60);
 		switch (item.getItemId()) {
 		case R.id.augmentedView:
-			Intent myIntent = new Intent(LocatieMap.this, AugmentedReality.class);
-			LocatieMap.this.startActivity(myIntent);
+			Intent myIntent = new Intent(LocationMap.this, AugmentedReality.class);
+			LocationMap.this.startActivity(myIntent);
 			return true;
 		case R.id.opslaan:
-			myIntent = new Intent(LocatieMap.this, SaveLocation.class);
-			LocatieMap.this.startActivity(myIntent);
+			myIntent = new Intent(LocationMap.this, SaveLocation.class);
+			LocationMap.this.startActivity(myIntent);
 			return true;
 		case R.id.refresh:
-			app.construeer();
+			app.getPOIs();
 			refreshMap();
 			return true;
 		case R.id.lijstloc:
-			myIntent = new Intent(LocatieMap.this, ListLocaties.class);
-			LocatieMap.this.startActivity(myIntent);
+			myIntent = new Intent(LocationMap.this, Locations.class);
+			LocationMap.this.startActivity(myIntent);
 			finish();
 			return true;
 		default:
@@ -153,7 +151,7 @@ public class LocatieMap extends MapActivity implements LocationListener {
 		double lng = app.getLng();
 		GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 		this.mapController.animateTo(punt);
-		app.construeer();
+		app.getPOIs();
 	}
 	
 	/**

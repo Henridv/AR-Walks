@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.vop.ar.AugmentedReality;
-import com.vop.ar.LocatieMap;
+import com.vop.ar.LocationMap;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
@@ -176,7 +176,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, ListLocaties.class);
+						Intent myIntent = new Intent(MainScreen.this, Locations.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}
@@ -186,7 +186,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, LocatieMap.class);
+						Intent myIntent = new Intent(MainScreen.this, LocationMap.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}

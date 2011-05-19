@@ -57,8 +57,8 @@ public class TrajectOpslaanZien extends MapActivity implements
 		initMap();
 		// t = DBWrapper.getTraject(walk_id);
 
-		if (app.getHuidige_walk() != null)
-			drawPath(app.getHuidige_walk(), -65536);
+		if (app.getCurrentTrack() != null)
+			drawPath(app.getCurrentTrack(), -65536);
 
 	}
 
@@ -97,8 +97,8 @@ public class TrajectOpslaanZien extends MapActivity implements
 
 		GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 		this.mapController.animateTo(punt);
-		if (app.getHuidige_walk() != null)
-			drawPath(app.getHuidige_walk(), -65536);
+		if (app.getCurrentTrack() != null)
+			drawPath(app.getCurrentTrack(), -65536);
 	}
 	
 	/**

@@ -25,7 +25,7 @@ public class InfoView extends View {
 	public InfoView(Context context) {
 		super(context);
 		app = (VopApplication) context.getApplicationContext();
-		app.construeer();
+		app.getPOIs();
 	}
 
 	@Override

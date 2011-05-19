@@ -19,10 +19,8 @@ import com.vop.tools.VopApplication;
 /**
  * alternative list view of locations
  * 
- * @author gbostoen
- * 
  */
-public class ListLocaties extends FullscreenListActivity {
+public class Locations extends FullscreenListActivity {
 	private Activity activity;
 	private String[] res;
 	ArrayList<com.vop.tools.data.Location> loc;

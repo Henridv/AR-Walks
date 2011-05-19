@@ -9,6 +9,7 @@ import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 
 import com.vop.tools.VopApplication;
+import com.vop.tools.data.Marker;
 
 /**
  * An OpenGL Renderer that draws Points Of Interest on the screen

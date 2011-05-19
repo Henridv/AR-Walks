@@ -135,6 +135,7 @@ public class LocationService extends Service {
 
 		mNotificationManager = (NotificationManager) getSystemService(ns);
 
+		// ongoing notification (can not be cleared from the notification area)
 		notification = new Notification(icon, tickerText, when);
 		notification.flags |= Notification.FLAG_ONGOING_EVENT
 				| Notification.FLAG_NO_CLEAR;

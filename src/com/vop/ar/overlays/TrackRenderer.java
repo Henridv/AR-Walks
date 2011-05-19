@@ -13,6 +13,7 @@ import android.opengl.GLSurfaceView.Renderer;
 
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
+import com.vop.tools.data.Marker;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
 

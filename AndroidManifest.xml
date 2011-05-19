@@ -30,7 +30,7 @@
         <activity android:name="Profile"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="Friends"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="SaveLocation"	android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="ListLocaties"	android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="Locations"	android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="TrajectOpslaan" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="EditTraject"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="EditProfile"	android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
@@ -41,7 +41,7 @@
         <activity android:name="FriendProfile"		android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="TrajectOpslaanZien"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.AugmentedReality"	android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="com.vop.ar.LocatieMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.ar.LocationMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="EditMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="ShowMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
