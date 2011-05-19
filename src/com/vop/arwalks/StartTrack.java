@@ -25,7 +25,7 @@ import com.vop.tools.data.Track;
  * @author gbostoen
  * 
  */
-public class StartEenWandeling extends MapActivity implements LocationListener {
+public class StartTrack extends MapActivity implements LocationListener {
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;

@@ -6,4 +6,7 @@
     <item android:id="@+id/message_update"
     	android:title="Update messages" 
         android:icon="@drawable/refresh" />
+    <item android:id="@+id/home"
+    	android:title="Home" 
+        android:icon="@drawable/refresh" />
 </menu>

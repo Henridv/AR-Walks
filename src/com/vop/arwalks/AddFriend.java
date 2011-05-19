@@ -40,9 +40,6 @@ public class AddFriend extends FullscreenListActivity {
 	ArrayList<Person> p2;
 	Vibrator vibrator;
 
-	QuickAction qa;
-	static private ActionItem actie1 = new ActionItem();
-	static private ActionItem actie2 = new ActionItem();
 	private int positie;
 
 	@Override
@@ -61,47 +58,18 @@ public class AddFriend extends FullscreenListActivity {
 					int position, long id) {
 				vibrator.vibrate(60);
 				positie = position;
-				qa = new QuickAction(view);
-
-				actie1.setTitle("View profile");
-				// actie1.setIcon(getResources().getDrawable(R.drawable.chart));
-				actie1.setOnClickListener(new android.view.View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						vibrator.vibrate(60);
-						if (positie > p2.size() - 1) {
-							int pos = positie - p2.size();
-							Intent myIntent = new Intent(AddFriend.this, FriendProfile.class);
-							myIntent.putExtra("profielid", p1.get(pos).getId());
-							AddFriend.this.startActivity(myIntent);
-						} else {
-							Intent myIntent = new Intent(AddFriend.this, FriendProfile.class);
-							myIntent.putExtra("profielid", p2.get(positie).getId());
-							AddFriend.this.startActivity(myIntent);
-						}
-					}
-				});
-				actie2.setTitle("Send message");
-				actie2.setOnClickListener(new android.view.View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						vibrator.vibrate(60);
-						if (positie > p2.size() - 1) {
-							int pos = positie - p2.size();
-							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p1.get(pos).getId());
-							updateNotAddedPersons();
-						} else {
-							DBWrapper.addFriend(Integer.parseInt(app.getState().get("userid")), p2.get(positie).getId());
-							updateNotAddedPersons();
-						}
-					}
-				});
-				qa.addActionItem(actie1);
-				qa.addActionItem(actie2);
-				qa.setAnimStyle(QuickAction.ANIM_AUTO);
-				qa.show();
-			}
-		});
+				if (position > p2.size() - 1) {
+					int pos = position - p2.size();
+					Intent myIntent = new Intent(AddFriend.this, FriendProfile.class);
+					myIntent.putExtra("profielid", p1.get(pos).getId());
+					AddFriend.this.startActivity(myIntent);
+				}
+				else{
+					Intent myIntent = new Intent(AddFriend.this, FriendProfile.class);
+					myIntent.putExtra("profielid", p2.get(position).getId());
+					AddFriend.this.startActivity(myIntent);
+				}
+		}});
 
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 

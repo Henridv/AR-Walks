@@ -52,7 +52,7 @@ public class Messages extends FullscreenListActivity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent myIntent = new Intent(Messages.this, MessageOnMap.class);
+				Intent myIntent = new Intent(Messages.this, ShowMessage.class);
 				myIntent.putExtra("id", locations.get(position).getId());
 				Messages.this.startActivity(myIntent);
 			}
@@ -116,7 +116,10 @@ public class Messages extends FullscreenListActivity {
 			updateMessages();
 			return true;
 		case R.id.message_update:
-			//updateWalks();
+			updateMessages();
+			return true;
+		case R.id.home:
+			this.finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

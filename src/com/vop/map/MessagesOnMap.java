@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.R.drawable;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -20,6 +24,8 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
+import com.vop.arwalks.AddMessage;
+import com.vop.arwalks.Messages;
 import com.vop.arwalks.R;
 import com.vop.map.overlays.CustomOverlayItem;
 import com.vop.map.overlays.SpecialImageOverlay;
@@ -27,6 +33,7 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
+import com.vop.tools.data.Marker;
 
 /**
  * show all messages
@@ -80,6 +87,17 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 			drawImage(locations.get(i));
 		}
 		mapView.getOverlays().add(itemizedoverlay);
+	}
+	private void refreshMap() {
+		mapView.getOverlays().clear();
+		mapView.getOverlays().add(myLocationOverlay);
+		int personId = Integer.parseInt(app.getState().get("userid"));
+		ArrayList<Location> locations = DBWrapper.getLocations(personId);
+		for(int i=0;i<locations.size();i++){
+			drawImage(locations.get(i));
+		}
+		mapView.getOverlays().add(itemizedoverlay);
+		mapView.invalidate();
 	}
 
 	/**
@@ -157,6 +175,29 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 	protected void onStop() {
 		super.onStop();
 		app.removeLocationListener(this);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.messages, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.message_post:
+			Intent myIntent = new Intent(MessagesOnMap.this, AddMessage.class);
+			myIntent.putExtra("type", "locations");
+			MessagesOnMap.this.startActivity(myIntent);
+			refreshMap();
+			return true;
+		case R.id.message_update:
+			refreshMap();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

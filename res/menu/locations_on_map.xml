@@ -4,4 +4,7 @@
 	<item android:id="@+id/opslaan" android:title="opslaan" android:icon="@drawable/locatie_toevoegen" />
 	<item android:id="@+id/refresh" android:title="refresh" android:icon="@drawable/refresh" />
 	<item android:id="@+id/lijstloc" android:title="lijst" android:icon="@drawable/refresh" />
+	<item android:id="@+id/home"
+    	android:title="Home" 
+        android:icon="@drawable/refresh" />
 </menu>

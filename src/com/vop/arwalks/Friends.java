@@ -112,9 +112,14 @@ public class Friends extends FullscreenListActivity {
 		case R.id.update_friends:
 			updateFriends();
 			return true;
+		case R.id.home:
+			this.finish();
+			return true;
+		case R.id.add_friend:
+			Intent myIntent = new Intent(Friends.this, AddFriend.class);
+			Friends.this.startActivity(myIntent);
+			return true;
 		default:
-			// add a friend!!
-
 			return super.onOptionsItemSelected(item);
 		}
 	}

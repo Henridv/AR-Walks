@@ -15,4 +15,7 @@
 		</menu>
 	</item>
 	<item android:id="@+id/refresh" android:title="refresh" android:icon="@drawable/refresh" />
+	<item android:id="@+id/home"
+    	android:title="Home" 
+        android:icon="@drawable/refresh" />
 </menu>

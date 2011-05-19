@@ -235,6 +235,9 @@ public class AugmentedReality extends FullscreenActivity implements
 			myIntent = new Intent(AugmentedReality.this, Locations.class);
 			AugmentedReality.this.startActivity(myIntent);
 			return true;
+		case R.id.home:
+			this.finish();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

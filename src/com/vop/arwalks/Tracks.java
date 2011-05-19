@@ -51,7 +51,7 @@ public class Tracks extends FullscreenListActivity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent myIntent = new Intent(Tracks.this, StartEenWandeling.class);
+				Intent myIntent = new Intent(Tracks.this, StartTrack.class);
 				myIntent.putExtra("walk_id", tracks.get(position).getId());
 				Tracks.this.startActivity(myIntent);
 			}
@@ -114,6 +114,9 @@ public class Tracks extends FullscreenListActivity {
 		switch (item.getItemId()) {
 		case R.id.traject_update:
 			updateWalks();
+			return true;
+		case R.id.home:
+			this.finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
