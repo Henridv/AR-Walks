@@ -12,7 +12,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.vop.ar.overlays.WandelingOverlay2;
+import com.vop.map.overlays.WandelingOverlay2;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;

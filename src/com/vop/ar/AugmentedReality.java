@@ -22,6 +22,7 @@ import com.vop.ar.overlays.TrackRenderer;
 import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
+import com.vop.map.LocationMap;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;

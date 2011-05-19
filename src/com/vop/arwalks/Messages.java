@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 
 import com.vop.arwalks.R;
+import com.vop.map.MessageOnMap;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;

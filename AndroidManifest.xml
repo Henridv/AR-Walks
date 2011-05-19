@@ -39,13 +39,13 @@
         <activity android:name="StartEenWandeling"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="AddFriend"			android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="FriendProfile"		android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="TrajectOpslaanZien"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.map.TrajectOpslaanZien"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.AugmentedReality"	android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="com.vop.ar.LocationMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.map.LocationMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="EditMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="ShowMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
-        <activity android:screenOrientation="landscape" android:name="MessageOnMap" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
-        <activity android:name="MessagesOnMap" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:screenOrientation="landscape" android:name="com.vop.map.MessageOnMap" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="com.vop.map.MessagesOnMap" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 </manifest>

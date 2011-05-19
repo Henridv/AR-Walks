@@ -1,4 +1,4 @@
-package com.vop.ar.overlays;
+package com.vop.map.overlays;
 
 import java.util.ArrayList;
 

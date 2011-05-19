@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.vop.ar.AugmentedReality;
-import com.vop.ar.LocationMap;
+import com.vop.map.LocationMap;
+import com.vop.map.MessagesOnMap;
+import com.vop.map.TrajectOpslaanZien;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;

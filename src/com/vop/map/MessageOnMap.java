@@ -1,4 +1,4 @@
-package com.vop.arwalks;
+package com.vop.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,9 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.vop.ar.overlays.ImageOverlay;
+import com.vop.arwalks.R;
+import com.vop.arwalks.R.id;
+import com.vop.arwalks.R.layout;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
@@ -22,12 +25,12 @@ import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
 
 /**
- * show all messages
+ * show a message
  * 
  * @author Niels
  * 
  */
-public class MessagesOnMap extends MapActivity implements LocationListener {
+public class MessageOnMap extends MapActivity implements LocationListener {
 	
 	private MapController mapController;
 	private MapView mapView;
@@ -54,20 +57,16 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
+		l = DBWrapper.getLocation(getIntent().getIntExtra("id", 0));
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
 
 		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
-		
-		int personId = Integer.parseInt(app.getState().get("userid"));;
 
 		initMap();
-		ArrayList<Location> locations = DBWrapper.getLocations(personId);
-		for(int i=0;i<locations.size();i++){
-			drawImage(locations.get(i));
-		}
+		drawImage(l);
 
 	}
 

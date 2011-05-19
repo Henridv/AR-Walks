@@ -1,4 +1,4 @@
-package com.vop.ar;
+package com.vop.map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +17,11 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
-import com.vop.ar.overlays.punten_overlay;
+import com.vop.ar.AugmentedReality;
 import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
+import com.vop.map.overlays.punten_overlay;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Marker;
