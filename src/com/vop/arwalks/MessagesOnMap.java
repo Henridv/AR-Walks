@@ -22,12 +22,12 @@ import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
 
 /**
- * show a message
+ * show all messages
  * 
  * @author Niels
  * 
  */
-public class MessageOnMap extends MapActivity implements LocationListener {
+public class MessagesOnMap extends MapActivity implements LocationListener {
 	
 	private MapController mapController;
 	private MapView mapView;
@@ -54,16 +54,20 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.locatiesmap_layout);
-		l = DBWrapper.getLocation(getIntent().getIntExtra("id", 0));
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
 
 		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(true);
 		this.mapView.setStreetView(true);
+		
+		int personId = Integer.parseInt(app.getState().get("userid"));;
 
 		initMap();
-		drawImage(l);
+		ArrayList<Location> locations = DBWrapper.getLocations(personId);
+		for(int i=0;i<locations.size();i++){
+			drawImage(locations.get(i));
+		}
 
 	}
 

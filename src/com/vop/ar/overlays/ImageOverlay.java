@@ -47,10 +47,13 @@ public class ImageOverlay extends Overlay{
 	         	buf.close();
 	            }
 		} catch (Exception e) {}
+		if(markerImage!=null){
+			markerImage = android.graphics.Bitmap.createScaledBitmap(markerImage, 40, 40, true);
+			canvas.drawBitmap(markerImage, screenPoint.x-markerImage.getWidth()/2,screenPoint.y-markerImage.getHeight()/2, null);
+		}
 		
-		markerImage = android.graphics.Bitmap.createScaledBitmap(markerImage, 40, 40, true);
+		//nog standaarddrawer aan toevoegen voor berichten zonder message
 		
-		canvas.drawBitmap(markerImage, screenPoint.x-markerImage.getWidth()/2,screenPoint.y-markerImage.getHeight()/2, null);
 		return true;
 	}
 	

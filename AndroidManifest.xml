@@ -46,5 +46,6 @@
         <activity android:name="EditMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="ShowMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
         <activity android:screenOrientation="landscape" android:name="MessageOnMap" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="MessagesOnMap" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 </manifest>

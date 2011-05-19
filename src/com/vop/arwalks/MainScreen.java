@@ -73,7 +73,8 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Toast.makeText(MainScreen.this, "map berichten", Toast.LENGTH_SHORT).show();
+						Intent myIntent = new Intent(MainScreen.this, MessagesOnMap.class);
+						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
