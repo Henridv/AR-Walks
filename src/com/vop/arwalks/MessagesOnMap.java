@@ -12,6 +12,8 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.vop.ar.overlays.ImageOverlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
@@ -61,6 +63,7 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 		this.mapView.setStreetView(true);
 
 		initMap();
+		drawImage(l);
 
 	}
 
@@ -81,14 +84,10 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 
 	@SuppressWarnings("unchecked")
 	// door drawline functie in wandeling_overlay
-	private void drawPath(ArrayList<Point> listOfPoints, int color) {
-		List overlays = this.mapView.getOverlays();
-		ArrayList<GeoPoint> listOfGeoPoints = new ArrayList<GeoPoint>();
-		for (int i = 0; i < listOfPoints.size(); i++) {
-			listOfGeoPoints.add(new GeoPoint((int) (listOfPoints.get(i).getLatitute() * 1E6), (int) (listOfPoints.get(i).getLongitude() * 1E6)));
+	private void drawImage(Location l) {
+		List<Overlay> overlays = this.mapView.getOverlays();
 
-		}
-		//overlays.add(new WandelingOverlay2(listOfGeoPoints, color));
+		overlays.add(new ImageOverlay(l));
 	}
 
 	@Override

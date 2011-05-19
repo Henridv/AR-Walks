@@ -1,12 +1,17 @@
 package com.vop.arwalks;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -112,12 +117,41 @@ public class AddMessage extends FullscreenActivity{
 			case 0:
 				break;
 			case -1:
+			try {
 				onPhotoTaken();
+			} catch (FileNotFoundException e) {}
 				break;
 		}
 	}
 	
-	protected void onPhotoTaken(){
+	protected void onPhotoTaken() throws FileNotFoundException{
+		Bitmap bMap = null;
+		FileInputStream in;
+		try {
+			in = new FileInputStream(new File(_path));
+			BufferedInputStream buf = new BufferedInputStream(in);
+	        bMap = BitmapFactory.decodeStream(buf);
+	        if (in != null) {
+	         	in.close();
+	        }
+	            if (buf != null) {
+	         	buf.close();
+	            }
+		} catch (Exception e) {} 
+		//nu deze bitmap resizen
+		
+		int width = bMap.getWidth();
+		int height = bMap.getHeight();
+		Bitmap tempMap = android.graphics.Bitmap.createScaledBitmap(bMap, width/8, height/8, true);
+		bMap = null;
+		FileOutputStream outStream = new FileOutputStream(new File(_path));
+		tempMap.compress(Bitmap.CompressFormat.JPEG,100 , outStream);
+		try{
+			outStream.close();
+		}catch(Exception e){}
+		tempMap = null;
+		
+		
 		DBWrapper.save(new Location(locName,locDescr,app.getLat(),app.getLng(),app.getAlt(),id,new File(_path)));
 		Toast.makeText(getApplicationContext(), "Location with extra information added!", Toast.LENGTH_LONG).show();
 	}
@@ -128,7 +162,11 @@ public class AddMessage extends FullscreenActivity{
 	
 	protected  void onRestoreInstanceState(Bundle savedInstanceState){
 		if(savedInstanceState.getBoolean(this.PHOTO_TAKEN)){
-			onPhotoTaken();
+			try {
+				onPhotoTaken();
+			} catch (FileNotFoundException e) {}
 		}
 	}
+
+
 }
