@@ -15,26 +15,18 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
-import com.vop.ar.overlays.ImageOverlay;
 import com.vop.arwalks.R;
-import com.vop.arwalks.R.id;
-import com.vop.arwalks.R.layout;
 import com.vop.map.overlays.CustomOverlayItem;
 import com.vop.map.overlays.SpecialImageOverlay;
-import com.vop.map.overlays.punten_overlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
-import com.vop.tools.data.Point;
-import com.vop.tools.data.Track;
 
 /**
  * show all messages

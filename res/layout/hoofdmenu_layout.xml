@@ -19,26 +19,26 @@
 		android:padding="10dip" android:layout_height="wrap_content" android:layout_width="wrap_content">
 		<TableRow
 			android:layout_height="wrap_content">
-			<ImageButton android:id="@+id/berichten" android:src="@layout/berichtenknop" android:background="@android:color/transparent"
+			<ImageButton android:id="@+id/berichten" android:src="@xml/berichtenknop" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
 			</ImageButton>
-			<ImageButton android:id="@+id/trajecten" android:src="@layout/trajectenknop" android:background="@android:color/transparent"
+			<ImageButton android:id="@+id/trajecten" android:src="@xml/trajectenknop" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</ImageButton>
 			<ImageButton android:id="@+id/locaties" 
-				android:src="@layout/locatiesknop" android:background="@android:color/transparent"
+				android:src="@xml/locatiesknop" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</ImageButton>
 		</TableRow>
 		<TableRow
 			android:layout_height="wrap_content">
-			<ImageButton android:id="@+id/vrienden" android:src="@layout/vriendenknop" android:background="@android:color/transparent"
+			<ImageButton android:id="@+id/vrienden" android:src="@xml/vriendenknop" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</ImageButton>
-			<ImageButton android:id="@+id/profiel" android:src="@layout/profielknop" android:background="@android:color/transparent"
+			<ImageButton android:id="@+id/profiel" android:src="@xml/profielknop" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
 			</ImageButton> 
-			<ImageButton android:id="@+id/uitloggen" android:src="@layout/exitknop" android:background="@android:color/transparent"
+			<ImageButton android:id="@+id/uitloggen" android:src="@xml/exitknop" android:background="@android:color/transparent"
 				android:onClick="uitloggen_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</ImageButton>
 		</TableRow>

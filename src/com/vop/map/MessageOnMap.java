@@ -13,7 +13,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
-import com.vop.ar.overlays.ImageOverlay;
 import com.vop.arwalks.R;
 import com.vop.arwalks.R.id;
 import com.vop.arwalks.R.layout;
@@ -90,7 +89,7 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 	private void drawImage(Location l) {
 		List<Overlay> overlays = this.mapView.getOverlays();
 
-		overlays.add(new ImageOverlay(l));
+		//overlays.add(new ImageOverlay(l));
 	}
 
 	@Override

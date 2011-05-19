@@ -114,7 +114,7 @@ public class LocationMap extends MapActivity implements LocationListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.locaties_map_menu, menu);
+		inflater.inflate(R.menu.locaties_map_menu, menu);
 		return true;
 	}
 

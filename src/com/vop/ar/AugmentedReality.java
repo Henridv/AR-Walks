@@ -21,6 +21,7 @@ import com.vop.ar.overlays.LocationRenderer;
 import com.vop.ar.overlays.TrackRenderer;
 import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
+
 import com.vop.arwalks.SaveLocation;
 import com.vop.map.LocationMap;
 import com.vop.tools.FullscreenActivity;
@@ -175,7 +176,7 @@ public class AugmentedReality extends FullscreenActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.locaties_menu, menu);
+		inflater.inflate(R.menu.locaties_menu, menu);
 		return true;
 	}
 

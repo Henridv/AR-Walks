@@ -101,7 +101,7 @@ public class Friends extends FullscreenListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.vrienden_menu, menu);
+		inflater.inflate(R.menu.vrienden_menu, menu);
 		return true;
 	}
 
