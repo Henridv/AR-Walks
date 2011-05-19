@@ -41,7 +41,7 @@ public class Messages extends FullscreenListActivity {
 		app = (VopApplication) getApplicationContext();
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		updateWalks();
+		updateMessages();
 
 		activity = this;
 
@@ -51,7 +51,7 @@ public class Messages extends FullscreenListActivity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent myIntent = new Intent(Messages.this, MessagesOnMap.class);
+				Intent myIntent = new Intent(Messages.this, MessageOnMap.class);
 				myIntent.putExtra("id", locations.get(position).getId());
 				Messages.this.startActivity(myIntent);
 			}
@@ -108,6 +108,12 @@ public class Messages extends FullscreenListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
+		case R.id.message_post:
+			Intent myIntent = new Intent(Messages.this, AddMessage.class);
+			myIntent.putExtra("type", "locations");
+			Messages.this.startActivity(myIntent);
+			updateMessages();
+			return true;
 		case R.id.message_update:
 			//updateWalks();
 			return true;
@@ -117,9 +123,9 @@ public class Messages extends FullscreenListActivity {
 	}
 
 	/**
-	 * Updates traject list
+	 * Updates message list
 	*/ 
-	private void updateWalks() {
+	private void updateMessages() {
 		final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading messages. Please wait...", true);
 		new Thread(new Runnable() {
 

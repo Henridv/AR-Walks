@@ -27,7 +27,7 @@ import com.vop.tools.data.Track;
  * @author gbostoen
  * 
  */
-public class MessagesOnMap extends MapActivity implements LocationListener {
+public class MessageOnMap extends MapActivity implements LocationListener {
 	
 	private MapController mapController;
 	private MapView mapView;
