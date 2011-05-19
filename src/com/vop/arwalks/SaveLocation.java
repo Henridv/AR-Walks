@@ -39,7 +39,7 @@ public class SaveLocation extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		this.activity = this;
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.locatie_opslaan_layout);
+		setContentView(R.layout.save_location);
 		intent = new Intent(this, LocationService.class);
 		
 	}

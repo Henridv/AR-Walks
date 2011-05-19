@@ -142,7 +142,7 @@ public class Messages extends FullscreenListActivity {
 					@Override
 					public void run() {
 						dialog.dismiss();
-						adapter = new ArrayAdapter<Location>(activity, R.layout.list_layout, locations);
+						adapter = new ArrayAdapter<Location>(activity, R.layout.list, locations);
 						setListAdapter(adapter);
 					}
 				});			
