@@ -48,6 +48,8 @@ public class ImageOverlay extends Overlay{
 	            }
 		} catch (Exception e) {}
 		
+		markerImage = android.graphics.Bitmap.createScaledBitmap(markerImage, 40, 40, true);
+		
 		canvas.drawBitmap(markerImage, screenPoint.x-markerImage.getWidth()/2,screenPoint.y-markerImage.getHeight()/2, null);
 		return true;
 	}
