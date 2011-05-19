@@ -21,7 +21,7 @@ public class Profile extends FullscreenActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.profiel_layout);
+		setContentView(R.layout.profile);
 		updateProfile();
 	}
 

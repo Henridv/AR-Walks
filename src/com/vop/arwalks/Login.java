@@ -44,7 +44,7 @@ public class Login extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		this.activity=this;
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_layout);
+		setContentView(R.layout.login);
 
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {

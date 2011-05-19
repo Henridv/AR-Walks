@@ -22,7 +22,7 @@ public class EditPassword extends FullscreenActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.paswoordwijzigen);
+		setContentView(R.layout.edit_pass);
 	}
 
 	/**

@@ -48,7 +48,7 @@ public class TrajectOpslaanZien extends MapActivity implements
 		// traject
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.locatiesmap_layout);
+		setContentView(R.layout.locations_on_map);
 
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();

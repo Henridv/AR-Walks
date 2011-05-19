@@ -34,7 +34,7 @@ public class MainScreen extends FullscreenActivity {
 		app = (VopApplication) getApplicationContext();
 		app.startLocationService();
 
-		setContentView(R.layout.hoofdmenu_layout);
+		setContentView(R.layout.main_screen);
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		// messages

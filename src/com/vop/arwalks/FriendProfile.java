@@ -18,7 +18,7 @@ public class FriendProfile extends FullscreenActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.profielfriendlayout);
+		setContentView(R.layout.profile_friend);
 		updateProfile();
 	}
 

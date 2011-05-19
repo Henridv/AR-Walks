@@ -23,7 +23,7 @@ public class EditProfile extends FullscreenActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.profielwijzigen);
+		setContentView(R.layout.edit_profile);
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
 		Person p = DBWrapper.getProfile(id);

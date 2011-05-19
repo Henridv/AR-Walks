@@ -44,7 +44,7 @@ public class TrajectOpslaan extends FullscreenActivity {
 		notification.flags = Notification.FLAG_NO_CLEAR;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
-		setContentView(R.layout.trajectopslaan_layout);
+		setContentView(R.layout.save_track);
 
 		toggleButton = (Button) findViewById(R.id.toggleRecording);
 		if (!TrackService.isRunning()) {

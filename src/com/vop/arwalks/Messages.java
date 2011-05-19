@@ -101,7 +101,7 @@ public class Messages extends FullscreenListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.message_menu, menu);
+		inflater.inflate(R.menu.messages, menu);
 		return true;
 	}
 

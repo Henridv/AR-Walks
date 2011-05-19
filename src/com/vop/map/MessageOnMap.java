@@ -55,7 +55,7 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.locatiesmap_layout);
+		setContentView(R.layout.locations_on_map);
 		l = DBWrapper.getLocation(getIntent().getIntExtra("id", 0));
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();

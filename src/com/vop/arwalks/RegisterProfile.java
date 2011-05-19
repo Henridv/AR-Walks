@@ -31,7 +31,7 @@ public class RegisterProfile extends FullscreenActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (VopApplication) getApplicationContext();
-		setContentView(R.layout.registerprofile_layout);
+		setContentView(R.layout.register_profile);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		String email = getIntent().getStringExtra("email");
 		String pass = getIntent().getStringExtra("password");

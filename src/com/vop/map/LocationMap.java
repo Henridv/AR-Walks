@@ -44,7 +44,7 @@ public class LocationMap extends MapActivity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.locatiesmap_layout);
+		setContentView(R.layout.locations_on_map);
 
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
@@ -114,7 +114,7 @@ public class LocationMap extends MapActivity implements LocationListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.locaties_map_menu, menu);
+		inflater.inflate(R.menu.locations_on_map, menu);
 		return true;
 	}
 
