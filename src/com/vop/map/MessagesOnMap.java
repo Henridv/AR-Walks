@@ -25,7 +25,7 @@ import com.google.android.maps.OverlayItem;
 import com.vop.arwalks.AddMessage;
 import com.vop.arwalks.R;
 import com.vop.map.overlays.CustomOverlayItem;
-import com.vop.map.overlays.SpecialImageOverlay;
+import com.vop.map.overlays.ImageOverlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
@@ -43,7 +43,7 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
 	private VopApplication app;
-	private SpecialImageOverlay itemizedoverlay;
+	private ImageOverlay itemizedoverlay;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -73,7 +73,7 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 		int personId = Integer.parseInt(app.getState().get("userid"));
 		//glenn
 		Drawable drawable1 = this.getResources().getDrawable(R.drawable.androidmarker);
-		itemizedoverlay=new SpecialImageOverlay(drawable1,this);
+		itemizedoverlay=new ImageOverlay(drawable1,this);
 		
 		initMap();
 		ArrayList<Location> locations = DBWrapper.getLocations(personId);

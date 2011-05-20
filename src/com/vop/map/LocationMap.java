@@ -21,7 +21,7 @@ import com.vop.ar.AugmentedReality;
 import com.vop.arwalks.Locations;
 import com.vop.arwalks.R;
 import com.vop.arwalks.SaveLocation;
-import com.vop.map.overlays.punten_overlay;
+import com.vop.map.overlays.LocationsOverlay;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Marker;
@@ -34,7 +34,7 @@ public class LocationMap extends MapActivity implements LocationListener {
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
-	private punten_overlay itemizedoverlay;
+	private LocationsOverlay itemizedoverlay;
 	private VopApplication app;
 
 	/** Called when the activity is first created. */
@@ -54,7 +54,7 @@ public class LocationMap extends MapActivity implements LocationListener {
 		this.mapView.setBuiltInZoomControls(true);
 		// this.mapView.displayZoomControls(true);
 		Drawable drawable1 = this.getResources().getDrawable(R.drawable.androidmarker);
-		itemizedoverlay = new punten_overlay(drawable1, this);
+		itemizedoverlay = new LocationsOverlay(drawable1, this);
 		initMap();
 		this.mapController.setZoom(17);
 	}

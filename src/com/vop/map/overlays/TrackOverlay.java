@@ -11,11 +11,11 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
 
-public class WandelingOverlay2 extends Overlay {
+public class TrackOverlay extends Overlay {
 	private ArrayList<GeoPoint> listOfGeoPoints;
 	private int color;
 
-	public WandelingOverlay2(ArrayList<GeoPoint> listOfGeoPoints, int color) {
+	public TrackOverlay(ArrayList<GeoPoint> listOfGeoPoints, int color) {
 		this.listOfGeoPoints = listOfGeoPoints;
 		this.color = color;
 	}

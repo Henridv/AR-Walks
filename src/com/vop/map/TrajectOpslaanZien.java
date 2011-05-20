@@ -15,7 +15,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.vop.arwalks.R;
 
-import com.vop.map.overlays.WandelingOverlay2;
+import com.vop.map.overlays.TrackOverlay;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
 
@@ -84,7 +84,7 @@ public class TrajectOpslaanZien extends MapActivity implements
 			listOfGeoPoints.add(new GeoPoint((int) (listOfPoints.get(i).getLatitute() * 1E6), (int) (listOfPoints.get(i).getLongitude() * 1E6)));
 
 		}
-		overlays.add(new WandelingOverlay2(listOfGeoPoints, color));
+		overlays.add(new TrackOverlay(listOfGeoPoints, color));
 		overlays.add(myLocationOverlay);
 		mapView.invalidate();
 	}

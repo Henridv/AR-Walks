@@ -10,17 +10,17 @@ import android.graphics.drawable.Drawable;
 import com.google.android.maps.ItemizedOverlay;
 import com.vop.arwalks.ShowMessage;
 
-public class SpecialImageOverlay extends ItemizedOverlay<CustomOverlayItem> {
+public class ImageOverlay extends ItemizedOverlay<CustomOverlayItem> {
 
 	private ArrayList<CustomOverlayItem> mOverlays = new ArrayList<CustomOverlayItem>();
 	Context mContext;
 
-	public SpecialImageOverlay(Drawable defaultMarker) {
+	public ImageOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 		// TODO Auto-generated constructor stub
 	}
 
-	public SpecialImageOverlay(Drawable defaultMarker, Context context) {
+	public ImageOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
 	}

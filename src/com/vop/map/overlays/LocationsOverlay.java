@@ -9,17 +9,17 @@ import android.graphics.drawable.Drawable;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
-public class punten_overlay extends ItemizedOverlay<OverlayItem> {
+public class LocationsOverlay extends ItemizedOverlay<OverlayItem> {
 
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	Context mContext;
 
-	public punten_overlay(Drawable defaultMarker) {
+	public LocationsOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 		// TODO Auto-generated constructor stub
 	}
 
-	public punten_overlay(Drawable defaultMarker, Context context) {
+	public LocationsOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
 	}

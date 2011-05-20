@@ -12,7 +12,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.vop.map.overlays.WandelingOverlay2;
+import com.vop.map.overlays.TrackOverlay;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
@@ -90,7 +90,7 @@ public class StartTrack extends MapActivity implements LocationListener {
 			listOfGeoPoints.add(new GeoPoint((int) (listOfPoints.get(i).getLatitute() * 1E6), (int) (listOfPoints.get(i).getLongitude() * 1E6)));
 
 		}
-		overlays.add(new WandelingOverlay2(listOfGeoPoints, color));
+		overlays.add(new TrackOverlay(listOfGeoPoints, color));
 	}
 
 	@Override
