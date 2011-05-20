@@ -58,7 +58,7 @@ public class StartTrack extends MapActivity implements LocationListener {
 		this.mapController = this.mapView.getController();
 
 		this.mapView.setBuiltInZoomControls(true);
-		this.mapView.setSatellite(true);
+		this.mapView.setSatellite(false);
 
 		initMap();
 		t = DBWrapper.getTrack(walk_id);
