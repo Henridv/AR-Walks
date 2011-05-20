@@ -49,10 +49,8 @@ public class LocationMap extends MapActivity implements LocationListener {
 		this.mapView = (MapView) findViewById(R.id.myMapView);
 		this.mapController = this.mapView.getController();
 
-		this.mapView.setSatellite(true);
-		this.mapView.setStreetView(true);
+		this.mapView.setSatellite(false);
 		this.mapView.setBuiltInZoomControls(true);
-		// this.mapView.displayZoomControls(true);
 		Drawable drawable1 = this.getResources().getDrawable(R.drawable.androidmarker);
 		itemizedoverlay = new LocationsOverlay(drawable1, this);
 		initMap();

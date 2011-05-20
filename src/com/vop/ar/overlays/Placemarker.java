@@ -112,7 +112,7 @@ public class Placemarker {
 
 	public void loadGLTexture(GL10 gl, Context context) {
 		// Get the texture from the Android resource directory
-		InputStream is = context.getResources().openRawResource(R.drawable.placemarker);
+		InputStream is = context.getResources().openRawResource(R.drawable.vectormarker);
 		Bitmap bitmap = null;
 		try {
 			// BitmapFactory is an Android graphics utility for images

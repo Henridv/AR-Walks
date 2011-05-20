@@ -56,7 +56,7 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 		this.mapController = this.mapView.getController();
 
 		this.mapView.setBuiltInZoomControls(true);
-		this.mapView.setSatellite(true);
+		this.mapView.setSatellite(false);
 
 		initMap();
 		drawImage(l);

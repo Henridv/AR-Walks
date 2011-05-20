@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.vop.ar.AugmentedReality;
 import com.vop.map.LocationMap;
 import com.vop.map.MessagesOnMap;
-import com.vop.map.TrajectOpslaanZien;
+import com.vop.map.SeeCurrentTrack;
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
 import com.vop.tools.FullscreenActivity;
@@ -137,7 +137,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, TrajectOpslaanZien.class);
+						Intent myIntent = new Intent(MainScreen.this, SeeCurrentTrack.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}

@@ -39,7 +39,7 @@
         <activity android:name="StartTrack"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="AddFriend"			android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="FriendProfile"		android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="com.vop.map.TrajectOpslaanZien"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="com.vop.map.SeeCurrentTrack"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.AugmentedReality"	android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.map.LocationMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
