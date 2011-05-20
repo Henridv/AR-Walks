@@ -110,9 +110,9 @@ public class AugmentedReality extends FullscreenActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String type = getIntent().getExtras().get("type").toString();
-		if (type == null)
-			type = "locations";
+		String type = "locations";
+		if (getIntent().getExtras() != null && getIntent().getExtras().get("type") != null)
+			type = getIntent().getExtras().get("type").toString();
 
 		app = (VopApplication) getApplicationContext();
 
