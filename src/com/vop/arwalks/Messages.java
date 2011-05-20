@@ -21,12 +21,10 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 
 import com.vop.arwalks.R;
-import com.vop.map.MessageOnMap;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
-import com.vop.tools.data.Track;
 
 public class Messages extends FullscreenListActivity {
 

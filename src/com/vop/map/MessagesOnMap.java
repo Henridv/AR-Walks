@@ -3,9 +3,7 @@ package com.vop.map;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.List;
 
-import android.R.drawable;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +23,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import com.vop.arwalks.AddMessage;
-import com.vop.arwalks.Messages;
 import com.vop.arwalks.R;
 import com.vop.map.overlays.CustomOverlayItem;
 import com.vop.map.overlays.SpecialImageOverlay;
@@ -33,7 +30,6 @@ import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
-import com.vop.tools.data.Marker;
 
 /**
  * show all messages
@@ -46,7 +42,6 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
-	private Location l;
 	private VopApplication app;
 	private SpecialImageOverlay itemizedoverlay;
 
@@ -74,7 +69,6 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 
 		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(false);
-		this.mapView.setStreetView(true);
 		
 		int personId = Integer.parseInt(app.getState().get("userid"));
 		//glenn
@@ -115,7 +109,7 @@ public class MessagesOnMap extends MapActivity implements LocationListener {
 	// FUNCTIES //
 	// ////////////////////////////////////
 
-	@SuppressWarnings("unchecked")
+
 	// door drawline functie in wandeling_overlay
 	private void drawImage(Location l) {
 		//List<Overlay> overlays = this.mapView.getOverlays();

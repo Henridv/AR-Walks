@@ -14,8 +14,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.vop.arwalks.R;
-import com.vop.arwalks.R.id;
-import com.vop.arwalks.R.layout;
+
 import com.vop.map.overlays.WandelingOverlay2;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Point;
@@ -54,8 +53,7 @@ public class TrajectOpslaanZien extends MapActivity implements
 		this.mapController = this.mapView.getController();
 
 		this.mapView.setBuiltInZoomControls(true);
-		this.mapView.setSatellite(true);
-		this.mapView.setStreetView(true);
+		this.mapView.setSatellite(false);
 
 		initMap();
 		// t = DBWrapper.getTraject(walk_id);

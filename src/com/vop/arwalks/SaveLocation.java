@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.facebook.android.Util;
 import com.facebook.android.Facebook.DialogListener;
 import com.vop.services.LocationService;
 import com.vop.tools.DBWrapper;

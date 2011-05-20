@@ -1,6 +1,5 @@
 package com.vop.map;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -14,14 +13,10 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.vop.arwalks.R;
-import com.vop.arwalks.R.id;
-import com.vop.arwalks.R.layout;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Location;
-import com.vop.tools.data.Point;
-import com.vop.tools.data.Track;
 
 /**
  * show a message
@@ -62,7 +57,6 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 
 		this.mapView.setBuiltInZoomControls(true);
 		this.mapView.setSatellite(true);
-		this.mapView.setStreetView(true);
 
 		initMap();
 		drawImage(l);

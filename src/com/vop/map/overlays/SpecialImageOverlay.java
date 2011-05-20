@@ -6,11 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.webkit.WebChromeClient.CustomViewCallback;
 
 import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
-import com.vop.arwalks.Messages;
 import com.vop.arwalks.ShowMessage;
 
 public class SpecialImageOverlay extends ItemizedOverlay<CustomOverlayItem> {

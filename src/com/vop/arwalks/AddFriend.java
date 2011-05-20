@@ -19,8 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.vop.arwalks.R;
-import com.vop.popup.ActionItem;
-import com.vop.popup.QuickAction;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
@@ -40,7 +38,6 @@ public class AddFriend extends FullscreenListActivity {
 	ArrayList<Person> p2;
 	Vibrator vibrator;
 
-	private int positie;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,6 @@ public class AddFriend extends FullscreenListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				vibrator.vibrate(60);
-				positie = position;
 				if (position > p2.size() - 1) {
 					int pos = position - p2.size();
 					Intent myIntent = new Intent(AddFriend.this, FriendProfile.class);

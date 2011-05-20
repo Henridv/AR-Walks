@@ -5,10 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Images.Media;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -76,7 +72,7 @@ public class AddMessage extends FullscreenActivity{
 	}
 	
 	public void without_picture(View v){
-		final ProgressDialog waiting = ProgressDialog.show(this, "", "Saving location and info. Please be patient...", true);
+		//final ProgressDialog waiting = ProgressDialog.show(this, "", "Saving location and info. Please be patient...", true);
 		new Thread(new Runnable() {
 			public void run() {
 				app = (VopApplication) getApplicationContext();
