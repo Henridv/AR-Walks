@@ -620,11 +620,12 @@ public class DBWrapper {
 	 */
 	private static JSONArray doPOST(String page,
 			ArrayList<NameValuePair> postValues) throws JSONException {
+		String url = VopApplication.DB_URL;
 		String result = "";
 		InputStream is = null;
 
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://move.ugent.be/~vop/" + page);
+		HttpPost httppost = new HttpPost(url + page);
 		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
 		// http post
@@ -675,16 +676,18 @@ public class DBWrapper {
 	 * @return
 	 */
 	private static File getImage(String filename) {
+		String url = VopApplication.DB_URL;
 		String localFilename = new File(filename).getName();
-		File img = new File(Environment.getExternalStorageDirectory(), "/vop/tmp/" + localFilename);
+		File img = new File(Environment.getExternalStorageDirectory(), "/vop/tmp/"
+				+ localFilename);
 		new File(Environment.getExternalStorageDirectory(), "/vop/tmp/").mkdirs();
-		
+
 		if (!img.exists()) {
 			try {
-				URL imageUrl = new URL("http://move.ugent.be/~vop/" + filename);
+				URL imageUrl = new URL(url + filename);
 				InputStream in = imageUrl.openStream();
 				OutputStream out = new BufferedOutputStream(new FileOutputStream(img));
-	
+
 				for (int b; (b = in.read()) != -1;) {
 					out.write(b);
 				}

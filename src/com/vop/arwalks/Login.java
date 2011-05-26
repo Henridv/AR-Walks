@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -37,15 +36,16 @@ import com.vop.tools.data.Person;
  * 
  */
 public class Login extends FullscreenActivity {
-	Facebook facebook = new Facebook("128192193922051");
-	Activity activity;
+	private Facebook facebook = new Facebook("128192193922051");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		this.activity=this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
+		String db_url = getString(R.string.db_url);
+		VopApplication.setDBUrl(db_url);
+		
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {

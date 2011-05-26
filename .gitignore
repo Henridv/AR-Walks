@@ -1,3 +1,5 @@
 /gen
 /bin
 /doc
+config.php
+properties.xml

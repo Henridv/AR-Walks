@@ -26,7 +26,8 @@ import com.vop.tools.data.Track;
  */
 public class VopApplication extends Application {
 	public final static String PREFS = "VOPPREFS";
-	public final static String LOGTAG = "vop_log";
+	public final static String LOGTAG = "arwalks";
+	protected static String DB_URL;
 
 	private HashMap<String, String> state;
 	private Marker[] punten;
@@ -247,5 +248,9 @@ public class VopApplication extends Application {
 
 	public void removeLocationListener(LocationListener locationListener) {
 		locationListeners.remove(locationListener);
+	}
+	
+	public static void setDBUrl(final String url) {
+		VopApplication.DB_URL = url;
 	}
 }
