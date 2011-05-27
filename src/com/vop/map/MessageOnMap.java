@@ -1,7 +1,5 @@
 package com.vop.map;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,7 +9,6 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
 import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.LocationListener;
@@ -25,7 +22,7 @@ import com.vop.tools.data.Location;
  * 
  */
 public class MessageOnMap extends MapActivity implements LocationListener {
-	
+
 	private MapController mapController;
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
@@ -78,12 +75,11 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 	// FUNCTIES //
 	// ////////////////////////////////////
 
-	@SuppressWarnings("unchecked")
 	// door drawline functie in wandeling_overlay
 	private void drawImage(Location l) {
-		List<Overlay> overlays = this.mapView.getOverlays();
+		this.mapView.getOverlays();
 
-		//overlays.add(new ImageOverlay(l));
+		// overlays.add(new ImageOverlay(l));
 	}
 
 	@Override
@@ -94,7 +90,7 @@ public class MessageOnMap extends MapActivity implements LocationListener {
 		GeoPoint punt = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 		this.mapController.animateTo(punt);
 	}
-	
+
 	/**
 	 * Set listeners
 	 */

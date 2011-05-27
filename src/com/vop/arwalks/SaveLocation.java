@@ -39,7 +39,7 @@ public class SaveLocation extends FullscreenActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.save_location);
 		intent = new Intent(this, LocationService.class);
-		
+
 	}
 
 	public void saveLocation(View v) {
@@ -54,7 +54,7 @@ public class SaveLocation extends FullscreenActivity {
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		//loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
+		// loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
 
 		facebook.authorize(this, new String[] { "email", "read_stream",
 				"publish_stream" }, new DialogListener() {
@@ -73,8 +73,6 @@ public class SaveLocation extends FullscreenActivity {
 
 			@Override
 			public void onComplete(Bundle values) {
-				// TODO Auto-generated method stub
-				String hello;
 				try {
 					String tekst = facebook.request("me");
 					try {
@@ -84,12 +82,11 @@ public class SaveLocation extends FullscreenActivity {
 						parameters.putString("message", "test2");
 						ByteArrayOutputStream stream = new ByteArrayOutputStream();
 						Drawable photo = activity.getResources().getDrawable(R.drawable.ar);
-						Bitmap bitmap = ((BitmapDrawable)photo).getBitmap();
-						bitmap.compress(Bitmap.CompressFormat.JPEG /* FileType */,
-						                        100 /* Ratio */, stream);
+						Bitmap bitmap = ((BitmapDrawable) photo).getBitmap();
+						bitmap.compress(Bitmap.CompressFormat.JPEG /* FileType */, 100 /* Ratio */, stream);
 						byte[] bitmapdata = stream.toByteArray();
 						parameters.putByteArray("picture", bitmapdata);
-						Log.e("hello",bitmapdata.toString());
+						Log.e("hello", bitmapdata.toString());
 						String response = facebook.request("/me/photos", parameters, "POST");
 						Log.e("response", response);
 						DBWrapper.save(loc);
@@ -115,7 +112,7 @@ public class SaveLocation extends FullscreenActivity {
 
 			}
 		});
-		
+
 		Location loc = new Location(locName, locDescr, lat, lng, alt, id);
 		DBWrapper.save(loc);
 		finish();

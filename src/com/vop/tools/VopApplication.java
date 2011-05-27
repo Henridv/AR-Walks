@@ -18,14 +18,14 @@ import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
 
 /**
- * An Android Application extending Application. It provides functions to
- * maintain a state for the app.
+ * An extended Android Application. It provides functions to maintain a state
+ * for the app.
  * 
  * @author henridv
  * 
  */
 public class VopApplication extends Application {
-	public final static String PREFS = "VOPPREFS";
+	public final static String PREFS = "ARWALKS_PREF";
 	public final static String LOGTAG = "arwalks";
 	protected static String DB_URL;
 
@@ -81,6 +81,7 @@ public class VopApplication extends Application {
 
 	/**
 	 * Returns the centered POI
+	 * 
 	 * @return
 	 */
 	public Marker getCenter() {
@@ -249,7 +250,12 @@ public class VopApplication extends Application {
 	public void removeLocationListener(LocationListener locationListener) {
 		locationListeners.remove(locationListener);
 	}
-	
+
+	/**
+	 * Sets the database URL used in the DBWrapper class
+	 * 
+	 * @param url
+	 */
 	public static void setDBUrl(final String url) {
 		VopApplication.DB_URL = url;
 	}

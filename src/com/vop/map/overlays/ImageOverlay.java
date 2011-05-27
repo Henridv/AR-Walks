@@ -36,12 +36,12 @@ public class ImageOverlay extends ItemizedOverlay<CustomOverlayItem> {
 	}
 
 	public void addOverlay(CustomOverlayItem overlay) {
-		Drawable d =overlay.getMarker(0);
-		if( d!= null){
+		Drawable d = overlay.getMarker(0);
+		if (d != null) {
 			boundCenter(d);
 			overlay.setMarker(d);
 		}
-		
+
 		mOverlays.add(overlay);
 		populate();
 	}
@@ -49,7 +49,7 @@ public class ImageOverlay extends ItemizedOverlay<CustomOverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		CustomOverlayItem item = mOverlays.get(index);
-		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+		new AlertDialog.Builder(mContext);
 		if (item != null) {
 			Intent myIntent = new Intent(mContext, ShowMessage.class);
 			myIntent.putExtra("id", item.getLocation().getId());

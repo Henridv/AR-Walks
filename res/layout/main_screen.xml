@@ -38,7 +38,7 @@
 			<ImageButton android:id="@+id/profiel" android:src="@xml/profile" android:background="@android:color/transparent"
 				android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip" android:enabled="false">
 			</ImageButton> 
-			<ImageButton android:id="@+id/uitloggen" android:src="@xml/exit" android:background="@android:color/transparent"
+			<ImageButton android:src="@xml/exit" android:background="@android:color/transparent"
 				android:onClick="uitloggen_klik" android:layout_width="90dip" android:layout_height="90dip" android:layout_margin="10dip">
 			</ImageButton>
 		</TableRow>
