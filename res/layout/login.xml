@@ -57,8 +57,7 @@
 		</Button>
 		<Button
 		android:id="@+id/facebook"
-		android:text="Use Facebook login"
-		android:onClick="facebook" android:layout_height="fill_parent" android:layout_width="wrap_content">
+		android:onClick="facebook" android:layout_height="fill_parent" android:layout_width="wrap_content" android:text="Facebook login">
 		</Button>
 	</LinearLayout>
 </LinearLayout>

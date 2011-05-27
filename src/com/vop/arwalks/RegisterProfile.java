@@ -1,16 +1,12 @@
 package com.vop.arwalks;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.vop.arwalks.R;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
-import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 
 /**
@@ -20,19 +16,15 @@ import com.vop.tools.data.Person;
  * 
  */
 public class RegisterProfile extends FullscreenActivity {
-	VopApplication app;
-	Vibrator vibrator;
-	EditText emailText;
-	EditText passText;
-	EditText nameText;
-	EditText telefoonNr;
+	private EditText	emailText;
+	private EditText	passText;
+	private EditText	nameText;
+	private EditText	telefoonNr;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (VopApplication) getApplicationContext();
 		setContentView(R.layout.register_profile);
-		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		String email = getIntent().getStringExtra("email");
 		String pass = getIntent().getStringExtra("password");
 		emailText = (EditText) findViewById(R.id.widget31);
@@ -55,8 +47,7 @@ public class RegisterProfile extends FullscreenActivity {
 			Person p = new Person(nameText.getText().toString(), telefoonNr.getText().toString(), passText.getText().toString(), emailText.getText().toString());
 			DBWrapper.save(p);
 			this.finish();
-		} else {
+		} else
 			Toast.makeText(getApplicationContext(), "Credentials not valid!", Toast.LENGTH_LONG).show();
-		}
 	}
 }

@@ -1,75 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-android:id="@+id/widget27"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
->
-<TextView
-android:id="@+id/widget28"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Name"
->
-</TextView>
-<EditText
-android:id="@+id/widget29"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textSize="12sp"
->
-</EditText>
-<TextView
-android:id="@+id/widget30"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Email:"
->
-</TextView>
-<EditText
-android:id="@+id/widget31"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textSize="12sp"
->
-</EditText>
-<TextView
-android:id="@+id/widget32"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="pass:"
->
-</TextView>
-<EditText
-android:id="@+id/widget33"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:text=""
-android:password="true"
-android:textSize="18sp"
->
-</EditText>
-<TextView
-android:id="@+id/widget36"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="phonenumber:"
->
-</TextView>
-<EditText
-android:id="@+id/widget37"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:textSize="18sp"
->
-</EditText>
-<Button
-android:id="@+id/widget35"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Registreer"
-android:onClick="register"
->
-</Button>
+<LinearLayout android:id="@+id/widget27"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:padding="25dp">
+	<TextView android:id="@+id/widget28" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Name">
+	</TextView>
+	<EditText android:id="@+id/widget29" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textSize="12sp">
+	</EditText>
+	<TextView android:id="@+id/widget30" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Email:">
+	</TextView>
+	<EditText android:id="@+id/widget31" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:textSize="12sp">
+	</EditText>
+	<TextView android:id="@+id/widget32" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Password:">
+	</TextView>
+	<EditText android:id="@+id/widget33" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="" android:password="true"
+		android:textSize="18sp">
+	</EditText>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Phone:">
+	</TextView>
+	<EditText android:id="@+id/widget37" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+	</EditText>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Register"
+		android:onClick="register">
+	</Button>
 </LinearLayout>

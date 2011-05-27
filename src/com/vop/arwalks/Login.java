@@ -36,7 +36,7 @@ import com.vop.tools.data.Person;
  * 
  */
 public class Login extends FullscreenActivity {
-	private Facebook facebook = new Facebook("128192193922051");
+	private Facebook	facebook	= new Facebook("128192193922051");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class Login extends FullscreenActivity {
 
 		String db_url = getString(R.string.db_url);
 		VopApplication.setDBUrl(db_url);
-		
+
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -85,9 +85,8 @@ public class Login extends FullscreenActivity {
 							emailbox.setText(contact_email);
 							password.setText("watskeburt");
 							login(null);
-						}
-						else{
-							DBWrapper.save(new Person(first_name+last_name, phone, "watskeburt", contact_email));
+						} else {
+							DBWrapper.save(new Person(first_name + last_name, phone, "watskeburt", contact_email));
 							EditText emailbox = (EditText) findViewById(R.id.login_email);
 							EditText password = (EditText) findViewById(R.id.login_password);
 							emailbox.setText(contact_email);
@@ -161,7 +160,7 @@ public class Login extends FullscreenActivity {
 					dialog.dismiss();
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getApplicationContext(), "Credentials are not valid.", Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_LONG).show();
 						}
 					});
 				}

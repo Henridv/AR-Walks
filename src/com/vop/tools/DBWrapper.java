@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -256,11 +259,11 @@ public class DBWrapper {
 	 */
 	public static Person getProfile(String email, String password) {
 		String page = "persons.php";
+		password = hashString(password);
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "profile"));
 		postValues.add(new BasicNameValuePair("email", email));
 		postValues.add(new BasicNameValuePair("password", password));
-
 		Person p = null;
 		try {
 			JSONArray jArray = doPOST(page, postValues);
@@ -700,5 +703,20 @@ public class DBWrapper {
 			}
 		}
 		return img;
+	}
+	
+	/**
+	 * Hash a string using SHA-1 
+	 * @param clearText
+	 * @return hashed string
+	 */
+	private static String hashString(String clearText) {
+		try {
+            MessageDigest m = MessageDigest.getInstance("SHA-1");
+            m.update(clearText.getBytes(), 0, clearText.length());
+            clearText = new BigInteger(1, m.digest()).toString(16);
+		} catch (NoSuchAlgorithmException e) {}
+		
+		return clearText;
 	}
 }
