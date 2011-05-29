@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
 import com.vop.tools.VopApplication;
-import com.vop.tools.data.Location;
+import com.vop.tools.data.Message;
 
 public class AddMessage extends FullscreenActivity {
 
@@ -78,8 +78,7 @@ public class AddMessage extends FullscreenActivity {
 				locName = locationName.getText().toString();
 				locDescr = locationDescription.getText().toString();
 
-				DBWrapper.save(new Location(locName, locDescr, app.getLat(), app.getLng(), app.getAlt(), id));
-
+				DBWrapper.save(new Message(locName, app.getLat(), app.getLng(), app.getAlt(), id, locDescr));
 				runOnUiThread(new Runnable() {
 					public void run() {
 						Toast.makeText(getApplicationContext(), "Location with extra information added!", Toast.LENGTH_LONG).show();
@@ -147,7 +146,7 @@ public class AddMessage extends FullscreenActivity {
 		}
 		tempMap = null;
 
-		DBWrapper.save(new Location(locName, locDescr, app.getLat(), app.getLng(), app.getAlt(), id, new File(_path)));
+		DBWrapper.save(new Message(locName, app.getLat(), app.getLng(), app.getAlt(), id, new File(_path), locDescr));
 		Toast.makeText(getApplicationContext(), "Location with extra information added!", Toast.LENGTH_LONG).show();
 	}
 

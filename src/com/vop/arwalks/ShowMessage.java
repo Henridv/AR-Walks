@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.vop.tools.DBWrapper;
 import com.vop.tools.FullscreenActivity;
-import com.vop.tools.data.Location;
+import com.vop.tools.data.Message;
 
 public class ShowMessage extends FullscreenActivity{
 
-	private Location l;
+	private Message message;
 	protected Bitmap bMap;
 
 	@Override
@@ -26,24 +26,24 @@ public class ShowMessage extends FullscreenActivity{
 		if (id == 0)
 			finish();
 		else {
-			l = DBWrapper.getLocation(id);
-			if (l == null)
+			message = DBWrapper.getMessage(id);
+			if (message == null)
 				finish();
 		}
 
 		TextView name = (TextView) findViewById(R.id.messagename);
-		name.setText(l.getName());
+		name.setText(message.getName());
 		TextView description = (TextView) findViewById(R.id.messagedescription);
-		description.setText(l.getDescription());
+		description.setText(message.getDescription());
 		TextView date = (TextView) findViewById(R.id.messagedate);
-		date.setText(l.getDate().substring(0,10));
+		date.setText(message.getDate().substring(0,10));
 		ImageView image = (ImageView) findViewById(R.id.messageimage);
 		BitmapFactory.Options options = new BitmapFactory.Options();
 	    options.inSampleSize = 4;
 	    
 	    FileInputStream in;
 		try {
-			in = new FileInputStream(l.getImg());
+			in = new FileInputStream(message.getImg());
 			BufferedInputStream buf = new BufferedInputStream(in);
 	        bMap = BitmapFactory.decodeStream(buf);
 	        image.setImageBitmap(bMap);

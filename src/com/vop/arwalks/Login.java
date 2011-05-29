@@ -8,7 +8,6 @@ import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,10 +40,32 @@ public class Login extends FullscreenActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login);
 
 		String db_url = getString(R.string.db_url);
 		VopApplication.setDBUrl(db_url);
+		
+		VopApplication app = (VopApplication) getApplicationContext();
+
+		// first check if the user is online
+		if (!app.isOnline()) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle("No connection");
+			dialog.setMessage(getString(R.string.no_connection));
+			dialog.setCancelable(true);
+			dialog.show();
+		} else {
+			SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
+
+			int userid = prefs.getInt("userid", 0);
+			if (userid != 0) {
+				app.putState("userid", Integer.toString(userid));
+				Intent myIntent = new Intent(Login.this, MainScreen.class);
+				startActivity(myIntent);
+				finish();
+				return;
+			}
+		}
+		setContentView(R.layout.login);
 
 		final EditText edittext = (EditText) findViewById(R.id.login_password);
 		edittext.setOnKeyListener(new OnKeyListener() {
@@ -181,38 +202,5 @@ public class Login extends FullscreenActivity {
 		myIntent.putExtra("email", emailbox.getText().toString());
 		myIntent.putExtra("password", password.getText().toString());
 		startActivity(myIntent);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		VopApplication app = (VopApplication) getApplicationContext();
-
-		// first check if the user is online
-		if (!app.isOnline()) {
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setTitle("No connection");
-			dialog.setMessage("You have no connection to the internet. Please, try again later.");
-			dialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-
-				}
-			});
-			dialog.setCancelable(false);
-			dialog.show();
-		} else {
-			SharedPreferences prefs = getSharedPreferences(VopApplication.PREFS, MODE_PRIVATE);
-
-			int userid = prefs.getInt("userid", 0);
-			if (userid != 0) {
-				app.putState("userid", Integer.toString(userid));
-				Intent myIntent = new Intent(Login.this, MainScreen.class);
-				Login.this.startActivity(myIntent);
-				finish();
-			}
-		}
 	}
 }

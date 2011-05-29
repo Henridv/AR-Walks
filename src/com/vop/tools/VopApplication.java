@@ -227,10 +227,17 @@ public class VopApplication extends Application {
 	 * location throughout the lifetime of the application.
 	 */
 	public void startLocationService() {
-		if (locationServiceIntent == null) {
-			locationServiceIntent = new Intent(this, LocationService.class);
-			startService(locationServiceIntent);
-		}
+		// run a new thread to avoid UI lag
+		new Thread() {
+			@Override
+			public void run() {
+				if (locationServiceIntent == null) {
+					locationServiceIntent = new Intent(getApplicationContext(), LocationService.class);
+					startService(locationServiceIntent);
+				}
+			}
+			
+		}.start();
 	}
 
 	/**

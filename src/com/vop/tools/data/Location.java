@@ -11,7 +11,6 @@ import java.io.File;
 public class Location extends Point {
 	private final Integer id;
 	private String name;
-	private String description;
 	private String date;
 	private Integer pers_id;
 	private File img;
@@ -22,20 +21,17 @@ public class Location extends Point {
 	 * 
 	 * @param id
 	 * @param name
-	 * @param description
 	 * @param latitute
 	 * @param longitude
 	 * @param altitude
 	 * @param date
 	 * @param persId
 	 */
-	public Location(Integer id, String name, String description,
-			Double latitute, Double longitude, Double altitude, String date,
-			Integer persId, File img) {
+	public Location(Integer id, String name, Double latitute, Double longitude,
+			Double altitude, String date, Integer persId, File img) {
 		super(latitute, longitude, altitude);
 		this.id = id;
 		this.name = name;
-		this.description = description;
 		this.date = date;
 		this.pers_id = persId;
 		this.img = img;
@@ -51,9 +47,9 @@ public class Location extends Point {
 	 * @param altitude
 	 * @param persId
 	 */
-	public Location(String name, String description, Double latitute,
-			Double longitude, Double altitude, Integer persId) {
-		this(null, name, description, latitute, longitude, altitude, null, persId, null);
+	public Location(String name, Double latitute, Double longitude,
+			Double altitude, Integer persId) {
+		this(null, name, latitute, longitude, altitude, null, persId, null);
 	}
 
 	/**
@@ -67,21 +63,17 @@ public class Location extends Point {
 	 * @param persId
 	 * @param img
 	 */
-	public Location(String name, String description, Double latitude,
-			Double longitude, Double altitude, Integer persId, File img) {
-		this(null, name, description, latitude, longitude, altitude, null, persId, img);
+	public Location(String name, Double latitude, Double longitude,
+			Double altitude, Integer persId, File img) {
+		this(null, name, latitude, longitude, altitude, null, persId, img);
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return this.name;
 	}
 
 	public String getDate() {
 		return date;
-	}
-
-	public String getDescription() {
-		return description;
 	}
 
 	public Integer getId() {
@@ -98,10 +90,6 @@ public class Location extends Point {
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public void setName(String name) {
@@ -128,6 +116,5 @@ public class Location extends Point {
 			return super.equals(o);
 		}
 	}
-	
-	
+
 }

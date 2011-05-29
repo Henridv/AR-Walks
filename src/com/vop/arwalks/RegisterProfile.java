@@ -10,9 +10,7 @@ import com.vop.tools.FullscreenActivity;
 import com.vop.tools.data.Person;
 
 /**
- * register profile
- * 
- * @author gbostoen
+ * An Activity to register a new profile
  * 
  */
 public class RegisterProfile extends FullscreenActivity {

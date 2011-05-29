@@ -7,7 +7,7 @@ import com.vop.tools.data.Location;
 public class CustomOverlayItem extends OverlayItem {
 	private Location l;
 	public CustomOverlayItem(GeoPoint point,Location l) {
-		super(point, l.getName(), l.getDescription());
+		super(point, l.getName(), "");
 		this.l=l;
 	}
 	public Location getLocation(){

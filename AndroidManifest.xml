@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.vop.arwalks"
-      android:versionCode="2" android:versionName="early alpha">
+      android:versionCode="2" android:versionName="0.1-alpha">
     <uses-sdk android:minSdkVersion="7" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
@@ -42,7 +42,7 @@
         <activity android:name="com.vop.map.SeeCurrentTrack"	android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.ar.AugmentedReality"	android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="com.vop.map.LocationMap"			android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
-        <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity android:name="AddMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
         <activity android:name="EditMessage" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="ShowMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
         <activity android:screenOrientation="landscape" android:name="com.vop.map.MessageOnMap" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>

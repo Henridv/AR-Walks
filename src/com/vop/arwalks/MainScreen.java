@@ -26,7 +26,7 @@ import com.vop.tools.VopApplication;
  * 
  */
 public class MainScreen extends FullscreenActivity {
-	VopApplication app;
+	private VopApplication app;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,16 +38,16 @@ public class MainScreen extends FullscreenActivity {
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		// messages
-		ImageButton berichten = (ImageButton) findViewById(R.id.berichten);
-		berichten.setOnClickListener(new android.view.View.OnClickListener() {
+		ImageButton messages = (ImageButton) findViewById(R.id.berichten);
+		messages.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
 				final QuickAction qa = new QuickAction(v);
 
 				ActionItem msg_view = new ActionItem();
-				ActionItem actie2 = new ActionItem();
-				ActionItem actie3 = new ActionItem();
+				ActionItem mgs_camera = new ActionItem();
+				ActionItem msg_map = new ActionItem();
 				ActionItem msg_send = new ActionItem();
 
 				msg_view.setTitle("View messages");
@@ -57,12 +57,12 @@ public class MainScreen extends FullscreenActivity {
 						vibrator.vibrate(60);
 						Intent myIntent = new Intent(MainScreen.this, Messages.class);
 						myIntent.putExtra("type", "locations");
-						MainScreen.this.startActivity(myIntent);
+						startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
-				actie2.setTitle("Messages on camera");
-				actie2.setOnClickListener(new android.view.View.OnClickListener() {
+				mgs_camera.setTitle("Messages on camera");
+				mgs_camera.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
@@ -70,13 +70,13 @@ public class MainScreen extends FullscreenActivity {
 						qa.dismiss();
 					}
 				});
-				actie3.setTitle("Messages on map");
-				actie3.setOnClickListener(new android.view.View.OnClickListener() {
+				msg_map.setTitle("Messages on map");
+				msg_map.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
 						Intent myIntent = new Intent(MainScreen.this, MessagesOnMap.class);
-						MainScreen.this.startActivity(myIntent);
+						startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
@@ -87,13 +87,13 @@ public class MainScreen extends FullscreenActivity {
 						vibrator.vibrate(60);
 						Intent myIntent = new Intent(MainScreen.this, AddMessage.class);
 						myIntent.putExtra("type", "locations");
-						MainScreen.this.startActivity(myIntent);
+						startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
 				qa.addActionItem(msg_view);
-				qa.addActionItem(actie2);
-				qa.addActionItem(actie3);
+				qa.addActionItem(mgs_camera);
+				qa.addActionItem(msg_map);
 				qa.addActionItem(msg_send);
 				qa.setAnimStyle(QuickAction.ANIM_AUTO);
 				qa.show();
@@ -101,8 +101,8 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// tracks
-		ImageButton trajecten = (ImageButton) findViewById(R.id.trajecten);
-		trajecten.setOnClickListener(new android.view.View.OnClickListener() {
+		ImageButton tracks = (ImageButton) findViewById(R.id.trajecten);
+		tracks.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
@@ -118,7 +118,7 @@ public class MainScreen extends FullscreenActivity {
 					public void onClick(View v) {
 						vibrator.vibrate(60);
 						Intent myIntent = new Intent(MainScreen.this, Tracks.class);
-						MainScreen.this.startActivity(myIntent);
+						startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
@@ -128,7 +128,7 @@ public class MainScreen extends FullscreenActivity {
 					public void onClick(View v) {
 						vibrator.vibrate(60);
 						Intent myIntent = new Intent(MainScreen.this, TrajectOpslaan.class);
-						MainScreen.this.startActivity(myIntent);
+						startActivity(myIntent);
 						qa.dismiss();
 					}
 				});
@@ -151,8 +151,8 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// AR
-		ImageButton locaties = (ImageButton) findViewById(R.id.locaties);
-		locaties.setOnClickListener(new android.view.View.OnClickListener() {
+		ImageButton locations = (ImageButton) findViewById(R.id.locaties);
+		locations.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
@@ -214,8 +214,8 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// friends
-		ImageButton vrienden = (ImageButton) findViewById(R.id.vrienden);
-		vrienden.setOnClickListener(new android.view.View.OnClickListener() {
+		ImageButton friends = (ImageButton) findViewById(R.id.vrienden);
+		friends.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);
@@ -251,8 +251,8 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// profile
-		ImageButton profiel = (ImageButton) findViewById(R.id.profiel);
-		profiel.setOnClickListener(new android.view.View.OnClickListener() {
+		ImageButton profile = (ImageButton) findViewById(R.id.profiel);
+		profile.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				vibrator.vibrate(60);

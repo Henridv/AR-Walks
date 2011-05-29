@@ -44,9 +44,7 @@ public class EditMessage extends FullscreenActivity{
 	 */
 	public void saveMessage(View v) {
 		String name = newName.getText().toString();
-		String description = newName.getText().toString();
 		l.setName(name);
-		l.setDescription(description);
 		DBWrapper.save(l);
 		finish();
 	}

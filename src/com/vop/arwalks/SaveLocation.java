@@ -46,15 +46,12 @@ public class SaveLocation extends FullscreenActivity {
 
 		EditText name = (EditText) findViewById(R.id.loc_name);
 		String locName = name.getText().toString();
-		EditText descr = (EditText) findViewById(R.id.loc_descr);
-		String locDescr = descr.getText().toString();
 
 		VopApplication app = (VopApplication) getApplicationContext();
 		Integer id = Integer.parseInt(app.getState().get("userid"));
 		double lng = app.getLng();
 		double lat = app.getLat();
 		double alt = app.getAlt();
-		// loc = new Location(locName, locDescr, lat, lng, alt, "default", id);
 
 		facebook.authorize(this, new String[] { "email", "read_stream",
 				"publish_stream" }, new DialogListener() {
@@ -113,7 +110,7 @@ public class SaveLocation extends FullscreenActivity {
 			}
 		});
 
-		Location loc = new Location(locName, locDescr, lat, lng, alt, id);
+		Location loc = new Location(locName, lat, lng, alt, id);
 		DBWrapper.save(loc);
 		finish();
 	}

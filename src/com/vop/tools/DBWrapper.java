@@ -34,6 +34,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.vop.tools.data.Location;
+import com.vop.tools.data.Message;
 import com.vop.tools.data.Person;
 import com.vop.tools.data.Point;
 import com.vop.tools.data.Track;
@@ -52,7 +53,7 @@ public class DBWrapper {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<Track> getTrajects() {
+	public static ArrayList<Track> getTracks() {
 		String page = "traject.php";
 		ArrayList<NameValuePair> postValues = new ArrayList<NameValuePair>();
 		postValues.add(new BasicNameValuePair("action", "trajects"));
@@ -345,7 +346,6 @@ public class DBWrapper {
 				l.add(new Location(
 						json_data.getInt("id"),
 						json_data.getString("name"),
-						json_data.getString("description"),
 						json_data.getDouble("lat"),
 						json_data.getDouble("lng"),
 						json_data.getDouble("alt"),
@@ -381,7 +381,6 @@ public class DBWrapper {
 			l = new Location(
 					json_data.getInt("id"),
 					json_data.getString("name"),
-					json_data.getString("description"),
 					json_data.getDouble("lat"),
 					json_data.getDouble("lng"),
 					json_data.getDouble("alt"),
@@ -417,7 +416,6 @@ public class DBWrapper {
 				l.add(new Location(
 						json_data.getInt("id"),
 						json_data.getString("name"),
-						json_data.getString("description"),
 						json_data.getDouble("lat"),
 						json_data.getDouble("lng"),
 						json_data.getDouble("alt"),
@@ -431,6 +429,11 @@ public class DBWrapper {
 		return l;
 	}
 
+	public static Message getMessage(int id) {
+		// TODO get message from db
+		return null;
+	}
+	
 	/**
 	 * Save a location
 	 * 
@@ -443,7 +446,6 @@ public class DBWrapper {
 		if (l.getId() != null)
 			postValues.add(new BasicNameValuePair("id", Integer.toString(l.getId())));
 		postValues.add(new BasicNameValuePair("name", l.getName()));
-		postValues.add(new BasicNameValuePair("description", l.getDescription()));
 		postValues.add(new BasicNameValuePair("lat", Double.toString(l.getLatitute())));
 		postValues.add(new BasicNameValuePair("lng", Double.toString(l.getLongitude())));
 		postValues.add(new BasicNameValuePair("alt", Double.toString(l.getAltitude())));
@@ -486,6 +488,18 @@ public class DBWrapper {
 			doPOST(page, postValues);
 		} catch (JSONException e) {
 		}
+	}
+	
+	/**
+	 * Create a new profile
+	 * @param name
+	 * @param phone
+	 * @param password
+	 * @param email
+	 * @return ID of the new profile
+	 */
+	public static int createProfile(String name, String phone, String password, String email) {
+		return 0;
 	}
 
 	/**
@@ -612,6 +626,10 @@ public class DBWrapper {
 	}
 
 	/**
+	 * Helper functions
+	 */
+	
+	/**
 	 * Perform actual HTTP POST
 	 * 
 	 * @param page
@@ -719,4 +737,5 @@ public class DBWrapper {
 		
 		return clearText;
 	}
+
 }

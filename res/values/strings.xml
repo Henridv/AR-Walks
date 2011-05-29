@@ -4,4 +4,5 @@
     <string name="app_name">AR Walks</string>
     <string name="welcome">Welcome to AR Walks!</string>
     <string name="login_fail">Login failed. Please try again...</string>
+    <string name="no_connection">You are not connected to the internet. It will not be possible to log in.</string>
 </resources>

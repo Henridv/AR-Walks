@@ -36,7 +36,7 @@ public class TrackRenderer extends GLSurfaceView implements Renderer {
 		POI = new ArrayList<Marker>();
 		for (Point p : track.getWalk()) {
 			POI.add(new Marker(
-					new Location(null, null, p.getLatitute(), p.getLongitude(), p.getAltitude(), 0),
+					new Location(null, p.getLatitute(), p.getLongitude(), p.getAltitude(), 0),
 					(float) app.getLat(),
 					(float) app.getLng(),
 					(float) app.getAlt()));

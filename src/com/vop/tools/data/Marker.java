@@ -78,7 +78,6 @@ public class Marker implements Comparable<Marker> {
 	 */
 	public Marker(com.vop.tools.data.Location l, float lat, float lng, float alt) {
 		this.title = l.getName();
-		this.info = l.getDescription();
 		this.lat = l.getLatitute();
 		this.lng = l.getLongitude();
 		max_distance = 5000f;

@@ -10,14 +10,14 @@ switch($action) {
 	case "trajects":
 		$query = "
 			SELECT id, name, pers_id as person
-			FROM trajects
+			FROM tracks
 			ORDER BY id";
 		break;
 		
 	case "trajects2":
 		$query = "
 			SELECT id, name, pers_id as person
-			FROM trajects
+			FROM tracks
 			ORDER BY id";
 		break;
 		
@@ -25,7 +25,7 @@ switch($action) {
 		$id = $_POST['id'];
 		$query = "
 			SELECT id, name, pers_id as person
-			FROM trajects
+			FROM tracks
 			WHERE id=$id";
 		break;
 		
@@ -47,7 +47,7 @@ switch($action) {
 		if (isset($_POST['id'])) {
 			$id = $_POST['id'];
 			$query = "
-				UPDATE trajects
+				UPDATE tracks
 				SET
 					name='$name',
 					pers_id='$person',
@@ -55,7 +55,7 @@ switch($action) {
 				WHERE id='$id'";
 		} else {
 			$query = "
-				INSERT INTO trajects
+				INSERT INTO tracks
 				(name, pers_id, walk)
 				VALUES
 				('$name', '$person', $geom)";
@@ -64,7 +64,7 @@ switch($action) {
 		
 	case "deltraject":
 		$query = "
-			DELETE FROM trajects
+			DELETE FROM tracks
 			WHERE id = ".$_POST['id'];
 		break;
 	default:
@@ -78,7 +78,7 @@ if ($action == "trajects" || $action == "get_walk") {
 		
 		$query = "
 			SELECT X(geom(dump(walk))) as lat, Y(geom(dump(walk))) as lng, Z(geom(dump(walk))) as alt
-			FROM trajects
+			FROM tracks
 			WHERE id=$id";
 		$point_res = pg_query($conn, $query);
 		$walk = array();
