@@ -1,5 +1,9 @@
 package com.vop.tools.data;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Represents a Person
  * 
@@ -61,8 +65,15 @@ public class Person {
 		this.name = name;
 	}
 
+	/**
+	 * Sets a new password for this Person. It is automatically hashed using
+	 * SHA-1.
+	 * 
+	 * @param password
+	 *            Plain text password
+	 */
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = hashString(password);
 	}
 
 	public void setPhone(String phone) {
@@ -72,5 +83,22 @@ public class Person {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	/**
+	 * Hash a string using SHA-1
+	 * 
+	 * @param clearText
+	 * @return hashed string
+	 */
+	private static String hashString(String clearText) {
+		try {
+			MessageDigest m = MessageDigest.getInstance("SHA-1");
+			m.update(clearText.getBytes(), 0, clearText.length());
+			clearText = new BigInteger(1, m.digest()).toString(16);
+		} catch (NoSuchAlgorithmException e) {
+		}
+
+		return clearText;
 	}
 }

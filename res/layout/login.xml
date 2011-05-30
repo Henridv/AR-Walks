@@ -50,9 +50,9 @@
 		android:onClick="register" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 		<Button
-		android:id="@+id/login"
-		android:text="Log in"
-		android:onClick="login" android:layout_height="fill_parent" android:layout_width="wrap_content">
+			android:id="@+id/login"
+			android:text="Log in"
+			android:onClick="login" android:layout_height="fill_parent" android:layout_width="wrap_content">
 		</Button>
 		<ImageButton
 			android:id="@+id/facebook"

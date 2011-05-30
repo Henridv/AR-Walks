@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:background="#FFFFFF">
+	<ImageView
+		android:id="@+id/widget_logo"
+		android:src="@drawable/appicon"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content">
+	</ImageView>
+	<TextView
+		android:id="@+id/widget_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/app_name"
+		android:textColor="#000000"
+		android:textSize="15dp"
+		android:layout_toRightOf="@id/widget_logo">
+	</TextView>
+	<TextView
+		android:id="@+id/widget_location"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/no_location"
+		android:textColor="#000000"
+		android:textSize="15dp"
+		android:layout_below="@id/widget_name"
+		android:layout_toRightOf="@id/widget_logo">
+	</TextView>
+</RelativeLayout>

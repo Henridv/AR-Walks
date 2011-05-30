@@ -14,8 +14,6 @@ import com.vop.tools.data.Person;
 /**
  * changing password
  * 
- * @author gbostoen
- * 
  */
 public class EditPassword extends FullscreenActivity {
 
@@ -54,7 +52,7 @@ public class EditPassword extends FullscreenActivity {
 					processDialog.dismiss();
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getApplicationContext(), "Changing password succeeded!", Toast.LENGTH_LONG).show();
+							Toast.makeText(getApplicationContext(), getString(R.string.chg_password), Toast.LENGTH_LONG).show();
 
 						}
 					});
@@ -69,9 +67,9 @@ public class EditPassword extends FullscreenActivity {
 					newpasswordbox.setText("");
 					newpasswordrepeatbox.setText("");
 				}
+				finish();
 			}
 		}).start();
-		finish();
 	}
 
 }

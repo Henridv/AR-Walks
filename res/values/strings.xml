@@ -5,4 +5,7 @@
     <string name="welcome">Welcome to AR Walks!</string>
     <string name="login_fail">Login failed. Please try again...</string>
     <string name="no_connection">You are not connected to the internet. It will not be possible to log in.</string>
+    <string name="no_location">No location found yet</string>
+    <string name="chg_profile">Your profile has been updated</string>
+    <string name="chg_password">Succesfully changed your password</string>
 </resources>

@@ -41,7 +41,6 @@ public class Locations extends FullscreenListActivity {
 				// When clicked, show a dialog with the TextView text
 				AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
 				dialog.setTitle(loc.get(position).getName());
-				dialog.setMessage("TODO: convert to msg");
 				dialog.show();
 			}
 		});

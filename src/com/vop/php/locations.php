@@ -10,7 +10,7 @@ switch ($action) {
 	// get all locations from one person
 	case "getlocs":
 		$query = "
-			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
+			SELECT id, name, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
 			FROM locations
 			WHERE pers_id = '".$_POST['id']."'
 			ORDER BY id";
@@ -19,7 +19,7 @@ switch ($action) {
 	// get one location
 	case "getloc":
 		$query = "
-			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
+			SELECT id, name, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt, image
 			FROM locations
 			WHERE id = '".$_POST['id']."'";
 		break;
@@ -36,7 +36,6 @@ switch ($action) {
 		
 	case "addloc":
 		$name = $_POST['name'];
-		$descr = $_POST['description'];
 		$lng = $_POST['lng'];
 		$lat = $_POST['lat'];
 		$alt = $_POST['alt'];
@@ -49,7 +48,6 @@ switch ($action) {
 				UPDATE locations
 				SET
 					name='$name',
-					description='$descr',
 					date='$date',
 					pers_id='$pers_id',
 					position=GeomFromText('POINT($lat $lng $alt)', 4326)
@@ -77,15 +75,15 @@ switch ($action) {
 		    if (isset($image)) {
 				$query = "
 					INSERT INTO locations
-					(name, description, pers_id, date, position, image)
+					(name, pers_id, date, position, image)
 					VALUES
-					('$name','$descr','$pers_id',NOW(), GeomFromText('POINT($lat $lng $alt)', 4326), '$image')";
+					('$name','$pers_id',NOW(), GeomFromText('POINT($lat $lng $alt)', 4326), '$image')";
 		    } else {
 				$query = "
 					INSERT INTO locations
-					(name, description, pers_id, date, position)
+					(name, pers_id, date, position)
 					VALUES
-					('$name','$descr','$pers_id',NOW(),GeomFromText('POINT($lat $lng $alt)', 4326))";
+					('$name','$pers_id',NOW(),GeomFromText('POINT($lat $lng $alt)', 4326))";
 		    }
 		}
 		break;
@@ -105,7 +103,7 @@ switch ($action) {
 		$pers_id = $_POST['userid'];
 		$name = $_POST['name'];
 		$query = "
-			SELECT id, name, description, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt
+			SELECT id, name, pers_id, date, X(position) as lat, Y(position) as lng, Z(position) as alt
 			FROM locations
 			WHERE NOT(pers_id = '$pers_id') AND name = '$name' ";
 		break;

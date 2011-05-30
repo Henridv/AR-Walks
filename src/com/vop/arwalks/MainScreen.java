@@ -21,9 +21,6 @@ import com.vop.tools.VopApplication;
 /**
  * This is the main menu of the application. It contains six buttons, each with
  * its submenus.
- * 
- * @author gbostoen
- * 
  */
 public class MainScreen extends FullscreenActivity {
 	private VopApplication app;
@@ -320,7 +317,7 @@ public class MainScreen extends FullscreenActivity {
 	 * 
 	 * @param v
 	 */
-	public void uitloggen_klik(View v) {
+	public void logout(View v) {
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(60);
 		app.putState("userid", null);

@@ -47,5 +47,11 @@
         <activity android:name="ShowMessage" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="landscape"></activity>
         <activity android:screenOrientation="landscape" android:name="com.vop.map.MessageOnMap" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity android:name="com.vop.map.MessagesOnMap" android:screenOrientation="landscape" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <receiver android:name="com.vop.widget.ARWidget">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget"></meta-data>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

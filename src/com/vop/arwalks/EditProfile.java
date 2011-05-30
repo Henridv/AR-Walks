@@ -66,13 +66,13 @@ public class EditProfile extends FullscreenActivity {
 				wachten.dismiss();
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(getApplicationContext(), "Changing profile succeeded!", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), getString(R.string.chg_profile), Toast.LENGTH_LONG).show();
 
 					}
 				});
+				finish();
 			}
 		}).start();
-		finish();
 	}
 
 }
