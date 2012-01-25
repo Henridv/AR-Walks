@@ -35,7 +35,7 @@ public class MainScreen extends FullscreenActivity {
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		// messages
-		ImageButton messages = (ImageButton) findViewById(R.id.berichten);
+		ImageButton messages = (ImageButton) findViewById(R.id.btn_messages);
 		messages.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -43,7 +43,7 @@ public class MainScreen extends FullscreenActivity {
 				final QuickAction qa = new QuickAction(v);
 
 				ActionItem msg_view = new ActionItem();
-				ActionItem mgs_camera = new ActionItem();
+				ActionItem msg_camera = new ActionItem();
 				ActionItem msg_map = new ActionItem();
 				ActionItem msg_send = new ActionItem();
 
@@ -58,8 +58,8 @@ public class MainScreen extends FullscreenActivity {
 						qa.dismiss();
 					}
 				});
-				mgs_camera.setTitle("Messages on camera");
-				mgs_camera.setOnClickListener(new android.view.View.OnClickListener() {
+				msg_camera.setTitle("Messages on camera");
+				msg_camera.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
@@ -89,7 +89,7 @@ public class MainScreen extends FullscreenActivity {
 					}
 				});
 				qa.addActionItem(msg_view);
-				qa.addActionItem(mgs_camera);
+				qa.addActionItem(msg_camera);
 				qa.addActionItem(msg_map);
 				qa.addActionItem(msg_send);
 				qa.setAnimStyle(QuickAction.ANIM_AUTO);
@@ -98,7 +98,7 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// tracks
-		ImageButton tracks = (ImageButton) findViewById(R.id.trajecten);
+		ImageButton tracks = (ImageButton) findViewById(R.id.btn_tracks);
 		tracks.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -148,7 +148,7 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// AR
-		ImageButton locations = (ImageButton) findViewById(R.id.locaties);
+		ImageButton locations = (ImageButton) findViewById(R.id.bnt_camera);
 		locations.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -195,7 +195,7 @@ public class MainScreen extends FullscreenActivity {
 					@Override
 					public void onClick(View v) {
 						vibrator.vibrate(60);
-						Intent myIntent = new Intent(MainScreen.this, SaveLocation.class);
+						Intent myIntent = new Intent(MainScreen.this, AddLocation.class);
 						MainScreen.this.startActivity(myIntent);
 						qa.dismiss();
 					}
@@ -211,7 +211,7 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// friends
-		ImageButton friends = (ImageButton) findViewById(R.id.vrienden);
+		ImageButton friends = (ImageButton) findViewById(R.id.btn_friends);
 		friends.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -248,7 +248,7 @@ public class MainScreen extends FullscreenActivity {
 		});
 
 		// profile
-		ImageButton profile = (ImageButton) findViewById(R.id.profiel);
+		ImageButton profile = (ImageButton) findViewById(R.id.btn_profile);
 		profile.setOnClickListener(new android.view.View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

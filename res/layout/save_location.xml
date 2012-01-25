@@ -2,50 +2,21 @@
 <LinearLayout
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:padding="25dp"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical">
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:paddingBottom="25dp"
-			android:gravity="center_horizontal">
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="Save current location"
-			android:textSize="25dp">
-		</TextView>
-	</LinearLayout>
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/loc_name"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:singleLine="true"
-			android:hint="Location name">
-		</EditText>
-	</LinearLayout>
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/loc_descr"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:singleLine="true"
-			android:hint="Description">
-		</EditText>
-	</LinearLayout>
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:gravity="right">
-		<Button
-			android:text="Save" android:onClick="saveLocation"
-			android:layout_height="fill_parent" android:layout_width="wrap_content">
-		</Button>
+    <include android:layout_width="fill_parent" layout="@layout/header" android:layout_height="wrap_content"></include>
+    <LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="25dp" android:orientation="vertical">
+        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textSize="25dp" android:text="Save current location" android:layout_gravity="center" android:layout_marginBottom="20dip"></TextView>
+	<EditText android:textSize="18sp" android:id="@+id/loc_name" android:hint="Location name" android:layout_height="wrap_content" android:layout_width="fill_parent" android:singleLine="true"></EditText>
+	<EditText android:textSize="18sp" android:id="@+id/loc_descr" android:hint="Description" android:layout_height="wrap_content" android:layout_width="fill_parent" android:singleLine="true">
+		<requestFocus></requestFocus>
+	</EditText>
+	<Button
+		android:onClick="saveLocation"
+		android:text="Save location"
+		android:layout_gravity="right" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	</LinearLayout>
 </LinearLayout>
