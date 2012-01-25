@@ -1,6 +1,8 @@
 package com.vop.arwalks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.vop.popup.ActionItem;
 import com.vop.popup.QuickAction;
@@ -22,12 +24,6 @@ import com.vop.tools.FullscreenListActivity;
 import com.vop.tools.VopApplication;
 import com.vop.tools.data.Person;
 
-/**
- * friends
- * 
- * @author gbostoen
- * 
- */
 public class Friends extends FullscreenListActivity {
 
 	private ArrayList<Person> friends;
@@ -46,7 +42,6 @@ public class Friends extends FullscreenListActivity {
 		app = (VopApplication) getApplicationContext();
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-		// menu opstartten
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -82,9 +77,9 @@ public class Friends extends FullscreenListActivity {
 				qa.show();
 			}
 		});
+		setContentView(R.layout.list);
 	}
 
-	// menu openen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -117,23 +112,25 @@ public class Friends extends FullscreenListActivity {
 		updateFriends();
 	}
 
-	/**
-	 * update current friends
-	 */
 	private void updateFriends() {
 		VopApplication app = (VopApplication) getApplicationContext();
 		int id = Integer.parseInt(app.getState().get("userid"));
 
 		friends = DBWrapper.getFriends(id);
+		
+		List<HashMap<String, ?>> data = new ArrayList<HashMap<String, ?>>();
 
-		String[] res = new String[friends.size()];
-		{
-			for (int i = 0; i < friends.size(); i++) {
-				res[i] = friends.get(i).getName();
-			}
+		for (Person f : friends) {
+			HashMap<String, String> row = new HashMap<String, String>();
+			row.put("name", f.getName());
+			row.put("phone", f.getPhone());
+			data.add(row);
 		}
-
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.friends, res));
-
+		SimpleAdapter adapter = new SimpleAdapter(this,
+				data,
+				R.layout.row,
+				new String[] {"name", "phone"},
+				new int[] {R.id.toptext, R.id.bottomtext});
+		setListAdapter(adapter);
 	}
 }

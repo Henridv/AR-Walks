@@ -8,4 +8,6 @@
     <string name="no_location">No location found yet</string>
     <string name="chg_profile">Your profile has been updated</string>
     <string name="chg_password">Succesfully changed your password</string>
+    <string name="no_messages">No messages found</string>
+    <string name="no_friends">You have not made any friends yet. Add them using their email address.</string>
 </resources>
